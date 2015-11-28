@@ -1,0 +1,26 @@
+<?php if (count($this->bicycleData) > 0): ?>
+    <table class="table table-bordered table-condensed table-possessions">
+        <thead>
+        <tr>
+            <th>Items you have added to your policy</th>
+            <th colspan="2">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach($this->bicycleData as $bike): ?>
+            <tr>
+                <td class="description">
+                    <?php echo $bike['make'] . ' - ' . $bike['model']; ?><br />
+                    Serial number: <?php echo $bike['serial']; ?>
+                </td>
+                <td class="price">
+                    &pound;<?php echo number_format($bike['value'], 2); ?>
+                </td>
+                <td>
+                    <a id="removeBike<?php echo $bike['id']; ?>" onclick="removeBikeClick('<?php echo $bike['id']; ?>'); return false;" class="tertiary-colour" href="#">Remove item</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>

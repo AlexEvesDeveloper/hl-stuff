@@ -1,0 +1,20 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Mid-Term Adjustments</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <p>
+            Thank you for amending to your RRP policy.
+            You will receive your documents by email within the next 24 hours.
+            If there is any additional information you feel we should be made aware of please email details to
+            <a href="mailto:{{ emailQueryAddress }}?subject=RRPI%20MTA%20Query%20for%20{{ policyNumber }}" title="{{ emailQueryAddress }}">{{ emailQueryAddress }}</a>.
+        </p>
+    </div>
+{% endblock %}

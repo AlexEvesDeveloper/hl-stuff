@@ -1,0 +1,48 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2 class="form">Company logo</h2>
+        <div class="warningpromo">
+        <?php
+            $messages = $this->logoMessages;
+            if (count($messages) > 0) {
+                echo "<ul class=\"errors\"><li>";
+                echo implode('</li><li>', $messages);
+                echo "</li></ul>";
+                }
+            ?>
+        </div>
+
+        <p>This section allows you to upload your agency logo to appear at the top of Connect - please submit it as a
+            GIF, JPEG or PNG no larger than
+            <?php echo number_format($this->params->connect->settings->logoUpload->connect->maxSize->pixels); ?>
+            pixels on each side and no larger than
+            <?php echo number_format($this->params->connect->settings->logoUpload->connect->maxSize->file / 1048576, 1); ?>
+            MB in size.</p>
+        <p>Image files will be resized to (and centred within)
+            <?php echo number_format($this->params->connect->settings->logoUpload->connect->max_x); ?> by
+            <?php echo number_format($this->params->connect->settings->logoUpload->connect->max_y); ?>
+            pixels, so logo images that are roughly this aspect ratio will look best.</p>
+        <form enctype="multipart/form-data" method="post" action="" name="modifyConnectLogo">
+            <div>
+                <img align="left"
+                     width="<?php echo $this->params->connect->settings->logoUpload->connect->max_x; ?>"
+                     height="<?php echo $this->params->connect->settings->logoUpload->connect->max_y; ?>"
+                     src="<?php echo $this->logoUrl;?>" />
+            </div>
+            <div style="float:right;">
+                <input type="hidden" value="<?php echo $this->params->connect->settings->logoUpload->connect->maxSize->file; ?>"
+                       name="MAX_FILE_SIZE" />
+                <input type="file" accept="<?php echo $this->params->connect->settings->logoUpload->mimeTypes->toArray(); ?>"
+                       name="logofile" />
+                <br />
+                <span style="font-size: 0.75em;">(<?php echo number_format($this->params->connect->settings->logoUpload->connect->maxSize->file / 1048576, 1); ?> MB limit of type GIF, JPEG or PNG)</span>
+                <br />
+            </div>
+            <div class="clear">
+                <input type="submit" value="Upload New Logo" name="uploadConnectLogo" id="next" />
+                <input type="submit" value="Delete Current Logo" name="deleteConnectLogo" class="next" onclick="if(confirm('Please select OK to confirm that you\'d like to delete the current logo')){return true;}else{return false;}" />
+            </div>
+        </form>
+    </div>
+</div>

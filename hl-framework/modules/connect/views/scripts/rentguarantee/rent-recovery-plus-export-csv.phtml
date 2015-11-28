@@ -1,0 +1,53 @@
+<?php
+
+$stdOut = $this->stdOut;
+
+fputcsv
+(
+    $stdOut,
+    array(
+        'PolicyNumber',
+        'PolicyTerm',
+        'Excess',
+        'PropertyAddress',
+        'PropertyPostcode',
+        'MonthlyRentalAmount',
+        'PolicyStartDate',
+        'PolicyEndDate',
+        'LandlordName',
+        'LandlordEmail',
+        'LandlordTelephone',
+    )
+);
+
+/** @var \RRP\Model\RentRecoveryPlusSearchResults $reportData */
+$reportData = $this->reportData;
+
+if ($reportData && $reportData->getTotalRecords()) {
+    /** @var \RRP\Model\RentRecoveryPlusSummary $summary */
+    foreach ($reportData->getRecords() as $summary)
+    {
+        fputcsv
+        (
+            $stdOut,
+            array
+            (
+                $summary->getPolicyNumber(),
+                $summary->getPolicyLength(),
+                $summary->getExcess(),
+                $summary->getPropertyAddress(),
+                $summary->getPropertyPostcode(),
+                $summary->getPropertyRental(),
+                $summary->getPolicyStartAt(),
+                $summary->getPolicyEndAt(),
+                $summary->getLandlordFullname(),
+                $summary->getLandlordEmailAddress(),
+                $summary->getLandlordPhoneNumber()
+            )
+        );
+    }
+    fputcsv($stdOut, array('', '', '', '', '', '', '', '', '', 'Total Policies', $reportData->getTotalRecords()));
+}
+else {
+    fputcsv($stdOut, array('No data found'));
+}

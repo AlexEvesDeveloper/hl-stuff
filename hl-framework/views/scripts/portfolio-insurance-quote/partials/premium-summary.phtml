@@ -1,0 +1,88 @@
+<h2>Your Premium</h2>
+<?php echo $this->helpPopup('Your Premium', 'portfolio-insurance-quote-help-premiumquote'); ?>
+
+<?php
+$iptText = "No IPT included";
+
+if (!isset($this->premiums->total)) {
+    // We don't have any premiums to show - must be on a new quote at step 1
+    
+    $monthlyPremium = '-';
+    $annualPremium = '-';
+    $monthlyIPT = '-';
+    $annualIPT = '-';
+    $monthlyFees = '-';
+    $annualFees = '-';
+    $monthlyPayable = 'N/A';
+    $annualPayable = 'N/A';
+} else {
+    $monthlyPremium = '&pound;' . $this->premiums->total;
+    $annualPremium = '&pound;' . $this->premiums->annualTotal;
+    $monthlyIPT = '(&pound;' . $this->premiums->iptAmount . ')';
+    $annualIPT = '(&pound;' . $this->premiums->annualIptAmount . ')';
+    $monthlyFees = '&pound;' . $this->fees->monthlyFeeSP;;
+    $annualFees = '-';
+    $monthlyPayable = '&pound;' . ($this->premiums->total + $this->fees->monthlyFeeSP);
+    $annualPayable = '&pound;' . $this->premiums->total * 12;
+    if ($this->premiums->iptAmount > 0) { 
+		$iptText = "IPT included @ " . $this->premiums->iptAmount . "%";
+	}
+}
+?>
+<div class="form_section">
+    <table id="premium_summary" cellpadding='0' cellspacing='0'>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th class="number">Monthly</th>
+                <th class="number">Annually</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Your Premium
+                </td>
+                <td class="number">
+                    <span class="monthlyPremiumQuote"><?php echo $monthlyPremium; ?></span>
+                </td>
+                <td class="number">
+                    <span class="annualPremiumQuote"><?php echo $annualPremium; ?></span>
+                </td>
+            </tr>
+            <tr class="ipt">
+                <td>
+                    <?php echo $iptText; ?>
+                </td>
+                <td class="number">
+                    <span class="monthlyIpt"><?php echo $monthlyIPT; ?></span>
+                </td>
+                <td class="number">
+                    <span class="annualIpt"><?php echo $annualIPT; ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Monthly Admin Fee
+                </td>
+                <td class="number">
+                    <span class="monthlyAdminFee"><?php echo $monthlyFees; ?></span>
+                </td>
+                <td class="number">
+                    <span class="annualAdminFee"><?php echo $annualFees; ?></span>
+                </td>
+            </tr>
+            <tr class="payable">
+                <td>
+                    <strong>Amount Payable</strong>
+                </td>
+                <td class="number">
+                    <span class="monthlyPayable"><?php echo $monthlyPayable; ?></span>
+                </td>
+                <td class="number">
+                    <span class="annualPayable"><?php echo $annualPayable; ?></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

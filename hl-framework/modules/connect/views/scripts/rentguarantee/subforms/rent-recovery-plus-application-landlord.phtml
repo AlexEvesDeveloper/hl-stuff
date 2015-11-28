@@ -1,0 +1,43 @@
+<?php
+$session = new Zend_Session_Namespace('hl_connect');
+?>
+
+<h2>Landlord Details</h2>
+
+<div class="form_section two-col">
+    <div class="autoAlt" style="font-size:14px">
+        <b>We will only contact your landlord in relation to their interest in your Rent Recovery Plus Insurance policy and will not solicit them for other services. This will involve a short survey to ensure they have received their documents and that they understand what having an interest in your policy means.</b>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->title; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->first_name->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->last_name; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->email_address->setOptions(array('class'=>'first'))->render(); ?>
+        Please ensure the email address provided belongs to the Landlord
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->confirm_email_address; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->phone_number; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->question1; ?>
+    </div>
+    <div class="autoAlt" id="AdditionalClaimInfo">
+        <?php echo $this->element->claiminfo; ?>
+     </div>
+    <div class="autoAlt">
+        <?php echo $this->element->question2; ?>
+    </div>    
+    <div class="autoAlt">
+        <?php echo $this->element->question3; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->agreement; ?>
+    </div>
+</div>

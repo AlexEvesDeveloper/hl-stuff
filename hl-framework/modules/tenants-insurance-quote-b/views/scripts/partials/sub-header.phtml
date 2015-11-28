@@ -1,0 +1,44 @@
+<div id="sub_header_clean">
+    <h2>Tenants Contents - Insurance Quote</h2>
+    <div id="steps" class="steps-tenants">
+        <div class="hidden-xs">
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 1) { echo " class=\"current\""; } ?> id="tenants-quote-step1" href="/tenants/insurance-quote-b/step1">
+                <span class="circle">1</span>
+                <span class="text">About you</span>
+            </a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 2) { echo " class=\"current\""; } ?> id="tenants-quote-step2" href="/tenants/insurance-quote-b/step2">
+                <span class="circle">2</span>
+                <span class="text">Your possessions</span>
+            </a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 3) { echo " class=\"current\""; } ?> id="tenants-quote-step3" href="/tenants/insurance-quote-b/step3">
+                <span class="circle">3</span>
+                <span class="text">Quote</span>
+            </a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 4) { echo " class=\"current\""; } ?> id="tenants-quote-step4" href="/tenants/insurance-quote-b/step4">
+                <span class="circle">4</span>
+                <span class="text">Important information</span>
+            </a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 5) { echo " class=\"current\""; } ?> id="tenants-quote-step5" href="/tenants/insurance-quote-b/step5">
+                <span class="circle">5</span>
+                <span class="text">Payment</span>
+            </a>
+        </div>
+
+        <div class="visible-xs">
+            <?php if ($this->stepNum == 'dd') :
+                $num = 5;
+            else :
+                $num = $this->stepNum;
+            endif; ?>
+            <a class="current" id="tenants-quote-step<?php echo $num ?>" href="/tenants/insurance-quote-b/step<?php echo $num ?>">
+                <span class="circle"><?php echo $num ?></span>
+                <span class="text">of</span>
+            </a>
+            <a href="#">
+                <span class="circle">5</span>
+                <span class="text">steps</span>
+            </a>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

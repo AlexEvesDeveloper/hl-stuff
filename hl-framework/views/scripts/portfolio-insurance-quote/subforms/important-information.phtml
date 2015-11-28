@@ -1,0 +1,139 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('portfolio-insurance-quote-help-importantinformation'); ?>
+        </span>
+        Important Information
+    </h2>
+
+    <!-- Question 1 -->
+    <div class="radio form-group" id="dec1primarylabel">
+        <label for="declaration1">
+            1) Are ALL of your properties occupied by tenants?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration1')->setAttrib('onClick','openAdditionalDialog(1,this);')->render(); ?>
+            <?php echo $this->additionCheck1;?>
+        </label>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="radio form-group" id="dec2primarylabel">
+        <label for="declaration2">
+            2) Are ALL of your properties to be occupied by tenants within 60 days of the start date of this policy?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration2')->setAttrib('onClick','openAdditionalDialog(2,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="radio form-group" id="dec3primarylabel">
+        <label for="declaration3">
+            2b) Are ALL of your properties let or to be let on a written Assured Shorthold Tenancy* with a minimum initial period of at least three months?<br />*(In England &amp; Wales or the equivalent in Scotland or Northern Ireland)
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration3')->setAttrib('onClick','openAdditionalDialog(3,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="radio form-group" id="dec4primarylabel">
+        <label for="declaration4">
+            2c) If ALL of your properties are currently let, are any of your tenants in breach of any term(s) of their tenancy agreement?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration4')->setAttrib('onClick','openAdditionalDialog(4,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="radio form-group" id="dec5primarylabel">
+        <label for="declaration5">
+            2d) Have ANY of the properties to be insured (or any of the residences within the properties) been unoccupied for a continuous period of more than ninety days immediately prior to the date of this proposal?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration5')->setAttrib('onClick','openAdditionalDialog(5,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="radio form-group" id="dec6primarylabel">
+        <label for="declaration6">
+            3) Are ALL of your properties built with brick, stone or concrete and roofed with tiles, slates, metal or concrete?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration6')->setAttrib('onClick','openAdditionalDialog(6,this);')->render(); ?>
+        </label>
+    </div>
+
+
+    <!-- Question 7 -->
+    <div class="radio form-group" id="dec7primarylabel">
+        <label for="declaration7">
+            4) Are ALL of your properties in a good state of repair and regularly maintained?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration7')->setAttrib('onClick','openAdditionalDialog(7,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="radio form-group" id="dec8primarylabel">
+        <label for="declaration8">
+            5) Are ANY of your properties located in areas liable to flooding?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration8')->setAttrib('onClick','openAdditionalDialog(8,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="radio form-group" id="dec9primarylabel">
+        <label for="declaration9">
+            6) Are ANY of the properties, or any immediately neighbouring properties, on sites which have ever shown signs of damage caused by subsidence, landslip or heave, or is there any evidence of ongoing movement (eg: cracking and/or bulging of walls)?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration1')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration9')->setAttrib('onClick','openAdditionalDialog(9,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="radio form-group" id="dec10primarylabel">
+        <label for="declaration10">
+            7) Have you suffered any incident or loss, whether insured or not, in the last 3 years in respect of the perils/covers requested in this proposal?
+            (<a href="#" onclick="openClaimsDialog(document.getElementById('declaration12-yes')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration10')->setAttrib('onClick','openClaimsDialog(this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 11 -->
+    <div class="radio form-group" id="dec11primarylabel">
+        <label for="declaration11">
+            8) Have you been convicted of arson, theft or any offence other than driving offences?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration11')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration11')->setAttrib('onClick','openAdditionalDialog(11,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="radio form-group" id="dec12primarylabel">
+        <label for="declaration12">
+            9) Are you aware of any circumstances which may give rise to a claim, or have you/they been refused insurance or had special terms applied?
+            &nbsp;(<a href="#" onclick="openAdditionalDialog(1,$('declaration12')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration12')->setAttrib('onClick','openAdditionalDialog(12,this);')->render(); ?>
+        </label>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="radio form-group" id="dec13primarylabel">
+        <label for="declaration12">
+            10) Bank Interest - Do you have any bank interest on this property? (<a href="#" onclick="openBankInterestDialog(document.getElementById('declaration13-yes')); return false;">edit</a>)
+            <?php echo $this->element->getElement('declaration13')->setAttrib('onClick','openBankInterestDialog(this);')->render(); ?>
+        </label>
+    </div>
+</div>
+
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">Statements</h2>
+    <div class="radio form-group">
+        <strong>Confirmation Statement</strong><br />
+        I confirm that the answers to the above statements are all true to the best of my
+        knowledge and understand that failure to answer these questions correctly could impact
+        my ability to claim.
+        <?php echo $this->element->declaration_confirmation; ?>
+    </div>
+</div>

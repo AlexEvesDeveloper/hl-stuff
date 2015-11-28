@@ -1,0 +1,20 @@
+<div id="letting_agent_hideable" class="hideable">
+    <div class="form_section one-col" style="border-top: none;">
+        <p>Please enter your letting agent&rsquo;s details below or search for them using their scheme number and click &lsquo;Find agent&rsquo;.</p>
+        <div class="hideable">
+            <div>
+                <?php echo $this->element->letting_agent_name; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->letting_agent_town; ?>
+            </div>
+            <div>
+                <?php echo $this->element->letting_agent_asn; ?>
+                <input type="submit" value="Find agent" onclick="getAgents(); return false;" />
+            </div>
+            <div id="letting_agent_selector" class="alt">
+                <?php echo $this->element->letting_agent->setAttribs(array('style' => 'width: 196px;'))->render(); ?>
+            </div>
+        </div>
+    </div>
+</div>

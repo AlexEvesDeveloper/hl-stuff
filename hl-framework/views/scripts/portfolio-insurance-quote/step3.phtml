@@ -1,0 +1,112 @@
+<?php
+    $view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view'); 
+    ?>
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">Provisional Quote</h2>
+
+    <div class="section-help section-help-fullwidth">
+        <?php echo $this->promoContent('portfolio-insurance-quote-help-premiumquote'); ?>
+    </div>
+
+    <table class="table table-condensed table-bordered">
+        <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Monthly</th>
+            <th>Annual</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <th>Premium:</th>
+            <td>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteMonthlyPremium'], 2);?></td>
+            <td>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteAnnualPremium'], 2);?></td>
+        </tr>
+        <tr>
+            <th>Insurance Premium Tax:</th>
+            <td>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteMonthlyIPT'], 2);?></td>
+            <td>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteAnnualIPT'], 2);?></td>
+        </tr>
+        <tr>
+            <th>Admin/Service Charge:</th>
+            <td>&pound;<?php echo (
+                    number_format($view->premiums['premiums']['UserQuoteMonthlyPremiumInc'], 2) - round($view->premiums['premiums']['UserQuoteMonthlyPremium'],2) - round($view->premiums['premiums']['UserQuoteMonthlyIPT'], 2)
+                ); ?></td>
+            <td>&pound;0.00</td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <th>Total</th>
+            <th>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteMonthlyPremiumInc'],2);?></th>
+            <th>&pound;<?php echo number_format($view->premiums['premiums']['UserQuoteAnnualPremiumInc'],2);?></th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="form-sub-section">
+    <div class="pull-right"><a href="#" id="toggle-all" class="btn btn-quaternary">Show all properties <img src="/assets/common/images/icon-caret-down.png" alt="" /></a></div>
+    <h3 class="quaternary-colour">Property Cover Breakdown</h3>
+    <?php
+        echo $view->partialLoop('portfolio-insurance-quote/partials/property-list.phtml', $view->propertyList);
+    ?>
+</div>
+
+<div class="form_section">
+    <div class="form-sub-section">
+        <div class="form-help hidden-xs hidden-sm"></div>
+        <h2 class="quaternary-colour main-heading">
+            <span class="help-trigger"><a class="show-form-help"></a></span>
+            <span class="field-help hidden-xs hidden-sm">
+                <?php echo $this->promoContent('portfolio-insurance-quote-help-additionalinformation'); ?>
+            </span>
+            Additional Information
+        </h2>
+
+        <div class="visible-xs visible-sm section-help">
+            <?php echo $this->promoContent('portfolio-insurance-quote-help-additionalinformation'); ?>
+        </div>
+
+        <div class="form-group">
+            <label for="existing_insurer">Exisiting Insurer</label>
+            <?php
+            echo $this->element->existing_insurer
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div class="form-group">
+            <label for="target_premium">Target Premium</label>
+            <?php
+            echo $this->element->target_premium
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div class="form-group">
+            <label>Renewal Date</label>
+            <div class="input-group date">
+                <input type="text" name="next_renwal_date" id="next_renwal_date" value="<?php echo htmlentities($this->element->next_renwal_date->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="how_hear">How did you hear about us?</label>
+            <?php
+            echo $this->element->how_hear
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div id="additional-information" class="form-group">
+            <label for="other">Please provide further details</label>
+            <?php
+            echo $this->element->other
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+        <script type="text/javascript">
+        
+            var isErrors = false;
+            
+            $(document).ready(function() {
+            
+                $('#refno, #firstname, #lastname, #address, #town, #postcode').change(ajaxValidateSearch);
+                $('#next').click(validateSubmit);
+            });
+            
+            function validateSubmit() {
+                
+                //If isErrors is true, return false.
+                //Else replace next button with ajax gif and return true.
+                if(isErrors) {
+                    
+                    return false;
+                }
+                
+                $('#next').parent().hide();
+                $('#submission-wait-icon').show();
+                return true;
+            }
+            
+            function ajaxValidateSearch() {
+                
+                $.ajax({
+                    url: '/referencing/validate-search',
+                    dataType: "json",
+                    type: "post",
+                    data: $('#refSearch').serialize(),
+                    cache: false,
+                    success: function(jsonResponse){
+                        
+                        if (jsonResponse.errorHtml != ''){
+
+                            if(!$('#errorListing').is(':visible')) {
+                            
+                                $('#errorListing').show('slow');
+                            }
+                            
+                            $('#errorListing').html(jsonResponse.errorHtml);
+                            isErrors = true;
+                        }
+                        else {
+                            
+                            if($('#errorListing').is(':visible')) {
+                                
+                                $('#errorListing').hide('slow');
+                            }
+                            isErrors = false;
+                        }
+                    }
+                });
+            }
+            
+        </script>
+        
+        <div class="popup_form_section">
+            <div id="errorListing" style="display: none; margin: 0; padding: 0;"></div>
+
+            <form id="refSearch" name="refSearch" method="get" action="/referencing/search">
+                <input type="hidden" value="1" id="page" name="page">
+                <div class="alt">
+                    <label>Reference Number</label>
+                    <input type="text" id="refno" name="refno" value="<?php echo $this->form->getElement('refno')->getValue(); ?>" />
+                </div>
+                <div>
+                    <label>Applicant First Name</label>
+                    <input type="text" id="firstname" name="firstname" value="<?php echo $this->form->getElement('firstname')->getValue(); ?>" />
+                </div>
+                <div class="alt">
+                    <label>Applicant Last Name</label>
+                    <input type="text" id="lastname" name="lastname" value="<?php echo $this->form->getElement('lastname')->getValue(); ?>" />
+                </div>
+                <div>
+                    <label>Property Address</label>
+                    <input type="text" id="address" name="address" value="<?php echo $this->form->getElement('address')->getValue(); ?>" />
+                </div>
+                <div class="alt">
+                    <label>Property Town</label>
+                    <input type="text" id="town" name="town" value="<?php echo $this->form->getElement('town')->getValue(); ?>" />
+                </div>
+                <div>
+                    <label>Property Post Code</label>
+                    <input type="text" id="postcode" name="postcode" value="<?php echo $this->form->getElement('postcode')->getValue(); ?>" />
+                </div>
+                <div class="alt">
+                    <label>State</label>
+                    <?php echo $this->form->getElement('state'); ?>
+                </div>
+                <div>
+                    <label>Product</label>
+                    <?php echo $this->form->getElement('type'); ?>
+                </div>
+                <div class="alt">
+                    <label>Results per Page</label>
+                    <?php echo $this->form->getElement('rows'); ?>
+                </div>
+                <div>
+                    <label style="float:right;"><input type="submit" name="submit" id="next" value="Search" /></label>
+                    <img style="float: right; display: none;" id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+                </div>
+            </form>
+        </div>

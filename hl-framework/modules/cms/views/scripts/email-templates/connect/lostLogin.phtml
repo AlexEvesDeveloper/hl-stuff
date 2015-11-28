@@ -1,0 +1,16 @@
+<p>
+    Dear <?php echo $this->metaData['agentFullname']; ?>,<br />
+    <br />
+    Following your online request for Connect access details, your Connect login information is as follows.<br />
+    <br />
+    Please note your password reset link is valid for a single use within 12 hours.  If you do not need to change your password you may disregard the reset link.
+</p>
+
+<ul>
+    <li>Agent scheme number: <?php echo $this->metaData['agentSchemeNo']; ?></li>
+    <li>User name: <?php echo $this->metaData['agentUsername']; ?></li>
+    <li>Password reset link: <a href="<?php echo $this->metaData['resetLink']; ?>"><?php echo $this->metaData['resetLink']; ?></a></li>
+</ul>
+
+--<br />
+This is an automated system message, please do not reply.

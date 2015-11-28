@@ -1,0 +1,33 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">My HomeLet Login</h2>
+
+    <div class="section-help">
+        <p>As a returning customer, please provide your My HomeLet account password to allow us to customise your experience.</p>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->email
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->password
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <a href="/my-homelet/forgotpassword" title="Reset Your Password" class="facebox pull-right">Forgot your password?</a>
+    <div class="clearfix"></div>
+</div>
+
+<script type="text/javascript">
+    (function ($) {
+        $('.facebox').click(function (e) {
+            e.preventDefault();
+            $.facebox($(this).attr('title'), { ajax: $(this).attr('href') });
+        });
+    })(jQuery);
+</script>

@@ -1,0 +1,85 @@
+<div class="wrapper two-col">
+
+    <div class="content">
+
+        <form id="lostlogin" name="lostlogin" enctype="application/x-www-form-urlencoded" method="post" action="">
+
+            <h2>Forgotten your details?</h2>
+
+            <p class="clear">
+                Simply fill in the details below and we&rsquo;ll send you your log in details by e-mail, this will also include a link that will allow you to reset password.
+            </p>
+
+            <p>
+                If you've remembered your log in details <a href="/connect">click here</a> to the return to the log in page.
+            </p>
+
+            <p class="messages" id="message">
+                <strong>Please provide at least two of the following items of information.</strong>
+                <?php
+                $formLevelErrors = $this->form->getErrorMessages();
+                if (count($formLevelErrors) > 0) {
+                    echo "<ul class=\"errors\"><li>";
+                    echo implode('</li><li>', $formLevelErrors);
+                    echo "</li></ul>";
+                }
+                ?>
+            </p>
+
+            <div class="form_section one-col">
+                <div class="alt">
+                    <?php echo $this->form->getElement('agentschemeno'); ?>
+                </div>
+                <div>
+                    <?php echo $this->form->getElement('username'); ?>
+                </div>
+                <div class="alt">
+                    <div>
+                        <label for="password">Password<br />
+                            <span style="font-size: 0.8em; color: inherit;">(if filled in please also supply user name, above)</span>
+                        </label>
+                        <input type="password" id="password" name="password" value="<?php echo $this->form->getElement('password')->getValue; ?>" />
+                        <?php
+
+                        $errors = $this->form->getElement('password')->getMessages();
+
+                        if (count($errors) > 0) {
+                            echo '<ul class="errors"><li>' . implode('</li></li>', $errors) . '</li></ul>';
+                        }
+
+                        ?>
+                    </div>
+                </div>
+                <div>
+                    <?php echo $this->form->getElement('realname'); ?>
+                </div>
+                <div class="alt">
+                    <div>
+                        <label for="question">Security question<br />
+                            <span style="font-size: 0.8em; color: inherit;">(if filled in please also supply answer, below)</span>
+                        </label>
+                        <?php echo $this->simpleSelect($this->form->getElement('question'), 'style="float: right; width: 45%; border: 2px solid #999; margin: 0 0 10px;"'); ?>
+                        <?php
+
+                        $errors = $this->form->getElement('question')->getMessages();
+
+                        if (count($errors) > 0) {
+                            echo '<ul class="errors"><li>' . implode('</li></li>', $errors) . '</li></ul>';
+                        }
+
+                        ?>
+                    </div>
+                </div>
+                <div>
+                    <?php echo $this->form->getElement('answer'); ?>
+                </div>
+                <div class="alt">
+                    <?php echo $this->form->getElement('email'); ?>
+                </div>
+            </div>
+
+            <input type="submit" value="submit" id="next" name="Submit" />
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<?php
+echo $this->subHeader('letting-agents', 'letting-agents');
+$layout = $this->layout()->getView();
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+		<div class="content">
+            <script type="text/javascript">
+                $(function() {
+                   $('#agent-switcher a').click(function() {
+                      var rel = $(this).attr('rel');
+                      //$(this).siblings().removeClass('active');
+                      $('#agent-switcher a').removeClass('active');
+                      $(this).addClass('active');
+
+                      $('#agent-types div.showing').fadeOut("fast", function() {
+                          $(this).removeClass('showing');
+                          $('#' + rel).fadeIn(function() {
+                              $(this).addClass('showing');
+                          });
+                      });
+                      return false;
+                   });
+                });
+            </script>
+            <h2>Team up with HomeLet</h2>
+            <br />
+            We're here to work in partnership with you, our letting agents, and that means offering a service that's right for your business. So, we've got three HomeLet membership levels: Premier and Standard, Whichever option you choose, one thing comes as standard - great service.<br />
+            <ul id="agent-switcher">
+                <li><a class="" rel="premier-text" href="#">Home<b>Let</b><br><small style="margin-left: 15px;">Premier</small></a></li>
+                <li><a class="" rel="standard-text" href="#">Standard</a></li>
+            </ul>
+            <div style="clear: both;"></div>
+            <div id="agent-types">
+                <div style="display: block;" class="type showing" id="premier-plus-text">
+                    <h3>The Products and Services included in this package from Premier customers include:</h3>
+                    <ul>
+                        <li>Advantage (click for more info)</li>
+                        <li>Discounted Professional Indemnity Insurance</li>
+                        <li>Zero excess on the first claim for Professional Indemnity Insurance</li>
+                        <li>Market Leading rates of Commission on new Business and Renewals</li>
+                        <li>Reductions on prices for referencing and Rent Guarantee</li>
+                        <li>Discounted NALS membership</li>
+                    </ul>
+                    <a class="find-out-more" href="<?php echo $layout->urls['lettingAgentsSignup']; ?>"><img src="/assets/cms/images/find-out-more.png" alt="find out more"></a>
+                </div>
+                <div style="display: none;" class="type" id="premier-text">
+                    <h3>Our Premier package includes:</h3>
+                    <ul>
+                        <li>Access to an incredibly fast and accurate referencing service and a choice of products.</li>
+                        <li>The chance to earn commission on a fantastic range of insurance products</li>
+                        <li>Your own dedicated account manager</li>
+                        <li>Access to our exclusive Connect online system, 24/7</li>
+                        <li>HomeLet Advantage, for up to 40% off thousands of High Street items, from TVs to holidays</li>
+                        <li>Discounted HomeLet Professional Indemnity insurance with zero excess on the first claim</li>
+                        <li>Market-leading commission on new business and renewals</li>
+                        <li>Discounts on our referencing and rent guarantee service</li>
+                        <li>Discounted NALS membership</li>
+                    </ul>
+                    <br />
+                    <a class="find-out-more" href="<?php echo $layout->urls['lettingAgentsSignup']; ?>"><img src="/assets/cms/images/find-out-more.png" alt="find out more"></a>
+                </div>
+                <div style="display: none;" class="type" id="standard-text">
+                    <h3>Our Standard package includes:</h3>
+                    <ul>
+                        <li>Access to an incredibly fast and accurate referencing service and a choice of products.</li>
+                        <li>The chance to earn commission on a fantastic range of insurance products</li>
+                        <li>Your own dedicated account manager</li>
+                    </ul>
+                    <h3>If you choose our Premier package, you'll also get all this for just &pound;50 + VAT a month:</h3>
+                    <ul>
+                        <li>HomeLet Advantage, for up to 40% off thousands of High Street items, from TVs to holidays</li>
+                        <li>Discounted HomeLet Professional Indemnity insurance with zero excess on the first claim</li>
+                        <li>Market-leading commission on new business and renewals</li>
+                        <li>Discounts on our referencing and rent guarantee service</li>
+                        <li>Discounted NALS membership</li>
+                    </ul>
+                    <h3 class="price">FREE</h3>
+                    <a class="find-out-more" href="<?php echo $layout->urls['lettingAgentsSignup']; ?>"><img src="/assets/cms/images/find-out-more.png" alt="find out more"></a>
+                </div>
+            </div><!--agent types -->
+            <script type="text/javascript">
+                $(function() {
+                    //wire up expander
+                    $('.expanders li a').click(function() {
+                        $(this).toggleClass("open");
+                        $(this).next().slideToggle();
+                        return false;
+                    })
+                });
+            </script>
+            <br />
+            <h2 class="extra-padding">More about the benefits</h2>
+            <ul class="expanders">
+                <li>
+                    <a rel="nofollow" href="#" class="expander">Advantage</a>
+                    <div class="details">
+                        <div>
+                            <div class="text">
+                                <p>
+                                    HomeLet Advantage is an exciting lifestyle discount scheme for you and your team created exclusively for HomeLet Premier customers where you can access exclusive discounts of up to 40% off thousands of products and services.  You can save online or by phone on everything from computers and office equipment to holidays and we can even save you money on your weekly shopping bill.  This has been proven to help improve staff retention and general staff satisfaction, and is a major benefit to today's small business owner.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar">
+            <h4 class="underline-corporate">What agents say</h4>
+            <div class="blue">
+                <div class="testyhearts">
+                    <div id="testimonials-holder">
+                        <ul>
+                            <?php echo $this->testimonials( 'letting-agents' ); ?>
+                        </ul>
+                        <div id="test-changer">
+                            <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                            <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div class="clear"></div>
+	</div>
+</div>

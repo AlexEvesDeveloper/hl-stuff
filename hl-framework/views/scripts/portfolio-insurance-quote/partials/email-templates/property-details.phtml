@@ -1,0 +1,49 @@
+<table cellspacing="0" cellpadding="0" border="0" width="100%" >
+<tr>
+	<td><h3 class="property_quote_h3"><div class="text">Property <?php echo $this->partialCounter;?></div></h3></td>
+</tr>
+<tr>
+<td>
+	<div id="propertyID_[--propnum--]">
+	<table cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tr>
+			<td class="padded">House number:</td><td><?php echo $this->houseNumber;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Address:</td><td><?php echo $this->address1;?><br /> <?php echo $this->address2;?><br /> <?php echo $this->address3;?><br /> <?php echo $this->address4;?> <br /> <?php echo $this->address5;?> <br /> <?php echo $this->postcode;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Risk Area:</td><td><?php echo $this->riskArea;?> : <?php echo $this->riskAreaB;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Tenant Status:</td><td><?php echo $this->tenantOccupation;?></td>
+		</tr>
+		<tr>
+			<td class="padded" colspan="2"><strong>Cover Options</strong></td>
+		</tr>
+		<tr>
+			<td class="padded">Buildings cover:</td><td>&pound;&nbsp;<?php echo $this->buildingsSumInsured;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Buildings Accidental Damage:</td><td><?php echo $this->buildingsAccidentalDamage;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Buildings Nil Excess:</td><td><?php echo $this->buildingsNilExcess;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Contents Cover:</td><td>&pound;&nbsp;<?php echo $this->contentsSumInsured;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Contents Accidental Damage:</td><td><?php echo $this->contentsAccidentalDamage;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Contents Nil Excess:</td><td><?php echo $this->contentsNilExcess;?></td>
+		</tr>
+		<tr>
+			<td class="padded">Contents Insurance for Unfurnished Properties:</td><td>&pound;&nbsp;<?php ($this->limitedContents == "Yes") ? print "5000" : print "0";?></td>
+		</tr>
+	</table>
+	</div>
+</td>
+</tr>
+</table>

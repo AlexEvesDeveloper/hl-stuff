@@ -1,0 +1,10 @@
+<tr>
+    <td width="250"><i>/<?php echo $this->url ?></i></td>
+    <td width="200"><?php echo $this->title ?></td>
+    <td>
+        <?php if ($this->editable==1) { ?>
+            <a class="ico-edit" href="/cms-admin/pages/edit?site=<?php echo $this->handle; ?>&id=<?php echo $this->id; ?>"> Edit</a>
+            <?php if ($this->url_editable==1) { ?><a class="ico-delete" href="/cms-admin/pages/delete?site=<?php echo $this->handle; ?>&id=<?php echo $this->id; ?>"> Delete</a><?php } ?>
+        <?php } ?>
+    </td>
+</tr>

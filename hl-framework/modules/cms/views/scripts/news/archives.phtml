@@ -1,0 +1,19 @@
+<?php
+echo $this->subHeader('global,corporate', 'corporate');
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+        <div class="content news">
+            <h2 class="orange">News Archives - <?php echo $this->month . ' ' . $this->year; ?></h2>
+            <br />
+			<?php echo $this->content ?>
+		</div>
+		<div class="sidebar">
+			<h4>Archives</h4>
+			<ul id="news_archives">
+				<?php echo $this->archives; ?>
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

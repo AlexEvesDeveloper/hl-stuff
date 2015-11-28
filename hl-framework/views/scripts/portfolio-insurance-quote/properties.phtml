@@ -1,0 +1,28 @@
+<?php
+/* NOTE:
+
+This isn't used anywhere, at all, not even a little bit.
+It's got a good name though hasn't it? 'properties.phtml' - it makes you think it might be the view
+for the properties section on portfolio! But HAH! You're wrong. Very wrong.
+
+<spoiler>That's called 'step.phtml'</spoiler>
+
+This is why you shouldn't let John loose with HTML... ever... 
+
+Love you really mate xox
+*/
+?>
+<div class="content">
+    <form id="portfolioProperty" class="validate" action="" method="post">
+        <?php echo $this->form; ?>
+    </form>
+    <script type="text/javascript">
+        // imageTick setup:
+        $('input[type=checkbox]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        $('input[type=radio]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+    </script>
+</div>

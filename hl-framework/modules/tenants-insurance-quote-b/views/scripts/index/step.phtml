@@ -1,0 +1,33 @@
+<?php echo $this->tenantsQuoteSubHeader($this->stepNum); ?>
+
+<?php $this->lessHeadLink()->prependStylesheet('/cms/css/tenants_forms.less'); ?>
+
+<div class="tenants col-sm-9">
+    <div class="content">
+        <form class="main" action="" method="post" enctype="application/x-www-form-urlencoded">
+            <?php
+                if (isset($this->errorCount) && $this->errorCount > 0) {
+                    ?>
+                    <div class="alert alert-warning">
+                        <p class="error">
+                            <i class="glyphicon glyphicon-exclamation-sign"></i>
+                            Oops, unfortunately there <?php echo (($this->errorCount == 1) ? 'appears to be an error' : 'appear to be some errors'); ?> in the form, please see below for details:
+                        </p>
+                        <?php echo $this->errorsHtml; ?>
+                    </div>
+                    <?php
+                }
+            ?>
+            <div class="form_section">
+                <?php echo $this->form; ?>
+            </div>
+            <?php
+                if ($this->stepNum != 'dd') {
+                    echo $this->partial('partials/premium-summary.phtml', array('premiums' => $this->premiums, 'fees' => $this->fees));
+                }
+            ?>
+            <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+        </form>
+    </div>
+</div>
+<?php echo $this->tenantsQuoteSidebar($this->premiums, $this->fees, $this->errorsHtml, $this->stepNum, $this->stepMax); ?>

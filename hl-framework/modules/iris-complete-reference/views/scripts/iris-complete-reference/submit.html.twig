@@ -1,0 +1,17 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block body %}
+
+    <h2>{{ bodyTitle | trans }}</h2>
+
+    <p>
+        {# TODO: Review for wording #}
+        We&rsquo;ve received your reference, {{ application.referenceNumber }}. We&rsquo;ll get started on it right away.
+    </p>
+
+{% endblock %}

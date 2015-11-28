@@ -1,0 +1,81 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-contentsinsurance')); ?>
+        </span>
+        Landlord Contents Insurance
+    </h2>
+
+    <a name="contents-insurance"></a>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-contentsinsurance'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->need_contents_insurance; ?>
+    </div>
+
+    <div id="contentsInsurancePromo">
+        <div class="alert alert-warning">
+            <?php echo $this->promoContent('landlords-insurance-quote-contentsinsurance-promo'); ?>
+        </div>
+    </div>
+
+    <div class="hideable" id="contents_insurance_hideable">
+        <div class="warningpromo" id="contentsFloodExcluded" style="display: none;">
+            <div class="alert alert-warning">
+                <?php echo $this->promoContent('landlords-insurance-quote-contentsinsurance-floodexcluded'); ?>
+            </div>
+        </div>
+
+        <div class="warningpromo" id="contentsSubsidenceExcluded" style="display: none;">
+            <div class="alert alert-warning">
+                <?php echo $this->promoContent('landlords-insurance-quote-contentsinsurance-subsidenceexcluded'); ?>
+            </div>
+        </div>
+
+        <div class="radio form-group">
+            <?php echo $this->element->property_furnished; ?>
+        </div>
+
+        <div id="unfurnishedContentsPromo" class="warningpromo alert alert-warning" style="display: none;">
+            <?php echo $this->promoContent('landlords-insurance-quote-unfurnishedcontents-promo'); ?>
+        </div>
+
+        <div id="contents_insurance_furnished_hideable" class="hideable">
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">Please enter a value without commas or a currency symbol. For example, if the value is &pound;12,000 please enter 12000</div>
+                <?php echo $this->element->contents_amount; ?>
+            </div>
+
+            <div class="form-group">
+                <?php echo $this->element->contents_excess; ?>
+            </div>
+
+            <div id="contentsHighValuePromo" class="infopromo">
+                <div class="alert alert-info">
+                    <?php echo $this->promoContent('landlords-insurance-quote-contents-highvalue'); ?>
+                </div>
+            </div>
+
+            <div class="radio form-group last-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    <?php echo $this->promoContent('landlords-insurance-quote-help-contentsinsurance-accidentaldamage'); ?>
+                </div>
+                <?php echo $this->element->contents_accidental_damage; ?>
+            </div>
+
+            <div id="contentsAccidentalDamagePromo" class="warningpromo" style="display: none;">
+                <div class="alert alert-warning">
+                    <?php echo $this->promoContent('landlords-insurance-quote-contentsinsurance-accidentaldamage-promo'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

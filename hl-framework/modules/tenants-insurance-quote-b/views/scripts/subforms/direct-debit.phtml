@@ -1,0 +1,84 @@
+<?php
+
+// Grab view for outputting values
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+?>
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-heading">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-directdebit'); ?>
+        </div>
+        Direct Debit Payment
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-directdebit'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php if ($view->payMonthly) : ?>
+                <p class="dd-info">Your First Payment</p>
+                <p class="dd-price">&pound;<?php echo number_format(($view->premiums->total * 2) + $view->fees->tenantspMonthlyFee, 2); ?></p>
+                <p class="dd-info">Your Monthly Payment</p>
+                <p class="dd-price">&pound;<?php echo number_format(($view->premiums->total + $view->fees->tenantspMonthlyFee), 2); ?></p>
+                <p class="small">Any administration fees are taken with this payment.</p>
+        <?php else : ?>
+                <p class="pull-left"><strong>Your Annual Payment</strong></p>
+                <p class="pull-right larger">&pound;<?php echo number_format($view->premiums->annualTotal, 2); ?></p>
+                <div class="clearfix"></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->dd_inyourname; ?>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->dd_onlyauthorised; ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->dd_accountname
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->bank_account_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->bank_sortcode_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="alert alert-info">
+        <h3 class="tertiary-colour">The Direct Debit Guarantee</h3>
+        <ul>
+            <li>
+                This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.
+            </li>
+            <li>
+                If there are any changes to the amount, date or frequency of your Direct Debit HomeLet will notify you 10 working days in advance of your account being debited or as otherwise agreed. If you request HomeLet to collect a payment, confirmation of the amount and date will be given to you at the time of the request.
+            </li>
+            <li>
+                If an error is made in the payment of your Direct Debit by HomeLet or your bank or building society you are entitled to a full and immediate refund of the amount paid from your bank or building society<br />
+                - If you receive a refund you are not entitled to, you must pay it back when HomeLet asks you to.
+            </li>
+            <li>
+                You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<?php
+
+//$subformValues = $this->element->getValues();
+//$values = $subformValues['subform_insuredaddress'];
+
+?>
+
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour">Rental Details</h2>
+
+    <!--  Rental price index questions. -->
+    <div class="form-group">
+        <?php echo $this->element->property_bedrooms; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->property_type; ?>
+    </div>
+
+    <!-- Tenancy questions resumption. -->
+    <div class="form-group">
+        <?php echo $this->element->property_birth; ?>
+    </div>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help quaternary-colour">
+            Please enter the total rent per month.
+        </div>
+        <?php echo $this->element->total_rent; ?>
+    </div>
+
+    <div id="tenancy_term_selector" class="form-group">
+        <?php echo $this->element->tenancy_term; ?>
+    </div>
+
+    <div id="no_of_tenants_selector" class="form-group">
+        <?php echo $this->element->no_of_tenants; ?>
+    </div>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help quaternary-colour">
+            Please enter the tenancy start date. The start date cannot be in the past or more than 30 days in the future.
+        </div>
+        <label for="tenancy_start_date" class="optional"><?php echo $this->element->tenancy_start_date->getLabel(); ?></label>
+        <div class="input-group date">
+            <input type="text" name="tenancy_start_date" id="tenancy_start_date" data-required="required" data-validate="validate" data-type="date" value="<?php echo htmlentities($this->element->tenancy_start_date->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+        </div>
+    </div>
+</div>

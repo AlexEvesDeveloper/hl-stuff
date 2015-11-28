@@ -1,0 +1,21 @@
+
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {%
+            include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/case-summary.html.twig'
+            with {
+                'case': case
+            }
+        %}
+
+        {%
+            include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/application-list.html.twig'
+            with {
+                'applications': applications,
+                'application_view_url': 'barbon_hostedapi_landlord_reference_applications_view_index'
+            }
+        %}
+    </div><!-- container -->
+{% endblock %}

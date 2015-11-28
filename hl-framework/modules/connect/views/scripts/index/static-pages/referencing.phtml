@@ -1,0 +1,192 @@
+<style type="text/css">
+table.notificationHistoryPanel {
+    border: none;
+    border-spacing: 0;
+}
+    table.notificationHistoryPanel tbody {
+        border: none;
+        border-spacing: 0;
+    }
+        table.notificationHistoryPanel tbody td {
+            border: none;
+            border-spacing: 0;
+        }
+</style>
+<script type="text/javascript">
+$(function() {
+    <?php
+    // For each dashboard property applicants section, add "alt" class to each
+    //   odd (0-indexed) element with class "autoAlt".
+    ?>
+<?php
+/* No dashboard to see here
+    $('.dashboard .property .applicants').each(function() {
+        $('.autoAlt:odd', this).addClass('alt');
+    });
+
+    $('.foldlink').each(function() {
+        $(this).next('.foldable').hide();
+        $(this).click(function() {
+            $(this).toggleClass('unfolded');
+            if ($(this).hasClass('unfolded')) {
+                $(this).next('.foldable').slideDown();
+            } else {
+                $(this).next('.foldable').slideUp();
+            }
+        });
+    });
+
+    // Fetch dashboard content only on first unfold
+    var dashboardLoaded = false;
+    $('#dashboardGraphsHeader').click(function() {
+        if (!dashboardLoaded) {
+            dashboardLoaded = true;
+            // Do fetch
+            $('.dashboard.referencing .graphs').load(
+                '/referencing/dashboard-graphs',
+                function() {
+                    // Load successful - hide AJAX indicator and show graphs
+                    $('#dashboardGraphsContent .ajaxLoader').slideUp();
+                    $('#dashboardGraphsContent .graphs').slideDown();
+                }
+            );
+        }
+    });
+
+    $('.applicants tbody tr').each(function() {
+        $('a:last', this).balloon({position: 'right', contents: 'Awaiting Landlord details<br />blah blah blah', classname: 'balloonTip'});
+    });
+*/
+?>
+});
+
+function showReferenceSearch() {
+    $.facebox('Reference Search', { ajax: '/referencing/search' });
+}
+
+$(document).ready(function() {
+	  // Handler for .ready() called.
+	$('#toggleNotificationPanelLink').toggle(function() {
+		$('#toggleNotificationPanelLink').text("less...");
+		$('.HiddenRow').toggle();
+		  
+		}, function() {
+		$('#toggleNotificationPanelLink').text("more...");
+		$('.HiddenRow').toggle();
+		});
+	});
+
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php /* Start Temporary IRIS Notification */ ?>
+        <?php if ($this->isCurrentAgentInIris()): ?>
+            <p style="float: right; color: #F00; font-size: 14px;">
+                <strong>IRIS Agent</strong>
+            </p>
+        <?php endif ?>
+        <?php /* End Temporary IRIS Notification */ ?>
+
+    <div>
+    <?php 
+    $tableContent = $this->NotificationHistoryPanel($this->agentSchemeNumber);
+    
+    if ($tableContent[1] > 0) {
+        ?>
+           
+        <h3>Referencing Notifications</h3>
+        
+        <table class="notificationHistoryPanel">
+            <?php echo  $tableContent[0];?>
+            <?php if($tableContent[1] > 3){?>
+            <tr><td><a id="toggleNotificationPanelLink" href="#" >more...</a></td></tr>
+            <?php }?>
+        </table>
+        <?php }?>
+    </div>
+
+        <?php if ($this->panelShow) { echo $this->infoPanel($this->panelContent); } ?>
+
+        <?php
+            $iconlayout = array();
+
+            $agent = new Datasource_Core_AgentUser();
+            $canDisplayCheckRight = $agent->canDisplayCheckRight($this->agentSchemeNumber, $this->agentUserName);
+            if ($canDisplayCheckRight) {
+                $iconlayout[] = array(
+                        'icon'          => 'documents',
+                        'title'         => 'HomeLet Verify',
+                        'help_text'     => 'Right to rent check',
+                        'url'           => '/referencing/homelet-verify',
+                );
+            }
+
+            $iconlayout = array_merge
+            (
+                array(
+                    array(
+                        'icon'          => 'start-alternate',
+                        'title'         => 'Start a new reference',
+                        'url'           => '#',
+                        'javascript'    => "window.open('/referencing/new','newReference','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=650,height=650');"
+                    ),
+                    array(
+                        'icon'          => 'search',
+                        'title'         => 'Reference search',
+                        'help_text'     => 'Find your complete or active references',
+                        'url'           => '#',
+                        'javascript'    => "showReferenceSearch(); return false;"
+                    ),
+                    array(
+                        'icon'          => 'your-products',
+                        'title'         => 'Referencing products',
+                        'help_text'     => 'Find out more about Insight, Enhance and Optimum',
+                        'url'           => '/referencing/products'
+                    ),
+                    array(
+                        'icon'          => 'company',
+                        'title'         => 'Start a new company reference',
+                        'url'           => '/referencing/company-application'
+                    ),
+                    array(
+                        'icon'          => 'documents',
+                        'title'         => 'Useful referencing documents',
+                        'help_text'     => 'Including our Referencing Service Guidelines',
+                        'url'           => '/referencing/info'
+                    ),
+                    array(
+                        'icon'          => 'postcode',
+                        'title'         => 'Royal Mail postcode finder',
+                        'help_text'     => 'Search for addresses on Royal Mail',
+                        'url'           => 'http://postcode.royalmail.com/'
+                    ),
+                    array(
+                        'icon'          => 'calculator',
+                        'title'         => 'Affordability calculator',
+                        'url'           => '',
+                        'size'          => 'double',
+                        'special'       => 'calcAffordability'
+                    )
+                ),
+                $iconlayout
+            );
+
+            $this->iconLayout($iconlayout);
+        ?>
+<?php
+/* No dashboard to see here
+        <div class="dashboard referencing" style="clear: both;">
+            <div class="header foldlink" id="dashboardGraphsHeader">
+                Referencing Dashboard
+            </div>
+            <div class="dashboardContent foldable" id="dashboardGraphsContent" style="display: none;">
+                <div class="ajaxLoader"></div>
+                <div class="graphs" style="display: none;"></div>
+            </div>
+        </div>
+*/
+?>
+    </div>
+</div>

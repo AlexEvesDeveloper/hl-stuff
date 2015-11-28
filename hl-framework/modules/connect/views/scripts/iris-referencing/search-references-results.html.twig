@@ -1,0 +1,78 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Search References Results</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/iris-referencing/search-references-results" action="get" class="form-horizontal">
+        <h2>Search References</h2>
+        <div class="form_section one-col">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary btn-search">Search</button>
+        </div>
+    </form>
+
+    <br class="clearfix" />
+
+    <h2>Search References Results</h2>
+
+    {% include '/iris-referencing/includes/pagination-stats.html.twig' with { 'pagination': pagination } %}
+
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Your Reference Number</th>
+                <th>Tenant First Name</th>
+                <th>Tenant Last Name</th>
+                <th>1<sup>st</sup> Line of Prospective Property Address</th>
+                <th>Status</th>
+                <th>Date Logged</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in pagination.items %}
+                <tr>
+                    <td>
+                        {% if constant('Iris\\IndividualApplication\\Search\\IndividualApplicationSearch::DATA_SOURCE_IRIS') == item.dataSource %}
+                            <a href="/iris-referencing/summary?uuid={{ item.referencingApplicationUuId }}">{{ item.referenceNumber }}</a>
+                        {% else %}
+                            <a href="/referencing/summary?refno={{ item.referencingApplicationUuId }}">{{ item.referenceNumber }}</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.applicantFirstName }}</td>
+                    <td>{{ item.applicantLastName }}</td>
+                    <td>
+                        {% if item.flat %}
+                            Flat {{ item.flat | trim }},
+                        {% endif %}
+                        {% if item.houseName %}
+                            {{ item.houseName | trim }},
+                        {% endif %}
+                        {% if item.houseNumber %}
+                            {{ item.houseNumber | trim }},
+                        {% endif %}
+                        {{ item.street }}
+                    </td>
+                    <td>{{ item.statusId | iris_lookup_name('applicationStatuses') }}</td>
+                    <td>{{ item.createdAt | date('jS M, Y @ h:ia') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" align="center">
+                        <em>No Results Found</em>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% include '/iris-referencing/includes/pagination-pages.html.twig' with { 'pagination': pagination, 'basePath': '/iris-referencing/search-references-results' } %}
+
+{% endblock %}

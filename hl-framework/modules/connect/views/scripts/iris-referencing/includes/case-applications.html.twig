@@ -1,0 +1,37 @@
+
+<h2>Applicants</h2>
+
+<style type="text/css">
+    tr.current td {
+        background-color: #DDD;
+    }
+</style>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Reference No.</th>
+            <th>Start Date</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Tenant Name</th>
+            <th>Completion by applicant via e-mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for caseApplication in caseApplications %}
+            <tr class="{{ caseApplication.referencingApplicationUuId == application.referencingApplicationUuId ? 'current' }}">
+                <td>
+                    <a href="/iris-referencing/summary?uuid={{ caseApplication.referencingApplicationUuId }}">{{ caseApplication.referenceNumber }}</a>
+                </td>
+                <td>{{ caseApplication.createdAt | date('jS F, Y') }}</td>
+                <td>{{ caseApplication.applicationType | iris_lookup_name('applicationTypes') }}</td>
+                <td>{{ caseApplication.status | iris_lookup_name('applicationStatuses') }}</td>
+                <td>{{ caseApplication.title }} {{ caseApplication.firstName }} {{ caseApplication.lastName }}</td>
+                <td>
+                    {% include '/iris-referencing/includes/resend-applicant-completion-email-link.html.twig' with { 'application': caseApplication } %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

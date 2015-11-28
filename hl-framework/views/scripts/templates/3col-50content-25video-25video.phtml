@@ -1,0 +1,26 @@
+<link href="/assets/cms/css/video.css" media="screen" rel="stylesheet" type="text/css" />
+<?php
+echo $this->subHeader($this->pageStyling, $this->pageStyling);
+?>
+<div class="<?php echo $this->pageStyling; ?>">
+    <div class="wrapper three-col">
+		<div class="content">
+            <?php echo $this->content ?>
+		</div>
+		<div class="sidebar">
+            <div class="sidebar1">
+                <h3 class="underline-<?php echo $this->pageStyling; ?>"><?php echo $this->meta['videoTitle1'] ?></h3>
+                <div class="video"><?php echo $this->embeddedVideo($this->meta['video1'], 206); ?></div>
+            </div>
+            <div class="sidebar2">
+                <h3 class="underline-<?php echo $this->pageStyling; ?>"><?php echo $this->meta['videoTitle2'] ?></h3>
+                <div class="video"><?php echo $this->embeddedVideo($this->meta['video2'], 206); ?></div>
+            </div>
+            <div class="clear"></div>
+            <div class="sidebardouble">
+				<?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader'], $this->meta['promoText'], $this->meta['promoIcon'], $this->meta['promoUrl']); ?>
+			</div>
+		</div>
+        <div class="clear"></div>
+	</div>
+</div>

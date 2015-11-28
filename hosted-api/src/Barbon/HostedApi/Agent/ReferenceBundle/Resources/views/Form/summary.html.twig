@@ -1,0 +1,8 @@
+{% block summary_widget %}
+    {% spaceless %}
+    {{ form_errors(form.case) }}
+    {{ form_widget(form.case) }}
+
+    {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock %}

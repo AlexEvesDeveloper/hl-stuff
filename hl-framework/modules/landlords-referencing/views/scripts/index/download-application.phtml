@@ -1,0 +1,123 @@
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		$("#next").click(downloadApplicationForm);
+	});
+
+</script>
+<div class="tenants">
+    <div class="wrapper two-col">
+        
+        <div class="content">
+        
+        	<!-- Main heading -->
+            <h1>
+            	<span class="landlords">Download Rent Guarantee / Tenant Referencing application</span>
+            </h1>
+            
+            <p style="margin-top: 20px;">
+            Please select the appropriate form from the drop down menu and see below for details on how
+            to apply.
+            </p>
+            
+		    <div>
+		    	<form action="" method="post" enctype="application/x-www-form-urlencoded" class="validate">
+		        <?php echo $this->form->application_select->setAttribs(
+		        	array('style' => 'width: 220px; float: left;'))->render(); ?>
+		    	<input type="submit" value="Download" id="next" name="next" style="float: left;">
+		    	</form>
+		    </div>
+            
+            
+            <!-- Apply by Post -->
+            <div style="width: 450px;">
+                <h2 style="margin-top: 25px; font-size: 17px;
+                    background: url('/assets/common/images/small_house_icon.png')
+                        no-repeat scroll 8px 12px transparent; padding-left: 30px; padding-top: 8px;">
+                    <span>Apply by Post?</span>
+                </h2>
+
+                <div style="border-top: 1px solid green; padding: 15px 10px 15px 10px; background: #E4E9EE;">
+                    <h3 style="padding-bottom: 10px;">
+                    Please complete and post your application to:
+                    </h3>
+
+                    <div style="color: #7AC142; font-weight: bold;">
+                    Referencing Department, Hestia House, Unit 2 Edgewest Road, Lincoln LN6 7EL
+                    </div>
+                </div>
+            </div>
+            <!-- End of Apply by Post -->
+            
+            
+            <!-- Apply by Email? -->
+            <div style="width: 450px;">
+                <h2 style="margin-top: 25px; font-size: 17px;
+                    background: url('/assets/common/images/small_house_icon.png')
+                        no-repeat scroll 8px 12px transparent; padding-left: 30px; padding-top: 8px;">
+                    <span>Apply by Email?</span>
+                </h2>
+
+                <div style="border-top: 1px solid green; padding: 15px 10px 15px 10px; background: #E4E9EE;">
+                    <h3 style="padding-bottom: 10px;">
+                    Please complete and email your application to:
+                    </h3>
+
+                    <div style="color: #7AC142; font-weight: bold;">
+                    apply@homelet.co.uk
+                    </div>
+                </div>
+            </div>
+            <!-- End of Apply by Email -->
+            
+            
+            
+        <!-- End of content section -->
+        </div>
+
+        
+		<div class="sidebar">
+		
+		    <div id="scroller-anchor"></div>
+		    <div id="scroller" style="margin-top:0px; width: 206px;">
+				
+				<h4 class="underline-landlords">Resources</h4>
+				<div class="white">
+					<?php $layout = $this->layout()->getView(); ?>
+					<a href="<?php echo $layout->urls['landlordsFaq']; ?>" class="nav-corporate-dark-button">Frequently Asked Questions</a>
+					<div style="clear:both;"></div>
+					
+					<a href="<?php echo $layout->urls['landlordsTopTips']; ?>" class="nav-corporate-dark-button">Top Tips</a>
+					<div style="clear:both;"></div>
+				</div>
+				
+				<h4 class="underline-landlords">What people say</h4>
+				<div class="blue">
+					<div class="testyhearts">
+						<div id="testimonials-holder">
+							<ul>
+								<?php
+									echo $this->testimonials('corporate');
+								?>
+							</ul>
+							<div id="test-changer">
+								<a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+								<a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(function() {
+    $('.form_section > div:even')
+        .not($('.form_section > div input.noalt').parent())
+        .addClass('alt');
+	});
+</script>

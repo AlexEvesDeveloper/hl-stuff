@@ -1,0 +1,36 @@
+{# Widgets! #}
+
+{% block date_widget -%}
+    {% if widget == 'single_text' %}
+        <div class="date-field">
+            {{- block('form_widget_simple') -}}
+        </div>
+    {% else %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline-date')|trim}) %}
+        {% if datetime is not defined or not datetime %}
+            <div {{ block('widget_container_attributes') -}}>
+        {% endif %}
+        <div class="date-selectors">
+            {{ form_widget(form.day) }}
+            {{ form_widget(form.month) }}
+            {{ form_widget(form.year) }}
+        </div>
+        {% if datetime is not defined or not datetime %}
+            </div>
+        {% endif %}
+    {% endif %}
+{%- endblock date_widget %}
+
+{# Errors #}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+        <ul class="list-unstyled">
+            {%- for error in errors -%}
+                <li><span class="fa fa-exclamation-circle"></span> {{ error.message }}</li>
+            {%- endfor -%}
+         </ul>
+        {% if form.parent %}</span>{% else %}</div>{% endif %}
+    {%- endif %}
+{%- endblock form_errors %}

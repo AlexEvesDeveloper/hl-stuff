@@ -1,0 +1,189 @@
+<?php $this->headLink()->appendStylesheet('/assets/cms/css/tenants.css', 'screen'); ?>
+<!--[if lte IE 7]>
+<link href="/assets/cms/css/tenants-ie.css" media="screen" rel="stylesheet" type="text/css" >
+<![endif]-->
+<script>
+$(function() {
+    // Ensure heights of main panels are the same
+    heightEqualise(
+        new Array(
+            $('.roundPanel.tenantsLiability, .roundPanel.tenantsContents').children('.roundPanelInner')
+        )
+    );
+
+    // Ensure heights of extra panels are the same
+    heightEqualise(
+        new Array(
+            $('.roundPanel.callUs, .roundPanel.pedalCycles, .roundPanel.possessions').children('.roundPanelInner')
+        )
+    );
+});
+
+// Takes an array of jQuery objects that each identify one or more elements, and sets the element heights to the maximum found amongst them
+// Only works for pixel value heights
+function heightEqualise(elements) {
+
+    // Find max height
+    var maxHeight = 0;
+    // Iterate through array of jQuery objects
+    for (var i = 0; i < elements.length; i++) {
+        // Check if jQuery object contains multiple elements
+        if (elements[i].length > 1) {
+            var subelements = elements[i];
+            // Iterate through sub elements
+            for (var j = 0; j < subelements.length; j++) {
+                maxHeight = Math.max(maxHeight, $(subelements[j]).height());
+            }
+        } else {
+            maxHeight = Math.max(maxHeight, elements[i].height());
+        }
+    }
+
+    // Set max height
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].length > 1) {
+            var subelements = elements[i];
+            for (var j = 0; j < subelements.length; j++) {
+                $(subelements[j]).height(maxHeight);
+            }
+        } else {
+            elements[i].height(maxHeight);
+        }
+    }
+
+}
+</script>
+<?php
+echo $this->subHeader($this->pageStyling, $this->pageStyling);
+?>
+<div class="<?php echo $this->pageStyling; ?>">
+    <div class="wrapper one-col">
+        <div class="content">
+            <?php echo $this->content ?>
+        </div>
+        <div class="content">
+            <div class="left roundPanel tenantsLiability">
+                <div class="roundPanelInner">
+                    <div class="starburst orange"><span class="text">Call<br />today!</span></div>
+                    <h1><span class="tenants">Tenancy Liability Cover</span></h1>
+                    <p>
+                        If you need to cover your liability as a tenant, HomeLet may be able to help with Tenancy Liability Cover...
+                    </p>
+                    <p>
+                        Key benefits include:
+                    </p>
+                    <ul>
+                        <li>&pound;2,500 to cover your liability as a tenant</li>
+                        <li>Cover for you and your family all on one policy</li>
+                    </ul>
+                    <p>
+                        So, if you accidentally damage your landlord&rsquo;s property, furniture, fittings and fixtures we&rsquo;ll pay out so you don&rsquo;t have to!
+                    </p>
+                    <p>
+                        For more information simply click find out more or call us on <br/>
+                        <span class="tenants">0845 117 6000</span>
+                    </p>
+                </div>
+                <div class="roundPanelFooter">
+                    <div>
+                      <br/><br/> <!-- must match opposite side for correct positioning -->
+                    </div>
+                    <div class="buttonLink">
+                        <a href="/tenants/liability-insurance" class="nav-tenants-button">Find out more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right roundPanel tenantsContents">
+                <div class="roundPanelInner">
+                    <h1><span class="tenants">Tenant&rsquo;s Contents Insurance+</span></h1>
+                    <p>
+                        If you&rsquo;re moving home you might have realised just how many possessions you have to move with you, but have you considered the cost of replacing them all if something unexpected happened? - It soon adds up...
+                    </p>
+                    <p>
+                        If you&rsquo;re looking to cover your contents in the home, why not choose HomeLet&rsquo;s Tenant&rsquo;s Contents Insurance+...
+                    </p>
+                    <p>
+                        Key benefits include:
+                    </p>
+                    <div class="starburst blue"><span class="text">Get a<br />quote!</span></div>
+                    <ul>
+                        <li>Cover for your contents in case they&rsquo;re damaged or stolen from your home</li>
+                        <li>Cover for your liability as a tenant, under your tenancy agreement</li>
+                        <li>Cover for you and your family all on one policy</li>
+                        <li>A fixed price no matter where you live in the UK</li>
+                    </ul>
+                </div>
+                <div class="roundPanelFooter">
+                    <div style="padding-left: 15px;">
+                        <a href="/tenants/contents-insurance">Find out more</a><br />
+                        <a href="/my-homelet/quotes">My Quotes</a>
+                    </div>
+                    <div class="buttonLink">
+                        <a href="/tenants/insurance-quote/step1" class="nav-tenants-button">Get a quote</a>
+                    </div>
+                    <div class="extraText">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="content">
+            <div class="left">
+                <p>For more information about Tenancy Liability Cover please click on the link below to view the policy documents.</p>
+                <a href="/policy-documents">View policy documents</a>
+            </div>
+            <div class="right">
+                <p>Thousands of tenants living in rented homes across the UK trust HomeLet to provide them with the protection they need - so what are you waiting for?</p>
+                <p>Simply click get a quote or call us today!</p>
+                <p>For more information about Tenant&rsquo;s Contents Insurance+ please click on the link below to view the policy documents.</p>
+                <a href="/policy-documents">View policy documents</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="left">
+                <h2><span class="orange">Call us today...</span></h2>
+            </div>
+            <div class="right">
+                <h2><span class="orange">Additional extras</span></h2>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="content" style="margin-top: 0;">
+            <div class="left roundPanel callUs">
+                <div class="roundPanelInner">
+                    <p>If you&rsquo;d like to speak to one of our friendly team members, why not call us today?:</p>
+                    <p><span class="tenants big">0845 117 6000</span></p>
+                    <p>We&rsquo;re open</p>
+                    <table cellspacing="0" cellpadding="0" border="0" class="openingtimes">
+                        <tr>
+                            <td>Mon-Fri:</td>
+                            <td>8.30am - 8pm</td>
+                        </tr>
+                        <tr>
+                            <td>Sat:</td>
+                            <td>9.30am - 1pm</td>
+                        </tr>
+                    </table>
+                    <p>We&rsquo;re always happy to help!</p>
+                </div>
+            </div>
+            <div class="right">
+                <div class="left roundPanel pedalCycles" style="width: 48%;">
+                    <div class="roundPanelInner">
+                        <h3><span class="tenants">Pedal cycles</span></h3>
+                        <p>We can offer additional cover for your pedal cycles if you&rsquo;d like to cover them whilst you&rsquo;re out and about or if they&rsquo;re worth more than &pound;200.</p>
+                        <a href="/tenants/additional-extras">Find out more</a>
+                    </div>
+                </div>
+                <div class="right roundPanel possessions" style="width: 48%;">
+                    <div class="roundPanelInner">
+                        <h3><span class="tenants">Personal Possessions</span></h3>
+                        <p>As well as covering the contents in your home we can also offer cover for the things you take out and about and for those extra special items anywhere in the world!</p>
+                        <a href="/tenants/additional-extras">Find out more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

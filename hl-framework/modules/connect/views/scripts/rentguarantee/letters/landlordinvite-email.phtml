@@ -1,0 +1,48 @@
+Dear <?php echo $this->landlords_name; ?><br />
+
+<p align="justify">
+  <strong>Make sure your rent is still protected</strong>
+</p>
+
+<p align="justify">
+  We'd like to remind you that the HomeLet Rent Guarantee which currently is in place for your tenant, <?php echo $this->tenant_name; ?>
+  is due to end on <?php echo $this->enddate->get(Zend_Date::DAY . '/' . Zend_Date::MONTH . '/' . Zend_Date::YEAR); ?>.
+</p>
+
+<p align="justify">
+  Your Rent Guarantee policy provides you with:
+  <ul>
+    <li>Cover for missed rental payments</li>
+    <li>Cover for legal costs incurred in evicting the tenant as a result of non-payment of the rent</li>
+    <li>Access to a specialist in-house Claims team who ensure all claims are handled promptly</li>
+  </ul>
+</p>
+
+<p align="justify">
+  There are many reasons why your tenant may become unable to pay the rent during a tenancy, they could be made redundant,
+  suffer an accident, go through a relationship break up or lose their job.
+</p>
+
+<p align="justify">
+  Should this happen, we know that evicting a tenant can be a time consuming and expensive process, especially when you consider missed
+  rental payments. However, by renewing your Rent Guarantee policy you can rest assured that if for any reason your tenant can't or
+  won't pay the rent, HomeLet will take care of things for you.
+</p>
+
+<p align="justify">
+  The total cost of renewing your HomeLet Rent Guarantee policy for the next <?php echo $this->policy_term; ?> months will be
+  &pound;<?php echo $this->policy_premium; ?> (includes all applicable fees and taxes).
+</p>
+
+<p align="justify">
+  To renew your policy and ensure that you're still protected by HomeLet Rent Guarantee or if you have any questions please call us to
+  today on <?php echo $this->agent_contact_number; ?>.
+</p>
+
+Kind regards<br />
+<br />
+<br />
+<br />
+
+<?php echo $this->agent_name; ?><br />
+<?php echo $this->agent_job_title; ?>

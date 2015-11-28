@@ -1,0 +1,153 @@
+
+<?php
+    $this->headScript()->appendFile('/assets/connect/js/rgrenewals.js');
+    
+    // Apply only when policies are due to lapse today
+    if ($this->expirestodaycount == 1)
+    {
+        $this->headScript()->appendScript('$(document).ready(function() {$.facebox("Action required", "Please be advised that you have 1 policy that expires today and requires urgent attention.");});');
+    }
+    else if ($this->expirestodaycount > 1)
+    {
+        $this->headScript()->appendScript('$(document).ready(function() {$.facebox("Action required", "Please be advised that you have ' . $this->expirestodaycount . ' policies that expire today and require urgent attention.");});');
+    }
+?>
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+		<div style="float: left">
+			<form name="policyNumSearch" id="policyNumSearch" class="search_form" method="post">
+				<input type="text" class="textbox" id="resultsFilter" size="26" name="policynumber" value="<?php echo $this->policyNumber;?>" />
+				<input type="submit" value="Search" class="round-button" />
+			</form>
+		</div>
+        
+		<div style="float: right;">
+            <form method="post" style="display: inline;">
+                <input type="hidden" name="export" value="yes"/>
+                <input type="hidden" name="policynumber" value="<?php echo $this->policyNumber;?>"/>
+                <input type="submit" value="Export to Spreadsheet" class="round-button" />&nbsp;
+            </form>
+
+            <form method="post" style="display: inline;">
+                <input type="button" value="Print Page" class="round-button" onClick="window.print(); return false;" />&nbsp;
+            </form>
+		</div>
+		
+        <div style="clear: both;">
+            <div class="subHeading"><a href="#" onclick="fnSetText('dvInvited',this)"><span>-</span> Renewal Invited</a></div>
+			<div id="dvInvited">
+				<div class="separator"></div>
+				<table width="100%" class="grid-renewal" cellspacing="0" align="center" rules="rows" bordercolor="#cccccc">
+					<tr>
+						<th width="100">
+							Policy number
+						</th>
+						<th width="310">
+							Risk Address
+						</th>
+						<th width="190">
+							Tenant Name
+						</th>
+						<th width="80">
+							Expiry Date
+						</th>
+						<th width="265">
+							Renewal Options
+						</th>
+					</tr>
+					<?php if(count($this->invited)>0):?>
+					<?php foreach ($this->invited as $i=>$value) {
+						$bgColor = "#FFFFFF";
+						if(($i%2)==0) $bgColor = "#F5F5F5"
+					?>
+					<tr bgcolor="<?php echo $bgColor?>">
+						<td><?php echo $value['policynumber'];?></td>
+						<td><?php echo $value['propaddress1'];?></td>
+						<td><?php echo $value['firstname']." ".$value['lastname'];?></td>
+						<td><?php echo date('d/m/Y', strtotime($value['enddate']));?></td>
+						<td>
+                            <?php if($this->fsastatusabbr == 'IO' || $this->fsastatusabbr == 'IAR'): ?>
+                                <a href="/rentguarantee/confirm-landlords-consent?policynumber=<?php echo $value['policynumber'];?>">Renew</a>
+                                <a href="/rentguarantee/confirm-agent-renewal-document?policynumber=<?php echo $value['policynumber'];?>">Renewal Documents</a>
+                            <?php else: ?>
+                                <a href="/rentguarantee/renew-policy?policynumber=<?php echo $value['policynumber'];?>">Renew</a>
+                                <a href="/rentguarantee/select-renewal-document?policynumber=<?php echo $value['policynumber'];?>">Renewal Documents</a>
+                            <?php endif; ?>
+                            
+                            <a href="/rentguarantee/decline-renewal?policynumber=<?php echo $value['policynumber'];?>">Do not renew</a>
+						</td>
+					<?php
+					}?>
+					<?php else: ?>
+					<tr>
+						<td colspan="5" style="text-align:center">No Invited Renewal(s) found.</td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+		</div>
+		<br/>
+		<div >
+			<div class="subHeading">
+                <a href="#" onclick="fnSetText('dvOverdue',this)"><span>-</span> Renewal Overdue</a>
+                
+                <?php if (count($this->overdue) > 0): ?>
+                    <span style="color: red">(Urgent attention is required, cover has expired)</span>
+                <?php endif; ?>
+            </div>
+            
+			<div id="dvOverdue" >
+				<div class="separator"></div>
+				<table width="100%" class="grid-renewal" cellspacing="0" align="center" rules="rows" bordercolor="#cccccc">
+					<tr>
+						<th width="100">
+							Policy number
+						</th>
+						<th width="310">
+							Risk Address
+						</th>
+						<th width="190">
+							Tenant Name
+						</th>
+						<th width="80">
+							Expiry Date
+						</th>
+						<th width="265">
+							Renewal Options
+						</th>
+					</tr>
+					<?php if(count($this->overdue)>0):?>
+					<?php foreach ($this->overdue as $i=>$value) {
+						$bgColor = "#FFFFFF";
+						if(($i%2)==0) $bgColor = "#F5F5F5"
+					?>
+					<tr bgcolor="<?php echo $bgColor?>">
+						<td><?php echo $value['policynumber'];?></td>
+						<td><?php echo $value['propaddress1'];?></td>
+						<td><?php echo $value['firstname']." ".$value['lastname'];?></td>
+						<td><?php echo date('d/m/Y', strtotime($value['enddate']));?></td>
+						<td>
+                            <?php if($this->fsastatusabbr == 'IO' || $this->fsastatusabbr == 'IAR'): ?>
+                                <a href="/rentguarantee/confirm-landlords-consent?policynumber=<?php echo $value['policynumber'];?>">Renew</a>
+                                <a href="/rentguarantee/confirm-agent-renewal-document?policynumber=<?php echo $value['policynumber'];?>">Renewal Documents</a>
+                            <?php else: ?>
+                                <a href="/rentguarantee/renew-policy?policynumber=<?php echo $value['policynumber'];?>">Renew</a>
+                                <a href="/rentguarantee/select-renewal-document?policynumber=<?php echo $value['policynumber'];?>">Renewal Documents</a>
+                            <?php endif; ?>
+							
+							<a href="/rentguarantee/decline-renewal?policynumber=<?php echo $value['policynumber'];?>">Do not renew</a>
+						</td>
+					<?php
+					}?>
+					<?php else: ?>
+					<tr>
+						<td colspan="5" style="text-align:center">No Overdue Renewal(s) found.</td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

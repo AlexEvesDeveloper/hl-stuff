@@ -1,0 +1,93 @@
+<?php if (isset($this->premiums->total) && $this->premiums->total != 0):
+    $monthlyWithFees = '&pound;' . number_format($this->premiums->total + $this->fees->monthlyFeeSP, 2);
+    $annually = '&pound;' . number_format($this->premiums->annualTotal, 2);
+else:
+    $monthlyWithFees = 'N/A';
+    $annually = 'N/A';
+endif; ?>
+
+<div class="col-sm-4 col-md-3 hidden-xs">
+    <?php if ('dd' != $this->stepNum): ?>
+        <?php if (1 == $this->stepNum): ?>
+            <div class="panel panel-default">
+                <div class="security-details">
+                    <h4 class="tertiary-colour">We're Secure</h4>
+                    <img src="/assets/common/images/security-image.png" alt="HomeLet is secured by RapidSSL" />
+                    <div class="security-details-content">
+                        <p>Make your purchase confidently. We provide high security data encryption powered by RapidSSL</p>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div id="quote" class="panel panel-default">
+            <h3 class="tertiary-colour">Your Premium</h3>
+            <?php if (1 == $this->stepNum): ?>
+                <p class="faded">In step 2 we'll give you a premium</p>
+            <?php endif; ?>
+            <div id="premiums" class="row">
+                <div class="premium col-md-6">
+                    <h5>Monthly</h5>
+                    <span class="monthlyPremiumQuote tertiary-colour quote-price"><?php echo $monthlyWithFees; ?></span>
+                </div>
+
+                <div class="premium col-md-6">
+                    <h5>Annually</h5>
+                    <span class="annualPremiumQuote base-colour quote-price"><?php echo $annually; ?></span>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($this->stepNum)): ?>
+        <div id="progress" class="panel panel-default">
+            <h3 class="tertiary-colour">Overall Progress</h3>
+            <div class="progress">
+                <?php if('dd' == $this->stepNum):
+                    $fractionComplete = 1;
+                else:
+                    if (isset($this->stepNum) && isset($this->stepMax)):
+                        $fractionComplete = $this->stepNum / ($this->stepMax + 1);
+                    else:
+                        $fractionComplete = 0;
+                    endif;
+                endif; ?>
+                <div class="progress-bar <?php if (5 == $this->stepNum || 'dd' == $this->stepNum): ?>plain-background<?php else: ?>tertiary-background<?php endif ?>" role="progressbar" aria-valuenow="<?php echo round($fractionComplete * 100); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo round($fractionComplete * 100); ?>%;">
+                    <span class="sr-only"><?php echo round($fractionComplete * 100); ?>% complete</span>
+                </div>
+            </div>
+
+            <div class="process-buttons">
+                <?php if ($this->stepNum > 2 && $this->stepNum < $this->stepMax): ?>
+                    <a class="btn btn-tertiary btn-sm margin-10 col-sm-12" onclick="$.facebox('Save my quote', { ajax: '/tenants/insurance-quote/save' }); return false;" href="#">Save<span class="hidden-sm"> my</span> Quote</a>
+                <?php endif; ?>
+
+                <?php if ($this->stepNum == $this->stepMax): ?>
+                    <a class="btn btn-inverse btn-sm margin-10 col-sm-12" onclick="$.facebox('Save my quote', { ajax: '/tenants/insurance-quote/save' }); return false;" href="#">Save<span class="hidden-sm"> my</span> Quote</a>
+                <?php endif; ?>
+
+                <?php if ($this->stepNum >= 4): ?>
+                    <a class="btn btn-inverse btn-sm margin-10 col-sm-12" onclick="$.facebox('Send me my quote', { ajax: '/tenants/insurance-quote/send' }); return false;" href="#">Send<span class="hidden-sm"> me my</span> Quote</a>
+                <?php endif; ?>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="panel panel-primary">
+        <h3>Need help?</h3>
+        <p class="large<?php if (5 != $this->stepNum): ?> tertiary-colour<?php endif ?>">Call: 0845 117 6000</p>
+        <p>We&rsquo;re open from:</p>
+        <table class="table table-condensed">
+            <tr>
+                <td>Weekdays</td>
+                <td>8:30am - 8:00pm</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td>9:30am - 1:00pm</td>
+            </tr>
+        </table>
+        <p>We&rsquo;re always happy to help.</p>
+    </div>
+</div>

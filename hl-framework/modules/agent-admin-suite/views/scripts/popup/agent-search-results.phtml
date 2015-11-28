@@ -1,0 +1,22 @@
+<table border="0" cellspacing="0" cellpadding="0" width="500px" class="clickable">
+	<thead>
+		<tr>
+			<th>Scheme No.</th>
+			<th>'H' No.</th>
+			<th>Trading Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+		foreach ($this->agents as $agent) {
+			?>
+			<tr>
+				<td><?php echo $agent['schemeNumber']; ?></td>
+				<td><?php echo $agent['hNumber']; ?></td>
+				<td><a href="/agent-admin-suite/agent-summary?asn=<?php echo $agent['schemeNumber']; ?>"><?php echo $agent['name']; ?></a></td>
+			</tr>
+			<?php
+		}		
+		?>
+	</tbody>
+</table>

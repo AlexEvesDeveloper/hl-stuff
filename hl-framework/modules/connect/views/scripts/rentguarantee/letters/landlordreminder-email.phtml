@@ -1,0 +1,35 @@
+Dear <?php echo $this->landlords_name; ?><br />
+
+<p align="justify">
+  <strong>Your policy is soon to expire &#45; can you afford not to protect your rent?</strong>
+</p>
+
+<p align="justify">
+  This is a reminder that the HomeLet Rent Guarantee which is currently in place for your tenant, <?php echo $this->tenant_name; ?>
+  is due to end on <?php echo $this->enddate->get(Zend_Date::DAY . '/' . Zend_Date::MONTH . '/' . Zend_Date::YEAR); ?>.
+</p>
+
+<p align="justify">
+  Remember with a HomeLet Rent Guarantee you won't be left out of pocket or even need to involve a solicitor, because they take care of everything for you.
+</p>
+
+<p align="justify">
+  Your Rent Guarantee policy provides you with:
+  <ul>
+    <li>Cover for missed rental payments</li>
+    <li>Cover for legal costs incurred in evicting the tenant as a result of non-payment of the rent</li>
+    <li>Access to a specialist in-house Claims team who ensure all claims are handled promptly</li>
+  </ul>
+</p>
+
+<p align="justify">
+  To renew your policy and ensure that you're still protected by HomeLet Rent Guarantee or if you have any questions please call us to today on <?php echo $this->agent_contact_number; ?>.
+</p>
+
+Kind regards<br />
+<br />
+<br />
+<br />
+
+<?php echo $this->agent_name; ?><br />
+<?php echo $this->agent_job_title; ?>

@@ -1,0 +1,49 @@
+<!--[if lte IE 7]>
+<style type="text/css">
+.fileinputs {
+    height: auto;
+}
+</style>
+<![endif]-->
+<script type="text/javascript">
+$(function() {
+    $('.fakefile button').click(function() {
+        $(this).parent().prev().find('input.MultiFile-applied').each(function() {
+            if (typeof($(this).attr('style')) == 'undefined') { $(this).click(); }
+        });
+        return false;
+    });
+});
+</script>
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+	<form enctype="multipart/form-data" method="post" action="" class="form-section">
+		<div class='case-details'>Enter Message</div>
+		<?php echo $this->form->message;?>
+		<div class='case-details'>Attach Documents</div>
+		<div class="form_section two-col" style="border-top: 0px">
+			<table width="100%">
+				<tr>
+					<td valign="top" width="322">To upload and attach documents, click the browse button and locate the document. Document must be no more than 4mb in size </td>
+					<td valign="top" width="300">
+						<div class="fileinputs">
+							<?php echo $this->form->attachdocuments; ?>
+							<div class="fakefile">
+								<button><strong>&nbsp;Upload</strong></button>
+							</div>
+							<div class="mask"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<ul class="errors"><li><?php echo $this->message;?></li></ul>
+		<div class="send-message-navigation">
+			<?php echo $this->form->send; ?>
+		</div>
+		<?php
+			$this->form->claimNumber->setValue($this->claimNumber);
+    		echo $this->form->claimNumber;
+		?>
+	</form>
+</div>

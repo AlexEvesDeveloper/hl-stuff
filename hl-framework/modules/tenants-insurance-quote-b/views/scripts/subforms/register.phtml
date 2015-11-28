@@ -1,0 +1,26 @@
+<!-- tenants' version -->
+<div id="subform-register" class="form-sub-section">
+    <h2 class="tertiary-colour">Register</h2>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help">
+            For security, passwords must have at least 8 characters and contain at least one uppercase letter and one number.
+        </div>
+        <?php
+        echo $this->element->password
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help">
+            Please re-enter your password to confirm it.
+        </div>
+        <?php
+        echo $this->element->confirm_password
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+</div>

@@ -1,0 +1,193 @@
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs ?>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper content">
+    <div class="call-to-action">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <h2>Insurance claims</h2>
+                <p>Find out more about making a claim on your insurance policy</p>
+                <ul class="list-unstyled">
+                    <li><a href="<?php echo $this->brochurewareBaseUrl; ?>tenants/help/make-a-claim/" class="arrow">Tenants Insurance claims</a></li>
+                    <li><a href="<?php echo $this->brochurewareBaseUrl; ?>landlord/help/making-a-claim/" class="arrow">Landlord Insurance claims</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <?php echo $this->partial('partials/portal-pod-update-information.phtml') ?>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <h2>Hi <?php echo $this->firstName; ?></h2>
+                <p>You can view your quotes, insurance policy documents and all of your correspondence from HomeLet right here in My HomeLet.</p>
+                <p>If you do need any further help please don't hesitate to get in touch.</p>
+                <a href="/logout" class="btn btn-primary">Log out</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="primary-content col-xs-12">
+        <h1>Your HomeLet Account</h1>
+
+        <div class="tabbed-details">
+            <?php echo $this->navigation ?>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <form action="" method="get" class="form-horizontal">
+                        <div class="form-group">
+                            <fieldset class="padded-form">
+                                <h2>References</h2>
+                                <label for="id">Reference Number</label>
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <input type="text" name="id" id="id" placeholder="Enter Reference Number&hellip;" class="search-input form-control" value="<?php echo $this->escape($this->searchTerms) ?>" />
+                                    </div>
+                                    <div class="clearfix visible-xs"></div>
+                                    <div class="col-sm-3">
+                                        <input type="submit" class="btn btn-default btn-small" value="Search" />
+                                    </div>
+                                </div>
+                                <?php foreach ($this->hiddenSearchFields as $_name => $_value): ?>
+                                    <input type="hidden" name="<?php echo $this->escape($_name) ?>" value="<?php echo $this->escape($_value) ?>" />
+                                <?php endforeach; ?>
+                            </fieldset>
+                        </div>
+                    </form>
+
+                    <?php if ($this->searchTerms != '' && !count($this->references)): ?>
+                        <h3>Sorry, but your search returned no results...</h3>
+                        <p>We were unable to find what you&rsquo;re searching for with the information that you&rsquo;ve provided.</p>
+                        <p>Please try again, if you&rsquo;re unable to find what you&rsquo;re looking for please don&rsquo;t hesitate to contact us, we&rsquo;re always happy to help.</p>
+                        <p>Kind regards,<br/>
+                            The HomeLet team</p>
+                    <?php else: ?>
+                        <table class="table table-condensed table-bordered hidden-xs policy-table">
+                        <thead>
+                        <tr>
+                            <th width="70"><?php echo $this->sortableColumn('Date', 'start_date') ?></th>
+                            <th><?php echo $this->sortableColumn('Applicant name', 'lastname') ?></th>
+                            <th><?php echo $this->sortableColumn('1st line of address', 'address1') ?></th>
+                            <th><?php echo $this->sortableColumn('Reference Number', 'externalrefno') ?></th>
+                            <th><?php echo $this->sortableColumn('Status', 'conclusion') ?></th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($this->references as $_reference): ?>
+                            <tr>
+                                <td width="70">
+                                    <?php if ($_reference['reference']->propertyLease): ?>
+                                        <?php echo $this->escape($_reference['reference']->propertyLease->tenancyStartDate->get(Zend_Date::DAY_SHORT .
+                                                ' ' . Zend_Date::MONTH_NAME_SHORT . ' ' . Zend_Date::YEAR)) ?>
+                                    <?php else: ?>
+                                        <em>Not supplied</em>
+                                    <?php endif ?>
+                                </td>
+
+                                <?php if ($_reference['reference']->referenceSubject && $_reference['reference']->referenceSubject->name): ?>
+                                    <td>
+                                        <?php echo $this->escape($_reference['reference']->referenceSubject->name->title) ?>
+                                        <?php echo $this->escape($_reference['reference']->referenceSubject->name->firstName) ?>
+                                        <?php echo $this->escape($_reference['reference']->referenceSubject->name->middleName) ?>
+                                        <?php echo $this->escape($_reference['reference']->referenceSubject->name->lastName) ?>
+                                    </td>
+                                <?php else: ?>
+                                    <td><em>Not supplied</em></td>
+                                <?php endif ?>
+
+                                <?php if ($_reference['reference']->propertyLease): ?>
+                                    <td>
+                                        <?php echo $this->escape($_reference['reference']->propertyLease->address->flatNumber) ?>
+                                        <?php echo $this->escape($_reference['reference']->propertyLease->address->houseNumber) ?>
+                                        <?php echo $this->escape($_reference['reference']->propertyLease->address->houseName) ?>
+                                        <?php echo $this->escape($_reference['reference']->propertyLease->address->addressLine1) ?>
+                                    </td>
+                                <?php else: ?>
+                                    <td><em>Not supplied</em></td>
+                                <?php endif ?>
+
+                                <td><?php echo $this->escape($_reference['reference']->externalId) ?></td>
+                                <td><?php echo $this->escape($_reference['reference']->status) ?></td>
+                                <td>
+                                    <?php if ($_reference['report'] != null): ?>
+                                        <a href="/my-homelet/references/<?php echo $this->escape($_reference['reference']->externalId) ?>/view-report?report=<?php echo $this->escape($_reference['report']->validationKey) ?>"
+                                            title="View <?php echo $_reference['report']->reportType ?> report" target="_blank">View <?php echo $_reference['report']->reportType ?> report</a><br/>
+                                        <a href="/my-homelet/references/<?php echo $this->escape($_reference['reference']->externalId) ?>/view-report?report=<?php echo $this->escape($_reference['report']->validationKey) ?>&download=true"
+                                            title="Download <?php echo $_reference['report']->reportType ?> report" target="_blank">Download <?php echo $_reference['report']->reportType ?> report</a>
+                                    <?php else: ?>
+                                        Awaiting report generation
+                                    <?php endif ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        </table>
+                        <div class="visible-xs">
+                            <dl>
+                                <?php foreach($this->references as $_reference): ?>
+                                    <dt><?php echo $this->sortableColumn('Date', 'start_date') ?></dt>
+                                    <dd>
+                                        <?php if ($_reference['reference']->propertyLease): ?>
+                                            <?php echo $this->escape($_reference['reference']->propertyLease->tenancyStartDate->get(Zend_Date::DAY_SHORT .
+                                                    ' ' . Zend_Date::MONTH_NAME_SHORT . ' ' . Zend_Date::YEAR)) ?>
+                                        <?php else: ?>
+                                            <em>Not supplied</em>
+                                        <?php endif ?>
+                                    </dd>
+                                    <dt><?php echo $this->sortableColumn('Applicant name', 'lastname') ?></dt>
+                                    <?php if ($_reference['reference']->referenceSubject && $_reference['reference']->referenceSubject->name): ?>
+                                        <dd>
+                                            <?php echo $this->escape($_reference['reference']->referenceSubject->name->title) ?>
+                                            <?php echo $this->escape($_reference['reference']->referenceSubject->name->firstName) ?>
+                                            <?php echo $this->escape($_reference['reference']->referenceSubject->name->middleName) ?>
+                                            <?php echo $this->escape($_reference['reference']->referenceSubject->name->lastName) ?>
+                                        </dd>
+                                    <?php else: ?>
+                                        <dd><em>Not supplied</em></dd>
+                                    <?php endif ?>
+                                    <dt><?php echo $this->sortableColumn('1st line of address', 'address1') ?></dt>
+                                    <?php if ($_reference['reference']->propertyLease): ?>
+                                        <dd>
+                                            <?php echo $this->escape($_reference['reference']->propertyLease->address->flatNumber) ?>
+                                            <?php echo $this->escape($_reference['reference']->propertyLease->address->houseNumber) ?>
+                                            <?php echo $this->escape($_reference['reference']->propertyLease->address->houseName) ?>
+                                            <?php echo $this->escape($_reference['reference']->propertyLease->address->addressLine1) ?>
+                                        </dd>
+                                    <?php else: ?>
+                                        <dd><em>Not supplied</em></dd>
+                                    <?php endif ?>
+                                    <dt><?php echo $this->sortableColumn('Reference Number', 'externalrefno') ?></dt>
+                                    <dd><?php echo $this->escape($_reference['reference']->externalId) ?></dd>
+                                    <dt><?php echo $this->sortableColumn('Status', 'conclusion') ?></dt>
+                                    <dd><?php echo $this->escape($_reference['reference']->status) ?></dd>
+                                    <dt>Action</dt>
+                                    <dd>
+                                        <?php if ($_reference['report'] != null): ?>
+                                            <a href="/my-homelet/references/<?php echo $this->escape($_reference['reference']->externalId) ?>/view-report?report=<?php echo $this->escape($_reference['report']->validationKey) ?>"
+                                               title="View <?php echo $_reference['report']->reportType ?> report" target="_blank">View <?php echo $_reference['report']->reportType ?> report</a><br/>
+                                            <a href="/my-homelet/references/<?php echo $this->escape($_reference['reference']->externalId) ?>/view-report?report=<?php echo $this->escape($_reference['report']->validationKey) ?>&download=true"
+                                               title="Download <?php echo $_reference['report']->reportType ?> report" target="_blank">Download <?php echo $_reference['report']->reportType ?> report</a>
+                                            <hr />
+                                        <?php else: ?>
+                                            Awaiting report generation
+                                            <hr />
+                                        <?php endif ?>
+                                    </dd>
+                                <?php endforeach; ?>
+                            </dl>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <?php echo $this->partial('partials/portal-pod-help.phtml') ?>
+    </div>
+</div>

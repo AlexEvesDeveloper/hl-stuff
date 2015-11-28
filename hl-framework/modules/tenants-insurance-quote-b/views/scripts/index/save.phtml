@@ -1,0 +1,57 @@
+<?php
+if ($this->alreadySaved) {
+    // This quote is already being saved.
+    ?>
+    You have requested that we save your quote, however because you are already logged in we will automatically be saving your selections as you complete your quote.<br />
+    <br />
+    Remember you can retrieve your quote at any time by visiting homelet.co.uk and entering your username and password.<br />
+    <?php
+} else {
+    ?>
+   <?php if (!$this->registered) { ?> 
+    <div id="password_entry">
+        <p>
+            Please choose a password for your account.<br />
+            <br />
+            You will be able to retreive your quote at any time in the next 45 days using your email address and this password.<br />
+        </p>
+        <hr size="1" />
+            <div>
+                <label>Username</label>
+                <span style="color: #E60E64; font-style: italic"><?php echo $this->emailAddress; ?></span>
+            </div>
+            
+        <form id="saveQuote" action="save" method="post" enctype="application/x-www-form-urlencoded" class="validate">
+        <?php echo $this->form; ?>
+        </form>
+    </div>
+<?php }
+ else { 
+ ?> 
+    <div id="success_message">
+        Thank you for choosing HomeLet to offer you a quote for your tenant's contents insurance. We've saved your quote as requested and have sent you an email for validating your My HomeLet account.<br />
+        <br />
+        You can retrieve your quote at any time by visiting homelet.co.uk after you log in.<br />
+    </div>
+ <?php } ?>
+        <script type="text/javascript">
+    $(function() {  
+        $("#saveQuote").submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(data) {
+                         //   $('#password_entry').hide();
+                    $('#facebox .facebox-content').html(data);
+                          //  $('#success_message').show();
+                }
+            });
+           // return false;
+        });
+    });
+        </script>
+    <?php
+}
+?>

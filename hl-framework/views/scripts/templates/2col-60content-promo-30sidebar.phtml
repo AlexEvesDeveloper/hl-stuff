@@ -1,0 +1,73 @@
+<?php
+echo $this->subHeader($this->pageStyling, $this->pageStyling);
+?>
+<div class="<?php echo $this->pageStyling; ?>">
+    <div class="wrapper two-col">
+		<div class="content">
+            <?php
+                echo $this->content;
+                if ($this->meta['promoHeader1'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader1'], $this->meta['promoText1'], $this->meta['promoIcon1'].'_small', $this->meta['promoUrl1']);
+                if ($this->meta['promoHeader2'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader2'], $this->meta['promoText2'], $this->meta['promoIcon2'].'_small', $this->meta['promoUrl2']);
+                if ($this->meta['promoHeader3'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader3'], $this->meta['promoText3'], $this->meta['promoIcon3'].'_small', $this->meta['promoUrl3']);
+                if ($this->meta['promoHeader4'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader4'], $this->meta['promoText4'], $this->meta['promoIcon4'].'_small', $this->meta['promoUrl4']);
+                if ($this->meta['promoHeader5'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader5'], $this->meta['promoText5'], $this->meta['promoIcon5'].'_small', $this->meta['promoUrl5']);
+                if ($this->meta['promoHeader6'] != '') echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader6'], $this->meta['promoText6'], $this->meta['promoIcon6'].'_small', $this->meta['promoUrl6']);
+            ?>
+		</div>
+		<div class="sidebar">
+            <div id="resources">
+            	<?php
+                $layout = $this->layout()->getView();
+            	if ($this->pageStyling == 'tenants') {
+            		?>
+            		<h3 class="underline-<?php echo $this->pageStyling; ?>">Resources</h3>
+            		<a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsFaq']; ?>">Frequently Asked <strong>Questions</strong></a>
+                    <a class="nav-tenants-button" href="<?php echo $layout->urls['contactUs']; ?>">Ask us a <strong>Question</strong></a>
+                    <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsTopTips']; ?>"><strong>Top Tips</strong> for Tenants</a>
+            		<?php
+            	} elseif ($this->pageStyling == 'landlords') {
+            		?>
+            		<h3 class="underline-<?php echo $this->pageStyling; ?>">Resources</h3>
+            		<a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsFaq']; ?>">Frequently Asked <strong>Questions</strong></a>
+                    <a class="nav-landlords-button" href="<?php echo $layout->urls['contactUs']; ?>">Ask us a <strong>Question</strong></a>
+            		<a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsTopTips']; ?>"><strong>Top Tips</strong> for Landlords</a>
+            		<?php
+            	} elseif ($this->pageStyling == 'letting-agents') {
+            		
+            	}
+                ?>
+                <div class="clear"></div>
+                <?php
+                // LANDLORDS LOWDOWN - Not currently in use
+                /*if ($this->pageStyling == 'landlords') {
+                    ?>
+                    <script type="text/javascript" src="/assets/cms/js/landlords/lowdownSignup.js"></script>
+                    <div id="landlord-lowdown">
+                        <form>
+                            <input type="text" name="email" />
+                            <input type="submit" name="go" value="Go" />
+                        </form>
+                        <div class="clear"></div>
+                    </div>
+                    <?php
+                }*/
+                ?>
+            </div>
+            <h4 class="underline-<?php echo $this->pageStyling; ?>">What people say</h4>
+            <div class="blue">
+                <div class="testyhearts">
+                    <div id="testimonials-holder">
+                        <ul>
+                            <?php echo $this->testimonials( $this->pageStyling ); ?>
+                        </ul>
+                        <div id="test-changer">
+                            <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                            <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div class="clear"></div>
+	</div>
+</div>

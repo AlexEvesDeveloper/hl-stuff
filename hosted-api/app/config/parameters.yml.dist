@@ -1,0 +1,29 @@
+# This file is a "template" of what your parameters.yml file should look like
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    iris_client.api_url: https://api.dev.barbondev.co.uk/referencing
+    iris_client.system_consumer_key: 7f000101-4492-107b-8144-92f07bfa0001
+    iris_client.system_consumer_secret: 7f000101-4492-107b-8144-92f07bfa0002
+
+    payment_client.api_url: http://payment-portal.centos5.dev
+    payment_client.api_key: 43800a859945c8436c14b4bc5dac4fb0615cf337
+
+    session_max_idle_time: 604800

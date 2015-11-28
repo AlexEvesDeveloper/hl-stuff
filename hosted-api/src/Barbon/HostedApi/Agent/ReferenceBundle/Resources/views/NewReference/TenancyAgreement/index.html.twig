@@ -1,0 +1,100 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% form_theme form with [
+    'bootstrap_3_layout.html.twig',
+    'BarbonHostedApiAppBundle:Common/Widgets:widgets.html.twig'
+] %}
+
+{% block javascripts %}
+
+    {# JavaScript assets #}
+    {%
+        javascripts
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{form_start(form)}}
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Data protection preferences
+            </div><!-- panel-heading -->
+
+            <div class="panel-body">
+                {{form_widget(form.applications)}}
+            </div>
+        </div><!-- panel panel-default -->
+
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tenant Declaration
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <div>
+                    {% include '@BarbonHostedApiAgentReferenceBundle/Resources/views/NewReference/TenancyAgreement/tenancyDeclarationWordingApplicant.html.twig' %}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Guarantor Declaration
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <div>
+                    {% include '@BarbonHostedApiAgentReferenceBundle/Resources/views/NewReference/TenancyAgreement/tenancyDeclarationWordingGuarantor.html.twig' %}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Confirmation
+            </div><!-- panel-heading -->
+
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label for="{{ form.application_correct.vars.id }}">
+                        {{form_widget(form.application_correct)}}
+                        Yes, I confirm that the information provided in this application form is true to the best of my knowledge,
+                        and I&rsquo;m happy with the checks which HomeLet will complete as detailed above. These
+                        results may be accessed again if I apply for a tenancy in the future. / These results may be accessed again
+                        if I apply to act as a guarantor in the future.
+                    </label>
+                    {{form_errors(form.application_correct)}}
+                </div>
+
+                <div class="checkbox">
+                    <label for="{{ form.referee_contact.vars.id }}">
+                        {{form_widget(form.referee_contact)}}
+                        Yes, I'm happy for HomeLet to contact my referees (including those outside the EEA), with personal information
+                        which has been provided in this form to allow them to verify the information about my earnings, dates of employment
+                        and previous tenancy term.
+                    </label>
+                    {{form_errors(form.referee_contact)}}
+                </div>
+
+                <div class="checkbox">
+                    <label for="{{ form.agree_terms.vars.id }}">
+                        {{form_widget(form.agree_terms)}}
+                        I understand and agree with these terms and conditions.
+                    </label>
+                    {{form_errors(form.agree_terms)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="pull-right">
+            {{form_label(form.agree)}}
+            {{form_widget(form.agree, {'attr':{'class':'btn btn-success'}})}}
+        </div>
+        {{form_end(form)}}
+    </div><!-- container -->
+{% endblock %}

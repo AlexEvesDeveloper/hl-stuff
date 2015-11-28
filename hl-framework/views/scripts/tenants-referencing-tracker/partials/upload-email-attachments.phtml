@@ -1,0 +1,24 @@
+<div id="upload">
+    <h3>Attachments</h3>
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $this->maxSize; ?>" />
+    <input type="file" name="attachment" size="10" />
+    <br />
+    <ul class="list-inline list-buttons">
+        <li><input class="btn btn-primary" type="submit" name="attachButton" id="attachButton" class="submit<?php echo (($this->totalSize > $this->maxSize) ? ' disabled' : ''); ?>" value="attach file"<?php echo (($this->totalSize > $this->maxSize) ? ' disabled="disabled"' : ''); ?> /></li>
+        <li><input class="btn btn-primary" type="submit" name="deleteButton" id="deleteButton" class="submit" value="delete files" /></li>
+    </ul>
+    <div class="clearfix"></div>
+    <div id="attachmentsContainer">
+        <?php
+        if ($this->totalSize > 0) {
+            $index = 0;
+            foreach($this->attachments as $name) {
+                ?>
+                <?php echo $name; ?><br />
+                <?php
+            }
+        }
+        ?>
+    </div>
+    <?php echo round($this->totalSize / 1048576, 1); ?> Mb of <?php echo round($this->maxSize / 1048576); ?> Mb<br />
+</div>

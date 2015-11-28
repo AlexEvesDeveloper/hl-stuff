@@ -1,0 +1,20 @@
+
+<form action="<?php echo $this->formAction; ?>" method="post">
+    <h2>Select Renewal Document</h2>
+
+    <div class="form_section one-col">
+        <div>
+            <input type="hidden" name="policynumber" value="<?php echo $this->policynumber; ?>" />
+            <?php echo $this->element->documenttype; ?>
+        </div>
+        
+        <div class="alt">
+            <?php echo $this->element->agentinvite; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->formsubmit_back; ?>
+            <?php echo $this->element->formsubmit_continue; ?>
+        </div>
+    </div>
+</form>

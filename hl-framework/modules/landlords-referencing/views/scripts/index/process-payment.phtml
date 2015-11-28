@@ -1,0 +1,55 @@
+<?php 
+	$session = new Zend_Session_Namespace('referencing_global');
+	$params = Zend_Registry::get('params');
+?>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+	  $('#secpay_precursor_form').submit();
+	});
+</script>
+
+<div class="tenants">
+    <div class="wrapper two-col">
+        
+        <div class="content">
+        	<div style="text-align:center;">
+            	<img src="/assets/common/images/ajax-loader.gif"><br />
+            	<br />
+            	<p>You are now being redirected to our secure payment server, if you are not redirected in a few seconds please click the button below.</p>
+            </div>
+
+        	<form id="secpay_precursor_form" action="<?php echo $this->secFormUrl;?>" method="post" enctype="application/x-www-form-urlencoded" class="validate">
+				<input name="merchant" type="hidden" value= "<?php echo $this->merchant;?>" />
+				<input name="trans_id" type="hidden" value= "<?php echo $this->trans_id;?>" />
+				<input name="refno" type="hidden" value= "<?php echo $this->refno;?>" />
+				<input name="amount" type="hidden" value= "<?php echo $this->amount;?>" />
+				<input name="callback" type="hidden" value= "<?php echo $this->callback;?>" />
+				<input name="template" type="hidden" value= "<?php echo $this->template;?>" />
+				<input name="repeat" type="hidden" value= "<?php echo $this->repeat;?>" />
+				<input name="test_status" type="hidden" value= "<?php echo $this->test_status;?>" />
+				<input name="test_mpi_status" type="hidden" value= "<?php echo $this->test_mpi_status;?>" />
+				<input name="usage_type" type="hidden" value= "<?php echo $this->usage_type;?>" />
+				<input name="cb_flds" type="hidden" value= "<?php echo $this->cb_flds;?>" />
+				<input name="cb_card_type" type="hidden" value= "<?php echo $this->cb_card_type;?>" />
+				<input name="digest" type="hidden" value= "<?php echo $this->digest;?>" />
+				<input name="confirmationcode" type="hidden" value= "<?php echo $this->confirmationcode;?>" />
+				<input name="dups" type="hidden" value= "<?php echo $this->dups;?>" />
+				<div id="submission-box" style="min-height: 55px; text-align: center;">
+	            	<input type="submit" class="button" id="paynow" name="paynow" value="Pay Now">
+	            </div>
+        	</form>
+        </div>
+		
+        <?php echo $this->partial('partials/sidebar.phtml', array('page' => 'price-confirmation', 'fractionComplete' => $this->fractionComplete)); ?>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(function() {
+    $('.form_section > div:even')
+        .not($('.form_section > div input.noalt').parent())
+        .addClass('alt');
+	});
+</script>

@@ -1,0 +1,69 @@
+<script type="text/javascript">
+    function showRentRecoveryPlusSearch() {
+        $.facebox('Rent Recovery Plus Insurance Search', { ajax: '/rentguarantee/rent-recovery-plus-search' });
+    }
+</script>
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) { echo $this->infoPanel($this->panelContent); } ?>
+
+        <?php
+            $iconLayout = array();
+            if ($this->canDisplayRRPI) {
+                $iconLayout[] = array(
+                    'icon'      => 'start-alternate',
+                    'title'     => 'Rent Recovery Plus',
+                    'help_text' => 'Submit a new application',
+                    'url'       => '/rentguarantee/rent-recovery-plus'
+                );
+            }
+            $iconLayout[] = array(
+                    'icon'      => 'search',
+                    'title'     => 'Rent Recovery Plus Search',
+                    'help_text' => 'Find your RRP policy',
+                    'url'      => '/rentguarantee/rent-recovery-plus-search'
+            );
+            $iconLayout[] = array(
+                   'icon'      => 'start-alternate',
+                    'title'     => Model_Core_Agent_AbsoluteType::toString($this->agentObj->absoluteType) . ' Rent Guarantee',
+                    'help_text' => 'Submit a new application',
+                    'url'       => '/rentguarantee/absolute'
+            );
+            $iconLayout[] = array(
+                    'icon'      => 'start-rg',
+                    'title'     => 'Rent Guarantee renewals',
+                    'help_text' => 'Manage your Rent Guarantee renewals',
+                    'url'       => '/rentguarantee/renewals',
+            );
+            $iconLayout[] = array(
+                    'icon'      => 'evict',
+                    'title'     => 'Online claims',
+                    'help_text' => 'Submit a new Rent Guarantee claim or view your existing claims',
+                    'url'       => '/rentguaranteeclaims/home'
+            );
+            $iconLayout[] = array(
+                    'icon'      => 'your-products',
+                    'title'     => 'Rent Guarantee products',
+                    'help_text' => 'Find out more about our specialist products',
+                    'url'       => '/rentguarantee/products'
+            );
+            $iconLayout[] = array(
+                    'icon'      => 'documents',
+                    'title'     => 'Evict',
+                    'help_text' => 'Find out more about our professional eviction services',
+                    'url'       => '/rentguarantee/evict'
+            );
+            $iconLayout[] = array(
+                    'icon'      => 'documents',
+                    'title'     => 'Useful information &amp; documents',
+                    'help_text' => 'Including claims information',
+                    'url'       => '/rentguarantee/info'
+            );
+
+            $this->iconLayout($iconLayout);
+        ?>
+    </div>
+</div>

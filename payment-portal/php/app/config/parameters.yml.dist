@@ -1,0 +1,40 @@
+# This file is a "template" of what your parameters.yml file should look like
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     barbon_payment_portal
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true
+
+    # JMS payment configuration
+    jms_payment_core_secret: SomeS3cr3tStringG0esHere
+
+    # PayPoint configuration
+    paypoint_merchant: ~
+    paypoint_remote_password: ~
+    paypoint_vpn_password: ~
+    paypoint_gateway_url: 'https://www.paypoint.net/java-bin/ValCard'
+    paypoint_wsdl_url: 'https://www.secpay.com/java-bin/services/SECCardService?wsdl'
+    paypoint_test_status: 'true'
+    paypoint_repeat: 'true'
+    paypoint_test_mpi_status: 'true'
+    paypoint_usage_type: 'E'
+    paypoint_dups: 'true'
+    paypoint_template: 'https://www.secpay.com/users/hanove04/dg_payment.html'

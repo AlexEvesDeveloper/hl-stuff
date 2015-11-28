@@ -1,0 +1,136 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% block body %}
+
+    {% if reportNotifications | length > 0 %}
+        <div class="reportNotifications">
+            <h3>Referencing Notifications</h3>
+            {% set reportNotificationsSlice =  reportNotifications | slice(0, 10) %}
+            {% for i, notification in reportNotificationsSlice %}
+                <div class="notificationHistoryPanel {{ (i >= 5) ? 'hidden' }}">
+                    <img src="/assets/connect/images/greentick.jpg" />
+                    Latest report for {{ notification.applicantName }} at
+                    {{ notification.propertyAddress }} <span class="separator-vertical">|</span>
+                    <a href="/iris-referencing/view-report?uuid={{ notification.referencingApplicationUuId }}&reportType={{ notification.finalReport ? 'final' : 'interim' }}">View Report</a>
+                </div>
+            {% endfor %}
+            {% if reportNotificationsSlice | length > 5 %}
+                <div>
+                    <a href="javascript:void(0);" id="viewMoreReportNotifications">View More</a>
+                </div>
+            {% endif %}
+            <br />
+        </div>
+        <script>
+            (function ($) {
+                var $hiddenPanels = $('.reportNotifications .notificationHistoryPanel.hidden');
+                var hidden = true;
+                $hiddenPanels.hide();
+                $('#viewMoreReportNotifications').click(function () {
+                    if (hidden) {
+                        $hiddenPanels.show();
+                        hidden = false;
+                        $(this).text('View Less');
+                    } else {
+                        $hiddenPanels.hide();
+                        hidden = true;
+                        $(this).text('View More');
+                    }
+                });
+            })(jQuery);
+        </script>
+    {% endif %}
+
+    <ul class="connect_button_list">
+        {% if agentSchemeNumber not in disabledNewReferenceList %}
+            <li class="single_button">
+                <a href="/iris-new-reference">
+                    <div class="connect_button">
+                        <img src="/assets/connect/images/icons/white-start-alternate.png" />
+                        <h5>Start a new reference</h5>
+                    </div>
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="single_button">
+            <a href="/iris-referencing/search-references">
+                <div class="connect_button_alt">
+                    <img src="/assets/connect/images/icons/white-search.png" />
+                    <h5>Reference search</h5>
+                    <span class="help_text">Find your complete or active references</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="line_end single_button">
+            <a href="/referencing/products">
+                <div class="connect_button">
+                    <img src="/assets/connect/images/icons/white-your-products.png" alt="Referencing products" width="104" height="100" />
+                    <h5>Referencing products</h5>
+                    <span class="help_text">Find out more about Insight, Enhance and Optimum</span>
+                </div>
+            </a>
+        </li>
+
+        <li class=" single_button">
+            <a href="/referencing/company-application">
+                <div class="connect_button_alt">
+                    <img src="/assets/connect/images/icons/white-company.png" alt="Start a new company reference" width="104" height="100" />
+                    <h5>Start a new company reference</h5>
+                </div>
+            </a>
+        </li>
+
+        <li class=" single_button">
+            <a href="/referencing/info">
+                <div class="connect_button">
+                    <img src="/assets/connect/images/icons/white-documents.png" alt="Useful referencing documents" width="104" height="100" />
+                    <h5>Useful referencing documents</h5>
+                    <span class="help_text">Including our Referencing Service Guidelines</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="line_end single_button">
+            <a href="http://www.royalmail.com/find-a-postcode" target="_blank">
+                <div class="connect_button_alt">
+                    <img src="/assets/connect/images/icons/white-postcode.png" alt="Royal Mail postcode finder" width="104" height="100" />
+                    <h5>Royal Mail postcode finder</h5>
+                    <span class="help_text">Search for addresses on Royal Mail</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="double_button">
+            <div class="special_connect_button">
+                <img src="/assets/connect/images/icons/white-calculator.png" alt="Affordability Calculator" width="104" height="100" />
+                <div class="button-details">
+                    <h5>Affordability calculator</h5>
+                    Please enter an amount<br /> in whole pounds (£) <br />into one of the boxes
+                </div>
+
+                <form action="/iris-referencing/rent-affordability" method="post" class="affordability_calculator">
+                    {{ form_widget(rentAffordabilityForm) }}
+                    <button type="submit" class="nav-corporate-dark-button">Check Rent Affordability</button>
+                </form>
+            </div>
+        </li>
+
+        {% if canDisplayCheckRight %}
+        <li class="line_end single_button">
+            <a href="/referencing/homelet-verify">
+                <div class="connect_button_alt">
+                    <img src="/assets/connect/images/icons/white-documents.png" alt="CheckRight" width="104" height="100" />
+                    <h5>HomeLet Verify</h5>
+                    <span class="help_text">Right to rent check</span>
+                </div>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <div class="clearfix"></div>
+
+{% endblock %}

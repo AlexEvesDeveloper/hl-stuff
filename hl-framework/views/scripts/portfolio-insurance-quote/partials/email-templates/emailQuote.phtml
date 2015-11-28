@@ -1,0 +1,347 @@
+<?php 
+	//Extract the DPA values from the session.
+	$dpaManager = new Manager_Core_DataProtection(Manager_Core_DataProtection::USE_SESSION);
+	$dpaItemArray = $dpaManager->getItems(null, Model_Core_DataProtection_ItemEntityTypes::INSURANCE);
+	
+	foreach($dpaItemArray as $currentItem) {
+			
+		switch($currentItem->constraintTypeId) {
+			
+			case Model_Core_DataProtection_ItemConstraintTypes::MARKETING_BY_PHONEANDPOST:
+				
+				if($currentItem->isAllowed) {
+					$dpaPhoneAndPost = 'Unselected';
+				}
+				else {
+					$dpaPhoneAndPost = 'Selected';
+				}
+				break;
+			
+			case Model_Core_DataProtection_ItemConstraintTypes::MARKETING_BY_SMSANDEMAIL:
+				
+				if($currentItem->isAllowed) {
+					$dpaSmsAndEmail = 'Selected';
+				}
+				else {
+					$dpaSmsAndEmail = 'Unselected';
+				}
+				break;
+				
+			case Model_Core_DataProtection_ItemConstraintTypes::MARKETING_BY_THIRDPARTY:
+				
+				if($currentItem->isAllowed) {
+					$dpaThirdParty = 'Selected';
+				}
+				else {
+					$dpaThirdParty = 'Unselected';
+				}
+				break;
+		}
+	}
+?>
+
+<table cellspacing="0" cellpadding="0" border="1" width="100%" id="calc_outer_table">
+	<tr>
+		<td colspan="3"><h3>Contact details</h3></td>
+	</tr>
+	<tr>
+		<td>Title:</td><td colspan="2"><?php echo $this->theCustomer['title'];?></td>
+	</tr>
+	<tr>
+		<td>First name:</td><td colspan="2"><?php echo $this->theCustomer['first_name'];?></td>
+	</tr>
+	<tr>
+		<td>Last name:</td><td colspan="2"><?php echo $this->theCustomer['last_name'];?></td>
+	</tr>
+    <tr>
+        <td>DoB:</td><td colspan="2"><?php echo $this->theCustomer['date_of_birth_at'];?></td>
+    </tr>
+	<tr>
+		<td>Phone num 1:</td><td colspan="2"><?php echo $this->theCustomer['telephone1'];?></td>
+	</tr>
+	<tr>
+		<td>Email:</td><td colspan="2"><?php echo $this->theCustomer['email_address'];?></td>
+	</tr>
+	<tr>
+		<td>Address:</td><td colspan="2"><?php echo $this->theCustomer['address1'];?><br /> <?php echo $this->theCustomer['address2'];?><br /> <?php echo $this->theCustomer['address3'];?> <br /> <?php echo $this->theCustomer['postcode'];?> <br /> <?php echo $this->theCustomer['country'];?></td>
+	</tr>
+	<tr>
+		<td>Quotenumber:</td><td colspan="2"><?php echo $this->theCustomer['refNo'];?></td>
+	</tr>
+
+	<tr>
+		<td>Provisional Quote:</td><td colspan="2">&pound;&nbsp;<?php echo $this->theData['UserQuote'];?></td>
+	</tr>
+	<tr>
+		<td>Quoted premium:</td>
+		<td colspan="2">&pound;&nbsp;<?php echo $this->theData['UserQuotePremium'];?></td>
+	</tr>
+	<tr>
+		<td>Quoted IPT:</td>
+		<td colspan="2">&pound;&nbsp;<?php echo $this->theData['UserQuoteIPT'];?></td>
+	</tr>
+	<tr>
+		<td>Quoted service charge:</td>
+		<td colspan="2">&pound;&nbsp;<?php echo $this->theData['UserQuoteService'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Business</h3></td>
+	</tr>
+	<tr>
+		<td>Agent Scheme Number</td><td colspan="2"><?php echo $this->theData['agentschemeno'];?></td>
+	</tr>
+	<tr>
+		<td>CSU ID</td><td colspan="2"><?php echo $this->theData['csuid'];?></td>
+	</tr>
+	<tr>
+		<td>Origin</td><td colspan="2"><?php echo $this->theData['origin'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Other</h3></td>
+	</tr>
+	<tr>
+		<td>Heard from</td><td colspan="2"><?php echo $this->theData["Additional"]->how_hear;?></td>
+	</tr>
+
+	
+	
+	<tr>
+		<td colspan="3">Data protection</td>
+	</tr>
+	<tr>
+		<td>Don't want HomeLet to contact by phone or post</td>
+		<td colspan="2">
+			<?php echo $dpaPhoneAndPost; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>Want HomeLet to contact by email or SMS</td>
+		<td colspan="2">
+			<?php echo $dpaSmsAndEmail; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>Happy for HomeLet to pass your details on to third parties</td>
+		<td colspan="2">
+			<?php echo $dpaThirdParty; ?>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td>Disclosure</td><td colspan="2">Selected</td>
+	</tr>
+
+	<tr>
+		<td>Existing Insurer</td><td colspan="2"><?php echo $this->theData['Additional']->existing_insurer;?></td>
+	</tr>
+	<tr>
+		<td>Target Premium</td><td colspan="2">&pound;&nbsp;<?php echo $this->theData["Additional"]->target_premium;?></td>
+	</tr>
+	<tr>
+		<td>Renewal Date</td><td colspan="2"><?php echo $this->theData["Additional"]->next_renwal_date;?></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Breakdown</h3></td>
+	</tr>
+	<tr>
+		<td><strong>Building area</strong></td><td><strong>Sum</strong></td><td><strong>Premium</strong></td>
+	</tr>
+	<tr>
+		<td><strong>1</strong></td><td><?php echo $this->theData['buildingAreaSum'][0];?></td><td><?php echo $this->theData['buildingAreaPremium'][0];?></td>
+	</tr>
+	<tr>
+		<td><strong>2</strong></td><td><?php echo $this->theData['buildingAreaSum'][1];?></td><td><?php echo $this->theData['buildingAreaPremium'][1];?></td>
+	</tr>
+	<tr>
+		<td><strong>3</strong></td><td><?php echo $this->theData['buildingAreaSum'][2];?></td><td><?php echo $this->theData['buildingAreaPremium'][2];?></td>
+	</tr>
+	<tr>
+		<td><strong>4</strong></td><td><?php echo $this->theData['buildingAreaSum'][3];?></td><td><?php echo $this->theData['buildingAreaPremium'][3];?></td>
+	</tr>
+	<tr>
+		<td><strong>5</strong></td><td><?php echo $this->theData['buildingAreaSum'][4];?></td><td><?php echo $this->theData['buildingAreaPremium'][4];?></td>
+	</tr>
+	<tr>
+		<td><strong>6</strong></td><td><?php echo $this->theData['buildingAreaSum'][5];?></td><td><?php echo $this->theData['buildingAreaPremium'][5];?></td>
+	</tr>
+	<tr>
+		<td><strong>7</strong></td><td><?php echo $this->theData['buildingAreaSum'][6];?></td><td><?php echo $this->theData['buildingAreaPremium'][6];?></td>
+	</tr>
+	<tr>
+		<td><strong>DSS</strong></td><td><?php echo $this->theData['buildingAreaSum'][7];?></td><td><?php echo $this->theData['buildingAreaPremium'][7];?></td>
+	</tr>
+	<tr>
+		<td><strong>Total</strong></td><td><strong><?php echo $this->theData['total_sum_buildings'];?></strong></td>
+		<td><strong><?php echo $this->theData['buildings_premium'];?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Buildings accidental damage</td><td><?php echo $this->theData['buildingsAccidentalDamage'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Buildings nil excess</td><td><?php echo $this->theData['buildingsNoExcess'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Buildings extra total</td><td><strong><?php echo $this->theData['buildingsEX_premium'];?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td><strong>Contents area</strong></td><td><strong>Sum</strong></td><td><strong>Premium</strong></td>
+	</tr>
+	<tr>
+		<td><strong>1</strong></td><td><?php echo $this->theData['contentsAreaSum'][0];?></td><td><?php echo $this->theData['contentsAreaPremium'][0];?></td>
+	</tr>
+	<tr>
+		<td><strong>2</strong></td><td><?php echo $this->theData['contentsAreaSum'][1];?></td><td><?php echo $this->theData['contentsAreaPremium'][1];?></td>
+	</tr>
+	<tr>
+		<td><strong>3</strong></td><td><?php echo $this->theData['contentsAreaSum'][2];?></td><td><?php echo $this->theData['contentsAreaPremium'][2];?></td>
+	</tr>
+	<tr>
+		<td><strong>4</strong></td><td><?php echo $this->theData['contentsAreaSum'][3];?></td><td><?php echo $this->theData['contentsAreaPremium'][3];?></td>
+	</tr>
+	<tr>
+		<td><strong>5</strong></td><td><?php echo $this->theData['contentsAreaSum'][4];?></td><td><?php echo $this->theData['contentsAreaPremium'][4];?></td>
+	</tr>
+	<tr>
+		<td><strong>DSS</strong></td><td><?php echo $this->theData['contentsAreaSum'][5];?></td><td><?php echo $this->theData['contentsAreaPremium'][5];?></td>
+	</tr>
+	<tr>
+		<td><strong>Total</strong></td><td><strong><?php echo $this->theData['total_sum_contents'];?></strong></td>
+		<td><strong><?php echo $this->theData['contents_premium'];?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Contents accidental damage</td><td><?php echo $this->theData['contentsAD_premium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Contents nil excess</td><td><?php echo $this->theData['contentsNE_premium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Contents extra total</td><td><strong><?php echo $this->theData['contentsEX_premium'];?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td><strong>PREMIUM</strong></td><td><strong><?php echo $this->theData['premium'];?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="2">Calculated professional tenants percentage</td>
+		<td><?php echo $this->theData['professionalRate'];?> %</td>
+	</tr>
+	<tr>
+		<td colspan="2">Calculated professional total</td><td><?php echo $this->theData['tenantPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Amount of Excess</td><td><?php echo $this->theData['excess'];?></td>
+	</tr>
+	<tr>
+		<td>Amount of claims over 3 years</td><td><?php echo $this->theData['claimsAmount'];?></td>
+		<td><?php echo $this->theData['claimsRatio'];?> %</td>
+	</tr>
+	<tr>
+		<td colspan="2">Claims experience:</td><td><?php echo $this->theData['claimsExperience'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Sum insured Discount</td><td><?php echo $this->theData['sumInsuredDiscount'];?></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td><strong>NET PREMIUM</strong></td><td><?php echo $this->theData['netnetPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Net Rates</h3></td>
+	</tr>
+	<tr>
+		<td colspan="2">Net Rate A</td><td></td>
+	</tr>
+	<tr>
+		<td>Net Rate B</td><td>multiplyer : <?php echo $this->theData['netRateBmultiply'];?></td><td><?php echo $this->theData['netRateB'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Loading/Discount :</td><td><?php echo $this->theData['loadingDiscount'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Gross Premium</h3></td>
+	</tr>
+	<tr>
+		<td colspan="2">Gross</td><td><?php echo $this->theData['gross'];?></td>
+	</tr>
+	<tr>
+		<td>Gross Exc IPT</td><td>multiplyer : <?php echo $this->theData['grossExcIPTmultiply'];?></td><td><?php echo $this->theData['grossExcIPT'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">IPT amount</td><td><?php echo $this->theData['grossIPT'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Gross Inc IPT</td><td><?php echo $this->theData['grossIncIPT'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><h3>Insurer Disbursement Details</h3></td>
+	</tr>
+	<tr>
+		<td colspan="2">Net premium</td><td><?php echo $this->theData['netnetPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">IPT on Gross</td><td><?php echo $this->theData['IPTonGross'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Total payable to UW</td><td><?php echo $this->theData['UWTotal'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3"><strong>Ageas Info</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Net Net premium</td><td><?php echo $this->theData['netnetPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">IPT on Gross</td><td><?php echo $this->theData['IPTonGross'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Premium to underwriter</td><td><?php echo $this->theData['UWPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="3"><strong>Gross Premium with 60% Commission</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Gross Premium</td><td><?php echo $this->theData['UserQuoteAnnualPremium'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">IPT on Gross</td><td><?php echo $this->theData['IPTonGross'];?></td>
+	</tr>
+	<tr>
+		<td colspan="2">Gross Premium inc IPT</td><td><?php echo $this->theData['UserQuote'];?></td>
+	</tr>
+    <?php echo $this->uwQuestionsHtml; ?>
+	<tr>
+		<td colspan="3">Additional Information</td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;[--uwAdditional--]</td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3"><?php echo $this->propertyHtml;?></td>
+	</tr>
+</table>

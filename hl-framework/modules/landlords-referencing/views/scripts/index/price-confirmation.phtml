@@ -1,0 +1,42 @@
+<?php
+$session = new Zend_Session_Namespace('referencing_global');
+$params = Zend_Registry::get('params');
+?>
+<div class="col-xs-12">
+    <div class="breadcrumb"></div>
+</div>
+<div class="landlords landlords-referencing col-sm-9">
+    <div class="content">
+        <form action="/landlords/referencing/process-payment" method="POST" class="main">
+            <h2 class="quaternary-colour">Price Confirmation</h2>
+            <p>
+                You are now ready to transmit the reference request to us for processing. If you wish to review
+                the application before you send it to us please click
+                <a href="#" onclick="openSummaryDialog(); return false;">here</a>.
+
+                Clicking the continue button
+                below confirms that you accept responsibility for the charges associated with it.
+            </p>
+
+            <p>
+                The charge for this reference is <strong>&pound;<?php echo $this->priceExcludingVat; ?></strong> plus VAT.
+            </p>
+
+            <p>
+                <strong>&pound;<?php echo $this->priceIncludingVat; ?></strong> will be charged to your card
+            </p>
+
+            <p>
+                Please complete your card details and confirm your purchase by clicking on the &quot;Continue&quot; button.
+            </p>
+            <input type="submit" value="Confirm" id="next" name="next" class="btn btn-quaternary pull-right">
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+
+<div class="landlords col-sm-3">
+    <?php echo $this->partial('partials/sidebar.phtml', array('page' => 'price-confirmation', 'fractionComplete' => $this->fractionComplete)); ?>
+</div>
+
+<div class="clear"></div>

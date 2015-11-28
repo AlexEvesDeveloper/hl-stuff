@@ -1,0 +1,46 @@
+<?php
+
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_insuredaddress'];
+
+?>
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-heading">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-insuredaddress'); ?>
+        </div>
+        Your Insured Address
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-insuredaddress'); ?>
+        </div>
+    </div>
+
+    <?php echo $this->element->ins_house_number_name; ?>
+
+    <div class="form-group">
+        <label for="ins_postcode" class="required">Postcode</label>
+        <div class="input-group">
+            <?php
+            echo $this->element->ins_postcode
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+            <span class="input-group-btn">
+                <input type="submit" id="ins_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#ins_house_number_name').val(), $('#ins_postcode').val(), 'ins_postcode', 'ins_address'); return false;" class="btn btn-tertiary" />
+            </span>
+        </div>
+    </div>
+
+    <div id="ins_address_selector" class="form-group">
+        <?php
+        echo $this->element->ins_address
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <?php echo $this->partial("partials/minimum-security-protection.phtml"); ?>
+</div>

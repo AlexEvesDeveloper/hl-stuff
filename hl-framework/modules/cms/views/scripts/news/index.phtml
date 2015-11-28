@@ -1,0 +1,27 @@
+<?php
+echo $this->subHeader('global,' . $this->category, $this->category);
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+		<div class="content news">
+			<?php echo $this->content ?>
+		</div>
+		<div class="sidebar">
+			<h4>Archives</h4>
+			<ul id="news_archives">
+				<?php echo $this->archives; ?>
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+var disqus_shortname = 'hestia';<?php /* TODO: Move hardcoded parameter to config */ ?>
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js?https';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>

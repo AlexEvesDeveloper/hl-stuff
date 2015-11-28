@@ -1,0 +1,34 @@
+<?php echo $this->subHeader('tenants', 'tenants'); ?>
+<div class="tenants">
+    <div class="wrapper two-col">
+        <div class="content">
+            <h1><span class="tenants">Error retrieving quote</span></h1>
+            <br />
+            <p>Sorry, this does not appear to be a valid Tenants Quote number</p>
+        </div>
+        <div class="sidebar">
+            <h4>What people say</h4>
+            <div class="blue tenants">
+                <div class="testyhearts">
+                    <div id="testimonials-holder">
+                        <ul>
+                            <?php echo $this->testimonials( 'tenants' ); ?>
+                        </ul>
+                        <div id="test-changer">
+                            <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                            <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    $('.form_section > div:even')
+        .not($('.form_section > div input.noalt').parent())
+        .addClass('alt');
+});
+</script>

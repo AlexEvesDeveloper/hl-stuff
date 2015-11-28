@@ -1,0 +1,50 @@
+<?php $this->headScript()->prependFile('/assets/account/js/my-homelet-form.js'); ?>
+
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs; ?>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper">
+
+    <div class="col-sm-8">
+        <h1 class="base-colour">Retrieve Your Quote</h1>
+
+        <p>To retrieve your HomeLet quote, all you need to do is enter your details.</p>
+
+        <p>Questions marked with an asterisk (*) are mandatory.</p>
+
+        <?php if ($this->form->getDescription()) : ?>
+            <ul class="errors">
+                <li><?php echo $this->escape($this->form->getDescription()) ?></li>
+            </ul>
+        <?php endif; ?>
+
+        <?php echo $this->form; ?>
+
+        <div class="clearfix"></div>
+        <p>Have a My HomeLet account? <a href="/my-homelet/login" title="">Please log in to My HomeLet</a>.</p>
+        <p>One of our Letting Agents looking for Connect? <a href="<?php $params = Zend_Registry::get('params'); echo ($params->connectUrl->connectRootUrl); ?>">Log in to Connect</a>.</p>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-secondary">
+            <h3>Need help?</h3>
+            <p class="large quaternary-colour">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+
+</div>

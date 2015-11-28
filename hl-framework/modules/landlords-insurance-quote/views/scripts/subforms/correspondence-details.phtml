@@ -1,0 +1,74 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-correspondencedetails')); ?>
+        </span>
+        Your Correspondence Details
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-correspondencedetails'); ?>
+        </div>
+    </div>
+
+    <?php echo $this->element->cor_house_number_name; ?>
+
+    <div class="form-group">
+        <label for="cor_foreign_address" class="checkbox">
+            <?php echo $this->element->cor_foreign_address; ?>
+            If you live outside of the UK, please check this box.
+        </label>
+    </div>
+
+    <div class="foreign-address">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+        <div class="line-3"></div>
+
+        <div class="form-group">
+            <?php echo $this->element->country; ?>
+        </div>
+
+        <div class="form-group" id="zip-postal-code">
+            <label for="cor_postcode">Please enter the zip/postal code for this address.</label>
+        </div>
+    </div>
+
+    <div class="uk-address">
+        <div class="form-group">
+            <label for="cor_postcode" class="required">Please enter the postcode for the property you live at:</label>
+            <div class="input-group" id="uk-postcode">
+                <?php echo $this->element->cor_postcode; ?>
+                <span class="input-group-btn">
+                    <input type="submit" id="cor_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#cor_house_number_name').val(), $('#cor_postcode').val(), 'cor_postcode', 'cor_address'); return false;" class="btn btn-quaternary btn-postcode" />
+                </span>
+            </div>
+        </div>
+
+        <div id="cor_address_selector" class="address-selector">
+            <div class="form-group">
+                <?php echo $this->element->cor_address; ?>
+            </div>
+        </div>
+    </div>
+
+    <div id="cor_address_details">
+        <p>You have <span class="foreign-details">entered</span><span class="uk-details">selected</span> the following address:</p>
+        <dl class="dl-horizontal">
+            <dt>Address:</dt>
+            <dd>
+                <?php echo $this->element->cor_address_line1; ?><span class="foreign-line1"></span><br />
+                <?php echo $this->element->cor_address_line2; ?><span class="foreign-line2"></span><br />
+                <?php echo $this->element->cor_address_line3; ?><span class="foreign-line3"></span><br class="foreign-details" />
+                <span class="foreign-country"></span>
+            </dd>
+            <dt><span class="foreign-details">Zip/</span>Postcode:</dt>
+            <dd>
+                <?php echo $this->element->cor_address_postcode; ?>
+            </dd>
+        </dl>
+        <p class="uk-details">If this is incorrect, please search for a new postcode above.</p>
+    </div>
+</div>

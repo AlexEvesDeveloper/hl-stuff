@@ -1,0 +1,11 @@
+<tr>
+	<td><?php echo $this->contact_name; ?></td>
+	<td><?php echo Application_Core_Utilities::mysqlDateToUk($this->birth_date); ?></td>
+	<td>
+		<?php echo $this->address_line_1; ?>,
+		<?php echo $this->address_line_2; ?>,
+		<?php echo $this->address_line_3; ?>,
+		<?php echo $this->address_postcode; ?>
+	</td>
+	<td width="60"><a href="#" onclick="removeContact('<?php echo $this->uid; ?>')">Remove</a></td>
+</tr>

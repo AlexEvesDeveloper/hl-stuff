@@ -1,0 +1,50 @@
+<?php
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_contentsinsurance'];
+?>
+
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-contentsinsurance'); ?>
+        </div>
+        Your Contents Insurance
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-contentsinsurance'); ?>
+        </div>
+    </div>
+
+    <div style="clear: both; font-size: 0.75em;" id="contents_note"></div>
+    
+    <div id="contentsPromo" class="alert alert-info">
+        <?php
+        $contentsPromo = $this->promoContent('tenants-insurance-quote-contents-promo');
+        // Strip out empty paragraphs.
+        $contentsPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $contentsPromo);
+        echo $contentsPromo;
+        ?>
+    </div>
+    
+    <div id="contentsHighValuePromo" class="alert alert-info">
+        <?php
+        $contentsHighValuePromo = $this->promoContent('tenants-insurance-quote-contents-highvalue');
+        // Strip out empty paragraphs
+        $contentsHighValuePromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $contentsHighValuePromo);
+        echo $contentsHighValuePromo
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->contents_cover_a->setOptions(array('class'=>'form-control'))->render(); ?>
+    </div>
+
+    <div id="contents_cover_b_hideable" class="hideable">
+        <div class="form-group">
+            <?php echo $this->element->contents_cover_b->setOptions(array('class'=>'form-control'))->render(); ?>
+        </div>
+    </div>
+</div>

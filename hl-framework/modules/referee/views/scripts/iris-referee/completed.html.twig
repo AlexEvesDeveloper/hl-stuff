@@ -1,0 +1,19 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block body %}
+
+    <h2>{{ bodyTitle | trans }}</h2>
+
+    <p>
+        Thank you for providing this information, this has been received and will be processed within the next 4 working
+        hours.
+    </p>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+<ul class="application-progress first-row">
+    <li>
+        Property Details<br /> Completed<br />
+        {% if progress.propertyDetailsCompleted %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+
+    <li>
+        Tenant Details<br /> Completed<br />
+        {% if progress.tenantDetailsCompleted %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+
+    {# If not student or unemployed #}
+    {% if 3 != application.employmentStatus and 7 != application.employmentStatus %}
+        <li>
+            Financial Referee Details<br /> Completed<br />
+            {% if progress.financialRefereeDetailsCompleted %}
+                <img src="/assets/connect/images/tick.png" alt="Complete" />
+            {% else %}
+                <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+            {% endif %}
+        </li>
+    {% endif %}
+
+    <li>
+        Rental Index<br /> Checked<br />
+        {% if progress.rentalIndexChecked %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+
+    <li>
+        Credit History<br /> Checked<br />
+        {% if progress.creditHistoryChecked %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+</ul>
+
+<ul class="application-progress">
+    <li>
+        Default Tenant<br /> Checked<br />
+        {% if progress.defaultTenantChecked %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+
+    {# If not student or unemployed #}
+    {% if 3 != application.employmentStatus and 7 != application.employmentStatus %}
+        <li>
+            Financial Referee<br /> Validated<br />
+            {% if progress.financialRefereeValidated %}
+                <img src="/assets/connect/images/tick.png" alt="Complete" />
+            {% else %}
+                <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+            {% endif %}
+        </li>
+    {% endif %}
+
+    <li>
+        Interim Report<br /> Completed<br />
+        {% if progress.interimReportCompleted %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+
+    {# If not living with relatives or home owner #}
+    {% if 4 != application.residentialStatus and 1 != application.residentialStatus %}
+        <li>
+            Landlord Referee Details<br /> Completed<br />
+            {% if progress.landlordRefereeDetailsCompleted %}
+                <img src="/assets/connect/images/tick.png" alt="Complete" />
+            {% else %}
+                <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+            {% endif %}
+        </li>
+    {% endif %}
+
+    <li>
+        Final Report<br /> Completed<br />
+        {% if progress.finalReportCompleted %}
+            <img src="/assets/connect/images/tick.png" alt="Complete" />
+        {% else %}
+            <img src="/assets/connect/images/cross.png" alt="Incomplete" />
+        {% endif %}
+    </li>
+</ul>

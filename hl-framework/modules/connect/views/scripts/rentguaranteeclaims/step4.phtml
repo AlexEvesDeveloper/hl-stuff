@@ -1,0 +1,51 @@
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="wrapper two-col">
+        <div class="content">
+            <?php echo $this->form; ?>
+        </div>
+        <?php echo $this->sidebar; ?>
+        <div class="sidebar" style="margin:0">
+            <?php
+                if($this->file_err != "") {
+            ?>
+        <div class="document_list">
+            <h4>Errors</h4>
+            <ul class="grid err">
+                <li><?php echo $this->file_err;?></li>
+            </ul>
+        </div>
+        <div>&nbsp;</div>
+        <?php
+        }
+        if (count($this->documents)>0) :
+        ?>
+            <div class="document_list">
+                <h4>Submitted Documents</h4>
+                <ul class="grid" id="document_list">
+                <?php
+                    $documentTypes = $this->document_types;
+                    $arrDocuments = array();
+                    foreach($this->documents->toArray() as $documents) {
+                        $arrDocuments[$documents['supporting_document_name']][] = $documents;
+                    }
+                    foreach($arrDocuments as $type => $documents) {
+                        echo "<li><b>".$documentTypes[$type]."</b></li>";
+                        foreach($documents as $document) {
+                        $name = basename($document['attachment_filename']);
+                        $file_path = "download?d=".$document['id']."&file=".$name;
+                ?>
+                        <li><img src="/assets/connect/images/cross.gif" onclick="fnDeleteFile('<?php echo $name;?>',<?php echo $document['id'];?>)" height="10" title="Delete" align="top"/> <a href="<?php echo $file_path;?>" target="_blank" title="<?php echo $name;?>"><?php echo substr($name,0,32);if(strlen($name)>32) echo "..";?></a></li>
+                <?php
+                    }
+                        echo "<li><div style='height:10px'></div></li>";
+                }
+                ?>
+                </ul>
+            </div>
+        </div>
+        <?php
+        endif;
+        ?>
+    </div>
+</div>

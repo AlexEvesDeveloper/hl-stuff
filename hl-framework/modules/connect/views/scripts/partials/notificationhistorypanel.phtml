@@ -1,0 +1,7 @@
+<tr<?php if ($this->partialCounter > 3) { echo ' class="HiddenRow" style="display: none;"'; } ?>>
+    <td>
+        <img src="/assets/connect/images/greentick.jpg" width="15" valign="top">
+        Latest report for <?php echo htmlspecialchars($this->line); ?>
+        <span style="color:#CCC;">|</span> <a href="<?php echo $this->viewReportURL; ?>" target="_blank" style="text-decoration: underline;" >View Report</a>
+    </td>
+</tr>

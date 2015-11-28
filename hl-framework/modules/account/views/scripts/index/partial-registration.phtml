@@ -1,0 +1,32 @@
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs ?>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper">
+    <div class="primary-content col-sm-8">
+        <h1>Registration</h1>
+        <p><?php echo $this->message; ?></p>
+        <?php if ($this->form->getDescription()) {?>
+            <ul class="errors">
+                <li><?php echo $this->escape($this->form->getDescription()) ?></li>
+            </ul>
+        <?php }?>
+        <?php echo $this->form; ?>
+        <a href="/my-homelet/login" title="">Existing Customer? Please Login</a>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <h2>Hi <?php echo $this->firstName; ?></h2>
+            <p>You can view your quotes, insurance policy documents and all of your correspondence from HomeLet right here in My HomeLet.</p>
+            <p>If you do need any further help please don't hesitate to get in touch.</p>
+            <a href="/logout" class="btn btn-primary">Log out</a>
+        </div>
+        <div class="panel panel-primary">
+            <h2>Need Help?</h2>
+            <p>Call us on 0845 117 6000 and one of our team will be happy to answer any questions you might have over the phone.</p>
+        </div>
+    </div>
+</div>

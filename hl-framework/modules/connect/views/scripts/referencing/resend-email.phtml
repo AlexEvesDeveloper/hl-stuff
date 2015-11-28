@@ -1,0 +1,50 @@
+<script type="text/javascript">
+$(function() {
+    $('#refResendEmailSubmit').click(function() {
+
+        $.post(
+            '/referencing/resend-email?refno=<?php echo $this->refno; ?>',
+            $('form#refResendEmail').serialize(),
+            function(data) {
+                $.facebox('Resend completion e-mail to <?php echo $this->applicantName; ?> (<?php echo $this->applicantType; ?>)', data);
+            },
+            'html'
+        );
+
+        return false;
+    });
+});
+</script>
+<div class="popup_form_section">
+    <form id="refResendEmail" name="refResendEmail" method="post" action="/referencing/resend-email?refno=<?php echo $this->refno; ?>">
+        <?php
+        if (isset($this->flashMessages) && count($this->flashMessages) > 0) {
+            ?>
+            <p class="error">Problem sending e-mail:</p>
+            <ul class="errorList">
+                <?php
+                foreach($this->flashMessages as $message) {
+                    $m = htmlentities($message);
+                    echo "<li>{$m}</li>";
+                }
+                ?>
+            </ul>
+            <br />
+            <?php
+        }
+        ?>
+        <input type="hidden" name="fromForm" value="1" />
+        <div class="alt">
+            <label>Email Address</label>
+            <input type="text" id="email" name="email" value="<?php echo $this->form->getElement('email')->getValue(); ?>" />
+        </div>
+        <div>
+            <label>Replace Email Address</label>
+            <input type="checkbox" id="replace" name="replace" value="1" <?php echo (($this->form->getElement('replace')->getValue() == '1') ? ' checked="checked"' : ''); ?> /><br />
+            (Replace e-mail address on file with this)
+        </div>
+        <div>
+            <label style="float:right"><input type="submit" name="submit" id="refResendEmailSubmit" value="Send" /></label>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,41 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">New Reference</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <style type="text/css">
+        #sub_header {
+            display: none;
+        }
+    </style>
+
+    <script>
+        var _isAgentReturningFromNotification = {{ isAgentReturningFromNotification ? 'true' : 'false' }};
+        var canDisplayDeclaration = {{ canDisplayDeclaration ? 'true' : 'false' }};
+    </script>
+
+    <form method="post" class="form-horizontal" id="generic_step_form" novalidate>
+        <h2>
+            {{ bodyTitle | trans }}
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        {{ form_widget(form) }}
+        <div class="clearfix"></div>
+        {% include 'back-to-summary.html.twig' with { 'summaryController': 'iris-new-reference' } %}
+    </form>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<?php
+$view = $this->getHelper('Partial')->view;
+?>
+
+<h2>Additional Income/Information</h2>
+<div class="form_section two-col">
+    <p>If you would like to submit your Profit and Loss Accounts with this application, please attach the file below:</p>
+    <?php
+
+    if (isset($view->fileUploaded['originalName'])) {
+        echo "<strong>File uploaded: {$view->fileUploaded['originalName']}</strong>\n";
+    }
+
+    ?>
+    <div class="autoAlt">
+        <?php
+
+        $this->element->profit_and_loss->setAttrib('accept', implode(', ', $view->params->connect->companyapps->fileUpload->mimeTypes->toArray()));
+        echo $this->element->profit_and_loss;
+
+        ?>
+        <br /><br />
+        <p class="info">(<?php echo number_format($view->params->connect->companyapps->fileUpload->maxSize->file / 1048576, 1); ?>  MB limit of type <?php echo $view->params->connect->companyapps->fileUpload->typeSummary; ?>)</p>
+    </div>
+    <div class="autoAlt">
+        <?php
+
+        echo $this->element->additional_info;
+
+        ?>
+    </div>
+</div>

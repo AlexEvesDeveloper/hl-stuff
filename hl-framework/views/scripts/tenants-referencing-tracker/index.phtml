@@ -1,0 +1,233 @@
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/tenants">Tenants</a> &raquo; Reference Tracker
+    </div>
+</div>
+
+<div class="tenants col-sm-8">
+    <h2>HomeLet Tenant Referencing Application Tracker</h2>
+
+    <p>
+        Hi <strong><?php echo $this->name; ?></strong>,
+    </p>
+
+    <p>
+        Welcome to your HomeLet application tracker.
+        You'll notice below that you can see the status and progress of your referencing application for:
+    </p>
+
+    <p>
+        <?php echo ($this->address1 != '') ? "<strong>{$this->address1}</strong><br />" : ''; ?>
+        <?php echo ($this->address2 != '') ? "<strong>{$this->address2}</strong><br />" : ''; ?>
+        <?php echo ($this->town != '') ? "<strong>{$this->town}</strong><br />" : ''; ?>
+        <?php echo ($this->postCode != '') ? "<strong>{$this->postCode}</strong><br />" : ''; ?>
+    <p>
+
+    <div class="progresspanel">
+        <div class="progresspanel-head">
+            <h3<?php
+            if (Model_Referencing_TatStates::REFERENCE_INPROGRESS == $this->status) {
+                echo ' class="in-progress"';
+            } elseif (Model_Referencing_TatStates::REFERENCE_COMPLETE == $this->status) {
+                echo ' class="complete"';
+            }
+            ?>>
+                Your application is: <strong><?php echo strtoupper($this->status); ?></strong>
+            </h3>
+        </div>
+        <div class="progresspanel-body">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Reference type:</td>
+                        <td>Status:</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr<?php if (Model_Referencing_TatStates::REFERENCE_ITEM_NOTAPPLICABLE == $this->primaryIncome) { echo ' class="not-applicable"'; } ?>>
+                        <td>Income</td>
+                        <td>
+                            <?php
+                            switch ($this->primaryIncome) {
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_INPROGRESS:
+                                    echo '<img src="/assets/common/images/status-in-progress.png" alt="Pending" />';
+                                    break;
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_COMPLETE:
+                                    echo '<img src="/assets/common/images/status-complete.png" alt="Received" />';
+                                    break;
+                                default:
+                                    echo $this->primaryIncome;
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr<?php if (Model_Referencing_TatStates::REFERENCE_ITEM_NOTAPPLICABLE == $this->additionalIncome) { echo ' class="not-applicable"'; } ?>>
+                        <td>Additional Income</td>
+                        <td>
+                            <?php
+                            switch ($this->additionalIncome) {
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_INPROGRESS:
+                                    echo '<img src="/assets/common/images/status-in-progress.png" alt="Pending" />';
+                                    break;
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_COMPLETE:
+                                    echo '<img src="/assets/common/images/status-complete.png" alt="Received" />';
+                                    break;
+                                default:
+                                    echo $this->additionalIncome;
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr<?php if (Model_Referencing_TatStates::REFERENCE_ITEM_NOTAPPLICABLE == $this->futureIncome) { echo ' class="not-applicable"'; } ?>>
+                        <td>Future Income</td>
+                        <td>
+                            <?php
+                            switch ($this->futureIncome) {
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_INPROGRESS:
+                                    echo '<img src="/assets/common/images/status-in-progress.png" alt="Pending" />';
+                                    break;
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_COMPLETE:
+                                    echo '<img src="/assets/common/images/status-complete.png" alt="Received" />';
+                                    break;
+                                default:
+                                    echo $this->futureIncome;
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr<?php if (Model_Referencing_TatStates::REFERENCE_ITEM_NOTAPPLICABLE == $this->landlord) { echo ' class="not-applicable"'; } ?>>
+                        <td>Landlord</td>
+                        <td>
+                            <?php
+                            switch ($this->landlord) {
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_INPROGRESS:
+                                    echo '<img src="/assets/common/images/status-in-progress.png" alt="Pending" />';
+                                    break;
+                                case Model_Referencing_TatStates::REFERENCE_ITEM_COMPLETE:
+                                    echo '<img src="/assets/common/images/status-complete.png" alt="Received" />';
+                                    break;
+                                default:
+                                    echo $this->landlord;
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr<?php if (is_null($this->missingInformation)) { echo ' class="not-applicable"'; } ?>>
+                        <td valign="top">What information are we missing?</td>
+                        <td>
+                            <?php
+                            if (is_null($this->missingInformation)) {
+                                ?>
+                                n/a
+                            <?php
+                            } else {
+                                ?>
+                                <ul>
+                                    <?php
+                                    foreach ($this->missingInformation as $missing) {
+                                        ?>
+                                        <li><?php echo $missing; ?></li>
+                                    <?php
+                                    }
+                                    ?>
+                                </ul>
+                            <?php
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <?php
+    if (Model_Referencing_TatStates::REFERENCE_COMPLETE == $this->status) {
+        ?>
+        <p>
+            Your application has been <strong>completed</strong> and our report has been sent to your letting agent.
+            Please bear in mind that your letting agent may carry out additional checks and the final decision on approving any application for a tenancy is ultimately down to your letting agent.
+        </p>
+
+        <p>
+            Your letting agent will be in touch to discuss your completed application in due course.
+        </p>
+    <?php
+    } else {
+        ?>
+        <p>
+            Your application has <strong>not been completed</strong>.
+            The length of time it takes us to complete a reference varies on a case by case basis, but we&rsquo;ll let you know if we need any further information to complete your reference, so please check back regularly.
+        </p>
+
+        <p>
+            As well as seeing the status of your reference, you can also check if we&rsquo;ve emailed you for any additional information, you can email us with any changes to your personal information or any supporting information for your application and you can also get a quote for our specialist tenant&rsquo;s contents insurance.
+        </p>
+    <?php
+    }
+    ?>
+
+    <div class="panel panel-dark">
+        <a href="/tenants/?<?php echo (($this->asn != '') ? "asn={$this->asn}&" : ''); ?>utm_source=TAT&utm_medium=More+Info+alt&utm_campaign=Tenants+Insurance" class="pull-right">
+            <img src="/assets/common/images/content_icons/white_cog_small.png" alt="cog edit" />
+        </a>
+        <h3>More information</h3>
+        <p>Cover your liability as a tenant and your contents with Tenant&rsquo;s Insurance</p>
+        <a href="/tenants/?<?php echo (($this->asn != '') ? "asn={$this->asn}&" : ''); ?>utm_source=TAT&utm_medium=More+Info+alt&utm_campaign=Tenants+Insurance" class="btn btn-primary">
+            More Info
+        </a>
+    </div>
+
+    <div class="panel panel-dark">
+        <a href="/tenants/reference-tracker/callme" class="pull-right">
+            <img src="/assets/common/images/content_icons/white_possessions_small.png" alt="edit possessions" />
+        </a>
+        <h3>Call me about insurance</h3>
+        <p>Let us call you back at a time that is convenient for you to talk about your insurance needs</p>
+        <a href="/tenants/reference-tracker/callme" class="btn btn-primary">Call Me</a>
+    </div>
+
+    <div class="panel panel-dark">
+        <a href="/tenants/reference-tracker/email" class="pull-right">
+            <img src="/assets/common/images/content_icons/white_book-e_small.png" alt="book" />
+        </a>
+        <h3>Email HomeLet</h3>
+        <p>Let us know about any changes to your personal details or provide us with additional information</p>
+        <a href="/tenants/reference-tracker/email" class="btn btn-primary">Contact Us</a>
+    </div>
+
+    <div class="panel panel-dark">
+        <a href="/tenants/reference-tracker/viewemails" class="pull-right">
+            <img src="/assets/common/images/content_icons/white_book-e_small.png" alt="book" />
+        </a>
+        <h3>View your emails</h3>
+        <p>Take a look at previous emails sent by HomeLet to you about your referencing application</p>
+        <a href="/tenants/reference-tracker/viewemails" class="btn btn-primary">View Emails</a>
+    </div>
+
+
+
+</div>
+
+<div class="tenants col-sm-4">
+    <?php echo $this->promoContent('tenants-application-tracker-promo'); ?>
+
+    <ul class="list-unstyled">
+        <li><a class="btn btn-default" href="/tenants/?<?php echo (($this->asn != '') ? "asn={$this->asn}&" : ''); ?>utm_source=TAT&utm_medium=Get+a+quote&utm_campaign=Tenants+Insurance">Get a quote</a><br /></li>
+        <li><a class="btn btn-default" href="/tenants/?<?php echo (($this->asn != '') ? "asn={$this->asn}&" : ''); ?>utm_source=TAT&utm_medium=Find+out+more&utm_campaign=Tenants+Insurance">Find out more</a></li>
+    </ul>
+
+    <hr />
+
+    <div class="panel panel-default bg-lets-move-tenant">
+        <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+        <h3 class="base-colour heavy">Let's Move App</h3>
+
+        <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+        <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+        <br />
+        <br />
+        <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+        <div class="clearfix"></div>
+    </div>
+</div>

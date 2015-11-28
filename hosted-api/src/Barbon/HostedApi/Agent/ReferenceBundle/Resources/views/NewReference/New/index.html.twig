@@ -1,0 +1,53 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% form_theme form with [
+    'bootstrap_3_layout.html.twig',
+    'BarbonHostedApiAppBundle:Common/Widgets:widgets.html.twig'
+] %}
+
+{% block javascripts %}
+
+    {# JavaScript assets #}
+    {%
+        javascripts
+            '@BarbonHostedApiAppBundle/Resources/public/js/collections.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.dates.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.refresh.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.minimise.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/addressfinder.plugin.jquery.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {# JSX assets #}
+    {# todo: React not used yet
+    {%
+        javascripts '@BarbonHostedApiAgentReferenceBundle/Resources/public/js/form-react.jsx.js'
+    %}
+        <script type="text/jsx" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    #}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="hidden-xs col-sm-4 col-md-3">
+                <nav role="navigation" id="affixed-navigation">
+                    <ul class="nav form-navigation"></ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-8 col-md-9">
+                <div class="page-content">
+                    <form method="post" class="referencing branded" id="generic_step_form" novalidate>
+                        <h2>New Reference</h2>
+                        {{ form_widget(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

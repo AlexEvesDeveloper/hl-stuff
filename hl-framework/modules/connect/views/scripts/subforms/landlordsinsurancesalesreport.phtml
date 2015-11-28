@@ -1,0 +1,21 @@
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Landlords Insurance Sales</h2>
+    
+    <div class="form_section one-col">
+        <p>
+            This report shows all Landlords Insurance policies introduced by you in the time period you enter below
+        </p>
+        
+        <div class="datePicker">
+            <?php echo $this->element->landlordsinsurancesalesreport_start; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->landlordsinsurancesalesreport_end; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->landlordsinsurancesalesreport_producereport; ?>
+            <?php echo $this->element->landlordsinsurancesalesreport_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

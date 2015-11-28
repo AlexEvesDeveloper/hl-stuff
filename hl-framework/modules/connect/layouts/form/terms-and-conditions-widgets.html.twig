@@ -1,0 +1,182 @@
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+{% block terms_and_conditions_widget %}
+    <h3>About your reference</h3>
+
+    <p>
+        <strong>
+            Please ensure your applicant has signed this declaration and consent form and you have
+            a copy on file.
+        </strong>
+    </p>
+
+    <p>
+        Your reference will be completed by HomeLet on behalf of your letting agent. HomeLet is part of the
+        Barbon Insurance Group Limited and for the purposes of this application, Barbon is the Data Controller
+        as defined in the Data Protection Act 1998 (the &ldquo;Act&rdquo;).
+    </p>
+
+    <p>
+        In order to complete your application, HomeLet will consult with a number of sources to verify the
+        information, including a licensed credit reference agency. As a result of the information received:
+    </p>
+
+    <ul>
+        <li>
+            HomeLet may pass on any information supplied to your landlord and/or letting agent, including the
+            results of any linked verification checks.
+        </li>
+
+        <li>
+            By consulting with a credit reference agency, HomeLet will share your information with them and
+            the agency may record the results of this search. This search may show how you conduct payments
+            with other organisations. From time to time, this information may also be used for debt tracing
+            and fraud prevention. You may request the name and address of the Credit Reference agency
+            HomeLet use and you may also apply for a copy of the information they provided to HomeLet.
+        </li>
+
+        <li>
+            If you default on your rental payments, HomeLet may record this on a centrally held database
+            of defaulting tenants, and such a default could affect any future application for tenancies,
+            credit, and/or insurance.
+        </li>
+
+        <li>
+            HomeLet may use debt collection agencies or tracing agents to trace your whereabouts and
+            recover any monies owed to HomeLet.
+        </li>
+
+        <li>
+            If false or inaccurate information is provided and fraud is identified, details will be passed to fraud
+            prevention agencies to prevent fraud and money laundering.
+        </li>
+    </ul>
+
+    <p>
+        Information may be sent to you and your nominated referees by email. This information will only be
+        sufficient enough to identify you and it won&rsquo;t be excessive; however you should be aware that
+        information sent via electronic means can&rsquo;t be guaranteed to be secure.
+    </p>
+
+    <p>
+        The provisions of Ground 17 of the Housing Act 1996 will apply to this application. If any
+        information within this application is found to be untrue it may be grounds to terminate the
+        tenancy agreement.
+    </p>
+
+    <p>
+        <strong>
+            Please read and complete the following statements carefully – it&rsquo;s important that you provide
+            your consent for the checks by marking the boxes next to the text.
+        </strong>
+    </p>
+
+    <p>
+        {{ form_widget(form.application_correct) }}
+
+        * Yes, I confirm that the information provided in this application form is true to the best of my
+        knowledge, and I&rsquo;m happy with the checks which HomeLet will complete as detailed above. These
+        results may be accessed again if I apply for a tenancy in the future.
+
+        {{ form_errors(form.application_correct) }}
+    </p>
+
+    <p>
+        {{ form_widget(form.referee_contact) }}
+
+        * Yes, I&rsquo;m happy for HomeLet to contact my referees (including those outside the EEA), with
+        personal information which has been provided in this form to allow them to verify the information
+        about my earnings, dates of employment and previous tenancy term.
+
+        {{ form_errors(form.referee_contact) }}
+    </p>
+
+    <p>
+        Please note, if you&rsquo;d like to find out more about any of the information sources we access to
+        complete your application, please visit
+        <a href="http://homelet.co.uk/ref-info" target="_blank">http://homelet.co.uk/ref-info</a>.
+    </p>
+
+    <p>
+        Following the completion of your reference, HomeLet or other Barbon Group Companies may contact
+        you about additional services we can offer which may be of interest to you. These services could
+        help protect your liability as a tenant as well as your personal contents. If you don&rsquo;t want us
+        to contact you, please tick this box {{ form_widget(form.canContactApplicantByPhoneAndPost) }}.
+
+        We&rsquo;ll never pass your details on to a third party unless
+        we ask for your express permission. If you&rsquo;d like to unsubscribe from any services at any time,
+        then please contact HomeLet on unsubscribe@homelet.co.uk
+    </p>
+
+    <p>
+        {{ form_widget(form.canContactApplicantBySMSAndEmail) }}
+        Yes, I&rsquo;m happy for HomeLet and other Barbon Group Companies to contact me occasionally by email
+        or SMS with exclusive offers, together with other information from selected third parties about
+        products and services which could benefit me as a tenant.
+    </p>
+
+    <p>
+        <strong>
+            Please ensure you answer the consent boxes as indicated by your applicant.
+        </strong>
+    </p>
+
+    <p>
+        <strong>
+            I understand that by submitting this application I will become liable to pay HomeLet.
+        </strong>
+    </p>
+
+    <p>
+        Please note by clicking &lsquo;Complete&rsquo; you (the letting agent) confirm:
+    </p>
+
+    <ul>
+        <li>
+            The information you are submitting includes the same details as on the paper application
+            form completed by the tenant, and
+        </li>
+
+        <li>
+            The online declaration you have completed on behalf of the tenant is the same as the
+            printed and signed copy you have kept on file
+        </li>
+    </ul>
+    
+    <div id='displayDeclaration'>
+        <p>
+            <a href="/assets/connect/pdf/referencingApplication/Tenant-Declaration-and-Consent-Form.pdf">
+                Download declaration
+            </a>
+        </p>
+    </div>
+    
+    <p>
+        {{ form_widget(form.agree_terms) }}
+        I understand and agree with these terms and conditions.
+        {{ form_errors(form.agree_terms) }}
+    </p>
+   
+    
+    <script>
+        (function ($) {
+            if (_isAgentReturningFromNotification) {
+                var $formCheckboxes = $('#{{ form.application_correct.vars.id }}, #{{ form.referee_contact.vars.id }}, #{{ form.canContactApplicantByPhoneAndPost.vars.id }}, #{{ form.canContactApplicantBySMSAndEmail.vars.id }}');
+                $formCheckboxes
+                        .attr('disabled', 'disabled')
+                ;
+                $('#{{ form.application_correct.vars.id }}, #{{ form.referee_contact.vars.id }}').attr('checked', 'checked');
+                $('#generic_step_form').submit(function () {
+                    $formCheckboxes.removeAttr('disabled');
+                });
+            }
+            
+            if ( ! canDisplayDeclaration ) {
+                $('#displayDeclaration').hide();               
+            }
+        })(jQuery);
+    </script>
+
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}

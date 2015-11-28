@@ -1,0 +1,30 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li><a href="/iris-referencing">Referencing</a></li>
+        <li class="last"><a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">Reference no: {{ application.referenceNumber }}</a></li>
+        <li class="current_page">Email Assessor</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div class="form-horizontal">
+        <h2>Email Assessor</h2>
+        {% if success is not null and success %}
+            <p class="flash-message flash-message-success">
+                Assessor has been contacted
+            </p>
+        {% endif %}
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="form-horizontal" novalidate>
+        <div class="form_section one-col">
+            {{ form_widget(form) }}
+        </div>
+    </form>
+
+{% endblock %}

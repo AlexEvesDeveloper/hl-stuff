@@ -1,0 +1,15 @@
+{% extends 'error-base.html.twig' %}
+
+{% block errorTitle %}Oops! Something Went Wrong{% endblock %}
+
+{% block errorContent %}
+    {% for sessionTimeoutMessage in app.session.flashbag.get('session_timeout') %}
+        <div class="flash flash-error">
+            <p>{{ sessionTimeoutMessage }}</p>
+        </div>
+    {% endfor %}
+
+    <p>
+        A Reference has not been ordered during this session, please re-submit the Reference form.
+    </p>
+{% endblock %}

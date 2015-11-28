@@ -1,0 +1,94 @@
+<div class="landlords framework-content">
+    <div class="col-md-8">
+        <form enctype="application/x-www-form-urlencoded" method="post" action="" class="form-horizontal main">
+            <h1 class="quaternary-colour">Welcome back<?php if ('' != $this->customerFirstName) { echo ' ' . $this->customerFirstName; } ?>,</h1>
+            <?php if (!$this->customerValidated): ?>
+                <p>As a returning user, we just need to quickly complete your registration before you can proceed.</p>
+
+                <p>We&rsquo;d previously sent you an email to validate your email address.  You just need to click on the link in the email to complete the registration process.</p>
+
+                <p>Don&rsquo;t worry if you can&rsquo;t find that e-mail, you can click the button below and we&rsquo;ll send you a new email.</p>
+
+                <div class="form-group">
+                    <input type="submit" name="resendValidation" id="resendValidation" value="Resend Account Validation" class="btn btn-inverse">
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->form->getDescription()): ?>
+                <div class="panel panel-dark">
+                    <ul class="errors">
+                        <li><?php echo $this->form->getDescription(); ?></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <label for="email" class="required control-label col-sm-3">Email address</label>
+                <div class="col-sm-9">
+                    <input type="text" name="email" id="email" value="<?php echo $this->form->getElement('email')->getValue(); ?>" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="required control-label col-sm-3">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" name="password" id="password" value="<?php echo $this->form->getElement('password')->getValue(); ?>" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-lg-offset-3 col-md-10 col-lg-9">
+                    <div class="hidden-xs">
+                        <input type="submit" name="submit" id="submit" value="Login" class="btn btn-quaternary pull-right">
+                        <input type="submit" name="forgottenPassword" id="forgottenPassword" value="Resend Password" class="btn btn-inverse">
+                    </div>
+
+                    <ul class="list-unstyled visible-xs">
+                        <li><input type="submit" name="submit" id="submit" value="Login" class="btn btn-quaternary"></li>
+                        <li><input type="submit" name="forgottenPassword" id="forgottenPassword" value="Resend Password" class="btn btn-inverse"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>Don&rsquo;t worry if you&rsquo;ve forgotten your password, we can <a href="#" class="forgotten-password-link">send you an e-mail to reset it</a>.</p>
+
+        </form>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <?php if ($this->customerValidated): ?>
+            <div class="panel panel-secondary">
+                <p>As you&rsquo;ve already registered with HomeLet you just need to enter your password to login and complete your quote.</p>
+
+                <p>If you&rsquo;ve forgotten your password, we can <a href="#" class="forgotten-password-link">send you an e-mail to reset it</a>.</p>
+            </div>
+        <?php else: ?>
+            <div class="panel panel-secondary">
+                <h3>Need help?</h3>
+
+                <p class="large quaternary-colour">Call: 0845 117 6000</p>
+
+                <p>We&rsquo;re open from:</p>
+                <table class="table table-condensed">
+                    <tr>
+                        <td>Weekdays</td>
+                        <td>8:30am - 6:30pm</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td>9:30am - 1:00pm</td>
+                    </tr>
+                </table>
+                <p>We&rsquo;re always happy to help.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.forgotten-password-link').click(function (e) {
+            e.preventDefault();
+            $('#forgottenPassword').click();
+        });
+    });
+</script>

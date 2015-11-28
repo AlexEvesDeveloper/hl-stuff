@@ -1,0 +1,66 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li><a href="/iris-referencing">Referencing</a></li>
+        <li class="last"><a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">Reference no: {{ application.referenceNumber }}</a></li>
+        <li class="current_page">Resend Email to Applicant</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    {% if _request.method == 'GET' or isValid == false %}
+
+        <h2>Resend Email to Applicant</h2>
+
+        <p>
+            If you would like to the change the email address of the applicant before re-sending, please do so using the
+            form below.
+        </p>
+
+        <form action="" method="post" novalidate>
+            {{ form_widget(form) }}
+            <button type="submit" class="button" id="save_and_send_button">Save &amp; Resend Email</button>
+        </form>
+
+        <script>
+            (function ($) {
+                $('#save_and_send_button').click(function(e) {
+                    $(this).html('Please Wait&hellip;');
+                    if ($(this).data('clicked')) {
+                        e.preventDefault();
+                        return;
+                    }
+                    $(this).data('clicked', true);
+                });
+            })(jQuery);
+        </script>
+
+    {% else %}
+
+        {% if isSuccess %}
+
+            <h2>Email Sent</h2>
+
+            <p>
+                We have re-sent an email to the applicant requesting that they complete their referencing
+                application
+            </p>
+
+        {% else %}
+
+            <h2>Email Failed to Send</h2>
+
+            <p>
+                The email has failed to send to the applicant. Please try again and if the problem continues
+                then please <a href="http://homelet.co.uk/contact-us">contact us</a>.
+            </p>
+
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

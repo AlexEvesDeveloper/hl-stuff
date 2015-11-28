@@ -1,0 +1,9 @@
+services:
+    barbon.hosted_api.landlord.authentication.form.type.direct_landlord_type:
+        class: Barbon\HostedApi\Landlord\AuthenticationBundle\Form\Type\DirectLandlordType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.titles
+            - @barbon.hosted_api.app.form.common.lookup.security_questions
+
+    barbon.hosted_api.landlord.authentication.form.type.login_type:
+        class: Barbon\HostedApi\Landlord\AuthenticationBundle\Form\Type\LoginType

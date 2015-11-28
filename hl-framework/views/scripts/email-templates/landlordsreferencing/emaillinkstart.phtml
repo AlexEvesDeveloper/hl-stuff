@@ -1,0 +1,41 @@
+<?php
+// Landlords Referencing - Email link to reference subject
+?>
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+    	Dear <strong><?php echo($this->metaData['firstName'] . ' ' . $this->metaData['lastName']); ?></strong>
+    </font>
+</p>
+
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">    
+    With reference to your recent application for tenancy of:
+    <br />
+    <br />
+    <?php echo $this->metaData['addressLine1']; ?>
+    <br />
+    <?php echo $this->metaData['town']; ?>
+    <br />
+    <?php echo $this->metaData['postCode']; ?>
+    </font>
+</p>
+    
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+    Please complete the on line Referencing Form to be found at:
+	</font>
+</p>
+
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+	    <strong>
+			<a href="<?php echo $this->metaData['linkUrl']; ?>"><?php echo $this->metaData['linkUrl']; ?></a>
+	    </strong>
+    </font>
+</p>
+    
+<p>
+	<font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+    Thank you in advance for your co-operation.
+    </font>
+</p>

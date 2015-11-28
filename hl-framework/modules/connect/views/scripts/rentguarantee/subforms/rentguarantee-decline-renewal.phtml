@@ -1,0 +1,27 @@
+
+<form action="<?php echo $this->formAction; ?>" method="post">
+    <h2>Decline Renewal</h2>
+    
+    <p>
+        Please be advised that by declining renewal you are accepting that rent guarantee cover will not be in place.
+    </p>
+    
+    <div class="form_section one-col">
+        <div>
+            <?php echo $this->element->nonrenewal_reason; ?>
+        </div>
+        
+        <div class="alt">
+            <?php echo $this->element->other_product; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->other_reason; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->formsubmit_back; ?>
+            <?php echo $this->element->formsubmit_continue; ?>
+        </div>
+    </div>
+</form>

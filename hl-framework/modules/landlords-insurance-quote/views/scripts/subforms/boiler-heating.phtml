@@ -1,0 +1,21 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-boilerheating')); ?>
+        </span>
+        Boiler &amp; Heating Cover
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-boilerheating'); ?>
+        </div>
+    </div>
+
+    <div id="boilerHeatingNotIncluded">
+        <div class="radio form-group">
+            <?php echo $this->element->need_boiler_heating; ?>
+        </div>
+    </div>
+</div>

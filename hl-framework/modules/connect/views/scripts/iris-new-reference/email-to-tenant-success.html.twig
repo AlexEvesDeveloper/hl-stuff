@@ -1,0 +1,30 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">New Reference</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <h2>{{ bodyTitle | trans }}</h2>
+
+    <p>
+        {# TODO: Review for wording #}
+        We've sent an email to <strong>{{ application.title }} {{ application.lastName }}</strong> ({{ application.email }}), instructing
+        them to complete the rest of the referencing process for application <strong>{{ application.referenceNumber }}</strong>.
+    </p>
+
+    <p>
+        <a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">View your reference</a>
+    </p>
+
+{% endblock %}

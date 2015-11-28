@@ -1,0 +1,49 @@
+<div class="sidebar">
+    <div id="scroller-anchor"></div>
+    <div id="scroller" style="margin-top:0px; width: 206px;">
+        <?php       
+        if (isset($this->stepNum)) {
+            ?>
+            <div id="progress">
+                <h4>Overall Progress</h4>
+                <div>
+                    <span class="progress_bar">
+                        <?php
+                        if($this->stepNum == "dd"){
+                            $fractionComplete = 1;
+                        }else{
+                            if (isset($this->stepNum) && isset($this->stepMax)) {
+                                $fractionComplete = $this->stepNum / $this->stepMax;
+                            } else {
+                                $fractionComplete = 0;
+                            }
+                        }
+                        ?>
+                        <span class="current_progress" style="width: <?php echo round($fractionComplete * 100); ?>%;">&nbsp;</span>
+                    </span>
+                </div>
+                <div id="errorList">
+                    <?php
+                        if ($this->errorCount > 0) {
+                            printf(
+                                '<p>There %s only %d mandatory field%s left to complete in step %d:</p>',
+                                (($this->errorCount == 1) ? 'is' : 'are'),
+                                $this->errorCount,
+                                (($this->errorCount == 1) ? '' : 's'),
+                                $this->stepNum
+                            );
+                        }
+                        echo $this->errorsHtml;
+                        ?>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        moveScroller();
+    });
+</script>

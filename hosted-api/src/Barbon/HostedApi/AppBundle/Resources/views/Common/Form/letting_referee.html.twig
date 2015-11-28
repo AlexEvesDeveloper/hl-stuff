@@ -1,0 +1,11 @@
+{% block letting_referee_widget %}
+    {% spaceless %}
+    {{ form_row(form.type) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.dayPhone) }}
+    {{ form_row(form.eveningPhone) }}
+    {{ form_row(form.fax) }}
+    {{ form_row(form.email) }}
+    {% endspaceless %}
+{% endblock %}

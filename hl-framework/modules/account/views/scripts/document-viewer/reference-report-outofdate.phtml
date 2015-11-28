@@ -1,0 +1,16 @@
+
+<div class="portal-wrapper">
+    <?php echo $this->breadcrumbs ?>
+
+    <div class="primary-content">
+        <h1>We've got a problem</h1>
+
+        <p>
+            The report you requested is not the latest version and is no longer available.
+        </p> 
+
+        <p>
+            <a href="/my-homelet/references/<?php echo $this->report->externalId ?>/view-report?report=<?php echo $this->report->validationKey ?>&download=<?php echo $this->download ?>" title="Retrieve the latest report version for your reference">Retrieve the latest report version for your reference.</a>
+        </p>
+    </div>
+</div>

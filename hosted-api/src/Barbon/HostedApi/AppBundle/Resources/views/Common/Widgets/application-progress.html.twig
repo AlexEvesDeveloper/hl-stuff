@@ -1,0 +1,254 @@
+<div id="application-progress-widget" class="panel panel-default">
+    <div class="panel-heading">
+        Progress
+        {% if allowAddGuarantor %}
+        <a href="{{ path('barbon_hostedapi_landlord_reference_newreference_guarantor_new_index', {'applicationId':application.applicationId}) }}" class="btn btn-primary pull-right">
+            Add a guarantor
+            <i class="fa fa-arrow-right"></i>
+        </a>
+        {% endif %}
+    </div><!-- panel-heading -->
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Property Details
+                    </span>
+                    {% if progress.propertyDetailsCompleted %}
+                        <span class="status-message">
+                            Completed
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Incomplete
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Tenant Details
+                    </span>
+                    {% if progress.tenantDetailsCompleted %}
+                        <span class="status-message">
+                            Completed
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Incomplete
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {# If not student or unemployed #}
+            {% if 3 != application.employmentStatus and 7 != application.employmentStatus %}
+                <div class="col-md-6">
+                    <div class="application-status">
+                        <span class="status-title">
+                            Financial Referee Details
+                        </span>
+                        {% if progress.financialRefereeDetailsCompleted %}
+                            <span class="status-message">
+                                Completed
+                            </span>
+                            <span class="status-icon status-icon-success">
+                                <i class="fa fa-check"></i>
+                            </span>
+                        {% else %}
+                            <span class="status-message">
+                                Incomplete
+                            </span>
+                            <span class="status-icon status-icon-fail">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Rental Index
+                    </span>
+                    {% if progress.rentalIndexChecked %}
+                        <span class="status-message">
+                            Checked
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Unchecked
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Credit History
+                    </span>
+                    {% if progress.creditHistoryChecked %}
+                        <span class="status-message">
+                            Checked
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Unchecked
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Default Tenant
+                    </span>
+                    {% if progress.defaultTenantChecked %}
+                        <span class="status-message">
+                            Checked
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Unchecked
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {# If not student or unemployed #}
+            {% if 3 != application.employmentStatus and 7 != application.employmentStatus %}
+                <div class="col-md-6">
+                    <div class="application-status">
+                        <span class="status-title">
+                            Financial Referee
+                        </span>
+                        {% if progress.financialRefereeValidated %}
+                            <span class="status-message">
+                                Validated
+                            </span>
+                            <span class="status-icon status-icon-success">
+                                <i class="fa fa-check"></i>
+                            </span>
+                        {% else %}
+                            <span class="status-message">
+                                Not validated
+                            </span>
+                            <span class="status-icon status-icon-fail">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Interim Report
+                    </span>
+                    {% if progress.interimReportCompleted %}
+                        <span class="status-message">
+                            Completed
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Incomplete
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {# If not living with relatives or home owner #}
+            {% if 4 != application.residentialStatus and 1 != application.residentialStatus %}
+                <div class="col-md-6">
+                    <div class="application-status">
+                        <span class="status-title">
+                            Landlord Referee Details
+                        </span>
+                        {% if progress.landlordRefereeDetailsCompleted %}
+                            <span class="status-message">
+                                Completed
+                            </span>
+                            <span class="status-icon status-icon-success">
+                                <i class="fa fa-check"></i>
+                            </span>
+                        {% else %}
+                            <span class="status-message">
+                                Incomplete
+                            </span>
+                            <span class="status-icon status-icon-fail">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="col-md-6">
+                <div class="application-status">
+                    <span class="status-title">
+                        Final Report
+                    </span>
+                    {% if progress.finalReportCompleted %}
+                        <span class="status-message">
+                            Completed
+                        </span>
+                        <span class="status-icon status-icon-success">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    {% else %}
+                        <span class="status-message">
+                            Incomplete
+                        </span>
+                        <span class="status-icon status-icon-fail">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- panel panel-default -->

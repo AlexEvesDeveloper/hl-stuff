@@ -1,0 +1,7 @@
+barbon_payment_portal:
+    resource: "@BarbonPaymentPortalBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+barbondev_payment_paypoint_hosted:
+    resource: "@BarbondevPaymentPayPointHostedBundle/Resources/config/routing.xml"

@@ -1,0 +1,104 @@
+<script type="text/javascript">
+        
+	var isErrors = false;
+	
+	$(document).ready(function() {
+	
+		$('#firstName, #lastName, #address1, #address2, #postcode, #telephone, #email').change(ajaxValidateSearch);
+		$('#next').click(validateSubmit);
+	});
+	
+	function validateSubmit() {
+	
+		//If isErrors is true, return false.
+		//Else replace next button with ajax gif and return true.
+		if(isErrors) {
+			
+			return false;
+		}
+		
+		$('#next').hide();
+		$('#submission-wait-icon').show();
+		return true;
+	}
+	
+	function ajaxValidateSearch() {
+	
+		$.ajax({
+			url: '/insurance/validate-search',
+			dataType: "json",
+			type: "post",
+			data: $('#custSearch').serialize(),
+			cache: false,
+			success: function(jsonResponse){
+				
+				if (jsonResponse.errorHtml != ''){
+
+					if(!$('#errorListing').is(':visible')) {
+					
+						$('#errorListing').show('slow');
+					}
+					
+					$('#errorListing').html(jsonResponse.errorHtml);
+					isErrors = true;
+				}
+				else {
+					
+					if($('#errorListing').is(':visible')) {
+						
+						$('#errorListing').hide('slow');
+					}
+					isErrors = false;
+				}
+			}
+		});
+	}
+	
+</script>
+
+<div class="popup_form_section">
+	<div id="errorListing" style="display: none; margin: 0; padding: 0;"></div>
+    
+    <p>
+        If you&rsquo;re looking for a Tenancy Liability policy please call us
+        on 0845 117 6000, as we don&rsquo;t currently host Tenancy Liability
+        policies on Connect.
+    </p>
+
+    <form id="custSearch" name="custSearch" method="get" action="/insurance/search-customer" class="workflowform">
+		<p class="workflowinfo">Please enter customer details in any of the boxes below and click on &quot;Search&quot;</p>
+		
+        <div>
+        	<label>Customer First Name</label>
+        	<input type="text" id="firstName" name="firstName" value="<?php echo $this->form->getElement('firstName')->getValue(); ?>" />
+        </div>
+        <div class="alt">
+        	<label>Customer Last Name</label>
+            <input type="text" id="lastName" name="lastName" value="<?php echo $this->form->getElement('lastName')->getValue(); ?>" />
+        </div>
+        <div>
+        	<label>Street Address</label>
+            <input type="text" id="address1" name="address1" value="<?php echo $this->form->getElement('address1')->getValue(); ?>" />
+        </div>
+        <div class="alt">
+        	<label>Town/City</label>
+        	<input type="text" id="address2" name="address2" value="<?php echo $this->form->getElement('address2')->getValue(); ?>" />
+        </div>
+        <div>
+        	<label>Post Code</label>
+        	<input type="text" id="postcode" name="postcode" value="<?php echo $this->form->getElement('postcode')->getValue(); ?>" />
+        </div>
+        <div class="alt">
+            <label>Telephone</label>
+            <input type="text" id="telephone" name="telephone" value="<?php echo $this->form->getElement('telephone')->getValue(); ?>" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="text" id="email" name="email" value="<?php echo $this->form->getElement('email')->getValue(); ?>" />
+        </div>
+        <div>
+            <input type="submit" name="submit" class="submit" id="next" value="Search">
+            <img style="float: right; display: none;" id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+        </div>
+    </form>
+</div>

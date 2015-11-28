@@ -1,0 +1,167 @@
+
+<?php
+$this->headScript()
+    ->appendFile('/assets/account/js/document-link-injector.js');
+?>
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs ?>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper content">
+    <div class="call-to-action">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <h2>Insurance claims</h2>
+                <p>Find out more about making a claim on your insurance policy</p>
+                <ul class="list-unstyled">
+                    <li><a href="<?php echo $this->brochurewareBaseUrl; ?>tenants/help/make-a-claim/" class="arrow">Tenants Insurance claims</a></li>
+                    <li><a href="<?php echo $this->brochurewareBaseUrl; ?>landlord/help/making-a-claim/" class="arrow">Landlord Insurance claims</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <?php echo $this->partial('partials/portal-pod-update-information.phtml') ?>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <h2>Hi <?php echo $this->firstName; ?></h2>
+                <p>You can view your quotes, insurance policy documents and all of your correspondence from HomeLet right here in My HomeLet.</p>
+                <p>If you do need any further help please don't hesitate to get in touch.</p>
+                <a href="/logout" class="btn btn-primary">Log out</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="primary-content col-xs-12">
+        <h1>Your HomeLet Account</h1>
+
+        <div class="tabbed-details">
+            <?php echo $this->navigation ?>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <?php if (($this->searchTerms != '') || ($this->searchTerms == '' && count($this->policies) > 0)): ?>
+                        <form action="" method="get" class="search form-horizontal">
+                            <fieldset class="padded-form">
+                                <h2>Policies</h2>
+                                <div class="form-group">
+                                    <label for="id">Policy Number</label>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <input type="text" name="id" id="id" placeholder="Enter Policy Number&hellip;" class="search-input form-control" value="<?php echo $this->searchTerms ?>" />
+                                        </div>
+                                        <div class="clearfix visible-xs"></div>
+                                        <div class="col-sm-3">
+                                            <input type="submit" class="btn btn-primary btn-small" value="Search" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php foreach ($this->hiddenSearchFields as $_name => $_value): ?>
+                                    <input type="hidden" name="<?php echo $this->escape($_name) ?>" value="<?php echo $this->escape($_value) ?>" />
+                                <?php endforeach; ?>
+                            </fieldset>
+                        </form>
+                    <?php endif ?>
+
+                    <?php if ($this->searchTerms != '' && !count($this->policies)): ?>
+                        <h3>Sorry, but your search returned no results...</h3>
+                        <p>We were unable to find what you&rsquo;re searching for with the information that you&rsquo;ve provided.</p>
+                        <p>Please try again, if you&rsquo;re unable to find what you&rsquo;re looking for please don&rsquo;t hesitate to contact us, we&rsquo;re always happy to help.</p>
+                        <p>Kind regards,<br/>
+                            The HomeLet team</p>
+                    <?php elseif ($this->searchTerms == '' && !count($this->policies)): ?>
+                        <h3>You currently have no policies available to view</h3>
+                        <p>
+                            You can get a quote for <a href="/tenants" title="Get a tenant's quote">tenants</a> insurance
+                            or <a href="/landlords/insurance-quote" title="Get a landlord's quote">landlords</a> insurance and the details of any HomeLet insurance policies that you purchase will appear here.
+                        </p>
+                        <p>
+                            We've been one of the UK's leading providers of tenant references and insurance solutions to
+                            the lettings industry for over two decades, which means we understand the potential risks that
+                            landlords and tenants face. We've used our experience to design a range of specialist insurance
+                            policies for <a href="/landlords/insurance-quote" title="Get a landlord's quote">landlords</a>
+                            and <a href="/tenants" title="Get a tenant's quote">tenants</a>.
+                        </p>
+                    <?php else: ?>
+                        <table class="table table-condensed table-bordered hidden-xs policy-table">
+                        <thead>
+                        <tr>
+                            <th><?php echo $this->sortableColumn('Policy Number', 'policynumber') ?></th>
+                            <th><?php echo $this->sortableColumn('Product', 'policyname') ?></th>
+                            <th>Coverage</th>
+                            <th><?php echo $this->sortableColumn('Start&nbsp;Date', 'startdate') ?></th>
+                            <th><?php echo $this->sortableColumn('Renewal&nbsp;Date', 'renewaldate') ?></th>
+                            <th><?php echo $this->sortableColumn('Status', 'paystatus') ?></th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $counter = 1; ?>
+                        <?php foreach ($this->policies as $policy): ?>
+                            <tr class="view" id="<?php echo $counter++; ?>">
+                                <td><strong><?php echo $this->escape($policy->policyNumber) ?></strong></td>
+                                <td><?php echo $this->escape(ucfirst($policy->getProductName())) ?></td>
+                                <td>
+                                    <ul>
+                                        <?php foreach ($policy->policyCovers as $cover): ?>
+                                            <li><?php echo $this->escape($cover) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </td>
+                                <td><?php echo $this->escape($policy->getStartsAt()) ?></td>
+                                <td><?php echo $this->escape($policy->getNextTermStartAt()) ?></td>
+                                <td><?php echo $this->escape($policy->getStatus()) ?></td>
+                                <td>
+                                    <a href="/my-homelet/policies/<?php echo base64_encode($policy->policyNumber) ?>/view-documents" title="" class="view">View Documents</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        </table>
+
+                        <div class="visible-xs">
+                            <dl>
+                                <?php foreach ($this->policies as $policy): ?>
+                                    <dt><?php echo $this->sortableColumn('Policy Number', 'policynumber') ?></dt>
+                                    <dd><strong><?php echo $this->escape($policy->policyNumber) ?></strong></dd>
+                                    <dt><?php echo $this->sortableColumn('Product', 'policyname') ?></dt>
+                                    <dd><?php echo $this->escape(ucfirst($policy->getProductName())) ?></dd>
+                                    <dt>Coverage</dt>
+                                    <dd>
+                                        <ul>
+                                            <?php foreach ($policy->policyCovers as $cover): ?>
+                                                <li><?php echo $this->escape($cover) ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </dd>
+                                    <dt><?php echo $this->sortableColumn('Start&nbsp;Date', 'startdate') ?></dt>
+                                    <dd><?php echo $this->escape($policy->getStartsAt()) ?></dd>
+                                    <dt><?php echo $this->sortableColumn('Renewal&nbsp;Date', 'renewaldate') ?></dt>
+                                    <dd><?php echo $this->escape($policy->getNextTermStartAt()) ?></dd>
+                                    <dt><?php echo $this->sortableColumn('Status', 'paystatus') ?></dt>
+                                    <dd><?php echo $this->escape($policy->getStatus()) ?></dd>
+                                    <dt>Action</dt>
+                                    <dd>
+                                        <a href="/my-homelet/policies/<?php echo base64_encode($policy->policyNumber) ?>/view-documents" title="" class="view">View Documents</a>
+                                        <hr />
+                                    </dd>
+                                <?php endforeach; ?>
+                            </dl>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12">
+        <?php echo $this->partial('partials/portal-pod-help.phtml') ?>
+    </div>
+</div>

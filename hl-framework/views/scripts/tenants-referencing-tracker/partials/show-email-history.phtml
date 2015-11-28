@@ -1,0 +1,26 @@
+<p class="clear">
+    Please find below a list of emails that have been sent to you from us about your application.
+</p>
+
+<div class="scrollcontainer">
+    <table cellspacing="0" class="emailhistory">
+        <thead>
+            <tr>
+                <td>Sent</td>
+                <td>Content</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach($this->emails as $email) {
+                ?>
+                <tr>
+                    <td valign="top"><?php echo $email['date']; ?></td>
+                    <td><?php echo $email['content']; ?></td>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
+</div>

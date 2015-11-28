@@ -1,0 +1,72 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) { echo $this->infoPanel($this->panelContent); } ?>
+
+        <?php
+            $iconlayout = array();
+
+            $iconlayout = array_merge
+            (
+                $iconlayout,
+                array(
+                    array(
+                        'icon'      => 'reports-ins',
+                        'title'     => 'Referencing reports',
+                        'help_text' => 'View summary information &amp; check our service levels',
+                        'url'       => '/reports/referencing'
+                    ),
+                    array(
+                        'icon'      => 'reports-ins',
+                        'title'     => 'Rent Guarantee reports',
+                        'help_text' => 'Check reports on live and lapsed policies',
+                        'url'       => '/reports/rent-guarantee'
+                    ),
+                    array(
+                        'icon'      => 'reports-ins',
+                        'title'     => 'Insurance reports',
+                        'help_text' => 'View summary reports on policies you&rsquo;ve introduced',
+                        'url'       => '/reports/insurance'
+                    )
+                )
+            );
+
+            if ($this->level == Model_Core_Agent_UserRole::MASTER)
+            {
+                $iconlayout[] =
+                array
+                (
+                    'icon'      => 'reports-invoice',
+                    'title'     => 'Your invoices',
+                    'help_text' => 'View your monthly HomeLet invoices',
+                    'url'       => '/reports/invoices'
+                );
+
+                $iconlayout[] =
+                array
+                (
+                    'icon'      => 'reports-invoice',
+                    'title'     => 'Commission statements',
+                    'help_text' => 'View your monthly commission statements',
+                    'url'       => '/reports/commission'
+                );
+            }
+
+            $iconlayout = array_merge
+            (
+                $iconlayout,
+                array(
+                    array(
+                        'icon'      => 'vizzihome',
+                        'title'     => 'Visual reports',
+                        'help_text' => 'Get a snapshot of the year and compare your stats with previous years',
+                        'url'       => '/reports/visual'
+                    )
+                )
+            );
+
+            $this->iconLayout($iconlayout);
+        ?>
+    </div>
+</div>

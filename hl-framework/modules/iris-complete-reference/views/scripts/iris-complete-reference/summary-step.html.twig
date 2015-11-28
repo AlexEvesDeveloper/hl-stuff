@@ -1,0 +1,344 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    {# No breadcrumbs #}
+{% endblock %}
+
+{% block body %}
+
+    <div class="reference-summary">
+        <h2>{{ bodyTitle | trans }}</h2>
+
+        <p>
+            Please review your reference before submitting the final application.
+        </p>
+
+        <p>
+            Information that has not been provided has been highlighted. Whilst this information is
+            not mandatory, the more information that can be provided about the applicant, the faster
+            the reference can be processed.
+        </p>
+
+        <p>
+            Your reference number is: <strong>{{ application.referenceNumber }}</strong>
+        </p>
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Tenant details</h3>
+            </div>
+            <dl>
+                <dt>
+                    Full name:
+                </dt>
+                <dd>
+                    {{ application.title }}
+                    {{ application.firstName }}
+                    {{ application.lastName }}
+                </dd>
+
+                {% if application.otherName %}
+                    <dt>
+                        Other/previous name:
+                    </dt>
+                    <dd>
+                        {{ application.otherName }}
+                    </dd>
+                {% endif %}
+
+                <dt>
+                    Date of Birth: (dd/mm/yyyy)
+                </dt>
+                <dd>
+                    {{ application.birthDate | date('jS F, Y') }}
+                </dd>
+
+                <dt>
+                    Bank account number:
+                </dt>
+                <dd>
+                    {{ application.bankAccount.accountNumber }}
+                </dd>
+
+                <dt>
+                    Bank sort code:
+                </dt>
+                <dd>
+                    {{ application.bankAccount.accountSortcode }}
+                </dd>
+
+                {#<dt>#}
+                    {#Tenant has lived in the UK for less than 6 months:#}
+                {#</dt>#}
+                {#<dd>#}
+                    {#&#123;&#35; TODO: apply correct data attribute name #}
+                    {### tenant lived in the uk for less than 6 months ###}
+                {#</dd>#}
+
+                {% if application.residentialStatus %}
+                    <dt>
+                        Current residential status:
+                    </dt>
+                    <dd>
+                        {{ application.residentialStatus | iris_lookup_name('residentialStatuses') }}
+                    </dd>
+                {% endif %}
+
+                {% if application.employmentStatus %}
+                    <dt>
+                        Current employment status:
+                    </dt>
+                    <dd>
+                        {{ application.employmentStatus | iris_lookup_name('employmentStatuses') }}
+                    </dd>
+                {% endif %}
+
+                <dt>
+                    Total income:
+                </dt>
+                <dd>
+                    &pound; {{ application.grossIncome | number_format(2) }}
+                </dd>
+
+                <dt>
+                    Telephone number:
+                </dt>
+                <dd>
+                    {{ application.phone }}
+                </dd>
+
+                <dt>
+                    Mobile number:
+                </dt>
+                <dd>
+                    {{ application.mobile }}
+                </dd>
+
+                <dt>
+                    Email:
+                </dt>
+                <dd>
+                    {{ application.email }}
+                </dd>
+
+                <dt>
+                    Has CCJs or adverse credit history:
+                </dt>
+                <dd>
+                    {{ application.hasCCJ ? 'Yes' : 'No' }}
+                </dd>
+            </dl>
+        </div>
+
+        <div class="reference-summary-section">
+            {% for addressHistoryItem in application.addressHistories %}
+                <div class="reference-summary-section-heading">
+                    {% if loop.first %}
+                        <h3>Current Address of Prospective Tenant</h3>
+                    {% else %}
+                        <h3>Previous Address of Prospective Tenant</h3>
+                    {% endif %}
+                </div>
+                <dl>
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                        {% include '/iris-referencing/includes/address.html.twig' with { 'address': addressHistoryItem.address } %}
+                    </dd>
+
+                    <dt>
+                        Period at address:
+                    </dt>
+                    <dd>
+                        {{ addressHistoryItem.durationMonths | iris_duration_years }} Years
+                        {{ addressHistoryItem.durationMonths | iris_duration_months }} Months
+                    </dd>
+                </dl>
+            {% else %}
+                <div class="reference-summary-section-heading">
+                    <h3>Current Address of Prospective Tenant</h3>
+                </div>
+                <dl>
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                        None given
+                    </dd>
+
+                    <dt>
+                        Period at address:
+                    </dt>
+                    <dd>
+                        None given
+                    </dd>
+                </dl>
+            {% endfor %}
+        </div>
+
+        {% if application.lettingReferee %}
+            <div class="reference-summary-section">
+                <div class="reference-summary-section-heading">
+                    <h3>Current Letting/Estate Agent</h3>
+                </div>
+                <dl>
+                    <dt>
+                        Name:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.name }}
+                    </dd>
+
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                    <dd>
+                        {% include '/iris-referencing/includes/address.html.twig' with { 'address': application.lettingReferee.address } %}
+                    </dd>
+
+                    <dt>
+                        Daytime telephone number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.dayPhone }}
+                    </dd>
+
+                    <dt>
+                        Evening telephone number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.eveningPhone }}
+                    </dd>
+
+                    <dt>
+                        Fax number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.fax }}
+                    </dd>
+
+                    <dt>
+                        Email address:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.email }}
+                    </dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if application.product.hasFinancialReference %}
+            <div class="reference-summary-section">
+                {% for financialRefereeHistoryItem in application.financialReferees %}
+                    <div class="reference-summary-section-heading">
+                        <h3>{{ financialRefereeHistoryItem.financialRefereeStatus | iris_lookup_name('financialRefereeStatuses') }} Employer Details</h3>
+                    </div>
+                    <dl>
+                        <dt>
+                            Type:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.financialRefereeType | iris_lookup_name('financialRefereeTypes') }}
+                        </dd>
+
+                        <dt>
+                            Company name:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.companyName }}
+                        </dd>
+
+                        <dt>
+                            Contact name:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.contactName }}
+                        </dd>
+
+                        <dt>
+                            Contact position:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.contactPosition }}
+                        </dd>
+
+                        <dt>
+                            Address:
+                        </dt>
+                        <dd>
+                            {% include '/iris-referencing/includes/address.html.twig' with { 'address': financialRefereeHistoryItem.address } %}
+                        </dd>
+
+                        <dt>
+                            Daytime telephone number:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.phone }}
+                        </dd>
+
+                        <dt>
+                            Fax number:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.fax }}
+                        </dd>
+
+                        <dt>
+                            Email:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.email }}
+                        </dd>
+
+                        <dt>
+                            Position held by applicant:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.applicantPositionHeld }}
+                        </dd>
+
+                        <dt>
+                            Is the position permanent:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.isPermanent ? 'Yes' : 'No' }}
+                        </dd>
+
+                        <dt>
+                            Payroll no:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.payrollNumber }}
+                        </dd>
+
+                        <dt>
+                            Gross annual income:
+                        </dt>
+                        <dd>
+                            &pound; {{ financialRefereeHistoryItem.applicantAnnualIncome | number_format(2) }}
+                        </dd>
+
+                        <dt>
+                            Start date (dd/mm/yyyy):
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.employmentStartDate | date('jS F, Y') }}
+                        </dd>
+                    </dl>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="form-horizontal">
+            {{ form_widget(form) }}
+        </form>
+    </div>
+
+{% endblock %}

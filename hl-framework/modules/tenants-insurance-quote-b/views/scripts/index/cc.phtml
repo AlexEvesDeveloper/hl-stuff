@@ -1,0 +1,21 @@
+<?php echo $this->tenantsQuoteSubHeader(5); ?>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#cc_payment_form').submit();
+});
+</script>
+<div class="tenants">
+    <div class="wrapper two-col">
+        <div class="content">
+            <div style="text-align:center;">
+            	<img src="/assets/cms/images/ajax-loader.gif"><br />
+            	<br />
+            	<p>You are now being redirected to our secure payment server, if you are not redirected in a few seconds please click the button below.</p>
+            </div>
+            <form id="cc_payment_form" action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded" onsubmit="_gaq.push(['_linkByPost', this]);">
+                <?php echo $this->form; ?>
+                <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+            </form>
+        </div>
+    </div>
+</div>

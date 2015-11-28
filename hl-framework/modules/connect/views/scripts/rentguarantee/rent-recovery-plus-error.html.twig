@@ -1,0 +1,18 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Application</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <p>
+            Unfortunately we have encountered a technical error with your application, please try again.
+            If the error persists, please contact your Account Manager
+        </p>
+    </div>
+{% endblock %}

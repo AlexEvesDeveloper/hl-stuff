@@ -1,0 +1,63 @@
+security:
+    providers:
+        iris:
+           id: barbon.hosted_api.security.provider.user_provider
+
+    encoders:
+        Barbon\HostedApi\SecurityBundle\Model\LandlordUser: plaintext
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+            security: false
+
+        debug:
+            pattern: ^/(agent|landlord)/debug
+            security: false
+
+        single_key_secured:
+            pattern: ^/system
+            stateless: false
+            context: primary_auth
+            simple_preauth:
+                authenticator: barbon.hosted_api.security.authentication.single_pair_authenticator
+
+        dual_key_secured:
+            pattern: ^/agent
+            stateless: false
+            context: primary_auth
+            simple_preauth:
+                authenticator: barbon.hosted_api.security.authentication.dual_pair_authenticator
+
+        login_secured:
+            pattern: ^/landlord
+            anonymous: ~
+            form_login:
+                login_path: /landlord/authentication/entry-point?action=login
+                check_path: /landlord/authentication/login_check
+                default_target_path: barbon_hostedapi_landlord_dashboard_index_index
+            logout:
+                path: /landlord/authentication/logout
+
+
+
+
+            #anonymous: ~
+            #asn: true
+            #form_login:
+            #    login_path: /login
+            #    check_path: /login_check
+            #    csrf_provider: form.csrf_provider
+            #    success_handler: barbon.hosted_api.security.authentication.handler.login_success_handler
+            #logout: ~
+
+    role_hierarchy:
+        ROLE_SYSTEM: [ROLE_AGENT, ROLE_LANDLORD]
+
+    access_control:
+        - { path: ^/landlord/authentication/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/landlord/authentication/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/landlord/authentication/entry-point, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/agent, roles: ROLE_AGENT }
+        - { path: ^/landlord, roles: ROLE_LANDLORD }
+        - { path: ^/system, roles: ROLE_SYSTEM }

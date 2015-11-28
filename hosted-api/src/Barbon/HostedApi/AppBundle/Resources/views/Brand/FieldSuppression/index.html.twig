@@ -1,0 +1,7 @@
+var suppressFieldConfig = {
+{% if 0 < suppressFields | length %}
+    {% for field, value in suppressFields %}
+        "{{ field }}": "{{ value }}",
+    {% endfor %}
+{% endif %}
+};

@@ -1,0 +1,98 @@
+services:
+    barbon.hosted_api.app.form.reference.type.reference_type:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\Type\ReferenceType
+        arguments:
+            - @barbon.hosted_api.app.form.reference.type.referencing_case_type
+            - @request_stack
+
+    barbon.hosted_api.app.form.reference.type.referencing_case_type:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\Type\ReferencingCaseType
+        arguments:
+            - @barbon.hosted_api.app.form.reference.type.referencing_application_type
+            - @barbon.hosted_api.app.form.common.type.prospective_landlord_type
+            - @barbon.hosted_api.app.form.reference.event_listener.rent_share_bridge_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.product_rent_guarantee_offering_bridge_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.product_property_let_type_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.lookup.rent_guarantee_offering
+            - @barbon.hosted_api.app.form.common.lookup.property_let_type
+            - @barbon.hosted_api.app.form.common.lookup.property_type
+            - @barbon.hosted_api.app.form.common.lookup.property_built_in_range
+
+    barbon.hosted_api.app.form.reference.type.referencing_application_type:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\Type\ReferencingApplicationType
+        arguments:
+            - @barbon.hosted_api.app.form.reference.type.referencing_guarantor_type
+            - @barbon.hosted_api.app.form.reference.event_listener.referencing_application_decorator_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.not_applicant_email_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.applicant_email_constraint_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.rent_share_constraint_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.lookup.product_agent
+            - @barbon.hosted_api.app.form.common.lookup.titles
+            - @barbon.hosted_api.app.form.common.lookup.completion_method
+
+    barbon.hosted_api.app.form.reference.type.referencing_guarantor_type:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\Type\ReferencingGuarantorType
+        arguments:
+            - @barbon.hosted_api.app.form.common.event_listener.not_applicant_email_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.applicant_email_constraint_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.rent_share_constraint_subscriber
+            - @barbon.hosted_api.app.form.common.lookup.titles
+            - @barbon.hosted_api.app.form.common.lookup.completion_method
+            - @request_stack
+
+    # Event listeners
+    barbon.hosted_api.app.form.reference.event_listener.referencing_application_decorator_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ReferencingApplicationDecoratorSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.common.type.bank_account_type
+            - @barbon.hosted_api.app.form.common.type.financial_referee_type
+            - @barbon.hosted_api.app.form.common.type.letting_referee_type
+            - @barbon.hosted_api.app.form.common.type.previous_address_type
+            - @barbon.hosted_api.app.form.reference.type.referencing_guarantor_type
+            - @barbon.hosted_api.app.form.reference.event_listener.residential_status_letting_reference_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.not_in_array_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_status_designation_subscriber
+            - @barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.lookup.residential_status
+            - @barbon.hosted_api.app.form.common.lookup.employment_status
+
+    barbon.hosted_api.app.form.reference.event_listener.product_property_let_type_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ProductPropertyLetTypeBridgeSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.product_agent
+
+    barbon.hosted_api.app.form.reference.event_listener.product_rent_guarantee_offering_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ProductRentGuaranteeOfferingBridgeSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.product_agent
+
+    barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ReferencingGuarantorDecoratorSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.common.type.bank_account_type
+            - @barbon.hosted_api.app.form.common.type.financial_referee_type
+            - @barbon.hosted_api.app.form.common.type.letting_referee_type
+            - @barbon.hosted_api.app.form.common.type.previous_address_type
+            - @barbon.hosted_api.app.form.common.event_listener.not_in_array_bridge_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_status_designation_subscriber
+            - @barbon.hosted_api.app.form.common.lookup.residential_status
+            - @barbon.hosted_api.app.form.common.lookup.employment_status
+
+    barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ReferencingGuarantorDecoratorBridgeSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_subscriber
+
+    barbon.hosted_api.app.form.reference.event_listener.rent_share_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\RentShareBridgeSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.reference.event_listener.rent_share_constraint_subscriber
+
+    barbon.hosted_api.app.form.reference.event_listener.rent_share_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\RentShareConstraintSubscriber
+        arguments:
+            - @session
+
+    barbon.hosted_api.app.form.reference.event_listener.residential_status_letting_reference_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Reference\EventListener\ResidentialStatusLettingReferenceSubscriber

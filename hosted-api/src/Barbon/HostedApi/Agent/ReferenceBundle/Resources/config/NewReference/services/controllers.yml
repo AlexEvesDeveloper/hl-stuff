@@ -1,0 +1,22 @@
+services:
+    barbon.hosted_api.agent.reference.controller.new_reference.new_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\NewReference\NewController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.app.form.reference.type.reference_type
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.agent.reference.controller.new_reference.tenancy_agreement_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\NewReference\TenancyAgreementController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.agent.reference.controller.new_reference.validate_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\NewReference\ValidateController
+        arguments:
+            - @barbon.hosted_api.app.form.reference.type.reference_type
+        calls:
+            - [ setContainer,[ @service_container ] ]

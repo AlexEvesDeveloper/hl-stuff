@@ -1,0 +1,37 @@
+<?php echo $this->tenantsQuoteSubHeader($this->stepNum); ?>
+
+<div class="tenants col-sm-8 col-md-9">
+    <div class="content">
+        <form class="main" action="" method="post" enctype="application/x-www-form-urlencoded">
+            <?php if (isset($this->errorCount) && $this->errorCount > 0): ?>
+                <div class="alert alert-danger">
+                    <p class="error">
+                        Oops, unfortunately there <?php echo ((1 == $this->errorCount) ? 'appears to be an error' : 'appear to be some errors'); ?> in the form, please see below for details:
+                    </p>
+                    <?php echo $this->errorsHtml; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="form_section">
+                <?php echo $this->form; ?>
+            </div>
+
+            <?php if (1 != $this->stepNum && 'dd' != $this->stepNum):
+                echo $this->partial(
+                    'partials/premium-summary.phtml', array(
+                        'premiums' => $this->premiums,
+                        'fees' => $this->fees
+                    )
+                );
+            endif; ?>
+
+            <?php echo $this->partial(
+                'partials/form-navigation.phtml', array(
+                    'stepNum' => $this->stepNum,
+                    'stepMax' => $this->stepMax
+                )
+            ); ?>
+        </form>
+    </div>
+</div>
+<?php echo $this->tenantsQuoteSidebar($this->premiums, $this->fees, $this->errorsHtml, $this->stepNum, $this->stepMax); ?>

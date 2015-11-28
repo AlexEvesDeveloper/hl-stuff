@@ -1,0 +1,517 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% import "/iris-referencing/macros/referencing-macros.html.twig" as referencingMacros %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">New Reference</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div class="reference-summary">
+        <h2>{{ bodyTitle | trans }}</h2>
+
+        <p>
+            Please review your reference before submitting the final application.
+        </p>
+
+        <p>
+            Information that has not been provided has been highlighted. Whilst this information is
+            not mandatory, the more information that can be provided about the applicant, the faster
+            the reference can be processed.
+        </p>
+
+        <p>
+            Your reference number is: <strong>{{ application.referenceNumber }}</strong>
+        </p>
+
+        <div class="pull-right">
+            {{ referencingMacros.upload_signed_declaration_link(application.referencingApplicationUuId, 'button', true, 'top') }}
+        </div>
+
+        <div class="clearfix">
+            &nbsp;
+        </div>
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Address of property to let</h3>
+                <span>[ <a href="/iris-new-reference?continue=1&backToSummary=1">edit</a> ]</span>
+            </div>
+            <dl>
+                <dt>
+                    Address:
+                </dt>
+                <dd>
+                    {% include '/iris-referencing/includes/address.html.twig' with { 'address': case.address } %}
+                </dd>
+
+                <dt>
+                    Tenancy start date:
+                </dt>
+                <dd>
+                    {{ case.tenancyStartDate | date('jS F, Y') }}
+                </dd>
+
+                <dt>
+                    Tenancy term:
+                </dt>
+                <dd>
+                    {{ case.tenancyTermInMonths | iris_duration_years }} Years
+                    {{ case.tenancyTermInMonths | iris_duration_months }} Months
+                </dd>
+
+                <dt>
+                    Number of tenants:
+                </dt>
+                <dd>
+                    {{ case.numberOfTenants }}
+                </dd>
+
+                <dt>
+                    Total rent of all tenants
+                </dt>
+                <dd>
+                    &pound;{{ case.totalRent | number_format(2) }}
+                </dd>
+            </dl>
+        </div>
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Product selection</h3>
+                <span>[ <a href="/iris-new-reference/product?backToSummary=1">edit</a> ]</span>
+            </div>
+            <dl>
+                <dt>
+                    Product:
+                </dt>
+                <dd>
+                    {{ application.product.name }}
+                </dd>
+
+                {% if application.product.hasRentGuarantee %}
+                    <dt>
+                        Rent guarantee policy length:
+                    </dt>
+                    <dd>
+                        {{ application.policyLength }} months
+                    </dd>
+                {% endif %}
+
+                <dt>
+                    Tenant's share of rent:
+                </dt>
+                <dd>
+                    &pound;{{ application.rentShare | number_format(2) }}
+                </dd>
+            </dl>
+        </div>
+
+        {% if case.prospectiveLandlord %}
+            <div class="reference-summary-section">
+                <div class="reference-summary-section-heading">
+                    <h3>Prospective landlord details</h3>
+                    <span>[ <a href="/iris-new-reference/landlord?backToSummary=1">edit</a> ]</span>
+                </div>
+                <dl>
+                    <dt>
+                        Landlord&rsquo;s name:
+                    </dt>
+                    <dd>
+                        {{ case.prospectiveLandlord.title }}
+                        {{ case.prospectiveLandlord.firstName }}
+                        {{ case.prospectiveLandlord.lastName }}
+                    </dd>
+
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                        {% include '/iris-referencing/includes/address.html.twig' with { 'address': case.prospectiveLandlord.address } %}
+                    </dd>
+
+                    <dt>
+                        Daytime telephone number:
+                    </dt>
+                    <dd>
+                        {{ case.prospectiveLandlord.dayPhone }}
+                    </dd>
+
+                    <dt>
+                        Evening telephone number:
+                    </dt>
+                    <dd>
+                        {{ case.prospectiveLandlord.eveningPhone }}
+                    </dd>
+
+                    <dt>
+                        Fax number:
+                    </dt>
+                    <dd>
+                        {{ case.prospectiveLandlord.fax }}
+                    </dd>
+
+                    <dt>
+                        Email:
+                    </dt>
+                    <dd>
+                        {{ case.prospectiveLandlord.email }}
+                    </dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Tenant details</h3>
+                <span>[ <a href="/iris-new-reference/tenant-details?backToSummary=1">edit</a> ]</span>
+            </div>
+            <dl>
+                <dt>
+                    Full name:
+                </dt>
+                <dd>
+                    {{ application.title }}
+                    {{ application.firstName }}
+                    {{ application.lastName }}
+                </dd>
+
+                {% if application.otherName %}
+                    <dt>
+                        Other/previous name:
+                    </dt>
+                    <dd>
+                        {{ application.otherName }}
+                    </dd>
+                {% endif %}
+
+                <dt>
+                    Date of Birth:
+                </dt>
+                <dd>
+                    {{ application.birthDate | date('jS F, Y') }}
+                </dd>
+
+                <dt>
+                    Bank account number:
+                </dt>
+                <dd>
+                    {{ application.bankAccount.accountNumber }}
+                </dd>
+
+                <dt>
+                    Bank sort code:
+                </dt>
+                <dd>
+                    {{ application.bankAccount.accountSortcode }}
+                </dd>
+
+                {#<dt>#}
+                    {#Tenant has lived in the UK for less than 6 months:#}
+                {#</dt>#}
+                {#<dd>#}
+                    {#&#123;&#35; TODO: apply correct data attribute name #}
+                    {### tenant lived in the uk for less than 6 months ###}
+                {#</dd>#}
+
+                <dt>
+                    Current residential status:
+                </dt>
+                <dd>
+                    {{ application.residentialStatus | iris_lookup_name('residentialStatuses') }}
+                </dd>
+
+                <dt>
+                    Current employment status:
+                </dt>
+                <dd>
+                    {{ application.employmentStatus | iris_lookup_name('employmentStatuses') }}
+                </dd>
+
+                <dt>
+                    Total income:
+                </dt>
+                <dd>
+                    &pound;{{ application.grossIncome | number_format(2) }}
+                </dd>
+
+                <dt>
+                    Telephone number:
+                </dt>
+                <dd>
+                    {{ application.phone }}
+                </dd>
+
+                <dt>
+                    Mobile number:
+                </dt>
+                <dd>
+                    {{ application.mobile }}
+                </dd>
+
+                <dt>
+                    Email:
+                </dt>
+                <dd>
+                    {{ application.email }}
+                </dd>
+
+                <dt>
+                    Has CCJs or adverse credit history:
+                </dt>
+                <dd>
+                    {{ application.hasCCJ ? 'Yes' : 'No' }}
+                </dd>
+            </dl>
+        </div>
+
+        <div class="reference-summary-section">
+            {% for addressHistoryItem in application.addressHistories %}
+                <div class="reference-summary-section-heading">
+                    {% if loop.first %}
+                        <h3>Current Address of Prospective Tenant</h3>
+                    {% else %}
+                        <h3>Previous Address of Prospective Tenant</h3>
+                    {% endif %}
+                    <span>[ <a href="/iris-new-reference/address-history?backToSummary=1">edit</a> ]</span>
+                </div>
+                <dl>
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                        {% include '/iris-referencing/includes/address.html.twig' with { 'address': addressHistoryItem.address } %}
+                    </dd>
+
+                    <dt>
+                        Period at address:
+                    </dt>
+                    <dd>
+                        {{ addressHistoryItem.durationMonths | iris_duration_years }} Years
+                        {{ addressHistoryItem.durationMonths | iris_duration_months }} Months
+                    </dd>
+                </dl>
+            {% else %}
+                <div class="reference-summary-section-heading">
+                    <h3>Current Address of Prospective Tenant</h3>
+                    <span>[ <a href="/iris-new-reference/address-history?backToSummary=1">edit</a> ]</span>
+                </div>
+                <dl>
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                        None given
+                    </dd>
+
+                    <dt>
+                        Period at address:
+                    </dt>
+                    <dd>
+                        None given
+                    </dd>
+                </dl>
+            {% endfor %}
+        </div>
+
+        {% if application.lettingReferee %}
+            <div class="reference-summary-section">
+                <div class="reference-summary-section-heading">
+                    <h3>Current Letting/Estate Agent</h3>
+                    <span>[ <a href="/iris-new-reference/letting-referee?backToSummary=1">edit</a> ]</span>
+                </div>
+                <dl>
+                    <dt>
+                        Name:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.name }}
+                    </dd>
+
+                    <dt>
+                        Address:
+                    </dt>
+                    <dd>
+                    <dd>
+                        {% include '/iris-referencing/includes/address.html.twig' with { 'address': application.lettingReferee.address } %}
+                    </dd>
+
+                    <dt>
+                        Daytime telephone number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.dayPhone }}
+                    </dd>
+
+                    <dt>
+                        Evening telephone number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.eveningPhone }}
+                    </dd>
+
+                    <dt>
+                        Fax number:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.fax }}
+                    </dd>
+
+                    <dt>
+                        Email address:
+                    </dt>
+                    <dd>
+                        {{ application.lettingReferee.email }}
+                    </dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if application.product.hasFinancialReference %}
+            <div class="reference-summary-section">
+                {% for financialRefereeHistoryItem in application.financialReferees %}
+                    <div class="reference-summary-section-heading">
+                        <h3>{{ financialRefereeHistoryItem.financialRefereeStatus | iris_lookup_name('financialRefereeStatuses') }} Financial Referee Details</h3>
+                        <span>[ <a href="/iris-new-reference/financial-referee?backToSummary=1">edit</a> ]</span>
+                    </div>
+                    <dl>
+                        <dt>
+                            Type:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.financialRefereeType | iris_lookup_name('financialRefereeTypes') }}
+                        </dd>
+
+                        {% if financialRefereeHistoryItem.companyName %}
+                            <dt>
+                                Company name:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.companyName }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.contactName %}
+                            <dt>
+                                Contact name:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.contactName }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.contactPosition %}
+                            <dt>
+                                Contact position:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.contactPosition }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.address.postcode %}
+                            <dt>
+                                Address:
+                            </dt>
+                            <dd>
+                                {% include '/iris-referencing/includes/address.html.twig' with { 'address': financialRefereeHistoryItem.address } %}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.phone %}
+                            <dt>
+                                Daytime telephone number:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.phone }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.fax %}
+                            <dt>
+                                Fax number:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.fax }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.email %}
+                            <dt>
+                                Email:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.email }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.applicantPositionHeld %}
+                            <dt>
+                                Position held by applicant:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.applicantPositionHeld }}
+                            </dd>
+                        {% endif %}
+
+                        <dt>
+                            Is the position permanent:
+                        </dt>
+                        <dd>
+                            {{ financialRefereeHistoryItem.isPermanent ? 'Yes' : 'No' }}
+                        </dd>
+
+                        {% if financialRefereeHistoryItem.payrollNumber %}
+                            <dt>
+                                Payroll no:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.payrollNumber }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.applicantAnnualIncome %}
+                            <dt>
+                                Gross annual income:
+                            </dt>
+                            <dd>
+                                &pound;{{ financialRefereeHistoryItem.applicantAnnualIncome | number_format(2) }}
+                            </dd>
+                        {% endif %}
+
+                        {% if financialRefereeHistoryItem.employmentStartDate %}
+                            <dt>
+                                Start date:
+                            </dt>
+                            <dd>
+                                {{ financialRefereeHistoryItem.employmentStartDate | date('jS F, Y') }}
+                            </dd>
+                        {% endif %}
+
+                    </dl>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="pull-right">
+            {{ referencingMacros.upload_signed_declaration_link(application.referencingApplicationUuId, 'button', true, 'bottom') }}
+        </div>
+
+        <div class="clearfix"></div>
+
+        <form method="post" class="form-horizontal">
+            {{ form_widget(form) }}
+        </form>
+    </div>
+
+{% endblock %}

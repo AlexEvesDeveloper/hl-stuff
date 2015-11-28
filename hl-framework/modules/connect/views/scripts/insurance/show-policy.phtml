@@ -1,0 +1,225 @@
+
+<?php $this->headLink()->appendStylesheet('/assets/connect/css/insuranceSummary.css'); ?>
+
+<div class="wrapper one-col">
+    <?php
+        $breadcrumbArray = array(
+            array(
+                'url'   => '/insurance',
+                'title' =>  'Insurance'
+            ),
+            'currentPage' => "Policy no: {$this->policy['policynumber']}"
+        );
+
+        echo $this->partial('partials/breadcrumb.phtml', array('breadcrumbArray' => $breadcrumbArray));
+    ?>
+
+    <table>
+        <tr>
+            <th colspan="2">
+                Customer Details
+            </th>
+        </tr>
+
+        <tr>
+            <td class="datafield">Name</td>
+            <td><?php echo $this->customer->getTitle(); ?> <?php echo $this->customer->getFirstName(); ?> <?php echo $this->customer->getLastName(); ?></td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Address</td>
+            <td><?php echo $this->customer->getAddressLine(1); ?>, 
+                <?php 
+			if($this->customer->getAddressLine(2) != ""){
+  			echo $this->customer->getAddressLine(2) . ", ";
+			} 
+		?> 
+                <?php echo $this->customer->getAddressLine(3); ?>, 
+                <?php echo $this->customer->getPostcode(); ?></td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Telephone</td>
+            <td><?php echo $this->customer->getTelephone(1); ?></td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Tel/Fax</td>
+            <td><?php echo $this->customer->getTelephone(2); ?></td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Email</td>
+            <td><?php echo $this->customer->getEmailAddress(); ?></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td colspan="3" class="policytype">
+                <?php
+                    $polstage = "Policy";
+                    $action="";
+
+                    if(preg_match("/^Q/i",$this->policy['policynumber']))
+                    {
+                        $polstage = "Quote";
+
+                        if($this->policy['policyname'] == "lowcostlandlords")
+                        {
+                            $action = "landlords-low-cost";
+                        }
+                        elseif($this->policy['policyname'] == "landlordsp")
+                        {
+                            $action = "landlords-plus";
+                        }
+                        elseif($this->policy['policyname'] == "tenantsp")
+                        {
+                            $action = "tenants-contents-plus";
+                        }
+                    }
+
+                    echo $polstage
+                ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="datafield"><?php echo $polstage; ?> Number</td>
+            <td>Address</td>
+            <td>Status</td>
+        </tr>
+
+        <tr>
+            <td><?php echo $this->policy['policynumber']; ?></td>
+            <td><?php echo $this->policy['propaddress1']; ?>, 
+                <?php if ($this->policy['propaddress3'] != ""){ echo $this->policy['propaddress3'] .", ";} ?> 
+                <?php echo $this->policy['proppostcode']; ?></td>
+            <td><?php echo $this->policy['paystatus']; ?></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="2">
+                <?php echo $this->policy['policynumber']; ?> <?php echo $polstage; ?>
+            </th>
+        </tr>
+
+        <tr>
+            <td class="datafield">Risk Address</td>
+            <td><?php echo $this->policy['propaddress1']; ?>, <?php if ($this->policy['propaddress3'] != ""){ echo $this->policy['propaddress3'] .", ";} ?> <?php echo $this->policy['proppostcode']; ?></td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Policy Term</td>
+            <td>
+                from
+                <?php
+                    if(empty($this->policy['startdate'])) {
+
+                        echo '&ndash;&ndash;';
+                    }
+                    else {
+
+                        echo $this->policy['startdate']->toString('dd/MM/YYYY');
+                    }
+                ?>
+
+                to
+                <?php
+                    if(empty($this->policy['enddate'])) {
+
+                        echo '&ndash;&ndash;';
+                    }
+                    else {
+
+                        echo $this->policy['enddate']->toString('dd/MM/YYYY');
+                    }
+                ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Paid By</td>
+            <td><?php echo $this->policy['payby']?> </td>
+        </tr>
+
+        <tr>
+            <td class="datafield">Paid Net</td>
+            <td><?php echo $this->policy['paidnet']?></td>
+        </tr>
+
+        <?php if(!preg_match("/^prgi/i", $this->policy['policynumber'])): ?>
+            <tr>
+                <td colspan="2" class="policycontrols">
+                    <?php
+                    if (substr($this->policy['policynumber'], 0, 1) == 'Q' && !in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+                        ?>
+			<a href="/insurance/<?php echo $action; ?>?policyno=<?php echo $this->policy['policynumber']; ?>&refno=<?php echo $this->policy['refno']; ?>" target="_blank" class="nav-agents-button" style="float: right; margin-right: 5px;" <?php if (preg_match('/^IM|^GY|^JE/i', $this->policy['proppostcode'])) {?>onClick="$.facebox('Warning','Unfortunately we\'re unable to offer you a policy with us, as we don\'t cover properties in the Channel Islands or the Isle of Man. If the property you\'re looking to insure isn\'t in the Channel Islands or the Isle of Man then please double check the postcode you\'ve supplied to us.'); return false;" <?php } ?> >Convert Quote</a>
+                        <?php
+                    }
+                    ?>
+                    
+                </td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Cover</th>
+            <th>Premium</th>
+        </tr>
+
+        <?php foreach($this->cover as $resultRow) { ?>
+        <tr>
+            <td><?php echo $resultRow['printableName']; ?></td>
+            <td class="coversuminsured">&pound;<?php echo number_format($resultRow['sumInsured'], 2); ?></td>
+            <td class="coverpremium">&pound;<?php echo number_format($resultRow['premium'], 2); ?></td>
+        </tr>
+        <?php }?>
+
+        <tr>
+            <td colspan="2" class="premsummary">Premium</td>
+            <td>&pound;<?php echo number_format($this->policy['premium'], 2); ?></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="premsummary">IPT</td>
+            <td>&pound;<?php echo number_format($this->policy['IPT'], 2);?></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="premsummary">Total Premium (<?php echo $this->policy['payby'];?>)</td>
+            <td>&pound;<?php echo number_format($this->policy['quote'], 2); ?></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Document Name</th>
+            <th>Type</th>
+            <th>Addressee</th>
+            <th>Date of Issue</th>
+        </tr>
+
+        <?php if (count($this->docHistoryResults) > 0): ?>
+            <?php foreach($this->docHistoryResults as $_document): ?>
+            <tr>            
+                <td><a href="/insurance/fetch-document?requestHash=<?php echo ($_document->request_hash) ?>&documentName=<?php echo ($_document->template_name); ?>" target="_blank">
+                    <?php echo ($_document->customerDescription); ?></a></td>
+                <td> <?php echo $_document->catType; ?> </td>
+                <td> <?php echo $_document->addresse ?> </td>
+                <td> <?php echo $_document->send_datetime->get(Zend_Date::DAY . ' ' . Zend_Date::MONTH_NAME_SHORT . ' ' . Zend_Date::YEAR) ?> </td>
+            </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+          <tr>
+           <td colspan="4">None found</td>
+          </tr>
+        <?php endif; ?>
+    </table>
+    
+</div>

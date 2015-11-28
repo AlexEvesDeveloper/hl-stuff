@@ -1,0 +1,9 @@
+{% form_theme form with [
+    'bootstrap_3_layout.html.twig',
+    'BarbonHostedApiAppBundle:Common/Widgets:widgets.html.twig'
+] %}
+
+<form method="post" class="referencing branded" id="generic_step_form" novalidate>
+    <h2>New Reference</h2>
+    {{ form_widget(form) }}
+</form>

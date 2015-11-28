@@ -1,0 +1,24 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <div class="half_form">
+        	<?php echo $this->livergreport; ?>
+    	</div>
+    	<div class="half_form">
+        	<?php echo $this->lapsedrgreport; ?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function()
+	{
+		$('#livergreport_end, #lapsedrgreport_end').datePicker().val(new Date().asString()).trigger('change');
+		$('#livergreport_start, #lapsedrgreport_start').datePicker(
+			{
+				
+				startDate: '01/01/1970', // This needs to be a date range that we can provide without killing the database
+				endDate: (new Date()).asString()
+			}
+		).val(Date.parse('3 months ago').asString()).trigger('change');
+	});
+</script>

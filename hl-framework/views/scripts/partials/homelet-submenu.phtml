@@ -1,0 +1,68 @@
+<?php
+$baseURL = 'http';
+if (isset($_SERVER["HTTPS"])) {
+    if ($_SERVER["HTTPS"] == "on") {$baseURL .= "s";}
+}
+$baseURL .= "://";
+$baseURL .= $_SERVER["SERVER_NAME"];
+
+switch ($this->selected)
+{
+    case 'letting-agents' :
+        ?>
+        <div id="sub_menu" class="letting_agents">
+            <ul id="sub_nav">
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/why-homelet" class="<?php echo ($this->url == 'letting-agents/why-homelet') ? 'here' : ''; ?>">Why HomeLet?</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/products" class="<?php echo ($this->url == 'letting-agents/products') ? 'here' : ''; ?>">Products</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/benefits" class="<?php echo ($this->url == 'letting-agents/benefits') ? 'here' : ''; ?>">Benefits</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/join-our-club" class="<?php echo ($this->url == 'letting-agents/join-our-club') ? 'here' : ''; ?>">Join Our Club</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/connect" class="<?php echo ($this->url == 'letting-agents/connect') ? 'here' : ''; ?>">Connect</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/letting-agents/news" class="<?php echo ($this->url == 'letting-agents/news') ? 'here' : ''; ?>">Agents News</a></li>
+            </ul>
+        </div>
+        <?php
+        break;
+
+    case 'tenants' :
+        ?>
+        <div id="sub_menu" class="tenants">
+            <ul id="sub_nav">
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/tenants/" class="<?php echo ($this->url == 'tenants/' || strpos($this->url, 'tenants/insurance-quote') !== false) ? 'here' : ''; ?>">Get a Quote</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/tenants/reference-tracker" class="<?php echo ($this->url == 'tenants/reference-tracker') ? 'here' : ''; ?>">Your Reference</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/tenants/useful-links" class="<?php echo ($this->url == 'tenants/useful-links') ? 'here' : ''; ?>">Useful Links</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/tenants/faq" class="<?php echo ($this->url == 'tenants/faq') ? 'here' : ''; ?>">FAQs</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/tenants/news" class="<?php echo ($this->url == 'tenants/news') ? 'here' : ''; ?>">Tenants Blog</a></li>
+            </ul>
+        </div>
+        <?php
+        break;
+
+    case 'landlords' :
+        ?>
+        <div id="sub_menu" class="landlords">
+            <ul id="sub_nav">
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/landlords/" class="<?php echo ($this->url == 'landlords/') ? 'here' : ''; ?>">Why HomeLet?</a></li>
+                <li><a style="width: 142px;" href="/landlords/products" class="<?php echo ($this->url == 'landlords/products') ? 'here' : ''; ?>">Products</a></li>
+                <li><a style="width: 142px;" href="/landlords/insurance-quote" class="<?php echo strpos($this->url, 'landlords/insurance-quote') !== false ? 'here' : ''; ?>">Get a Quote</a></li>
+                <li><a style="width: 142px;" href="/landlords/tips" class="<?php echo ($this->url == 'landlords/tips') ? 'here' : ''; ?>">Landlords Tips</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/landlords/news" class="<?php echo ($this->url == 'landlords/news') ? 'here' : ''; ?>">Landlords News</a></li>
+            	<li><a style="width: 142px;" href="/landlords/useful-links" class="<?php echo ($this->url == 'landlords/useful-links') ? 'here' : ''; ?>">Useful Links </a></li>
+            </ul>
+        </div>
+        <?php
+        break;
+    case 'about-us' :
+        ?>
+        <div id="sub_menu" class="about_us">
+            <ul id="sub_nav">
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/about-us/about-homelet" class="<?php echo ($this->url == 'about-us/about-homelet') ? 'here' : ''; ?>">About HomeLet</a></li>
+                <?php /* <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/about-us/meet-the-team" class="<?php echo ($this->url == 'about-us/meet-the-team') ? 'here' : ''; ?>">Meet the Team</a></li> */ ?>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/about-us/charity" class="<?php echo ($this->url == 'about-us/charity') ? 'here' : ''; ?>">Charity</a></li>
+                <li><a style="width: 142px;" href="<?php echo $baseURL; ?>/about-us/history" class="<?php echo ($this->url == 'about-us/history') ? 'here' : ''; ?>">History</a></li>
+                <li><a style="width: 162px;" href="<?php echo $baseURL; ?>/about-us/corp-responsibility" class="<?php echo ($this->url == 'about-us/corp-responsibility') ? 'here' : ''; ?>">Corporate Responsibility</a></li>
+            </ul>
+        </div>
+        <?php
+        break;
+}
+?>

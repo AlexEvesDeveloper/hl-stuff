@@ -1,0 +1,285 @@
+<script type="text/javascript">
+    $(function() {
+<?php
+// For each dashboard property applicants section, add "alt" class to each
+//   odd (0-indexed) element with class "autoAlt".
+?>
+<?php
+/* No dashboard to see here
+  $('.dashboard .property .applicants').each(function() {
+  $('.autoAlt:odd', this).addClass('alt');
+  });
+
+  $('.foldlink').each(function() {
+  $(this).next('.foldable').hide();
+  $(this).click(function() {
+  $(this).toggleClass('unfolded');
+  if ($(this).hasClass('unfolded')) {
+  $(this).next('.foldable').slideDown();
+  } else {
+  $(this).next('.foldable').slideUp();
+  }
+  });
+  });
+
+  $('.commissionTitle').click(function() {
+  $('.commission').toggleClass('hidden');
+  });
+
+  $('.applicants tbody tr').each(function() {
+  $('a:first', this).balloon({position: 'right', contents: 'Policy number<br />PHLI3164845/01', classname: 'balloonTip'});
+  });
+ */
+?>
+    });
+
+<?php
+// The "no access" message for IO and IAR agents trying to access insurance functionality.
+if (in_array($this->fsastatusabbr, array('IO', 'IAR', 'AR'))) {
+    ?>
+        function showNoAccess() {
+            $.facebox(
+                    'You\'re unable to access this section',
+                    'We\'re sorry but due to your HomeLet agent status you\'re unable to access this particular section of Connect, if you want to discuss this further please contact your Account Manager.'
+                    );
+        }
+    <?php
+}
+?>
+    function showInsuranceCustomerSearch() {
+        $.facebox('Customer Search', {ajax: '/insurance/search-customer'});
+    }
+
+    function showInsurancePolicySearch() {
+        $.facebox('Policy Search', {ajax: '/insurance/search-policy'});
+    }
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) {
+            echo $this->infoPanel($this->panelContent);
+        } ?>
+
+        <?php
+        $iconlayout = array();
+
+        // Check if agent status allows access to insurance functions.
+        if (!in_array($this->fsastatusabbr, array('IO', 'IAR', 'AR'))) {
+            // Insurance function access allowed.
+            $iconlayout = array(
+                array(
+                    'icon' => 'start',
+                    'title' => 'Generate a quote',
+                    'help_text' => 'Create a new insurance policy',
+                    'url' => '/insurance/quote'
+                ),
+                array(
+                    'icon' => 'search-people',
+                    'title' => 'Search your customers',
+                    'help_text' => 'Search by customer details',
+                    'url' => '#',
+                    'javascript' => 'showInsuranceCustomerSearch(); return false;'
+                ),
+                array(
+                    'icon' => 'search',
+                    'title' => 'Search your policies',
+                    'help_text' => 'Search by policy details',
+                    'url' => '#',
+                    'javascript' => 'showInsurancePolicySearch(); return false;'
+                )
+            );
+        } else {
+            // Insurance function access not allowed.
+            $iconlayout = array(
+                array(
+                    'icon' => 'start',
+                    'title' => 'Generate a quote',
+                    'help_text' => 'Create a new insurance policy',
+                    'url' => '#',
+                    'javascript' => 'showNoAccess(); return false;'
+                ),
+                array(
+                    'icon' => 'search-people',
+                    'title' => 'Search your customers',
+                    'help_text' => 'Search by customer details',
+                    'url' => '#',
+                    'javascript' => 'showNoAccess(); return false;'
+                ),
+                array(
+                    'icon' => 'search',
+                    'title' => 'Search your policies',
+                    'help_text' => 'Search by policy details',
+                    'url' => '#',
+                    'javascript' => 'showNoAccess(); return false;'
+                )
+            );
+        }
+
+        /*
+         * Every FSA status except IO,None, EPB,LA, REF and CUST
+         */
+        if (in_array($this->fsastatusabbr, array('Direct', 'NAR', 'AR', 'DIR_AP', 'AR_AP', 'NAR_AP', 'IAR'))) {
+            $iconlayout = array_merge(
+                    $iconlayout, array(
+                array(
+                    'icon' => 'quote',
+                    'style' => 'tenant',
+                    'title' => 'Quote my tenant',
+                    'help_text' => 'Request HomeLet to contact your tenant',
+                    'url' => '/insurance/quote-my-tenant/',
+                    'javascript' => ''
+                ),
+                array(
+                    'icon' => 'quote',
+                    'style' => 'landlord',                    
+                    'title' => 'Quote my landlord',
+                    'help_text' => 'Request HomeLet to contact your landlord',
+                    'url' => '/insurance/quote-my-landlord',
+                    'javascript' => ''
+                )
+                    )
+            );
+        }
+
+        $iconlayout = array_merge(
+                $iconlayout, array(
+            array(
+                'icon' => 'general-info',
+                'title' => 'Insurance product information',
+                'help_text' => 'Find out more',
+                'url' => '/insurance/products'
+            ),
+            array(
+                'icon' => 'documents',
+                'title' => 'Useful information &amp; documents',
+                'help_text' => 'Including Key Facts and Policy Wordings',
+                'url' => '/insurance/info'
+            ),
+            array(
+                'icon' => '',
+                'title' => 'Commission calculator',
+                'url' => '',
+                'special' => 'calcCommission'
+            )
+                )
+        );
+
+        $this->iconLayout($iconlayout);
+        ?>
+        <?php
+        /* No dashboard to see here
+          <div class="dashboard insurance" style="clear: both;">
+
+          <div class="property">
+          <div class="header foldlink">
+          <div class="left">42 Tribble Lane, Lincoln, LN4 8GW</div>
+          </div>
+          <div class="dashboardContent foldable" style="display: none;">
+          <div class="applicants">
+          <table width="100%">
+          <thead>
+          <tr>
+          <th><div class="rounded"><div class="fullyCenter">Policy Holder</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Policy Type</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Policy Value</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter commissionTitle">Commission*<br /><span style="font-size: 0.75em;">*click to <span class="commission">show</span><span class="commission hidden">hide</span></span></div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Documents</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Status</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Action</div></div></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="autoAlt">
+          <td><a href="#">Miss Sarah Connor</a></td>
+          <td>Rent Guarantee</td>
+          <td>&pound;150</td>
+          <td><div class="commission">***</div><div class="commission hidden">&pound;10</div></td>
+          <td><div class="rounded button">Documents</div></td>
+          <td><span class="active">Active - New Business</span></td>
+          <td>&nbsp;</td>
+          </tr>
+          <tr class="autoAlt">
+          <td><a href="#">Mr Marvin Diode</a></td>
+          <td>Tenants' Contents Insurance+</td>
+          <td>&pound;112</td>
+          <td><div class="commission">***</div><div class="commission hidden">&pound;11.20</div></td>
+          <td><div class="rounded button">Documents</div></td>
+          <td><span class="inbetween">Active - Near Expiry</span></td>
+          <td><div class="rounded button">Invite renewal</div></td>
+          </tr>
+          </tbody>
+          </table>
+          </div>
+          </div>
+          </div>
+
+          <div class="property">
+          <div class="header foldlink">
+          <div class="left">9a Rocky Road, Lincoln, LN3 1KV</div>
+          </div>
+          <div class="dashboardContent foldable" style="display: none;">
+          <div class="applicants">
+          <table width="100%">
+          <thead>
+          <tr>
+          <th><div class="rounded"><div class="fullyCenter">Policy Holder</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Policy Type</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Policy Value</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter commissionTitle">Commission*<br /><span style="font-size: 0.75em;">*click to <span class="commission">show</span><span class="commission hidden">hide</span></span></div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Documents</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Status</div></div></th>
+          <th><div class="rounded"><div class="fullyCenter">Action</div></div></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="autoAlt">
+          <td><a href="#">Ms Sigourney Weaver</a></td>
+          <td>Landlord's Insurance+</td>
+          <td>&pound;898</td>
+          <td><div class="commission">***</div><div class="commission hidden">&pound;89.90</div></td>
+          <td><div class="rounded button">Documents</div></td>
+          <td><span class="cancelled">Cancelled</span></td>
+          <td>&nbsp;</td>
+          </tr>
+          <tr class="autoAlt">
+          <td><a href="#">Capt Ben Sisko</a></td>
+          <td>Tenants' Contents Insurance+</td>
+          <td>&pound;109</td>
+          <td><div class="commission">***</div><div class="commission hidden">&pound;10.90</div></td>
+          <td><div class="rounded button">Documents</div></td>
+          <td>Quote</td>
+          <td><div class="rounded button">Convert quote</div></td>
+          </tr>
+          </tbody>
+          </table>
+          </div>
+          </div>
+          </div>
+
+          <div class="header foldlink">
+          Insurance Dashboard
+          </div>
+
+          <div class="dashboardContent foldable" style="display: none;">
+          <div class="graphs">
+          <div class="graphNew">
+          <div class="title">New Policies:</div>
+          <img src="https://chart.googleapis.com/chart?cht=bvg&chd=t:5,2,0,3,6,6,8,3,5,2,0,1,1,4&chxt=x,y&chxl=0:|1|2|3|4|5|6|7|8|9|10|11|12|13|14|1:|0|5|10&chs=800x300&chco=FDBB30&chg=7.1428,50&chbh=47&chds=0,10&chtt=New%20Policies%20%28last%2014%20days%29" />
+          </div>
+          <div class="graphType">
+          <div class="title">Policy Types:</div>
+          <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:45,0,40,15&chs=407x300&chdl=Landlord's%20Insurance+|Tenants'%20Liability|TCI%2B|Low%20Cost%20Landlord's&chco=FF6F1C,0C2F6B,FDBB30,7AC142&chtt=Policy%20Types%20for%20Referencing%20Estates" />
+          </div>
+          <div class="graphActive">
+          <div class="title">Active Policies:</div>
+          <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:35,65&chs=407x300&chdl=New%20business|Renewal&chco=FF6F1C,0C2F6B&chtt=Active%20Policies%20for%20Referencing%20Estates" />
+          </div>
+          </div>
+          </div>
+          </div>
+         */
+        ?>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="content">
+    <form id="portfolioProperty" action="" class="validate" method="post">
+        <?php echo $this->form; ?>
+    </form>
+    <script type="text/javascript">
+        // imageTick setup:
+        $('input[type=checkbox]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        $('input[type=radio]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        // Add alt classes to odd dd tags (0th indexed) but count them only
+        // where there are associated labels
+        var alternate = 0;
+        $('dd').each( function() {
+            var labelText = $(this).prev('dt').html();
+            if (labelText != '' && labelText != '&nbsp;' && labelText != ' ') {
+                alternate = (alternate + 1) % 2;
+            }
+            if (alternate == 1) {
+                $(this).addClass('alt');
+            }
+        });
+    </script>
+    <style>
+        .facebox-header {
+            background: none;
+        }
+        .facebox-header h2 {
+            padding-left: 8px;
+        }
+    </style>
+    <h3 class="quaternary-colour">Bank Interests Added:</h3>
+    <div id="interest-list">
+        <?php
+        if (count($this->interestList->toArray()) > 0) {
+            echo $this->partialLoop('portfolio-insurance-quote/partials/bank-interest.phtml', $this->interestList->toArray());
+        } else {
+            echo "<em>None</em>";
+        }
+        ?>
+    </div>
+    <input type="button" onclick="$('#facebox .close').click();" value="Done" class="btn btn-quaternary pull-right" />
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,1074 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('span.info').cluetip({
+            splitTitle: '|',
+            showTitle: false,
+            cluetipClass: 'jtip',
+            dropShadowSteps: 3,
+            sticky: false,
+            arrows: true,
+            leftOffset: -300,
+            width: 250
+        });
+
+
+    if(($("#tenancy_address option").length >1 && $("#tenancy_postcode").val()!='')
+            || ($("#tenancy_address option").length ==1 && $("#tenancy_postcode").val()=='')) {
+        $('#no_property_address_selector').hide();
+    }
+
+    if(($("#tenancyforwarding_address option").length >1 && $("#tenancyforwarding_postcode").val()!='')
+        || ($("#tenancyforwarding_address option").length ==1 && $("#tenancyforwarding_postcode").val()=='')) {
+        $('#forwarding_property_address_selector').hide();
+    }
+
+    <?php
+    if($this->element->total_tenants->getValue()>0) { ?>
+        $('#tenant_mastercontainer').show();
+        <?php
+    }
+
+    if($this->element->total_guarantors->getValue() !='') { ?>
+        $('#guarantor_mastercontainer').show();
+        <?php
+    }
+    ?>
+
+    // Date Picker Control
+    $('.input-pos-float').limitkeypress({ rexp: /^\d*[0-9]?\d*$/ });
+    $('#tenancy_start_date').datePicker({startDate:'01/01/1900'});
+    $('#tenancy_end_date').datePicker({startDate:'01/01/1900'});
+    $('#original_cover_start_date').datePicker({startDate:'01/01/1900'});
+    $('#tenant_vacated_date').datePicker({startDate:'01/01/1900'});
+    $('#first_arrear_date').datePicker({startDate:'01/01/1900'});
+    $('#deposit_received_date').datePicker({startDate:'01/01/1900'});
+    $('#tenant_occupation_confirmed_by_tel_dateofcontact').datePicker({startDate:'01/01/1900'});
+    $('#tenant_occupation_confirmed_by_email_dateofcontact').datePicker({startDate:'01/01/1900'});
+    $('#tenant_occupation_confirmed_by_visit_dateofvisit').datePicker({startDate:'01/01/1900'});
+    $('#section21_expiry').datePicker({startDate:'01/01/1900'});
+    $('#section8_expiry').datePicker({startDate:'01/01/1900'});
+
+
+    if ($('#recent_complaints').val() == 1) {
+        $('#recentComplaintsFurtherDetails').show();
+    }
+    else {
+        $('#recentComplaintsFurtherDetails').hide();
+    }
+
+    $('#recent_complaints').change(function() {
+        var recentComplaints = $(this).val();
+
+        if (recentComplaints == 1) {
+            $('#recentComplaintsFurtherDetails').show();
+        }
+        else {
+            $('#recentComplaintsFurtherDetails').hide();
+        }
+    });
+
+
+    if ($('#grounds_for_claim').val() == 'other') {
+        $('#groundsForClaimFurtherDetails').show();
+    }
+    else {
+        $('#groundsForClaimFurtherDetails').hide();
+    }
+
+    $('#grounds_for_claim').change(function() {
+        var groundsForClaim = $(this).val();
+
+        if (groundsForClaim == 'other') {
+            $('#groundsForClaimFurtherDetails').show();
+        }
+        else {
+            $('#groundsForClaimFurtherDetails').hide();
+        }
+    });
+
+    // Tenant vacated question hide or display
+    if (parseInt($('#tenant_vacated').val()) === 1) {
+        // Vacated details on, occupation details off
+        $('#tenantVacatedDate').show();
+        $('#arrearsAtVacatedPossession').show();
+        $('#forwardingAddressPostcode').show();
+        $('#tenantOccupationOfProperty').hide();
+    }
+    else if (parseInt($('#tenant_vacated').val()) === 0) {
+        // Vacated details off, occupation details on
+        $('#tenantVacatedDate').hide();
+        $('#arrearsAtVacatedPossession').hide();
+        $('#forwardingAddressPostcode').hide();
+        $('#tenantOccupationOfProperty').show();
+    }
+    else {
+        // All off
+        $('#tenantVacatedDate').hide();
+        $('#arrearsAtVacatedPossession').hide();
+        $('#forwardingAddressPostcode').hide();
+        $('#tenantOccupationOfProperty').hide();
+    }
+
+    // Add onchange event for tenant vacated question
+    $('#tenant_vacated').change(function() {
+        var tenantVacated = parseInt($(this).val());
+        console.log(tenantVacated);
+
+        if (tenantVacated === 1) {
+            // Vacated details on, occupation details off
+            $('#tenantVacatedDate').show();
+            $('#arrearsAtVacatedPossession').show();
+            $('#forwardingAddressPostcode').show();
+            $('#tenantOccupationOfProperty').hide();
+        }
+        else if (tenantVacated === 0) {
+            // Vacated details off, occupation details on
+            $('#tenantVacatedDate').hide();
+            $('#arrearsAtVacatedPossession').hide();
+            $('#forwardingAddressPostcode').hide();
+            $('#tenantOccupationOfProperty').show();
+        }
+        else {
+            // All off
+            $('#tenantVacatedDate').hide();
+            $('#arrearsAtVacatedPossession').hide();
+            $('#forwardingAddressPostcode').hide();
+            $('#tenantOccupationOfProperty').hide();
+        }
+    });
+
+    if ($('#tenant_occupation_confirmed_by_tel').is(':checked')) {
+        $('#tenantoccupationOfPropertyByTel').show();
+    }
+    else {
+        $('#tenantoccupationOfPropertyByTel').hide();
+    }
+
+    $('#tenant_occupation_confirmed_by_tel').change(function () {
+        var isChecked = $(this).is(':checked');
+
+        if (isChecked) {
+            $('#tenantoccupationOfPropertyByTel').show();
+        }
+        else {
+            $('#tenantoccupationOfPropertyByTel').hide();
+        }
+    });
+
+    if ($('#tenant_occupation_confirmed_by_email').is(':checked')) {
+        $('#tenantoccupationOfPropertyByEmail').show();
+    }
+    else {
+        $('#tenantoccupationOfPropertyByEmail').hide();
+    }
+
+    $('#tenant_occupation_confirmed_by_email').change(function () {
+        var isChecked = $(this).is(':checked');
+
+        if (isChecked) {
+            $('#tenantoccupationOfPropertyByEmail').show();
+        }
+        else {
+            $('#tenantoccupationOfPropertyByEmail').hide();
+        }
+    });
+
+    if ($('#tenant_occupation_confirmed_by_visit').is(':checked')) {
+        $('#tenantoccupationOfPropertyByVisit').show();
+    }
+    else {
+        $('#tenantoccupationOfPropertyByVisit').hide();
+    }
+
+    $('#tenant_occupation_confirmed_by_visit').change(function () {
+        var isChecked = $(this).is(':checked');
+
+        if (isChecked) {
+            $('#tenantoccupationOfPropertyByVisit').show();
+        }
+        else {
+            $('#tenantoccupationOfPropertyByVisit').hide();
+        }
+    });
+
+    if ($('#section21_served').val() == 1) {
+        $('#section21NoticeDetails').show();
+    }
+    else {
+        $('#section21NoticeDetails').hide();
+    }
+
+    $('#section21_served').change(function() {
+        var section21Served = $(this).val();
+
+        if (section21Served == 1) {
+            $('#section21NoticeDetails').show();
+        }
+        else {
+            $('#section21NoticeDetails').hide();
+        }
+    });
+
+    if ($('#section8_served').val() == 1) {
+        $('#section8Expiry').show();
+    }
+    else {
+        $('#section8Expiry').hide();
+    }
+
+    $('#section8_served').change(function() {
+        var section8Served = $(this).val();
+
+        if (section8Served == 1) {
+            $('#section8Expiry').show();
+        }
+        else {
+            $('#section8Expiry').hide();
+        }
+    });
+
+
+    // Hide address dropdowns until needed
+    $('#tenancy_address_selector').hide();
+    $('#tenancyforwarding_address_selector').hide();
+
+    // Guarantor Container
+    $('#total_guarantors').change(function() {
+        $('#guarantor_mastercontainer').show();
+        numofdiv = $(this).val();
+        if (numofdiv =='') {
+            numofdiv = 0;
+        }
+        var totalHiddenGuarantor = $("#totalguarantors").val();
+        if (totalHiddenGuarantor =='') {
+            totalHiddenGuarantor = 0;
+        }
+
+        var begin = parseInt(totalHiddenGuarantor) + parseInt(1);
+        var removeGuarantor ='';
+
+        if(numofdiv < totalHiddenGuarantor) {
+            removeGuarantor = parseInt(numofdiv) + parseInt(1);
+            for(i=removeGuarantor; i<=4;i++) {
+                $("#guarantor_parent_"+i).remove();
+                $("#guarantor_child_"+i).remove();
+            }
+        }
+
+        for(i=begin; i<=numofdiv;i++) {
+
+            // Guarantor parent - replace element ids with numbered ones
+            template    =   $('#guarantorsection').html();
+            template    =   template.replace(/guarantor_parent/g,"guarantor_parent_"+i);
+            template    =   template.replace(/guarantor_name/g,"guarantor_name_"+i);
+
+            template    =   template.replace(/Guarantor Section Title/g,"Guarantor " + i);
+
+
+            template    =   template.replace(/guarantor_hometelno/g,"guarantor_hometelno_"+i);
+            template    =   template.replace(/guarantor_worktelno/g,"guarantor_worktelno_"+i);
+            template    =   template.replace(/guarantor_mobiletelno/g,"guarantor_mobiletelno_"+i);
+            template    =   template.replace(/guarantor_email/g,"guarantor_email_"+i);
+
+            template    =   template.replace(/guarantor_postcode/g,"guarantor_postcode_"+i);
+            template    =   template.replace(/guarantor_add_selector/g,"guarantor_add_selector_"+i);
+            template    =   template.replace(/guarantor_address/g,"guarantor_address_"+i);
+            template    =   template.replace(/guarantoraddress_id/g,"guarantoraddress_id_"+i);
+            template    =   template.replace(/address_lookup/g,"address_lookup_"+i);
+            template    =   template.replace(/cleardiv/g,"cleardiv_"+i);
+            template    =   template.replace(/guarantor_child/g,"guarantor_child_"+i);
+            template    =   template.replace(/guarantors_dob/g,"guarantors_dob_"+i);
+            template    =   template.replace(/guarantor_homeletrefno/g,"guarantor_homeletrefno_"+i);
+            template    =   template.replace(/guarantor_manual_address/g,"guarantor_manual_address_"+i);
+
+            // append parent
+            if($("#guarantor_parent_"+i).length==0){
+                $("<div />", { id:"guarantor_parent_"+i }).append(template).appendTo("#guarantor_mastercontainer");
+            }
+            $("#guarantor_parent_"+i).addClass('no-padding');
+
+            // Guarantor Child
+            address_template =    $('#no_guarantor_address_selector').html();
+            address_template    =    address_template.replace(/guarantor_housename/g,"guarantor_housename_"+i);
+            address_template    =    address_template.replace(/guarantor_street/g,"guarantor_street_"+i);
+            address_template    =    address_template.replace(/guarantor_town/g,"guarantor_town_"+i);
+            address_template    =    address_template.replace(/guarantor_city/g,"guarantor_city_"+i);
+
+            // append child
+            if ($("#guarantor_child_"+i).length==0) {
+                $("<div />", { id:"guarantor_child_"+i , style:"display:none" }).append(address_template).appendTo("#guarantor_manual_address_"+i);
+            }
+
+            // Remove padding
+            $("#guarantor_child_"+i).css('padding', '0');
+
+            // Hide address drop down
+            $("#guarantor_add_selector_"+i).hide();
+
+            birthDatePicker('guarantors_dob_' + i);
+        }
+
+        $("#totalguarantors").val(numofdiv);
+
+        // Show hide cleardiv_1 depending on div number
+        if (numofdiv > 0) {
+            $('#cleardiv_1').hide();
+        } else {
+            $('#cleardiv_1').show();
+        }
+
+    });
+
+
+    $('#total_tenants').change(function() {
+        $('#tenant_mastercontainer').show();
+        numofdiv    =    $(this).val();
+        if(numofdiv ==''){
+            numofdiv=0;
+        }
+
+        var totalHiddenTenant = $("#totaltenants").val();
+        if (totalHiddenTenant =='') {
+            totalHiddenTenant = 0;
+        }
+        var begin = parseInt(totalHiddenTenant) + parseInt(1);
+        var removeTenant ='';
+        if (numofdiv < totalHiddenTenant) {
+            removeTenant = parseInt(numofdiv) + parseInt(1);
+            for (i=removeTenant; i<=7;i++) {
+                $("#tenant_parent_"+i).remove();
+            }
+        }
+
+        for (i=begin; i<=numofdiv;i++) {
+            template    =    $('#tenantsection').html();
+            template    =    template.replace(/tenant_mastercontainer/g,"dynamicdiv"+i);
+
+            template    =   template.replace(/Tenant Section Title/g,"Tenant " + i);
+
+            template    =    template.replace(/tenant_name/g,"tenant_name_"+i);
+            template    =    template.replace(/tenant_hometelno/g,"tenant_hometelno_"+i);
+            template    =    template.replace(/tenant_worktelno/g,"tenant_worktelno_"+i);
+            template    =    template.replace(/tenant_mobiletelno/g,"tenant_mobiletelno_"+i);
+            template    =    template.replace(/tenant_email/g,"tenant_email_"+i);
+            template    =    template.replace(/rg_policy_ref/g,"rg_policy_ref_"+i);
+            template    =    template.replace(/tenants_dob/g,"tenants_dob_"+i);
+
+
+            // append tenant elements
+            if($("#tenant_parent_"+i).length==0){
+                $("<div />", { id:"tenant_parent_"+i }).append(template).appendTo("#tenant_mastercontainer");
+            }
+
+            birthDatePicker('tenants_dob_' + i);
+        }
+        $("#totaltenants").val(numofdiv);
+    });
+
+    var tenantTotal = $("#totaltenants").val();
+    for (loop = 1; loop <= tenantTotal; loop++){
+        birthDatePicker('tenants_dob_' + loop);
+        DateParts = $('#tenants_dob_' + loop).val().split('/');
+        $('#dobDay_tenants_dob_' + loop).val(DateParts[0]);
+        $('#dobMonth_tenants_dob_' + loop).val(DateParts[1]);
+        $('#dobYear_tenants_dob_' + loop).val(DateParts[2]);
+    }
+
+    var guarantorTotal = $("#total_guarantors").val();
+    for (loop = 1; loop <= guarantorTotal; loop++) {
+        birthDatePicker('guarantors_dob_' + loop);
+        DateParts = $('#guarantors_dob_' + loop).val().split('/');
+        $('#dobDay_guarantors_dob_' + loop).val(DateParts[0]);
+        $('#dobMonth_guarantors_dob_' + loop).val(DateParts[1]);
+        $('#dobYear_guarantors_dob_' + loop).val(DateParts[2]);
+    }
+});
+
+function birthDatePicker(elementId)
+{
+    var i;
+    var minBirthDate = new Date();
+    minBirthDate.setDate(minBirthDate.getDate() - 36525); // 100 years
+    var minBirthDateYear = String(minBirthDate.getFullYear());
+
+    var maxBirthDate = new Date();
+    maxBirthDate.setDate(maxBirthDate.getDate() - 5844); // 16 years
+    var maxBirthDateYear = String(maxBirthDate.getFullYear());
+    var days = '';
+
+    days = days + '<option value="">--</option>';
+    for (i = 1; i <= 31; i++) {
+        days = days + '<option value="' + lpad(String(i), '0', 2) + '">' + i + '</option>';
+    }
+
+    var months = '';
+    months = months + '<option value="">--</option>';
+    for (i = 0; i < Date.abbrMonthNames.length; i++) {
+        months = months + '<option value="' + lpad(String(i + 1), '0', 2) + '">' + Date.abbrMonthNames[i] + '</option>';
+    }
+
+    var years = '';
+    years = years + '<option value="">----</option>';
+    for (i = minBirthDateYear; i <= maxBirthDateYear; i++) {
+        years = years + '<option value="' + i + '">' + i + '</option>';
+    }
+
+    $(
+        '<select onchange="updateDisplayDates(\'' + elementId + '\')" id="dobDay_'  + elementId + '" style="width: 60px; float: left;margin-left:18px; margin-right: 10px;">' + days + '</select>' +
+        '<select onchange="updateDisplayDates(\'' + elementId + '\')" id="dobMonth_' + elementId + '" style="width: 60px; float: left; margin-right: 10px;">' + months + '</select>' +
+        '<select onchange="updateDisplayDates(\'' + elementId + '\')" id="dobYear_' + elementId + '" style="width: 60px; float: left; margin-right: 0px;">' + years + '</select>'
+    ).insertBefore("#" + elementId);
+
+    // Hide the field
+    $("#" + elementId).hide();
+}
+
+
+function updateDisplayDates(elementId) {
+    $('#' + elementId).val(
+        $('#dobDay_'+ elementId).val() + '/' + $('#dobMonth_'+ elementId).val() + '/' + $('#dobYear_'+ elementId).val()
+    );
+
+    if ($('#' + elementId).val() == '') {
+        // If no start date already stored, default to today
+        tempStartDate = new Date();
+    }
+    else {
+       // Read the start date from the real (but hidden) field
+        var startDateParts = $('#' + elementId).val().split('/');
+
+        // Enforce that start date can exist
+        var tempStartDate = new Date(parseInt(startDateParts[2], 10), parseInt(startDateParts[1], 10) - 1, parseInt(startDateParts[0], 10));
+    }
+
+    // Write it back
+    $('#' + elementId).val(
+       lpad(String(tempStartDate.getDate()), '0', 2) + '/' +
+        lpad(String(parseInt(tempStartDate.getMonth(), 10) + 1), '0', 2) + '/' +
+        String(tempStartDate.getFullYear())
+    );
+}
+
+
+function lpad(str, padString, len) {
+    while (str.length < len) {
+        str = padString + str;
+    }
+    return str;
+}
+<?php if ($this->element->tenancy_address_id->getValue() != '') { ?>
+    // Trigger post code search for property and then choose option
+    $(function() {
+        $.ajaxSetup({ async: false });
+        getPropertiesByPostcode(
+            $('#tenancy_postcode').val(),
+            'tenancy_postcode',
+            'tenancy_address',
+            'no_property_address_selector'
+        );
+        $.ajaxSetup({ async: true });
+
+        $('#tenancy_address').val("<?php echo $this->element->tenancy_address_id->getValue(); ?>");
+
+        addressShowHideManualFields('<?php echo $this->element->tenancy_address_id->getValue(); ?>', 'no_property_address_selector');
+    });
+<?php }?>
+<?php if ($this->element->tenantsforwarding_address_id->getValue() != ''): ?>
+// Trigger post code search for forwarding address and then choose option
+$(function() {
+    $.ajaxSetup({ async: false });
+    getPropertiesByPostcode(
+        $('#tenantsforwarding_postcode').val(),
+        'tenantsforwarding_postcode',
+        'tenantsforwarding_address',
+        'forwarding_property_address_selector'
+    );
+    $.ajaxSetup({ async: true });
+
+    $('#tenantsforwarding_address').val("<?php echo $this->element->tenantsforwarding_address_id->getValue(); ?>");
+
+    addressShowHideManualFields('<?php echo $this->element->tenantsforwarding_address_id->getValue(); ?>', 'forwarding_property_address_selector');
+});
+<?php else: ?>
+$(function() {
+    addressShowHideManualFields('<?php echo $this->element->tenantsforwarding_address_id->getValue(); ?>', 'forwarding_property_address_selector');
+});
+<?php endif ?>
+
+
+<?php if ($this->element->total_guarantors->getValue() > 0) { ?>
+    // Trigger post code search(es) for guarantor(s) and then choose option(s)
+    $(function() {
+        $.ajaxSetup({ async: false });
+        <?php for ($i = 1; $i <= $this->element->total_guarantors->getValue(); $i++) { ?>
+            getPropertiesByPostcode(
+                $('#guarantor_postcode_<?php echo $i; ?>').val(),
+                'guarantor_postcode_<?php echo $i; ?>',
+                'guarantor_address_<?php echo $i; ?>',
+                'guarantor_child_<?php echo $i; ?>'
+            );
+        <?php } ?>
+        $.ajaxSetup({ async: true });
+        <?php for ($i = 1; $i <= $this->element->total_guarantors->getValue(); $i++) {
+            $guarantor_address = "guarantor_address_{$i}"
+            ?>
+
+            $('#guarantor_address_<?php echo $i; ?>').val("<?php echo $this->element->$guarantor_address->getValue(); ?>");
+
+            addressShowHideManualFields('<?php echo $this->element->$guarantor_address->getValue(); ?>', "guarantor_child_<?php echo $i; ?>");
+        <?php } ?>
+    });
+<?php }?>
+
+</script>
+
+<div class="clear"></div>
+
+<form enctype="application/x-www-form-urlencoded" method="post" action="" id="guarantorform">
+    <h2>Property Details</h2>
+    <div class="form_section one-col">
+        <div>
+            <?php echo $this->element->housing_act_adherence; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->tenancy_start_date; ?>
+        </div>
+        <div class="datePicker">
+            <?php echo $this->element->tenancy_end_date; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->original_cover_start_date; ?>
+        </div>
+        <div class="">
+            <?php
+                echo $this->element->tenancy_postcode;
+                echo $this->element->tenancy_address_lookup;
+                echo $this->element->tenancy_address_id;
+                ?>
+            <div id="tenancy_address_selector" class="drop-down-pad">
+                <label>&nbsp;</label>
+                <?php
+                echo $this->element->tenancy_address->setAttribs(
+                    array(
+                        'style' => 'width: 320px;',
+                        'onchange' => 'addressShowHideManualFields($(this).val(), \'no_property_address_selector\');'
+                    )
+                )->render();
+                ?>
+            </div>
+        </div>
+        <div id="no_property_address_selector" class="alt no-padding">
+            <div>
+                <?php echo $this->element->tenancy_housename; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->tenancy_street; ?>
+            </div>
+            <div>
+                <?php echo $this->element->tenancy_town; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->tenancy_city; ?>
+            </div>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->monthly_rent; ?>
+        </div>
+        <div class="datePicker">
+            <?php echo $this->element->first_arrear_date; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->deposit_amount; ?>
+        </div>
+        <div class="datePicker">
+            <?php echo $this->element->deposit_received_date; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->rent_arrears; ?>
+        </div>
+        <div>
+            <?php echo $this->element->recent_complaints; ?>
+        </div>
+
+        <div id="recentComplaintsFurtherDetails" class="alt">
+            <label for="recent_complaints_further_details">Please provide further details (250 char max):</label>
+            <?php echo $this->element->recent_complaints_further_details; ?>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <h2>Claim Details</h2>
+    <div class="form_section one-col">
+        <div>
+            <?php echo $this->element->policy_number; ?>
+        </div>
+
+        <div class="alt">
+            <?php echo $this->element->grounds_for_claim; ?>
+        </div>
+
+        <div id="groundsForClaimFurtherDetails">
+            <label for="grounds_for_claim_further_details">Please provide grounds for claim (250 char max):</label>
+            <?php echo $this->element->grounds_for_claim_further_details; ?>
+        </div>
+
+        <div class="alt">
+            <?php echo $this->element->tenant_vacated; ?>
+        </div>
+
+        <div id="tenantVacatedDate" class="datePicker">
+            <?php echo $this->element->tenant_vacated_date; ?>
+        </div>
+
+        <div id="arrearsAtVacatedPossession">
+            <?php echo $this->element->arrears_at_vacant_possession; ?>
+        </div>
+
+        <div id="forwardingAddressPostcode">
+            <?php
+            echo $this->element->tenantsforwarding_postcode;
+            echo $this->element->tenantsforwarding_address_lookup;
+            echo $this->element->tenantsforwarding_address_id;
+            ?>
+            <div id="tenantsforwarding_address_selector" class="drop-down-pad">
+                <label>&nbsp;</label>
+                <?php
+                echo $this->element->tenantsforwarding_address->setAttribs(
+                    array(
+                        'style' => 'width: 320px;',
+                        'onchange' => 'addressShowHideManualFields($(this).val(), \'forwarding_property_address_selector\');'
+                    )
+                )->render();
+                ?>
+            </div>
+        </div>
+
+        <div id="forwarding_property_address_selector" class="alt no-padding">
+            <div>
+                <?php echo $this->element->tenantsforwarding_housename; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->tenantsforwarding_street; ?>
+            </div>
+            <div>
+                <?php echo $this->element->tenantsforwarding_town; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->tenantsforwarding_city; ?>
+            </div>
+        </div>
+
+        <div id="tenantOccupationOfProperty" class="no-padding" style="margin: 0; padding: 0;">
+            <div>
+            <label>
+                How have you confirmed the tenant(s) is still in the property?
+            </label>
+            </div>
+
+            <div>
+                <?php echo $this->element->tenant_occupation_confirmed_by_tel; ?>
+            </div>
+
+            <div id="tenantoccupationOfPropertyByTel" style="padding: 0; margin: 0;">
+                <div class="datePicker">
+                    <?php echo $this->element->tenant_occupation_confirmed_by_tel_dateofcontact; ?>
+                </div>
+
+                <div>
+                    <?php echo $this->element->tenant_occupation_confirmed_by_tel_tenantname; ?>
+                </div>
+            </div>
+
+            <div class="alt">
+                <?php echo $this->element->tenant_occupation_confirmed_by_email; ?>
+            </div>
+
+            <div id="tenantoccupationOfPropertyByEmail" style="padding: 0; margin: 0;">
+                <div class="datePicker">
+                    <?php echo $this->element->tenant_occupation_confirmed_by_email_dateofcontact; ?>
+                </div>
+
+                <div>
+                    <?php echo $this->element->tenant_occupation_confirmed_by_email_tenantname; ?>
+                </div>
+            </div>
+
+            <div>
+                <?php echo $this->element->tenant_occupation_confirmed_by_visit; ?>
+            </div>
+
+            <div id="tenantoccupationOfPropertyByVisit" style="padding: 0; margin: 0;">
+                <div class="datePicker">
+                    <?php echo $this->element->tenant_occupation_confirmed_by_visit_dateofvisit; ?>
+                </div>
+
+                <div>
+                    <?php echo $this->element->tenant_occupation_confirmed_by_visit_individualattending; ?>
+                </div>
+
+                <div>
+                    <?php echo $this->element->tenant_occupation_confirmed_by_visit_tenantname; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <h2>Section 21 Notice</h2>
+    <div class="form_section one-col">
+        <div>
+            <?php echo $this->element->section21_served; ?>
+        </div>
+
+        <div id="section21NoticeDetails" style="padding: 0; margin: 0;">
+            <div class="datePicker">
+                <?php echo $this->element->section21_expiry; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_moneydepositreceived; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_money_held_under_tds_deposit_scheme; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_tds_complied_with; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_tds_prescribed_information_to_tenant; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_landlord_deposit_in_property_form; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->section21_returned_at_notice_serve_date; ?>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <h2>Section 8 Notice</h2>
+    <div class="form_section one-col">
+
+        <div>
+            <?php echo $this->element->section8_served; ?>
+        </div>
+
+        <div id="section8Expiry" class="datePicker">
+            <?php echo $this->element->section8_expiry; ?>
+        </div>
+
+        <div>
+            <?php echo $this->element->section8_demand_letter_sent; ?>
+        </div>
+
+        <div>
+            <label for="section8_over18_occupants">Please list all known occupiers of the property over the age of
+                18 years, who are NOT named as tenants on the tenancy agreement <br/>(250 char max):</label>
+            <?php echo $this->element->section8_over18_occupants; ?>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <h2>Tenant Details</h2>
+    <div class="form_section one-col">
+        <div class="alt">
+            <?php echo $this->element->total_tenants; ?>
+        </div>
+        <div id="tenant_mastercontainer" style="display:none;padding:0px;" class="no-padding">
+            <?php
+            if($this->element->total_tenants->getValue() !='')
+            {
+                for($i=1;$i<=$this->element->total_tenants->getValue();$i++)
+                {
+                    $tenant_parent_id           = "tenant_parent_".$i;
+                    $tenant_name                = "tenant_name_".$i;
+                    $tenant_hometelno           = "tenant_hometelno_".$i;
+                    $tenant_worktelno           = "tenant_worktelno_".$i;
+                    $tenant_mobiletelno         = "tenant_mobiletelno_".$i;
+                    $tenant_email               = "tenant_email_".$i;
+                    $rg_policy_ref              = "rg_policy_ref_".$i;
+                    $tenants_dob                = "tenants_dob_".$i;
+                    $info                       = "info_".$i;
+                    ?>
+                    <div id="<?php echo $tenant_parent_id;?>">
+                        <h5>Tenant <?php echo $i; ?></h5>
+                        <div>
+                            <?php echo $this->element->$tenant_name; ?>
+                        </div>
+
+                        <div class="alt">
+                            <?php echo $this->element->$tenant_hometelno; ?>
+                        </div>
+
+                        <div>
+                            <?php echo $this->element->$tenant_worktelno; ?>
+                        </div>
+
+                        <div class="alt">
+                            <?php echo $this->element->$tenant_mobiletelno; ?>
+                        </div>
+
+                        <div>
+                            <?php echo $this->element->$tenant_email; ?>
+                        </div>
+
+                        <div class="two-col alt">
+                            <?php echo $this->element->$rg_policy_ref; ?>
+                        </div>
+                        <div class="two-col datePicker" style="padding-right:0px;">
+                            <?php echo $this->element->$tenants_dob; ?>
+                        </div>
+                        <script>
+                            $('span.<?php echo $info;?>').cluetip({
+                                splitTitle: '|',
+                                showTitle: false,
+                                cluetipClass: 'jtip',
+                                dropShadowSteps: 3,
+                                sticky: false,
+                                arrows: true,
+                                leftOffset: -300,
+                                width: 250
+                            });
+                        </script>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+        <?php echo $this->element->totaltenants; ?>
+        <div id="tenantsection" class="no-padding" style="display:none;">
+            <h5>Tenant Section Title</h5>
+
+            <div>
+                <?php echo $this->element->tenant_name; ?>
+            </div>
+
+            <div class="alt">
+                <?php echo $this->element->tenant_hometelno; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->tenant_worktelno; ?>
+            </div>
+
+            <div class="alt">
+                <?php echo $this->element->tenant_mobiletelno; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->tenant_email; ?>
+            </div>
+
+            <div class="two-col alt">
+                <?php echo $this->element->rg_policy_ref; ?>
+            </div>
+            <div class="two-col datePicker">
+                <?php echo $this->element->tenants_dob; ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <h2>Guarantor Details</h2>
+    <div class="form_section one-col">
+        <div id="howmany_guarantors" class="alt">
+            <?php echo $this->element->total_guarantors; ?>
+        </div>
+        <div class="one-col no-padding" id="guarantor_mastercontainer" style="display:none;padding:0px;">
+            <?php
+            if ($this->element->total_guarantors->getValue() !='') {
+                for ($i = 1; $i <= $this->element->total_guarantors->getValue(); $i++) {
+                    $guarantor_parent_id    = "guarantor_parent_" . $i;
+                    $guarantor_child_id     = "guarantor_child_" . $i;
+                    $guarantor_name         = "guarantor_name_" . $i;
+                    $guarantor_hometelno    = "guarantor_hometelno_".$i;
+                    $guarantor_worktelno    = "guarantor_worktelno_".$i;
+                    $guarantor_mobiletelno  = "guarantor_mobiletelno_".$i;
+                    $guarantor_email        = "guarantor_email_".$i;
+
+
+                    $guarantor_postcode     = "guarantor_postcode_" . $i;
+                    $address_lookup         = "address_lookup_" . $i;
+                    $guarantor_address      = "guarantor_address_" . $i;
+                    $guarantor_address_sel  = "guarantor_add_selector" . $i;
+                    $guarantor_housename    = "guarantor_housename_" . $i;
+                    $guarantor_street       = "guarantor_street_" . $i;
+                    $guarantor_town         = "guarantor_town_" . $i;
+                    $guarantor_city         = "guarantor_city_" . $i;
+                    $guarantoraddress_id    = "guarantoraddress_id_" . $i;
+                    $onclick = sprintf('getPropertiesByPostcode($(\'#%s\').val(), \'%s\', \'%s\', \'%s\'); $(\'#%s\').show(); return false;',
+                        $guarantor_postcode,
+                        $guarantor_postcode,
+                        $guarantor_address,
+                        $guarantor_child_id,
+                        $guarantor_address_sel
+                    );
+
+                    $guarantors_dob         = "guarantors_dob_".$i;
+                    $guarantors_homeletrefno = "guarantor_homeletrefno_".$i;
+
+                    ?>
+                    <div id="<?php echo $guarantor_parent_id;?>" class="no-padding">
+                        <h5>Guarantor <?php echo $i; ?></h5>
+
+                        <div>
+                            <?php echo $this->element->$guarantor_name;?>
+                        </div>
+
+                        <div class="alt">
+                            <?php echo $this->element->$guarantor_hometelno; ?>
+                        </div>
+
+                        <div>
+                            <?php echo $this->element->$guarantor_worktelno; ?>
+                        </div>
+
+                        <div class="alt">
+                            <?php echo $this->element->$guarantor_mobiletelno; ?>
+                        </div>
+
+                        <div>
+                            <?php echo $this->element->$guarantor_email; ?>
+                        </div>
+
+                        <div class="alt">
+                            <?php echo $this->element->$guarantor_postcode; ?>
+                            <input type="submit" id="address_lookup" value="Find address" name="address_lookup" onClick="<?php echo $onclick; ?>"/>
+                            <?php echo $this->element->$guarantoraddress_id; ?>
+                            <div id="<?php echo $guarantor_address_sel; ?>" class="drop-down-pad">
+                                <label>&nbsp;</label>
+                                <?php echo $this->element->$guarantor_address->setAttribs(
+                                    array(
+                                        'style' => 'width: 320px;',
+                                        'onchange' => "addressShowHideManualFields($(this).val(), '{$guarantor_child_id}');"
+                                    )
+                                )->render();
+                                ?>
+                            </div>
+                        </div>
+
+                        <div id="<?php echo $guarantor_child_id;?>" style="<?php if($this->element->$guarantor_address->getValue() >0){echo "display:none";} else {echo "display:block";}?>" >
+                            <div>
+                                <?php echo $this->element->$guarantor_housename; ?>
+                            </div>
+                            <div class="alt">
+                                <?php echo $this->element->$guarantor_street; ?>
+                            </div>
+                            <div>
+                                <?php echo $this->element->$guarantor_town; ?>
+                            </div>
+                            <div class="alt">
+                                <?php echo $this->element->$guarantor_city; ?>
+                            </div>
+                            <div class="clear" id="<?php echo $guarantor_child_id;?>"></div>
+                        </div>
+
+                        <div>
+                            <?php echo $this->element->$guarantors_homeletrefno; ?>
+                        </div>
+
+                        <div class="two-col datePicker" style="padding-right:0px;">
+                            <?php echo $this->element->$guarantors_dob; ?>
+                        </div>
+
+                        <div class="clear" id="<?php echo $guarantor_parent_id;?>"></div>
+                    </div>
+                <?php
+                }
+            }
+            ?>
+        </div>
+        <?php echo $this->element->totalguarantors; ?>
+        <div id="guarantorsection" style="display:none;" class="no-padding">
+            <div class="clear" id="cleardiv"></div>
+            <h5>Guarantor Section Title</h5>
+
+            <div>
+                <?php echo $this->element->guarantor_name; ?>
+            </div>
+
+            <div class="alt">
+                <?php echo $this->element->guarantor_hometelno; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->guarantor_worktelno; ?>
+            </div>
+
+            <div class="alt">
+                <?php echo $this->element->guarantor_mobiletelno; ?>
+            </div>
+
+            <div>
+                <?php echo $this->element->guarantor_email; ?>
+            </div>
+
+            <div class="alt">
+                <?php
+                echo $this->element->guarantor_postcode;
+                echo $this->element->address_lookup;
+                echo $this->element->guarantoraddress_id;
+                ?>
+                <div id="guarantor_add_selector" class="drop-down-pad" style="clear: both;">
+                    <label>&nbsp;</label>
+                    <?php
+                    echo $this->element->guarantor_address->setAttribs(
+                        array(
+                            'style' => 'width: 320px;',
+                            'onchange' => 'addressShowHideManualFields($(this).val(), \'guarantor_child\');'
+                        )
+                    )->render();
+                    ?>
+                </div>
+            </div>
+
+            <div id="guarantor_manual_address" style="padding: 0;">
+
+            </div>
+
+            <div>
+                <?php echo $this->element->guarantor_homeletrefno; ?>
+            </div>
+
+            <div class="datePicker">
+                <?php echo $this->element->guarantors_dob; ?>
+            </div>
+        </div>
+        <div id="no_guarantor_address_selector" class="no-padding" style="display:none;">
+            <div>
+                <?php echo $this->element->guarantor_housename; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->guarantor_street; ?>
+            </div>
+            <div>
+                <?php echo $this->element->guarantor_town; ?>
+            </div>
+            <div class="alt">
+                <?php echo $this->element->guarantor_city; ?>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clear"></div>
+    <div class="two-col">
+        <div id="navigationmenu">
+            <?php echo $this->element->back; ?>
+            <?php echo $this->element->save_exit; ?>
+            <?php echo $this->element->next->setAttribs(array('style' => 'clear: none;'))->render(); ?>
+        </div>
+    </div>
+</form>

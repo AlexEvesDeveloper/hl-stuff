@@ -1,0 +1,5 @@
+services:
+    barbon.hosted_api.app.service.reference.reference_retriever:
+        class: Barbon\HostedApi\AppBundle\Service\Reference\ReferenceRetriever
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager

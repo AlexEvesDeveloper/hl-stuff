@@ -1,0 +1,77 @@
+<?php
+class Cms_View_Helper_Twitter extends Zend_View_Helper_Abstract
+{
+    public function twitter()
+    {
+    	if (APPLICATION_ENV == 'development') {
+    		$twitterArray = array(
+    			array(
+    				'tweet'        => 'Dev Tweet',
+	                 'link'         => 'http://twitter.com'
+	            ),
+	            array(
+    				'tweet'        => 'Can\'t Connect to Twitter!',
+	                 'link'         => 'http://twitter.com'
+	            )
+			);
+    	} else {
+    	
+        $params = Zend_Registry::get('params');
+        
+        // Initialise the twitter cache
+        $frontendOptions = array(
+            'lifetime' => 7200, // cache lifetime of 2 hours
+            'automatic_serialization' => true
+        );
+        $backendOptions = array(
+            'cache_dir' => APPLICATION_PATH . '/../private/cache' // Directory where to put the cache files
+        );
+        
+        $cache = Zend_Cache::factory('Core',
+                                     'File',
+                                     $frontendOptions,
+                                     $backendOptions);
+        
+        if (APPLICATION_ENV == 'testing' || (($twitterArray = $cache->load('HomeLet_Twitter')) === false)) {
+            // We don't have the twitter stream so we need to grab it
+            
+            // Check to make sure the feed is responding - as Zend_Feed_Reader doesn't die gracefully :(
+            $config = array(
+                'adapter'   => 'Zend_Http_Client_Adapter_Curl',
+                'curloptions' => array(CURLOPT_FOLLOWLOCATION => true),
+            );
+            $client = new Zend_Http_Client($params->cms->twitterFeedURL, $config);
+            $response = $client->request();
+            if ($response->getStatus() == '200') {
+                
+                $twitterFeed = Zend_Feed_Reader::import($params->cms->twitterFeedURL);
+                
+                $count = count($twitterFeed);
+                if ($count>6) $count=6;
+                
+                $twitterArray = array();
+                $i=1;
+                foreach ($twitterFeed as $entry) {
+                    $edata = array(
+                        'tweet'        => str_replace('HomeLet:', '', $entry->getDescription()),
+                        'link'         => $entry->getLink()
+                    );
+                    
+                    array_push($twitterArray,$edata);
+                    $i++;
+                    if ($i>$count) break;
+                }
+                
+                $cache->save($twitterArray,'HomeLet_Twitter');
+            }
+            else
+            {
+                return '';
+            }
+        }
+	    }
+        
+        return $this->view->partialLoop('templates/partials/twitter.phtml', $twitterArray);
+    }
+}
+?>

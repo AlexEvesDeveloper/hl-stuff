@@ -1,0 +1,12 @@
+<div class="wrapper">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h3>Company Application Form Submitted</h3>
+        <p>
+            Your application has been submitted and will be processed shortly.
+        </p>
+        <p>
+            If you have any further queries, please do not hesitate to email us at <a href="mailto:<?php echo $this->params->connect->companyapps->emailQueryAddress; ?>?subject=Company%20Application%20Referencing%20Query" title="<?php echo $this->params->connect->companyapps->emailQueryAddress; ?>"><?php echo $this->params->connect->companyapps->emailQueryAddress; ?></a>.
+        </p>
+    </div>
+</div>

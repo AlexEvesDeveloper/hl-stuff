@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.landlord.reference.controller.list_references.list_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\ListReferences\ListController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.app.service.reference.reference_retriever
+            - @barbon.hosted_api.app.form.common.lookup.application_status
+            - @security.token_storage

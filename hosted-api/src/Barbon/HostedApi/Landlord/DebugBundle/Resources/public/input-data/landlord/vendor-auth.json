@@ -1,0 +1,7 @@
+{
+    "systemKey": "e358ed82-0e26-4463-9a12-2fd62bce1940",
+    "systemSecret": "3de1b941-d98d-4195-a02a-9aee4b6417d1",
+    "callbackUrl": "{scheme}://{hostname}{basepath}/landlord/debug/reference-callback",
+    "redirectOnSuccessUrl": "{scheme}://{hostname}{basepath}/landlord/debug/reference-success",
+    "redirectOnFailureUrl": "{scheme}://{hostname}{basepath}/landlord/debug/reference-failure"
+}

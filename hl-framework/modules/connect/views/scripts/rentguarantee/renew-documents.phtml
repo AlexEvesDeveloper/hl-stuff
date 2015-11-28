@@ -1,0 +1,32 @@
+<?php echo $this->headLink(); echo $this->headScript();?>
+<img src="/assets/connect/images/homelet-logo.png"/>
+<br/><br/>
+<div class="reportHeading">Rent Guarantee Renewals Suite</div>
+<div class="separator"></div>
+<div class="box" style="width:50%">
+	<div class="box_title">Renewal Documents</div>
+	<div class="box_content">
+		<p>Do you want to...</p>
+		<form method="post" name="sendDocuments">
+			<table >
+				<tr>
+					<td>Send invite to landlord</td>
+					<td><label><input type="radio" name="landlorddocument" value="invite" checked="checked" /></label></td>
+				</tr>
+				<tr>
+					<td>Send reminder to landlord</td>
+					<td><label><input type="radio" name="landlorddocument" value="reminder" /></label>
+					</td>
+				</tr>
+				<tr>
+					<td width="160">Receive renewal invitation</td>
+					<td><label><input type="checkbox" name="agentdocument" value="yes" /></label></td>
+				</tr>
+			</table>
+			<br/>
+			<input type="hidden" name="policynumber" value="<?php echo $this->policynumber;?>" />
+			<input type="button" class="round-button" onclick="location.href='/connect/rentguarantee/renewal'" value=" Back "/>&nbsp;
+			<input type="submit" class="round-button" value=" Continue "/>
+		</form>
+	</div>
+</div>

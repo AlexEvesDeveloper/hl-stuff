@@ -1,0 +1,31 @@
+<style type="text/css">
+	
+	.errorList {
+		
+		margin: 0 0 10px 0 !important;
+		border: 1px solid #FF6F1C;
+		padding: 7px;
+	}
+	
+	.errorList li {
+		
+		list-style: none;
+	}
+	
+</style>
+
+<?php if(count($this->errors)): ?>
+
+	<ul class="errorList">
+        <?php foreach($this->errors as $error): ?>
+
+            <?php foreach($error as $key => $value): ?>
+			
+                <li><?php echo $value; ?></li>
+				
+			<?php endforeach; ?>
+
+        <?php endforeach; ?>
+    </ul>
+	
+<?php endif; ?>

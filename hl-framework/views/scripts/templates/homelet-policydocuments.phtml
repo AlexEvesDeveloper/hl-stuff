@@ -1,0 +1,102 @@
+<?php
+echo $this->subHeader('corporate', 'corporate');
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+        <div class="content">
+            <script type="text/javascript">
+                $(function() {
+                   //wire up expander
+                   $('.expanders li a').click(function() {
+                      $(this).toggleClass("open");
+                      $(this).next().slideToggle();
+                   })
+                });
+            </script>
+
+            <h4 style="margin:30px 0 10px">Policy Wordings</h4>
+            <ul class="policy">
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/LL_plus_policy_wording.pdf">Landlord's Insurance +</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/HomeLetLowCost.pdf">Low Cost Landlords</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/Landlords_Portfolio_Policy_Wording.pdf">Landlord's Portfolio Insurance</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Landlords_Comprehensive_Policy_Wording.pdf">Landlord's Comprehensive Insurance</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/HomeLet_Tenants_Protection_Plus_policy_summary_0209_V4.pdf">Tenant's Insurance</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/HomeLetTenants.pdf">Tenant's Protection</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/RG/B287_Combined_09_12.pdf">Xpress, Extra and Advantage Rent Guarantee</a>
+                </li>
+            </ul>
+
+            <h4 style="margin:30px 0 10px">Policy Summaries</h4>
+            <ul class="policy">
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Landlords-Insurance-plus-policy-summary-Key-facts.pdf">Landlord's Insurance +</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/Tenants-Insurance-plus-policy-summary-Key-facts.pdf">Tenant's Insurance</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Emergency_Assistance_Policy_Summary_Propgen.pdf">Tenant's Protection</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/Low_Cost_Buildings_Policy_Summary_Propgen.pdf">Low-Cost Landlords</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/Landlords_Portfolio_Summary.pdf">Landlord's Portfolio Insurance</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Landlords_Comprehensive_Insurance_Policy_summary.pdf">Landlord's Comprehensive Insurance</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Xpress_RG_and_Legal_Policy_Summary_Amends.pdf">Xpress Rent Guarantee &amp; Legal</a>
+                </li>
+                <li>
+                    <a href="/assets/legacy-cms/media/policy-documents/Extra_RG_and_Legal_Policy_Summary_Amended.pdf">Extra Rent Guarantee &amp; Legal</a>
+                </li>
+                <li class="alt-year">
+                    <a href="/assets/legacy-cms/media/policy-documents/Advantage_RG_and_Legal_Policy_Summary.pdf">Advantage Rent Guarantee &amp; Legal</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar">
+            <div id="right">
+                <h4 class="underline-corporate">Resources</h4>
+                <div class="white">
+                    <?php $layout = $this->layout()->getView(); ?>
+                    <a href="<?php echo $layout->urls['contactUs']; ?>" class="nav-corporate-button">Ask us a Question</a>
+                    <a href="<?php echo $layout->urls['connectLogin']; ?>" class="nav-corporate-button">Login to Connect</a>
+                    <div style="clear:both;"></div>
+                </div>
+                <h4 class="underline-corporate">What people say</h4>
+                <div class="blue">
+                    <div class="testyhearts">
+                        <div id="testimonials-holder">
+                            <ul>
+                                <?php
+                                    echo $this->testimonials( 'corporate' );
+                                ?>
+                            </ul>
+                            <div id="test-changer">
+                                <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                                <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

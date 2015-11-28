@@ -1,0 +1,23 @@
+<?php
+// Landlords Referencing - Email link to reference subject
+?>
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+    	Dear <strong><?php echo($this->metaData['firstName'] . ' ' . $this->metaData['lastName']); ?></strong>
+    </font>
+</p>
+
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">    
+	Your prospective tenant has completed the reference application that you sent them. 
+	Please click on the link below to review the application and proceed with the reference. 
+    </font>
+</p>
+
+<p>
+    <font face="Trebuchet MS, Hevetica, Arial, sans-serif" color="#000077">
+	    <strong>
+			<a href="<?php echo $this->metaData['linkUrl']; ?>"><?php echo $this->metaData['linkUrl']; ?></a>
+	    </strong>
+    </font>
+</p>

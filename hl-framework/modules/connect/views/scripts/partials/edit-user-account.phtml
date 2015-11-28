@@ -1,0 +1,60 @@
+<div id="userAccounts" class="<?php echo $this->userStatusClass; ?>">
+
+    <?php if ($this->firstRow): ?>
+
+        <div>
+            <table cellspacing="0" cellpadding="2" border="0" width="100%" id="userListing">
+                <caption>
+                    <?php if($this->userStatusClass == 'activated'): ?>
+                        Live Users
+                    <?php else: ?>
+                        De-activated Users
+                    <?php endif; ?>
+                </caption>
+                <thead>
+                    <tr>
+                        <th width="25%">Full Name</th>
+                        <th width="15%">Username</th>
+                        <th width="20%">Master User</th>
+                        <th width="20%">Access Reports</th>
+                        <th width="10%">Active</th>
+                        <th width="10%">Edit</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    <?php endif; ?>
+
+    <form method="post" action="/settings?show=userAdministration&userId=<?php echo $this->userId; ?>#userAdministration_<?php echo $this->userId; ?>">
+        <input type="hidden" name="userId" value="<?php echo $this->userId; ?>" />
+        <div class="foldable1" id="foldable1_<?php echo $this->userId; ?>">
+
+            <table cellspacing="0" cellpadding="2" border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td width="25%"><?php echo $this->form->subform_useraccount->getElement('realname')->getValue(); ?></td>
+                        <td width="15%"><?php echo $this->form->subform_useraccount->getElement('username')->getValue(); ?></td>
+                        <td width="20%"><?php echo (($this->form->subform_useraccount->getElement('master')->getValue() == '1') ? 'Yes' : 'No'); ?></td>
+                        <td width="20%"><?php echo (($this->form->subform_useraccount->getElement('reports')->getValue() == '1') ? 'Yes' : 'No'); ?></td>
+                        <td width="10%"><?php echo (($this->form->subform_useraccount->getElement('status')->getValue() == '1') ? 'Yes' : 'No'); ?></td>
+                        <td width="10%"><a href="#" onclick="$('.foldable1').slideDown(); $('.foldable2').slideUp(); $('#foldable1_<?php echo $this->userId; ?>').slideUp(); $('#foldable2_<?php echo $this->userId; ?>').slideDown(); return false;">Edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="foldable2" id="foldable2_<?php echo $this->userId; ?>">
+            <h3>
+                <a name="userAdministration_<?php echo $this->userId; ?>"></a>Edit account for <?php echo $this->form->subform_useraccount->getElement('realname')->getValue(); ?>
+                (Username: <?php echo $this->form->subform_useraccount->getElement('username')->getValue(); ?>)
+            </h3>
+
+            <?php echo $this->form; ?>
+
+            <input class="nav-agents-button" type="reset" name="cancel" value="Cancel" onclick="$('.foldable1').slideDown(); $('.foldable2').slideUp(); return true;" />
+            <input class="nav-agents-button" type="submit" name="updateAccount" value="Update details" style="float: right;" />
+        </div>
+    </form>
+</div>

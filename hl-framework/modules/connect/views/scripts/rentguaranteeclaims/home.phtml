@@ -1,0 +1,83 @@
+<script type="text/javascript">
+function submitForm(url,claimNo,mode) {
+    $('#ref_num').val(claimNo);
+    $('#mode').val(mode);
+    $('#submitClaim').attr('action', url);$('#submitClaim').submit();
+}
+</script>
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="title">What would you like to do?</div>
+    <div class="submit-view-searchClaim">
+        <div>
+            <div class="submit-claim">
+                <a href="/rentguaranteeclaims/step1"><img src="/assets/connect/images/claims/new-claim.jpg" /></a>
+            </div>
+            <div class="view-claim">
+                <a href="/rentguaranteeclaims/view-claims"><img src="/assets/connect/images/claims/claim-in-progress.jpg" /></a>
+            </div>
+            <div class="search-claim">
+                <form action="/rentguaranteeclaims/claim-details" method="post" id="searchClaim">
+                    <?php
+                        echo $this->form->claimNumber;
+                        echo $this->form->search;
+                    ?>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clear"><br/></div>
+    <div class="partial-saved-claim">
+        <div>
+            <div class="title">Your partially saved claims</div>
+            <div class="partial-claim-content">
+            To continue a claim you have already started, select the claim from the list below. Please note, these claims have not been submitted to the claims department
+            </div>
+            <div class="claim-header">
+                <div class="claim-dateSaved"><b>Date Saved</b></div>
+                <div class="claim-address"><b>Address</b></div>
+                <div class="claim-refNo-extended"><b>&nbsp;</b></div>
+                <div class="clear"></div>
+            </div>
+            <div class="claims-status">
+                <?php
+                    $count=3;
+                    if(count($this->partialClaim)>0) {
+                        foreach($this->partialClaim as $claim) {
+                ?>
+                <div class="partially-saved-claims">
+                    <div class="claim-details">
+                        <div class="claim-dateSaved">
+                            <?php echo $claim['lastUpdatedDate'];?>
+                        </div>
+                        <div class="claim-address">
+                            <?php echo $claim['tenancyAddress'];?>
+                        </div>
+                        <div class="right">
+                            <a href="#" onclick="submitForm('/rentguaranteeclaims/continue',<?php echo $claim['referenceNumber']?>,'')"><img src="/assets/connect/images/claims/continue-submit.jpg" align="absmiddle" /></a>
+                            <a href="#" onclick="submitForm('/rentguaranteeclaims/print-claim',<?php echo $claim['referenceNumber']?>,'view')"><img src="/assets/connect/images/claims/view.png"  align="absmiddle"/></a>
+                            <a href="#" onclick="submitForm('/rentguaranteeclaims/print-claim',<?php echo $claim['referenceNumber']?>,'delete')"><img src="/assets/connect/images/claims/delete.jpg"  align="absmiddle"/></a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <?php
+                    }
+                } else {
+                ?>
+                <div class="no-cliams">
+                    <p>No claim(s) found..</p>
+                </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<form name="submitClaim" id="submitClaim" method="post">
+    <?php
+        echo $this->form->ref_num;
+        echo $this->form->mode;
+    ?>
+</form>

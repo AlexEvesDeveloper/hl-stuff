@@ -1,0 +1,96 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow): echo $this->infoPanel($this->panelContent); endif; ?>
+
+        <?php
+
+            $iconLayout = array(
+                
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Rent Guarantee claim form',
+                    'url'   => '/assets/connect/pdf/Rent_Guarantee_And_Legal_Claims_Form.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'You can now submit Rent Guarantee claims online through Connect, but if you&rsquo;d like to send it by email or fax you can use this form.',
+                        'version'       => '',
+                        'release_date'  => ''
+                    )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Rent Guarantee claims process',
+                    'url'   => '/assets/connect/pdf/Rent_Guarantee_And_Legal_Claims_Process.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This document provides some further information on our claims process, what documentation we require and a rough guide to the timescale involved.',
+                        'version'       => '',
+                        'release_date'  => ''
+                    )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Xpress Policy Summary',
+                    'url'   => '/assets/connect/pdf/Xpress_RG_and_Legal_Policy_Summary_Amends.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This is the policy summary for Xpress Rent Guarantee.',
+                        'version'       => '',
+                        'release_date'  => ''
+                    )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Extra Policy Summary',
+                    'url'   => '/assets/connect/pdf/Extra_RG_and_Legal_Policy_Summary_Amended.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This is the policy summary for Extra Rent Guarantee.',
+                        'version'       => '',
+                        'release_date'  => ''
+                     )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Advantage Policy Summary ',
+                    'url'   => '/assets/connect/pdf/Advantage_RG_and_Legal_Policy_Summary.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This is the policy summary for Advantage Rent Guarantee.',
+                        'version'       => '',
+                        'release_date'  => ''
+                     )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Rent Recovery Plus Policy Summary',                            
+                    'url'   => '/assets/connect/pdf/B334_Rent_Recovery_Plus_Policy_Summary.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This is the policy summary for Rent Recovery Plus Insurance.',
+                        'version'       => '',
+                        'release_date'  => ''
+                     )
+                ),
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Rent Recovery Plus claim form',
+                    'url'   => '/assets/connect/pdf/B344_Rent_Recovery_Plus_Claim_Form.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'This is the claim form for Rent Recovery Plus.',
+                        'version'       => '',
+                        'release_date'  => ''
+                     )
+                )
+
+            );
+                                      
+            if(! $this->canDisplayRRPI){                
+                foreach($iconLayout as $key => $value){
+                    if ($value['title'] == 'Rent Recovery Plus Insurance') {                        
+                        break;
+                    }                                        
+                }
+                if ($key>=0) { unset($iconLayout[$key]); }            
+            }
+                   
+            $this->iconLayout($iconLayout);
+        ?>
+    </div>
+</div>

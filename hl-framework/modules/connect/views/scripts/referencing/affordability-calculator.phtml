@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#fb_rent').change(function() {
+		$('#fb_tenant_income').val("");
+		$('#fb_guarantor_income').val("");
+	});
+
+	$('#fb_tenant_income').change(function() {
+		$('#fb_rent').val("");
+		$('#fb_guarantor_income').val("");
+	});
+
+	$('#fb_guarantor_income').change(function() {
+		$('#fb_tenant_income').val("");
+		$('#fb_rent').val("");
+	});
+});
+
+function Calculate()
+{
+        rent             = $('#fb_rent');
+        tenant_income    = $('#fb_tenant_income');
+        guarantor_income = $('#fb_guarantor_income');
+        if (
+            ((rent.val() != '') && (tenant_income.val() != '')) ||
+            ((tenant_income.val() != '') && (guarantor_income.val() != '')) ||
+            ((rent.val() != '') && (guarantor_income.val() != ''))
+        ) {
+                alert('Please enter one amount only in any box');
+                return;
+        }
+        if(rent.val() != "")
+        {
+                tenant_income.val( (rent.val() * 2.5) * 12 );
+                guarantor_income.val( (rent.val() * 3) * 12 );
+        }
+        else if(tenant_income.val() != "")
+        {
+                amount                 = (tenant_income.val() / 12) / 2.5;
+                rent.val(amount.toFixed(2));
+                amount                 = (rent.val() * 3) * 12;
+                guarantor_income.val( amount.toFixed(2) );
+        }
+        else if(guarantor_income.val() != "")
+        {
+                amount                 = (guarantor_income.val() / 12) / 3;
+                rent.val( amount.toFixed(2) );
+                amount                 = (rent.val() * 2.5) * 12;
+                tenant_income.val( amount.toFixed(2) );
+        }
+
+        $('#rent').val( $('#fb_rent').val() );
+        $('#tenant_income').val( $('#fb_tenant_income').val() );
+        $('#fb_guarantor_income').val( $('#fb_guarantor_income').val() );
+}
+</script>
+<div class="popup_form_section">
+	<?php echo $this->form;?>	
+</div>

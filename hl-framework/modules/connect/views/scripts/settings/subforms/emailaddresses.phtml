@@ -1,0 +1,30 @@
+<div class="form_section two-col stripeMe">
+    <?php
+
+    $col = 0;
+    foreach(Model_Core_Agent_EmailMapCategory::iterableKeys() as $categoryConstName => $val) {
+
+        if ($col == 0) {
+
+            echo "<div>\n";
+            echo $this->element->getElement("email{$categoryConstName}")->setOptions(array('class' => 'first'))->render();
+
+        } else  {
+
+            echo $this->element->getElement("email{$categoryConstName}");
+            echo "</div>\n";
+
+        }
+
+        $col = ($col + 1) % 2;
+    }
+
+    // Close off in the case of an odd number
+    if ($col == 1) {
+
+        echo "</div>\n";
+
+    }
+    ?>
+    <input id="next" class="nav-agents-button" type="submit" name="updateEmailAddresses" value="Save" />
+</div>

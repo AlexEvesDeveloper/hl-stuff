@@ -1,0 +1,15 @@
+<h2>Risk Address</h2>
+<div class="form_section two-col">
+	<div class="autoAlt">
+		<?php echo $this->element->ins_house_number_name; ?>
+	</div>
+	<div class="autoAlt">
+		<?php echo $this->element->ins_postcode; ?>
+		<input type="submit" id="ins_postcode_lookup" value="Find address"
+			name="lookup"
+			onclick="getProperties($('#ins_house_number_name').val(), $('#ins_postcode').val(), 'ins_postcode', 'ins_address'); return false;" />
+	</div>
+	<div id="ins_address_selector" class="autoAlt">
+		<?php echo $this->element->ins_address->setAttribs(array('style' => 'width: 320px;'))->render(); ?>
+	</div>
+</div>

@@ -1,0 +1,69 @@
+<h1>Add <?php echo $this->siteDescription; ?> page</h1>
+<script type="text/javascript">
+$(function() {
+    $(".ico-delete").click(function(e){
+        if (!confirm("Are you sure you want to delete this menu item?\n\nThis action cannot be undone!")) { e.preventDefault(); }
+    });
+    $( "#sortable" ).sortable({
+        opacity: 0.6,
+        update : function () { 
+            $('#menuorder').val($('#sortable').sortable('toArray')); 
+        } 
+    });
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);    
+    <?php } ?>
+});
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<form action="/cms-admin/pages/edit?site=<?php echo $this->siteHandle ?>" method="post">
+    <p>
+        <label for="pageTitle" class="req">Page Title:</label><br />
+        <input type="text" size="60" name="pageTitle" class="input-text" id="pageTitle" value="<?php echo $this->pageTitle ?>"/>
+    </p>
+    <p>
+        <label for="pageURL" class="req">URL:</label><br />
+        <span class="smaller low">(no leading forward slash - E.g., letting-agents/about-us)</span><br />
+        <?php if ($this->siteBasePath != '') { echo $this->siteBasePath; } ?>
+        <input type="text" size="60" name="pageURL" class="input-text" id="pageURL" value="<?php echo $this->pageURL ?>"/>
+    </p>
+    <p>
+        <label for="metaDescription" class="req">Meta Description:</label><br />
+        <span class="smaller low">(Meaningful description of the page's content)</span><br />
+        <textarea class="input-text" name="metaDescription" id="metaDescription" cols="100" rows="2"><?php echo $this->metaDescription ?></textarea>
+    </p>
+    <p>
+        <label for="metaKeywords" class="req">Meta Keywords:</label><br />
+        <span class="smaller low">(separated by comma)</span><br />
+        <input type="text" size="100" name="metaKeywords" class="input-text" id="metaKeywords" value="<?php echo $this->metaKeywords ?>"/><br />
+    </p>
+    <p>
+        <label for="pageContent" class="req">
+        <?php if ($this->siteHandle == 'hl-connect') { ?>
+            Breadcrumb Trail:
+        <?php } else { ?>
+            Content:
+        <?php } ?>
+        </label><br />
+        <textarea class="editor input-text" name="pageContent" id="pageContent" cols="100" rows="10"><?php echo $this->pageContent ?></textarea>
+    </p>
+    <p>
+        <label for="template" class="req">Layout:</label><br />
+        <select name="template" class="input-text" id="template">
+            <?php echo $this->templateFields ?>
+        </select>
+    </p>
+    <?php echo $this->metaFields ?>
+    <!-- <div class="box-01">
+        <p class="nom"><input type="submit" value="Publish" class="input-submit" /> or <input type="submit" value="Archive" class="input-submit-02" /></p>
+    </div>  -->
+    <div class="box-02">
+        <input type="hidden" name="id" id="id" value="<?php echo $this->pageID ?>" />
+        <p class="nom"><input type="submit" value="Save" class="input-submit" />
+    </div>
+</form>

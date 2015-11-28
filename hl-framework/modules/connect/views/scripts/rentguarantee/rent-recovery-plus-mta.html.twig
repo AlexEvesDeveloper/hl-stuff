@@ -1,0 +1,133 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Mid-Term Adjustments</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form name="{{ form.vars.id }}" id="{{ form.vars.id }}" action="/rentguarantee/rent-recovery-plus-mta" method="post">
+        <h2>Mid-Term Adjustments
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        <div>
+            <div class="form_section two-col">
+                <div class="autoAlt">
+                    <label class="required">Policy Number</label>
+                    <div>{{ form.vars.value.policyNumber }}</div>
+                </div>
+                {{ form_row(form.policyNumber) }}
+                {{ form_row(form.policyExpiresAt) }}
+                {{ form_row(form.mtaEffectiveAt) }}
+                {{ form_row(form.referenceType) }}
+                {{ form_row(form.propertyRental) }}
+                <p>
+                    The change you are making may invalidate your cover.<br>
+                    Please ensure that the sum insured does not exceed 10% of the original referenced rental amount for this let.<br>
+                    Increases beyond this threshold require new acceptable references.</p>
+                {{ form_row(form.isDepositSufficient) }}
+                {{ form_row(form.hasPossibleClaimCircumstances) }}
+                {% if form.claimInfo is defined %}
+                    {{ form_row(form.claimInfo) }}
+                {% endif %}
+                {{ form_row(form.hasPriorClaims) }}
+                {{ form_row(form.hasPermittedOccupiersOnly) }}
+                {{ form_row(form.hasTenancyDisputes) }}
+                {{ form_row(form.tenancyAgreementType) }}
+                {{ form_errors(form) }}
+            </div>
+        </div>
+        <h2>Disclosure
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        <div class="form_section two-col">
+            <p>Any other facts known to you which are likely to affect acceptance or assessment of the insurance cover
+                you are requesting must be disclosed. Should you have any doubt about what you should disclose, do not
+                hesitate to tell us. Making sure we are informed is for your own protection, as failure to disclose may
+                mean that your policy will not give you the protection you require, or perhaps may invalidate the policy
+                altogether. For your reference, we recommend that you keep a record of any additional information given,
+                including copies of letters.</p>
+        </div>
+        <h2>Declaration
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        <div class="form_section one-col">
+            <div class="autoAlt">
+                <p>Please read the declaration below and confirm by ticking the box that the information you've provided
+                    is true. <strong>It's important you do this as we're unable to continue with your application if you
+                        do not.</strong> I/We declare that the foregoing statements and particulars are, to the best of my
+                    knowledge and belief, true and complete, and that I/We have read and note the above, headed
+                    'Disclosure'. I/We consent to the information on this form and on any claim I/We make being supplied
+                    to IDS Ltd, the insurance industry's data collection agency, so that it can be made available to
+                    other insurers. I/We also agree that, in response to any searches you make in connection with this
+                    application or any claim, IDS Ltd may supply information it has received from other insurers about
+                    other claims I/We have made. I/We agree that the insurance will not be in force until this
+                    application has been accepted by HomeLet. I/We agree that the foregoing statements and particulars
+                    will form the basis of the contract between me/us and HomeLet. A copy of the completed
+                    proposal/application is automatically provided for retention at the time of completion.</p>
+                <p>This policy will be set up on the basis that:</p><br>
+                <ul>
+                    {% if 'Company' != form.vars.value.tenancyAgreementType %}
+                    <li>The property is let or to be let on a written Assured Shorthold Tenancy * with a minimum initial
+                        period of at least three months<br/>
+                        <em>* (In England & Wales or the equivalent in Scotland, Northern Ireland or the Isle of Man)</em>
+                    </li>
+                    {% endif %}
+                    <li> You are not aware of any circumstances which may give rise to a claim, or have been refused
+                        insurance or had special terms applied</li>
+                    <li>The property is in a good state of repair and regularly maintained</li>
+                    <li>All tenants have been referenced in accordance with HomeLet conditions before the policy start
+                        date</li>
+                    <li>All future tenants will be referenced in accordance with the conditions of this policy</li>
+                </ul>
+                {{ form_row(form.confirmation1) }}
+            </div>
+            <div class="autoAlt">
+                <p>Please read the following documents</p><br>
+                <ul>
+                    <li>
+                        <a href="/assets/connect/pdf/B338_Rent_Recovery_Plus_IDD.pdf" target="_blank">Initial Disclosure Document</a>
+                    </li>
+                    <li>
+                        <a href="/assets/connect/pdf/B334_Rent_Recovery_Plus_Policy_Summary.pdf" target="_blank">Policy Summary</a>
+                    </li>
+                </ul>
+                {{ form_row(form.confirmation2) }}
+            </div>
+            {{ form_row(form.update) }}
+            {{ form_row(form.updateList) }}
+            {{ form_row(form.isXhr) }}
+            {{ form_errors(form) }}
+        </div>
+        <br/>
+        <div class="application-options">
+            <input type="hidden" name="formName" id="formName" value="{{ form.vars.name }}">
+            <button type="submit" class="button">Save Changes</button>
+            <button type="button" onClick="javascript:history.back()" class="button">Back</button>
+        </div>
+    </form>
+
+    <script>
+        (function ($) {
+            $('.content .form_section').each(function() {
+                $('.autoAlt:odd', this).addClass('alt');
+            });
+            // Hide the update button as it's intended to be fired only by the type change.
+            $('#{{ form.update.vars.id }}').hide();
+        })(jQuery)
+    </script>
+    <script type="text/javascript" src="/assets/connect/js/rentguarantee/updateList.js"></script>
+
+{% endblock %}
+

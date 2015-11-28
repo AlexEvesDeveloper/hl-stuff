@@ -1,0 +1,135 @@
+{% block address_widget %}
+    {% spaceless %}
+
+        <div class="address-block">
+            <div class="form-group address-lookup" id="address_lookup_{{ form.vars.id }}">
+                {{ form_label(form.postcode) }}
+                <div class="input-group">
+                    {{ form_widget(form.postcode, {'attr': {'class': 'no-form-refresh postcode-lookup'}}) }}
+                    <span id="find_address_{{ form.vars.id }}" class="input-group-btn">
+                        {#<a href="javascript:void(0);" onclick="alert('look up!');" class="address-finder-help">#}
+                        {#<span>Help</span>#}
+                        {#</a>#}
+                    </span>
+                </div>
+                {{ form_errors(form.postcode) }}
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="address-lines">
+                {{ form_row(form.flat) }}
+                <div class="abroad-required">
+                    {{ form_row(form.houseName) }}
+                </div>
+                {{ form_row(form.houseNumber) }}
+                <div class="abroad-required">
+                    {{ form_row(form.street) }}
+                </div>
+                <div class="form-group helpable-field">
+                    {{ form_label(form.locality) }}
+                    {{ form_widget(form.locality, {'attr': {'class': 'field-locality'}}) }}
+                    <div class="field-help">
+                        <div class="pointer"></div>
+                        <i class="fa fa-info-circle"></i> Village/suburb/area for this address.
+                    </div>
+                    {{ form_errors(form.locality) }}
+                </div>
+                <div class="abroad-required">
+                    {{ form_row(form.town) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.country) }}
+                    {{ form_widget(form.country, {'attr': {'class': 'address-selection'}}) }}
+                </div>
+            </div>
+        </div>
+
+        {# todo: refactor this so that there's a generic endpoint for the address finder #}
+
+        <script>
+            function abroadToggle($this) {
+                var addressFind = $this.closest('.single-application-section');
+                if ($this.is(':checked')) {
+                    // If we're dealing with overseas addresses, we need to
+                    // populate some fields with the required 'special' values.
+                    addressFind.find('.address-block').hide();
+                    addressFind.find('.address-selection option:selected').val('');
+                    addressFind.find('.abroad-required input[type=text]').val('Abroad');
+                    addressFind.find('.postcode-lookup').val('1001');
+                } else {
+                    addressFind.find('.address-block').show();
+                    addressFind.find('.address-selection option:selected').val('- Please Select -');
+                    addressFind.find('.abroad-required input[type=text]').val('');
+                    addressFind.find('.postcode-lookup').val('');
+                }
+            }
+
+            $('.abroad-toggle').change(function() {
+                var $this = $(this);
+                abroadToggle($this);
+            });
+
+            $(function() {
+                $('#find_address_{{ form.vars.id }}').addressfinder({
+                    formId: '{{ form.vars.id }}',
+                    preExecutionCallback: function () {
+                        $('#find_address_{{ form.vars.id }} .postcode-error').remove();
+                    },
+                    findAddressButtonClass: 'btn btn-default',
+                    addressFinderUri: '{{ url('barbon_hostedapi_app_lookup_address_postcode') ~ '/' }}',
+                    addressSelector: {
+                        insertionSelector: '#address_lookup_{{ form.vars.id }}',
+                        placement: 'append'
+                    },
+                    postcodeBlankErrorCallback: function () {
+                        $('#address_lookup_{{ form.vars.id }}').prepend('<div class="message warning">Please enter a postcode</div>');
+                    },
+                    postExecutionCallback: function () { $(document).trigger('formChangedEvent'); }
+                });
+
+                $(document).ready(function () {
+                    $('.abroad-toggle').each(function(){
+                        // Hide any address blocks that contain foreign address
+                        if ($(this).is(':checked')) {
+                            $(this).closest('.single-application-section').find('.address-block').hide();
+                        }
+                    });
+
+                    $('#step_next').click(function (e) {
+                        var $addressStreet = $('#{{ form.street.vars.id }}');
+                        if ($addressStreet && !$addressStreet.val()) {
+                            if (confirm('Are you sure you\'d like to proceed without a street for this address?')) {
+                                var $addressTown = $('#{{ form.town.vars.id }}');
+                                if ($addressTown.val()) {
+                                    $addressStreet.val($addressTown.val());
+                                }
+                            }
+                            else {
+                                e.preventDefault();
+                                _hasDblClickProtection = false;
+                                $('#step_next').text($('#step_next').data('default-label') ? $('#step_next').data('default-label') : 'Next');
+                                $addressStreet.css('border', '1px solid red');
+                            }
+                        }
+                    });
+
+//                    $('.form-control').focusin(function() {
+//                        $(this).closest('.helpable-field').find('.field-help').show();
+//                    });
+//
+//                    $('.form-control').focusout(function() {
+//                        $(this).closest('.helpable-field').find('.field-help').hide();
+//                    });
+                });
+            });
+
+//            function displayAddressFinderHelp()
+//            {
+//                window.open('/iris-referencing/address-finder-help', null, "height=200,width=400,status=yes,toolbar=no,menubar=no,location=no");
+//                return false;
+//            }
+        </script>
+
+    {% endspaceless %}
+{% endblock %}

@@ -1,0 +1,191 @@
+
+{% extends "iristat-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block body %}
+    <div class="tenants col-sm-8">
+        <h2>{{ bodyTitle | trans }}</h2>
+
+        <p>
+            Hi <strong>{{ tatStatus.firstName }} {{ tatStatus.lastName }}</strong>,
+        </p>
+
+        <p>
+            Welcome to your HomeLet application tracker.
+            You&rsquo;ll notice below that you can see the status and progress of your referencing application for:
+        </p>
+
+        <p>
+            {% if tatStatus.address.flat %}<strong>{{ tatStatus.address.flat }}</strong>{% endif %}
+            {% if tatStatus.address.houseName %}<strong>{{ tatStatus.address.houseName }}</strong>{% endif %}
+            {% if tatStatus.address.houseNumber %}<strong>{{ tatStatus.address.houseNumber }}</strong>{% endif %}
+            {% if tatStatus.address.street %}<strong>{{ tatStatus.address.street }}</strong>{% endif %}
+            <br />
+            {% if tatStatus.address.district %}<strong>{{ tatStatus.address.district }}</strong><br />{% endif %}
+            {% if tatStatus.address.town %}<strong>{{ tatStatus.address.town }}</strong><br />{% endif %}
+            {% if tatStatus.address.county %}<strong>{{ tatStatus.address.county }}</strong><br />{% endif %}
+            {% if tatStatus.address.postcode %}<strong>{{ tatStatus.address.postcode }}</strong><br />{% endif %}
+        <p>
+
+        <div class="progresspanel">
+            <div class="progresspanel-head">
+                {% if constant('TenantApplicationTracker_IndexController::IN_PROGRESS') == summaryStatus %}
+                    <h3 class="in-progress">Your application is: <strong>INCOMPLETE</strong></h3>
+                {% elseif constant('TenantApplicationTracker_IndexController::COMPLETE') == summaryStatus %}
+                    <h3 class="complete">Your application is: <strong>COMPLETE</strong></h3>
+                {% endif %}
+            </div>
+            <div class="progresspanel-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Reference type:</td>
+                            <td>Status:</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr{% if constant('TenantApplicationTracker_IndexController::NOT_APPLICABLE') == incomeStatus %} class="not-applicable"{% endif %}>
+                            <td>Income</td>
+                            <td>
+                                {% if constant('TenantApplicationTracker_IndexController::IN_PROGRESS') == incomeStatus %}
+                                    <img src="/assets/common/images/status-in-progress.png" alt="Pending" />
+                                {% elseif constant('TenantApplicationTracker_IndexController::COMPLETE') == incomeStatus %}
+                                    <img src="/assets/common/images/status-complete.png" alt="Received" />
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr{% if constant('TenantApplicationTracker_IndexController::NOT_APPLICABLE') == additionalIncomeStatus %} class="not-applicable"{% endif %}>
+                            <td>Additional Income</td>
+                            <td>
+                                {% if constant('TenantApplicationTracker_IndexController::IN_PROGRESS') == additionalIncomeStatus %}
+                                    <img src="/assets/common/images/status-in-progress.png" alt="Pending" />
+                                {% elseif constant('TenantApplicationTracker_IndexController::COMPLETE') == additionalIncomeStatus %}
+                                    <img src="/assets/common/images/status-complete.png" alt="Received" />
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr{% if constant('TenantApplicationTracker_IndexController::NOT_APPLICABLE') == futureIncomeStatus %} class="not-applicable"{% endif %}>
+                            <td>Future Income</td>
+                            <td>
+                                {% if constant('TenantApplicationTracker_IndexController::IN_PROGRESS') == futureIncomeStatus %}
+                                    <img src="/assets/common/images/status-in-progress.png" alt="Pending" />
+                                {% elseif constant('TenantApplicationTracker_IndexController::COMPLETE') == futureIncomeStatus %}
+                                    <img src="/assets/common/images/status-complete.png" alt="Received" />
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr{% if constant('TenantApplicationTracker_IndexController::NOT_APPLICABLE') == landlordStatus %} class="not-applicable"{% endif %}>
+                            <td>Landlord</td>
+                            <td>
+                                {% if constant('TenantApplicationTracker_IndexController::IN_PROGRESS') == landlordStatus %}
+                                    <img src="/assets/common/images/status-in-progress.png" alt="Pending" />
+                                {% elseif constant('TenantApplicationTracker_IndexController::COMPLETE') == landlordStatus %}
+                                    <img src="/assets/common/images/status-complete.png" alt="Received" />
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if constant('TenantApplicationTracker_IndexController::COMPLETE') == summaryStatus %}
+            <p>
+                Your application has been <strong>completed</strong> and our report has been sent to your letting agent.
+                Please bear in mind that your letting agent may carry out additional checks and the final decision on approving any application for a tenancy is ultimately down to your letting agent.
+            </p>
+
+            <p>
+                Your letting agent will be in touch to discuss your completed application in due course.
+            </p>
+        {% else %}
+            <p>
+                Your application has <strong>not been completed</strong>.
+                The length of time it takes us to complete a reference varies on a case by case basis, but we'll let you know if we need any further information to complete your reference, so please check back regularly.
+            </p>
+
+            <p>
+                As well as seeing the status of your reference, you can also check if we've emailed you for any additional information, you can email us with any changes to your personal information or any supporting information for your application and you can also get a quote for our specialist tenant's contents insurance.
+            </p>
+        {% endif %}
+
+        <div class="panel panel-dark">
+            <a href="/tenants/?asn={{ agentSchemeNumber }}&utm_source=TAT&utm_medium=More+Info+alt&utm_campaign=Tenants+Insurance" class="pull-right">
+                <img src="/assets/common/images/content_icons/white_cog_small.png" alt="cog edit" />
+            </a>
+            <h3>More information</h3>
+            <p>Cover your liability as a tenant and your contents with Tenant&rsquo;s Insurance</p>
+            <a href="/tenants/?asn={{ agentSchemeNumber }}&utm_source=TAT&utm_medium=More+Info+alt&utm_campaign=Tenants+Insurance" class="btn btn-primary">
+                More Info
+            </a>
+        </div>
+
+        <div class="panel panel-dark">
+            <a href="/tenant-application-tracker/call-me?utm_source=TAT&utm_medium=Call+Me&utm_campaign=Tenants+Insurance" class="pull-right">
+                <img src="/assets/common/images/content_icons/white_possessions_small.png" alt="edit possessions" />
+            </a>
+            <h3>Call me about insurance</h3>
+            <p>Let us call you back at a time that is convenient for you to talk about your insurance needs</p>
+            <a href="/tenant-application-tracker/call-me?utm_source=TAT&utm_medium=Call+Me&utm_campaign=Tenants+Insurance" class="btn btn-primary">Call Me</a>
+        </div>
+
+        {#<div class="panel panel-dark">#}
+            {#<a href="/tenant-application-tracker/email" class="pull-right">#}
+                {#<img src="/assets/common/images/content_icons/white_book-e_small.png" alt="book" />#}
+            {#</a>#}
+            {#<h3>Email HomeLet</h3>#}
+            {#<p>Let us know about any changes to your personal details or provide us with additional information</p>#}
+            {#<a href="/tenant-application-tracker/email" class="btn btn-primary">Contact Us</a>#}
+        {#</div>#}
+
+        {#<div class="panel panel-dark">#}
+            {#<a href="/tenant-application-tracker/view-emails" class="pull-right">#}
+                {#<img src="/assets/common/images/content_icons/white_book-e_small.png" alt="book" />#}
+            {#</a>#}
+            {#<h3>View your emails</h3>#}
+            {#<p>Take a look at previous emails sent by HomeLet to you about your referencing application</p>#}
+            {#<a href="/tenant-application-tracker/view-emails" class="btn btn-primary">View Emails</a>#}
+        {#</div>#}
+    </div>
+
+    <div class="tenants col-sm-4">
+        {{ iris_cms_zend_panel('tenants-application-tracker-promo') }}
+
+        <ul class="list-unstyled">
+            <li><a class="btn btn-default" href="/tenants/?asn={{ agentSchemeNumber }}&utm_source=TAT&utm_medium=Get+a+quote&utm_campaign=Tenants+Insurance">Get a quote</a><br /></li>
+            <li><a class="btn btn-default" href="/tenants/?asn={{ agentSchemeNumber }}&utm_source=TAT&utm_medium=Find+out+more&utm_campaign=Tenants+Insurance">Find out more</a></li>
+        </ul>
+
+        <hr />
+
+        <div class="panel panel-default bg-lets-move-tenant">
+            <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+            <h3 class="base-colour heavy">Let's Move App</h3>
+
+            <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+            <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+            <br />
+            <br />
+            <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    {% if form %}
+        <form method="post">
+            {{ form_widget(form) }}
+        </form>
+    {% endif %}
+
+{% endblock %}

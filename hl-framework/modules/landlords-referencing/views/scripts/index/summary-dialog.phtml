@@ -1,0 +1,391 @@
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <h4>Property Landlords Details</h4>
+
+        <dl>
+            <dt>Landlord name</dt>
+            <dd><?php echo $this->prospectiveLandlord['name']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Contact name</dt>
+            <dd><?php echo $this->prospectiveLandlord['contactName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->prospectiveLandlord['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->prospectiveLandlord['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone</dt>
+            <dd><?php echo $this->prospectiveLandlord['telephone']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Mobile</dt>
+            <dd><?php echo $this->prospectiveLandlord['mobile']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd><?php echo $this->prospectiveLandlord['email']; ?></dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <h4>Property Details</h4>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->property['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->property['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Rent</dt>
+            <dd><?php echo $this->property['rent']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Tenancy Start Date</dt>
+            <dd><?php echo $this->property['startDate']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Term</dt>
+            <dd><?php echo $this->property['duration']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>No of Tenants</dt>
+            <dd><?php echo $this->property['noOfTenants']; ?></dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <h4>Tenant Personal Details</h4>
+
+        <dl>
+            <dt>Name</dt>
+            <dd><?php echo $this->referenceSubject['name']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Previous/Maiden Name</dt>
+            <dd><?php echo $this->referenceSubject['maidenName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Date of Birth</dt>
+            <dd><?php echo $this->referenceSubject['dob']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Bank Account Number</dt>
+            <dd><?php echo $this->referenceSubject['bankAccountNumber']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Bank Sort Code</dt>
+            <dd><?php echo $this->referenceSubject['bankSortCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone</dt>
+            <dd><?php echo $this->referenceSubject['telephone']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Mobile</dt>
+            <dd><?php echo $this->referenceSubject['mobile']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd><?php echo $this->referenceSubject['email']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Residential Status</dt>
+            <dd><?php echo $this->referenceSubject['currentResidentialStatus']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Employment Status</dt>
+            <dd><?php echo $this->referenceSubject['currentOccupationStatus']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Likely to Change</dt>
+            <dd><?php echo $this->referenceSubject['isOccupationLikelyToChange']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Income</dt>
+            <dd>&pound;<?php echo $this->referenceSubject['income']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Share of Rent</dt>
+            <dd>&pound;<?php echo $this->referenceSubject['shareOfRent']; ?></dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <h4>Current Landlord Details</h4>
+
+        <dl>
+            <dt>Name</dt>
+            <dd><?php echo $this->currentLandlord['name']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->currentLandlord['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->currentLandlord['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone day</dt>
+            <dd><?php echo $this->currentLandlord['telephoneDay']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone evening</dt>
+            <dd><?php echo $this->currentLandlord['telephoneEvening']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Fax</dt>
+            <dd><?php echo $this->currentLandlord['fax']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd><?php echo $this->currentLandlord['email']; ?></dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <h4>Employment Details</h4>
+
+        <dl>
+            <dt>Employer name</dt>
+            <dd><?php echo $this->currentOccupation['organisationName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Contact name</dt>
+            <dd><?php echo $this->currentOccupation['contactName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Contact position</dt>
+            <dd><?php echo $this->currentOccupation['contactPosition']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->currentOccupation['oranisationAddress']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->currentOccupation['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone</dt>
+            <dd><?php echo $this->currentOccupation['telephone']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Fax</dt>
+            <dd><?php echo $this->currentOccupation['fax']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd><?php echo $this->currentOccupation['email']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Salary</dt>
+            <dd>&pound;<?php echo $this->currentOccupation['salary']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Position Held</dt>
+            <dd><?php echo $this->currentOccupation['positionHeld']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Payroll Number</dt>
+            <dd><?php echo $this->currentOccupation['payrollNumber']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Start Date</dt>
+            <dd><?php echo $this->currentOccupation['startDate']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>End Date</dt>
+            <dd><?php echo $this->currentOccupation['endDate']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Permanent</dt>
+            <dd><?php echo $this->currentOccupation['isPermanent']; ?></dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <h4>Future Employment Details</h4>
+
+        <dl>
+            <dt>Employer name</dt>
+            <dd><?php echo $this->futureOccupation['organisationName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Contact name</dt>
+            <dd><?php echo $this->futureOccupation['contactName']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Contact position</dt>
+            <dd><?php echo $this->futureOccupation['contactPosition']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->futureOccupation['oranisationAddress']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->futureOccupation['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Telephone</dt>
+            <dd><?php echo $this->futureOccupation['telephone']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Fax</dt>
+            <dd><?php echo $this->futureOccupation['fax']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd><?php echo $this->futureOccupation['email']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Salary</dt>
+            <dd>&pound;<?php echo $this->futureOccupation['salary']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Position Held</dt>
+            <dd><?php echo $this->futureOccupation['positionHeld']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Payroll Number</dt>
+            <dd><?php echo $this->futureOccupation['payrollNumber']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Start Date</dt>
+            <dd><?php echo $this->futureOccupation['startDate']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>End Date</dt>
+            <dd><?php echo $this->futureOccupation['endDate']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Permanent</dt>
+            <dd><?php echo $this->futureOccupation['isPermanent']; ?></dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <h4>Current Address Details</h4>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->firstResidence['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->firstResidence['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Period here</dt>
+            <dd class="duration-in-months"><?php echo $this->firstResidence['duration']; ?></dd>
+        </dl>
+    </div>
+
+
+    <div class="col-sm-4">
+        <h4>First Previous Address Details</h4>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->secondResidence['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->secondResidence['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Period here</dt>
+            <dd class="duration-in-months"><?php echo $this->secondResidence['duration']; ?></dd>
+        </dl>
+    </div>
+
+
+    <div class="col-sm-4">
+        <h4>Second Previous Address Details</h4>
+
+        <dl>
+            <dt>Address</dt>
+            <dd><?php echo $this->thirdResidence['address']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Postcode</dt>
+            <dd><?php echo $this->thirdResidence['postCode']; ?></dd>
+        </dl>
+
+        <dl>
+            <dt>Period here</dt>
+            <dd class="duration-in-months"><?php echo $this->thirdResidence['duration']; ?></dd>
+        </dl>
+    </div>
+</div>

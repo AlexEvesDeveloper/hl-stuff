@@ -1,0 +1,298 @@
+<script type="text/javascript">
+function fnSubmitDocuments(type) {
+    $('#hd_type').val(type);
+    if (!$('#chk_confirm').is(":checked")) {
+        alert("Please confirm you have insured authority");
+        return false;
+    }
+
+    if (!$('#dec1_confirm').is(":checked") || !$('#dec2_confirm').is(":checked")) {
+        alert("Please confirm your acceptance to the declarations");
+        return false;
+    }
+
+    $('#supportingdocuments').submit();
+}
+</script>
+<div class="clear"></div>
+
+<div class="container">
+    <form id="fileupload" action="/json/rg-claims-file-uploader" method="POST" enctype="multipart/form-data">
+        <h2>Supporting Documents</h2>
+        <div class="form_section two-col">
+            <ul>
+                <li>Original tenancy agreements and copies of any renewed tenancy agreement</li>
+                <li>Full rent schedule from the beginning of the tenancy or covering the last 2 years</li>
+                <li>Copies of any notices served on the tenant (section 8/ section 21)</li>
+                <li>Confirmation of contact made with the tenant regarding arrears (include type of contact made and dates)</li>
+                <li>Deed of Guarantee (if applicable)</li>
+                <li>TDS certificate</li>
+                <li>Confirmation of dates the prescribed information was served</li>
+                <li>Documents supporting any conditions of the final report (if applicable)</li>
+            </ul>
+
+            <p>
+                The above is a guide to the documents which will enable us to assess the claim quicker, any documents that are not submitted with the claim will be requested prior to a decision being made.
+            </p>
+
+            <p>
+                You can attach files up to a maximum size of <?php echo (int) ini_get('upload_max_filesize'); ?>MB that are in the following formats.
+            </p>
+
+            <ul>
+                <li>Office files (csv, doc, docx, xls, xlsx)</li>
+                <li>Image files (gif, ief, jpe, jpeg, jpg, png, rgb, svg, tif, tiff)</li>
+                <li>Text files (htm, html, pdf, rtf, txt)</li>
+            </ul>
+
+            <p>
+                Please attach your documents below:
+            </p>
+
+            <div class="row">
+                <div class="fileupload-description">
+                    Select type of file to upload: <select name="fileupload-description" style="width: 50%;">
+                        <?php
+                        $datasource_supportingDocs = new Datasource_Insurance_RentGuaranteeClaim_SupportingDocuments();
+                        $fileDescriptions = array('' => '--- please select ---') + $datasource_supportingDocs->getDocumentTypes();
+                        foreach($fileDescriptions as $key => $val) {
+                            ?>
+                            <option value="<?php echo $key; ?>"><?php echo $val; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="fileupload-buttonbar">
+                    <span class="btn success fileinput-button">
+                        <span>Add files...</span>
+                        <input type="file" name="files[]" multiple>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <table class="zebra-striped"><tbody class="files"></tbody></table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="fileupload-buttonbar" style="text-align: right;">
+                    <button type="submit" class="btn primary start">Start uploading all</button>
+                    <!--button type="reset" class="btn primary cancel">Cancel upload</button-->
+                    <button type="button" class="btn primary delete">Delete selected</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- gallery-loader is the loading animation container -->
+<div id="gallery-loader"></div>
+
+<form enctype="multipart/form-data" method="post" action="step4" id="supportingdocuments" >
+    <h2>Insured Authority</h2>
+    <div class="form_section two-col">
+        <p>
+	        We confirm that we have authorisation from the landlord to permit the legal and claims department
+            and HomeLet&rsquo;s nominated solicitors to act on the landlords behalf in connection with the service
+            of any notice seeking possession pursuant to Section 8 Housing Act 1988 (as amended), issuing possession
+            proceedings in the County Court or issuing any enforcement procedure as may be required in the event
+            that my tenant(s) is in default of any terms of their tenancy agreement.
+        </p>
+
+        <div>
+            <label>Please tick to confirm </label>
+            <?php echo $this->element->chk_confirm; ?>
+        </div>
+
+        <div>
+            <?php echo $this->element->doc_confirmation_agent_name; ?>
+        </div>
+
+        <p>
+            You are agreeing to these terms on behalf of the Landlord. By doing so you should retain the
+            written consent from the landlord for you to do so. You may be required to produce this
+            authority as part of the claims process.
+        </p>
+
+        <p>
+            As part of the claim process we may contact the Landlord to verify the information provided
+            and to confirm that the Landlord has given their consent.
+        </p>
+
+        <div>
+            <?php echo $this->element->landlord_proprietor_of_property; ?>
+        </div>
+
+        <div id="landlord-proprietor">
+            <p><strong>Please provide evidence (authority) of the existence of the authority given to the Landlord
+            as shown on the tenancy agreement to let the property on behalf of the registered owner.</strong></p>
+        </div>
+    </div>
+
+    <h2>Declaration</h2>
+    <div class="form_section two-col">
+        <p>
+            I / We confirm that all the documents requested have been uploaded and that the information provided is true and accurate as at today’s date.
+        </p>
+
+        <div>
+            <label>Please tick to confirm </label>
+            <?php echo $this->element->dec1_confirm; ?>
+        </div>
+
+        <p>
+            I / We understand that making a fraudulent insurance claim is a criminal offence and that my details may be passed to the enforcement authorities.
+        </p>
+
+        <div>
+            <label>Please tick to confirm </label>
+            <?php echo $this->element->dec2_confirm; ?>
+        </div>
+
+        <p>
+            HomeLet is a trading name of Barbon Insurance Group Limited which is authorised and regulated by the Financial Conduct Authority for insurance mediation.
+            Registered in England number 3135797. Registered office address: Hestia House, Edgewest Road, Lincoln, LN6 7EL
+        </p>
+
+        <div id="navigationmenu">
+            <?php echo $this->element->hd_type; ?>
+            <?php echo $this->element->back; ?>
+            <?php echo $this->element->save_exit; ?>
+            <?php echo $this->element->next; ?>
+        </div>
+    </div>
+</form>
+
+
+<script>
+var fileUploadErrors = {
+    maxFileSize: 'File is too big',
+    minFileSize: 'File is too small',
+    acceptFileTypes: 'Filetype not allowed',
+    maxNumberOfFiles: 'Max number of files exceeded',
+    uploadedBytes: 'Uploaded bytes exceed file size',
+    emptyResult: 'Empty file upload result'
+};
+</script>
+
+<script id="template-upload" type="text/html">
+{% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+    <tr class="template-upload fade">
+        <td class="name"><span class="filename">{%=file.name%}</span></td>
+        <td class="size">{%=o.formatFileSize(file.size)%}</td>
+        {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+            <td class="progress"><div class="progressbar" style="padding:0;"><div style="width:0%;padding:0;"></div></div></td>
+            <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary">Start</button>{% } %}</td>
+        {% } else { %}
+            <td colspan="2"></td>
+        {% } %}
+        <td class="cancel">{% if (!i) { %}<button class="btn primary">Cancel</button>{% } %}</td>
+    </tr>
+{% } %}
+</script>
+
+<script id="template-download" type="text/html">
+{% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+            <td class="name"><span class="filename">{%=file.name%}</span><span class="file-description">({%=file.description%})</span></td>
+            <td class="size">{%=o.formatFileSize(file.size)%}</td>
+            <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+        {% } else { %}
+            <td class="name"><a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}"><span class="filename">{%=file.name%}</span></a><span class="file-description">({%=file.description%})</span></td>
+            <td class="size">{%=o.formatFileSize(file.size)%}</td>
+            <td colspan="2"></td>
+        {% } %}
+        <td class="delete">
+            <button class="btn primary" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">Delete</button>
+            <input type="checkbox" name="delete" value="1">
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<script src="/assets/connect/js/rentguaranteeclaims/jquery.ui.widget.min.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/load-image.min.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/tmpl.min.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/bootstrap-modal.min.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/jquery.iframe-transport.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/jquery.fileupload.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/jquery.fileupload-ui.js"></script>
+<script src="/assets/connect/js/rentguaranteeclaims/application.js"></script>
+<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE >= 8 -->
+<script src="/assets/connect/js/rentguaranteeclaims/jquery.xdr-transport.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    <?php /* Enabling/disabling of "Add files..." button */ ?>
+    $('.fileupload-description select').change(function() {
+        if ($('.fileupload-description select option:selected').val() == '') {
+            disableAddButton();
+        } else {
+            enableAddButton();
+        }
+    });
+
+    <?php /* Trigger disabling "Add files..." button unless a file description is selected */ ?>
+    $('.fileupload-description select').change();
+
+    function enableAddButton() {
+        $('.fileupload-buttonbar .fileinput-button')
+            .addClass('success');
+        $('#fileupload').fileupload('enableFileInputButton');
+    }
+
+    function disableAddButton() {
+        $('.fileupload-buttonbar .fileinput-button')
+            .removeClass('success');
+        $('#fileupload').fileupload('disableFileInputButton');
+    }
+
+    <?php /* Hook into the add callback to store the file descriptions */ ?>
+    var fileDescriptions = new Array();
+    $('#fileupload').bind('fileuploadaddcomplete', function(e, data) {
+
+        // Check that new filename is unique before carrying on
+        var unique = true;
+        var latestFilename = data.files[0].name;
+        $('.template-download td.name .filename, .template-upload td.name .filename').slice(0, -1).each(function() {
+            if ($(this).text() == latestFilename) {
+                unique = false;
+            }
+        });
+
+        if (unique) {
+            $.each(data.files, function (index, file) {
+                // Store file description against file name
+                var filename = file.name;
+                var type = $('.fileupload-description select option:selected').val();
+                var description = $('.fileupload-description select option:selected').text();
+                var index = fileDescriptions.length / 2;
+                fileDescriptions.push({ name: 'filename_' + index, value: filename });
+                fileDescriptions.push({ name: 'description_' + index, value: type });
+                // Display new file description
+                $('.template-upload td.name').each(function() {
+                    if ($(this).text() == filename) {
+                        $(this).append('<span class="file-description">(' + description + ')</span>');
+                    }
+                });
+            });
+        } else {
+            // File being added is already uploaded or in the to-upload list, cancel it
+            alert('File already added.');
+            $('.template-upload .cancel button:last').click();
+        }
+    });
+
+    <?php /* Add a callback event to send the stored file descriptions */ ?>
+    $('#fileupload').bind('fileuploadsubmit', function(e, data) {
+        data.formData = fileDescriptions;
+    });
+});
+</script>

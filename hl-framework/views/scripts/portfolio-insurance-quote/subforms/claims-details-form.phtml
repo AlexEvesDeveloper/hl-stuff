@@ -1,0 +1,11 @@
+<div class="dialog">
+    <dl>
+        <?php echo $this->element->getElement('claim_property')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('claim_type')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('claim_month')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('claim_year')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('claim_value')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('claim_detail')->setOptions(array('class'=>'form-control'))->render();?>
+    </dl>
+    <input class="btn btn-quaternary" type="button" id="cor_address_add" value="Add" name="cor_address_add" onclick="addClaims(); return false;" />
+</div>

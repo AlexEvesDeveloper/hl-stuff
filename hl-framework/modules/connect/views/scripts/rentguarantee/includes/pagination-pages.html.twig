@@ -1,0 +1,38 @@
+
+{# todo: this html needs to have semantic structure #}
+
+{% if pagination.totalNumberOfItems %}
+    <div class="pagination-pages">
+        {% if pagination.firstPageNumber and pagination.currentPageNumber != pagination.firstPageNumber %}
+            <a href="{{ basePath }}?{{ queryString }}&page={{ pagination.firstPageNumber }}">&laquo; First</a> |
+        {% else %}
+            &laquo; First |
+        {% endif %}
+
+        {% if pagination.previousPageNumber %}
+            <a href="{{ basePath }}?{{ queryString }}&page={{ pagination.previousPageNumber }}">&lsaquo; Prev</a> |
+        {% else %}
+            &lsaquo; Prev |
+        {% endif %}
+
+        {% for page in pagination.pages %}
+            {% if pagination.currentPageNumber == page %}
+                <strong>{{ page }}</strong> |
+            {% else %}
+                <a href="{{ basePath }}?{{ queryString }}&page={{ page }}">{{ page }}</a> |
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.nextPageNumber %}
+            <a href="{{ basePath }}?{{ queryString }}&page={{ pagination.nextPageNumber }}">Next &rsaquo;</a> |
+        {% else %}
+            Next &rsaquo; |
+        {% endif %}
+
+        {% if pagination.lastPageNumber and pagination.currentPageNumber != pagination.lastPageNumber %}
+            <a href="{{ basePath }}?{{ queryString }}&page={{ pagination.lastPageNumber }}">Last &raquo;</a>
+        {% else %}
+            Last &raquo;
+        {% endif %}
+    </div>
+{% endif %}

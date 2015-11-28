@@ -1,0 +1,96 @@
+<?php
+
+$this->headLink()->appendStylesheet ('/assets/connect/css/insuranceQuoteTenants.css');
+
+?>
+<script type="text/javascript">
+<?php
+
+$insuranceAccessAllowed = false;
+
+// The "no access" message for IO and IAR agents trying to access insurance functionality.
+if (in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+    ?>
+    function showNoAccess() {
+        $.facebox(
+            'You\'re unable to access this section',
+            'We\'re sorry but due to your HomeLet agent status you\'re unable to access this particular section of Connect, if you want to discuss this further please contact your Account Manager.'
+        );
+    }
+    <?php
+} else {
+    
+    $insuranceAccessAllowed = true;
+    
+    ?>
+    function showNoOnline() {
+        $.facebox(
+            'Please call us',
+            'If you\'d like a quote for tenancy Liability please call us on 0845 117 6000, as quotes are not available online.'
+        );
+    }
+    <?php
+}
+?>
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <div class="left">
+            <ul class="connect_button_list">
+                <li class="single_button">
+                    <a href="#" target="" onclick="<?php echo (($insuranceAccessAllowed) ? "window.open('/insurance/tenants-contents-plus?covertype=tlc','newInsurance','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=800,height=650');" : 'showNoAccess();'); ?> return false;">
+                        <div class="connect_button">
+                            <img src="/assets/connect/images/icons/white-house-liability.png" alt="Tenant's Liability Insurance" width="104" height="100" />
+                            <h5>Tenancy Liability Cover</h5>
+                            <span class="help_text">
+                                <p>If your tenant would like to cover their liability as a tenant under their tenancy agreement with you please click here to get a quote</p>
+                            </span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            
+            <br style="clear: both;" />
+
+            <p>
+                Key benefits include:<br />
+                <br />
+                &bull; &pound;5,000 to cover their liability as a tenant<br />
+                &bull; Cover for your tenant, their partner and all members of their family who permanently live in their home<br />
+                &bull; Cover available for just &pound;99 per year for 12 month, annually paid policies<br />
+            </p>
+            <p>So, if they accidentally damage your landlord&rsquo;s property, furniture, fittings and fixtures we&rsquo;ll pay out so they don&rsquo;t have to!</p>
+	    <p class="small">NB. Please be aware that unfortunately we&rsquo;re unable to offer policies in the Channel Islands or the Isle of Man.</p>
+        </div>
+        <div class="right">
+            <ul class="connect_button_list">
+                <li class="single_button">
+                    <a href="#" target="" onclick="<?php echo (($insuranceAccessAllowed) ? "window.open('/insurance/tenants-contents-plus?covertype=tcp','newInsurance','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=800,height=650');" : 'showNoAccess();'); ?> return false;">
+                        <div class="connect_button_alt">
+                            <img src="/assets/connect/images/icons/white-house-possessions.png" alt="Tenant's Contents Insurance" width="104" height="100" />
+                            <h5>Tenant's Contents Insurance+</h5>
+                            <span class="help_text">
+                                <p>If your tenant would like to cover both their liability as a tenant and their contents please click here to get a quote.</p>
+                            </span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <br style="clear: both;" />
+
+            <p>
+                Key benefits include:<br />
+                <br />
+                &bull; Cover for your tenant&rsquo;s contents in case they&rsquo;re damaged or stolen from your property<br />
+                &bull; Cover for your tenant&rsquo;s liability, under their tenancy agreement<br />
+                &bull; Cover available from &pound;5,000 - &pound;60,000*<br />
+                &bull; We can even cover up to two Sharers on the policy too!<br />
+            </p>
+            <p class="small">*Cover over £60,000 is available, but is subject to meeting our Underwriters&rsquo; criteria.</p>
+            <p class="small">NB. Please be aware that unfortunately we&rsquo;re unable to offer policies in the Channel Islands or the Isle of Man.</p>
+
+        </div>
+    </div>
+</div>

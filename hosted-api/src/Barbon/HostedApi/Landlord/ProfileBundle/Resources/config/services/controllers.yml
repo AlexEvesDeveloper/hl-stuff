@@ -1,0 +1,7 @@
+services:
+    barbon.hosted_api.landlord.profile.controller.update_controller:
+        class: Barbon\HostedApi\Landlord\ProfileBundle\Controller\UpdateController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]

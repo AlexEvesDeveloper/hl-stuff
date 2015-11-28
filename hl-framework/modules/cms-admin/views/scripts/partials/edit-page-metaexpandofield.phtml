@@ -1,0 +1,138 @@
+<?php
+
+$params = Zend_Registry::get('params');
+
+if ($this->metaType == 'icon_links') {
+
+//Zend_Debug::dump($this->value);
+
+    $icons = array('' => '(none)') + $params->connect->iconList->toArray();
+    $iconUrl = $params->connect->iconUrl;
+
+    ?>
+    <p>
+        <label class="req"><?php echo $this->niceName ?>:</label><br />
+        <span class="smaller low"><?php echo $this->description ?></span><br />
+    <?php
+    foreach ($this->value as $temp_id => $iconData) {
+
+        $content = $iconData['content'];
+        $iconIdPart = "{$this->metaName}-{$iconData['meta_content_id']}-{$temp_id}";
+
+        ?>
+
+        <h3>Icon <?php echo $temp_id + 1; ?>: <?php echo $content->title; ?></h3>
+
+        <label class="req">Icon Type:</label><br />
+        <span class="smaller low">'Standard' icons are links and/or JavaScript-triggers, and 'special' icons are those such as calculators (in which case the icon subtype will be driven by its title).</span><br />
+        <input type="radio" name="<?php echo $iconIdPart; ?>-type" id="<?php echo $iconIdPart; ?>-type-standard" value="standard" <?php echo (($content->type == 'standard') ? ' checked="checked"' : ''); ?>/> Standard<br />
+        <input type="radio" name="<?php echo $iconIdPart; ?>-type" id="<?php echo $iconIdPart; ?>-type-special" value="special" <?php echo (($content->type == 'special') ? ' checked="checked"' : ''); ?>/> Special<br />
+
+        <br />
+
+        <label for="<?php echo $iconIdPart; ?>-title" class="req">Icon Title:</label><br />
+        <span class="smaller low">Title of icon displayed alongside it for 'standard' icons, or if icon type is 'special', this should be a subtype value such as 'calcAffordability' or 'calcCommission'.</span><br />
+        <input type="text" size="60" name="<?php echo $iconIdPart; ?>-title" class="input-text" id="<?php echo $iconIdPart; ?>-title" value="<?php echo $content->title ?>" /><br />
+
+        <br />
+
+        <label class="req" for="<?php echo $iconIdPart; ?>-iconName">Icon Image:</label><br />
+        <select class="input-text input-icon" name="<?php echo $iconIdPart; ?>-iconName" id="<?php echo $iconIdPart; ?>-iconName" onchange="$('#<?php echo $iconIdPart; ?>-icon').attr('src', '<?php echo $iconUrl; ?>' + $(this).val() + '_orange.png');">
+        <?php
+
+        foreach($icons as $iconType) {
+            echo sprintf(
+                "<option value=\"%s\"%s>%s</option>\n",
+                $iconType,
+                (($iconType == $content->icon) ? ' selected="selected"' : ''),
+                $iconType
+            );
+        }
+
+        ?>
+        </select>
+        <span class="iconPreviewOuter">
+          <span class="iconPreviewMid">
+            <span class="iconPreviewInner">
+              <img id="<?php echo $iconIdPart; ?>-icon" src="<?php echo (($content->icon != '') ? "{$iconUrl}{$content->icon}_orange.png" : ''); ?>" alt="" width="50%" height="50%" />
+            </span>
+          </span>
+        </span>
+
+        <br />
+
+        <label for="<?php echo $iconIdPart; ?>-url">Icon URL:</label><br />
+        <span class="smaller low">Optional URL, may be relative or absolute.</span><br />
+        <input type="text" size="60" name="<?php echo $iconIdPart; ?>-url" class="input-text" id="<?php echo $iconIdPart; ?>-url" value="<?php echo $content->url ?>" /><br />
+
+        <br />
+
+        <label for="<?php echo $iconIdPart; ?>-javaScript">Icon OnClick JavaScript:</label><br />
+        <span class="smaller low">Optional JavaScript triggered by an onclick event.  If URL is empty or '#' then 'return false;' is automatically appended.</span><br />
+        <input type="text" size="60" name="<?php echo $iconIdPart; ?>-javaScript" class="input-text" id="<?php echo $iconIdPart; ?>-javaScript" value="<?php echo $content->javaScript ?>" /><br />
+
+        <br />
+
+        <hr />
+
+        <?php
+    }
+    ?>
+    </p>
+    <?php
+}
+
+/*
+
+$icon = new Model_Cms_Connect_IconLink();
+
+$icon->type = 'standard';
+$icon->title = 'Start a new reference';
+$icon->icon = 'opendoor';
+$icon->url = null;
+$icon->javaScript = 'window.open(\'/connect/referencing/jump?action=new\',\'referenceNew\',\'hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=600,height=600\');';
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'standard';
+$icon->title = 'Reference search';
+$icon->icon = 'search';
+$icon->url = null;
+$icon->javaScript = 'window.open(\'/connect/referencing/jump?action=find\',\'referenceFind\',\'hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=950,height=500\');';
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'standard';
+$icon->title = 'Your referencing products';
+$icon->icon = 'opendoor';
+$icon->url = '/connect/referencing/products';
+$icon->javaScript = null;
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'standard';
+$icon->title = 'Company application';
+$icon->icon = 'cogs';
+$icon->url = '/connect/referencing/company-application';
+$icon->javaScript = null;
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'standard';
+$icon->title = 'Useful information and documents';
+$icon->icon = 'book';
+$icon->url = '/connect/referencing/information';
+$icon->javaScript = null;
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'standard';
+$icon->title = 'Rent Guarantee and Legal Service Claims';
+$icon->icon = 'info_money';
+$icon->url = '/connect/referencing/rentGuarantee';
+$icon->javaScript = null;
+echo "\n" . serialize($icon) . "\n";
+
+$icon->type = 'special';
+$icon->title = 'calcAffordability';
+$icon->icon = '';
+$icon->url = null;
+$icon->javaScript = null;
+echo "\n" . serialize($icon) . "\n";
+
+*/

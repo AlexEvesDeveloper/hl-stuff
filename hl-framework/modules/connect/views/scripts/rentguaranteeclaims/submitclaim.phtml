@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    function submitForm(url) {
+        $('#claimNumber').attr('action', url);$('#claimNumber').submit();
+    }
+</script>
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php if($this->status == "f"):?>
+            <div class="submit-claim-content" align="center">
+                <br/>
+
+                <div>
+                    <div class="oc_textheader"><h5>We will get back to you on your claim submission</h5></div>
+                </div>
+            </div>
+        <?php else :?>
+            <div class="submit-claim-content" align="center">
+                <div>
+                    <div class="oc_textheader"><h5>Your claim has been submitted</h5></div>
+                </div>
+                <div class="submit-claim-content">
+                    <strong>A dedicated claims handler</strong> will email you to confirm it has been received. <br/><br/>
+                </div>
+                <div class="">
+                    The claim will be <strong>assessed</strong> within 4 working days once all documents have been received.<br/><br/>
+                </div>
+                <div class="">
+                    If you haven't attached all <strong>supporting documents</strong>, please send them to <a href="mailto:rentguaranteeclaims@homelet.co.uk">rentguaranteeclaims@homelet.co.uk</a> or fax to 08450527648 at your earliest convenience. Missing documents may mean that the claim is delayed.<br/><br/>
+                </div>
+            </div>
+            <div id="submit-claim-navigation">
+                <?php
+                echo $this->form->claim_exit;
+                echo $this->form->print_fax_header;
+                echo $this->form->print_claim;
+                ?>
+            </div>
+        <?php endif;?>
+        <form action="" method="POST" id="claimNumber" target="_blank">
+            <?php
+            $this->form->ref_num->setValue($this->ref_num);
+            echo $this->form->ref_num;
+            echo $this->form->mode;
+            ?>
+        </form>
+    </div>
+</div>

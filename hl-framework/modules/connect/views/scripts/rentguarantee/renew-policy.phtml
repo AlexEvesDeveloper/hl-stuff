@@ -1,0 +1,286 @@
+
+<script type="text/javascript">
+    <?php if($this->tenancyterm == 6): ?>
+      var premium = '<?php echo $this->premium6month; ?>';
+      <?php else: ?>
+         var premium = '<?php echo $this->premium12month; ?>';
+    <?php endif; ?>
+        var renewalButtonClicked = false;
+        var premium6 = '<?php echo $this->premium6month; ?>';
+        var premium12 = '<?php echo $this->premium12month; ?>';
+                  
+
+
+	function getCheckedValue(radioObj) {
+	if(!radioObj)
+		return "";
+	var radioLength = radioObj.length;
+	if(radioLength == undefined)
+		if(radioObj.checked)
+			return radioObj.value;
+		else
+			return "";
+	for(var i = 0; i < radioLength; i++) {
+		if(radioObj[i].checked) {
+			return radioObj[i].value;
+		}
+	}
+	return "";
+}
+
+    function checkRGoffered(){
+   	 // 
+     	 var tentype=getCheckedValue(document.getElementsByName("tenancytype"));
+     	 var rgoff=getCheckedValue(document.getElementsByName("rgoffer"));
+        if(tentype==""){
+            alert("Please select Property Let Type !");
+            return false;
+
+        }
+        if(rgoff==""){
+            alert("Please select How is Rent Guarantee offered to your landlord at renewal !");
+            return false;
+        }
+
+     	
+          if(document.getElementById("fsastatus").value=="AR" || 
+        	 document.getElementById("fsastatus").value=="Direct" ||       	
+        	 document.getElementById("fsastatus").value=="NAR" ||
+        	 tentype==2 ||
+        	 rgoff==1 
+             )
+             {
+                return true;
+              
+             }
+         else{
+           
+             	alert("Please note if you only offer a Rent Collect, Tenant Find / Let Only service to your landlords, you cannot also offer them Rent Guarantee for a separate charge as you are not providing a Fully Managed Service. Unfortunately this means that you are not able to renew this product!");
+
+             	return false;
+             }
+    }
+</script>
+
+<?php
+    $address = array();
+    $fsaflag=false;
+    if($this->fsastatusabbr == "AR" || $this->fsastatusabbr == "Direct" || $this->fsastatusabbr == "NAR" ){
+    	$fsaflag=true;
+    }
+    
+    if (isset($this->housenumber) && $this->housenumber != '')
+        $address[] = $this->housenumber;
+    
+    if (isset($this->housename) && $this->housename != '')
+        $address[] = $this->housename;
+    
+    if (isset($this->addressline1) && $this->addressline1 != '')
+        $address = array_merge($address, explode(',', $this->addressline1));
+        
+    if (isset($this->addressline2) && $this->addressline2 != '')
+        $address = array_merge($address, explode(',', $this->addressline2));
+        
+    if (isset($this->town) && $this->town != '')
+        $address[] = ucfirst(strtolower($this->town));
+    
+    if (isset($this->county) && $this->county != '')
+        $address[] = $this->county;
+    
+    if (isset($this->postcode) && $this->postcode != '')
+        $address[] = strtoupper($this->postcode);
+    
+    if (isset($this->country) && $this->country != '')
+        $address[] = $this->country;
+    
+    foreach ($address as &$value) $value = trim($value);
+    $address = implode(', ', $address);
+    
+    if($this->tenancyterm == 6){
+        $this->premium=$this->premium6month;    
+    }
+    else{
+        $this->premium=$this->premium12month;    
+    }
+
+?>
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <form name="rgRenewal" id="rgRenewal" method="post">
+            <h2>Renew Policy</h2>
+            <input type="hidden" name="fsastatus" id="fsastatus" value="<?php echo $this->fsastatusabbr; ?>" />
+            <input type="hidden" name="policynumber" value="<?php echo $this->policynumber; ?>" />
+            <input type="hidden" name="pollength" value="<?php echo $this->tenancyterm; ?>" />
+            <input type="hidden" name="title" value="<?php echo $this->title; ?>" />
+            <input type="hidden" name="firstname" value="<?php echo $this->firstname; ?>" />
+            <input type="hidden" name="lastname" value="<?php echo $this->lastname; ?>" />
+            <input type="hidden" name="riskaddress" value="<?php echo $address; ?>" />
+            <input type="hidden" name="risktown" value="<?php echo $this->town; ?>" />
+            <input type="hidden" name="riskpc" value="<?php echo $this->postcode; ?>" />
+            <input type="hidden" name="date"  value="<?php echo date('d/m/Y'); ?>" />
+            <input type="hidden" name="signature" value="<?php echo $this->userRealName; ?> (<?php echo $this->agentId; ?>)" />
+            
+            <div id="rgRenewalSuite_pageContent" style="margin-top: 10px;">
+                <div class="table_wrap">
+                    <table id="tenant_detail" style="width: 100%">
+                    
+                        <tr>
+                            <td width="160">Product Name:</td>
+                            <td><?php echo $this->productname; ?></td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="160">Policy Number:</td>
+                            <td><?php echo $this->policynumber; ?></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Property Address:</td>
+                            <td><?php echo $address; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Tenant:</td>
+                            <td><?php echo $this->title; ?> <?php echo $this->firstname; ?> <?php echo $this->lastname; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Rent:</td>
+                            <td><?php echo $this->rent; ?> p.c.m.</td>
+                        </tr>
+                        <tr>
+                            <td>Share of Rent:</td>
+                            <td><?php echo $this->rentshare; ?> p.c.m.</td>
+                        </tr>
+                    </table>
+                </div>
+        		<?php if($fsaflag): ?>
+                 <p>
+                   We're writing to let you know that the Rent Guarantee policy on the tenant above is due to expire shortly.  Don't worry 
+                   though because as long as there has been no previous claim, and the tenant doesn't have any rent arrears or a dispute 
+                   over the tenancy, then its easy to make sure this valuable cover continues.
+                 </p>
+                <?php else :?>
+                 <p>
+                	We're writing to let you know that the Rent Guarantee policy on the tenant above is due to expire shortly.  Don't worry 
+                	though because as long as you're continuing to fully manage this property, there has been no previous claim, and the 
+                	tenant doesn't have any rent arrears or a dispute over the tenancy, then its easy to make sure this valuable cover 
+                	continues.
+                 </p>
+                <?php endif;?>
+                <p>
+                 This will cost just &pound;<?php echo $this->premium6month; ?> (inclusive of Insurance Premium Tax) for 6 months cover, or &pound;<?php echo $this->premium12month; ?> (inclusive of 
+                 Insurance Premium Tax) for 12 months cover you could continue to protect the rental income.    
+                </p>
+                <?php if(!$fsaflag): ?>
+                <p>
+                   However, if you're not fully managing this property, or if you make an explicit charge for the Rent Guarantee to your 
+                   landlord then you will be unable to extend the guarantee.
+                </p>
+                <?php endif;?>
+                <h3 style="color: #000000;">Next Steps</h3>
+                <p>
+                    All you have to do now is check the details provided for renewal below and amend as required, then renew this policy. If you need to amend the policy date please contact us on 0845 142 0264 before renewing the policy.
+                </p>
+                
+                <table id="policy_details" style="width: 100%;">
+                    <tr>
+                        <td style="width: 30%;">Start date of the current policy </td>
+                        <td><?php echo $this->startdate->get(Zend_Date::DAY . '/' . Zend_Date::MONTH . '/' . Zend_Date::YEAR); ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%;">Expiry date of the current policy </td>
+                        <td><?php echo $this->enddate->get(Zend_Date::DAY . '/' . Zend_Date::MONTH . '/' . Zend_Date::YEAR); ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%;">The policy duration </td>
+                        <td>
+                            <?php if($this->productlength == 0): ?>
+                                <label for="term6Month"><input type="radio" name="term" value="6" id="term6Month" onClick="document.getElementById('final_premium').innerHTML='<?php echo $this->premium6month; ?>';" <?php if($this->tenancyterm == 6) echo "checked";?> />6</label>
+                                &nbsp;&nbsp;
+                                <label for="term12Month"><input type="radio" name="term" value="12" id="term12Month" onClick="document.getElementById('final_premium').innerHTML='<?php echo $this->premium12month; ?>';" <?php if($this->tenancyterm == 12) echo "checked";?>/>12 *</label>
+                            <?php else :?>
+                                <input type="hidden" name="term" value="<?php echo $this->tenancyterm; ?>" /> <?php echo $this->tenancyterm; ?> months
+                            <?php endif;?>
+                        </td>
+                    </tr>
+        
+                    <tr>
+                        <td style="width: 30%;">The monthly rent for this property will be </td>
+                        <td>&pound; <input type="text" name="rent" id="rent" value="<?php echo $this->rent->getValue(); ?>" /></td>
+                    </tr>
+        
+                    <tr>
+                        <td style="width: 30%;">The monthly rent for this applicant will be </td>
+                        <td>&pound; <input type="text" name="rentshare" id="rentshare" value="<?php echo $this->rentshare->getValue(); ?>" /></td>
+                    </tr>
+
+                	<tr>
+                		<td style="width: 30%;">Property Let Type</td>
+                		<td>
+                			<label for="tenancytype1"><input type="radio" name="tenancytype" value="1" id="tenancytype1" />Let only</label>
+                			<label for="tenancytype2"><input type="radio" name="tenancytype" value="3" id="tenancytype2" />Rent collect</label>
+                			<label for="tenancytype3"><input type="radio" name="tenancytype" value="2" id="tenancytype3" />Managed</label>
+                		</td>
+                	</tr>
+
+                	<tr>
+                		<td style="width: 30%;">How is Rent Guarantee offered to your landlord at renewal</td>
+                		<td>
+                			<label for="rgoffer1"><input type="radio" name="rgoffer" value="1" id="rgoffer1" />Free of charge</label>
+                			<label for="rgoffer2"><input type="radio" name="rgoffer" value="2" id="rgoffer2" />Included in Management Fees</label>
+                			<label for="rgoffer3"><input type="radio" name="rgoffer" value="3" id="rgoffer3" />Separate charge for Rent Guarantee to the landlord</label>
+                		</td>
+                	</tr>
+                </table>
+                
+                <?php if($this->productlength == 0): ?>
+                    <p>* Please check as applicable</p>
+                <?php endif;?>
+                
+                <p>
+                    <b>Please note:</b> If the monthly rent has increased by more than 10% a new reference and Rent Guarantee will be required
+                    however the original terms and conditions will still apply.
+                </p>
+        
+                <p>
+                    <b>Important notice, please read the declaration before you renew your Rent Guarantee policy.</b>
+                </p>
+        
+                <h3 style="color: #000000;">Declaration</h3>
+                <p>
+                    I/We confirm that <?php echo $this->title; ?> <?php echo $this->firstname; ?> <?php echo $this->lastname; ?> is not currently in
+                    arrears of rent and is not in dispute over the tenancy agreement.
+                </p>
+        
+                <p>
+                    I/We are not aware of any circumstances which may give rise to a claim, and undertake to advise HomeLet of
+                    any such circumstances which arise subsequently, prior to the end of the tenancy.
+                </p>
+        
+                <p>
+                    I/We understand that there will be no refund of premium in the event that this renewal is cancelled.
+                </p>
+        
+                <p>
+                    I/We also authorise HomeLet to deduct &pound;<span id="final_premium"><?php echo $this->premium; ?></span> from our designated bank
+                    account on or about the 22nd day of the month following the renewal of this Rent Guarantee.
+                </p>
+        
+                <p>
+                    To renew this Rent Guarantee, click the button below <b>before</b> the date of expiry. Once you've renewed the policy we'll send
+                    you a certificate extending the cover at the quoted rent.
+                </p>
+        
+                <p style="text-align: center;">
+                  <b>Rent Guarantee - it's simply common sense!</b>
+                </p>
+        
+                <div align="center">
+                    <input type="submit" name="formsubmit_back" class="round-button" value="Back"/>
+                    <input type="submit" name="formsubmit_continue" class="round-button" value="Continue" onclick="if (checkRGoffered()) { if (renewalButtonClicked == true) { return false }; renewalButtonClicked = true; return true; } else { return false; }" ondblclick="if (checkRGoffered()) { if (renewalButtonClicked == true) { return false }; renewalButtonClicked = true; return true; } else { return false; }" />
+                </div>
+            </div>
+        </form>
+	</div>
+</div>

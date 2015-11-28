@@ -1,0 +1,32 @@
+<?php
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_accountsaddress'];
+?>
+<h2>Your Accounts Address</h2>
+<?php echo $this->helpPopup('Your Accounts Address', 'letting-agents-application-help-accountsaddressdetails'); ?>
+<div class="clear"></div>
+
+<div class="form_section one-col">
+    <div class="alt">
+    <?php echo $this->element->accounts_uid; ?>
+        <?php echo $this->element->accounts_postcode; ?>
+        <input type="submit" id="accounts_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#accounts_house_number_name').val(), $('#accounts_postcode').val(), 'accounts_postcode', 'accounts_address'); return false;" />
+    </div>
+    <div id="accounts_address_selector">
+        <?php echo $this->element->accounts_address->setAttribs(array('style' => 'width: 320px;'))->render(); ?>
+    </div>
+    <div id="accounts_address_details">
+    	<div>
+    		<?php echo $this->element->accounts_address_line1; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->accounts_address_line2; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->accounts_address_line3; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->accounts_address_postcode; ?>
+    	</div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div id="application-summary-widget" class="panel panel-default">
+    <div class="panel-heading">
+        Application Summary
+        <a href="{{ path(case_url_path, {'caseId': caseId}) }}" class="badge badge-primary pull-right"><i class="fa fa-arrow-left"></i> Back to property</a>
+    </div><!-- panel-heading -->
+
+    <div class="panel-body">
+        <dl class="dl-horizontal pull-left" style="width:50%;">
+            <dt>
+                Applicant Name
+            </dt>
+            <dd>
+                {% if application.firstName and application.lastName %}
+                    {{ application.title }} {{ application.firstName }} {{ application.lastName }}
+                {% else %}
+                    <em>Not Provided</em>
+                {% endif %}
+            </dd>
+
+            <dt>Applicant Type</dt>
+            <dd>
+                {{ application.applicationType | iris_application_type_label }}
+            </dd>
+
+            <dt>Maiden Name</dt>
+            <dd>
+                {{ application.otherName }}
+            </dd>
+
+            <dt>Date of Birth</dt>
+            <dd>
+                {{ application.birthDate | date('jS F, Y') }} ({{ application.birthDate | date('d/m/Y') }})
+            </dd>
+
+            <dt>Residential Status</dt>
+            <dd>
+                {% if application.residentialStatus is not null %}
+                    {{ application.residentialStatus | iris_residential_status_label }}
+                {% else %}
+                    <em>Not Provided</em>
+                {% endif %}
+            </dd>
+
+            <dt>Employment Status</dt>
+            <dd>
+                {% if application.employmentStatus is not null %}
+                    {{ application.employmentStatus | iris_employment_status_label }}
+                {% else %}
+                    <em>Not Provided</em>
+                {% endif %}
+            </dd>
+
+            <dt>Gross Annual Income</dt>
+            <dd>
+                {% if application.grossIncome is not null %}
+                    &pound; {{ application.grossIncome | number_format(2) }}
+                {% else %}
+                    <em>Not Provided</em>
+                {% endif %}
+            </dd>
+
+            <dt>Share of Rent</dt>
+            <dd>
+                {% if application.rentShare is not null %}
+                    &pound; {{ application.rentShare | number_format(2) }}
+                {% else %}
+                    <em>Not Provided</em>
+                {% endif %}
+            </dd>
+        </dl>
+            
+        <dl class="dl-horizontal pull-right" style="width:50%;">
+            <dt>Property Address</dt>
+            <dd>
+                {% if case.address is not null %}
+                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                        with { 'address': case.address } %}
+                {% endif %}
+            </dd>
+
+            <dt>E-mail</dt>
+            <dd>
+                <a href="mailto:{{ application.email }}">{{ application.email }}</a>
+            </dd>
+
+            {% if application.phone %}
+                <dt>Telephone</dt>
+                <dd>
+                    {{ application.phone }}
+                </dd>
+            {% endif %}
+
+            {% if application.mobile %}
+                <dt>Mobile</dt>
+                <dd>
+                    {{ application.mobile }}
+                </dd>
+            {% endif %}
+        </dl>
+    </div><!-- panel-body -->
+</div>

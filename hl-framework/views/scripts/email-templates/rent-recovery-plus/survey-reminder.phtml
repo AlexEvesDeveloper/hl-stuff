@@ -1,0 +1,105 @@
+<?php
+    $agentName    = $this->metaData['lettingAgent'];
+    $surveyLink   = $this->metaData['surveyLink'];
+    $landlordName = $this->metaData['landlordName'];
+?>
+
+<style type="text/css">
+    h1 {
+        /*@editable*/ color: #00346d;
+        display:block;
+        font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 100%;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        border-width: 5px;
+        border-top-style: solid;
+        border-right-style: solid;
+        border-left-style: solid;
+        border-bottom-style: solid;
+        padding: 5px;
+        text-align: center;
+    }
+    h2 {
+        color: #00346d;
+        display: block;
+        font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 100%;
+        margin: 0;
+    }
+    .link {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    a {
+        font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 100%;
+        color: #00346d;
+    }
+    p {
+        font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        margin: 1em 0;
+    }
+    p.wrapped {
+        word-wrap: break-word;
+
+        /* ms word break */
+        -ms-word-break: break-all;
+        word-break: break-all;
+
+        /* webkit hyphens */
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+</style>
+
+<p>
+    <?php echo $landlordName; ?>,
+</p>
+
+<p>
+    You should have received an Acknowledgment of Interest to confirm that <?php echo $agentName; ?> has taken out a
+    Rent Recovery Plus Policy in their own name through HomeLet, and have noted that you have an &quot;Interest In&quot;
+    the policy.  This means that if your tenant is in breach of their tenancy agreement and <?php echo $agentName; ?>
+    makes a successful claim under the policy, any sums recovered that are due to you under your agreement will be
+    passed onto you by them.
+</p>
+
+<h1>
+    HomeLet would like to ensure that you have a complete understanding of this product, as it is HomeLet that provide
+    the cover to your letting agent.
+    </br></br>
+    Please click on the link below for a brief explanation of your Interest In this policy, and just one question that
+    we would like you to answer regarding this product. We expect it to take no more than 2 minutes of your time to
+    answer the question and would really appreciate your feedback.
+</h1>
+
+<p class="link">
+    <a href="<?php echo $surveyLink ?>">
+        <?php echo $surveyLink ?>
+    </a>
+</p>
+
+<p>
+    If you have any queries regarding the service you have entered into with <?php echo $agentName; ?>, please contact
+    <?php echo $agentName; ?> directly.
+</p>
+
+<p>
+    Kind regards
+</p>
+
+<h2>
+    The HomeLet Team
+</h2>

@@ -1,0 +1,42 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : (isPopup is defined and isPopup ? "popup-base.html.twig" : "irisreferencing-base.html.twig") %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Rent Affordability</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/iris-referencing/rent-affordability{{ isPopup ? '?isPopup=1' }}" method="post" class="form-horizontal">
+        <h2>HomeLet Rent Affordability Calculator</h2>
+        <p>Please enter an amount in whole pounds (&pound;) into <strong>one</strong> of the boxes below:</p>
+        <div class="form_section one-col">
+            {{ form_widget(form) }}
+        </div>
+        <div class="form_section one-col rent-affordability-buttons">
+            <button type="submit" class="button">Calculate</button>
+            <a href="{{ _request.getUri() }}" class="button reset">Clear</a>
+        </div>
+    </form>
+
+    {% if output and _request.isMethod('post') %}
+        <div class="rent-affordability-results">
+            <h3>Rent affordability check results</h3>
+            <div class="rent-affordability-results-content">
+                <dl>
+                    <dt><strong>Monthly Rent</strong></dt>
+                    <dd>&pound; {{ output.monthlyRent | number_format(2) }}</dd>
+                    <dt><strong>Tenant Income</strong></dt>
+                    <dd>&pound; {{ output.tenantAnnualIncome | number_format(2) }}</dd>
+                    <dt><strong>Guarantor Income</strong></dt>
+                    <dd>&pound; {{ output.guarantorAnnualIncome | number_format(2) }}</dd>
+                </dl>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

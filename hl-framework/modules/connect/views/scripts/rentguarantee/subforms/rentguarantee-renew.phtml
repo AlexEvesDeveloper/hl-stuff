@@ -1,0 +1,45 @@
+
+<script type="text/javascript">
+    <?php if($this->tenancyterm == 6): ?>
+        var premium = '<?php echo $this->premium6month; ?>';
+    <?php else: ?>
+        var premium = '<?php echo $this->premium12month; ?>';
+    <?php endif; ?>
+    
+    var renewalButtonClicked = false;
+    
+    var premium6 = '<?php echo $this->premium6month; ?>';
+    var premium12 = '<?php echo $this->premium12month; ?>';
+</script>
+
+<?php
+    $address = array();
+    
+    if (isset($this->housenumber) && $this->housenumber != '')
+        $address[] = $this->housenumber;
+    
+    if (isset($this->housename) && $this->housename != '')
+        $address[] = $this->housename;
+    
+    if (isset($this->addressline1) && $this->addressline1 != '')
+        $address = array_merge($address, explode(',', $this->addressline1));
+        
+    if (isset($this->addressline2) && $this->addressline2 != '')
+        $address = array_merge($address, explode(',', $this->addressline2));
+        
+    if (isset($this->town) && $this->town != '')
+        $address[] = ucfirst(strtolower($this->town));
+    
+    if (isset($this->county) && $this->county != '')
+        $address[] = $this->county;
+    
+    if (isset($this->postcode) && $this->postcode != '')
+        $address[] = strtoupper($this->postcode);
+    
+    if (isset($this->country) && $this->country != '')
+        $address[] = $this->country;
+    
+    foreach ($address as &$value) $value = trim($value);
+    $address = implode(', ', $address);
+?>
+

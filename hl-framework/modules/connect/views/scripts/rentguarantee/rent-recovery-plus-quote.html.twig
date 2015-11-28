@@ -1,0 +1,26 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Application</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <form action="/rentguarantee/rent-recovery-plus-accept" method="post">
+        <div>
+            <p>
+                Thank you for applying for an RRP policy, your quote number is {{ policyNumber }}.
+                {{ paymentDetails }}
+                Please confirm that you are happy to proceed.
+            </p>
+
+            <div class="application-options">
+                <a href="/rentguarantee/rent-recovery-plus-accept?policyNumber={{ policyNumber }}" class="button">Accept</a>
+                <a href="/rentguarantee/rent-recovery-plus?policyNumber={{ policyNumber }}" class="button">Back</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

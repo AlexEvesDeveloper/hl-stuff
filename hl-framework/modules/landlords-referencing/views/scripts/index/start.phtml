@@ -1,0 +1,154 @@
+<div class="tenants">
+    <div class="wrapper two-col">
+        
+        <div class="content">
+        
+        	<!-- Main heading -->
+            <h1>
+            	<span class="landlords">Tenant Referencing and Rent Guarantee</span>
+            </h1>
+            
+            <p style="margin-top: 20px;">
+			Tenant referencing provides you with relevant information to make an informed decision on a prospective tenant’s suitability. 
+			This is done by checking whether they have been bankrupt, have not been able to pay their rent in the past, and check that they’re really who they say they are. 
+			We are also able to pay your rent should your tenant stop paying, with our Rent Guarantee products. 
+			We can even pay some rent after vacant possession has been obtained whilst you look for a new tenant. 
+			Please take a look at the products below:  
+            </p>
+            
+            
+            <!-- Tenant Referencing section -->
+            <!--[if IE 8]>
+            	<link rel="stylesheet" type="text/css" href="/assets/cms/css/ie8.css" />
+            <![endif]-->
+            
+            <h2 style="margin-top: 15px;">
+            	<span class="landlords">Tenant Referencing</span>
+            </h2>
+            
+            <div class="ref_start product_info_box">
+				<div>
+					<ul>
+						<li>
+						HomeLet specialises in providing fast, accurate and intelligent referencing so you can feel 
+						confident about renting your property to a future tenant.
+						</li>
+						
+						<li>
+						In the last 3 years we’ve referenced over one million tenants, so we feel confident in being 
+						able to make a decision on a tenant’s suitability. 
+						</li>
+					</ul>
+					
+					<ul>
+						<li>
+						We have differing levels of referencing products, from Insight which offers a comprehensive credit
+						check, Enhance which is the most rigorous reference you can get; right the way up to Optimum 
+						where we guarantee to remove your tenant from the property.  
+						</li>
+					</ul>
+				</div>
+				
+				<!-- Vertical button bar -->
+				<a class="nav-landlords-button" href="/landlords/referencing/products" >View our products</a><br/><br/>
+				<a class="nav-landlords-button" href="<?php echo $this->applicationUrl; ?>?pt=nrg">Apply Online</a>
+				
+				<div class="dotted_line_sep" >
+					<p>
+						Alternatively you can apply via email or post.
+					</p>
+				</div>
+                
+				<a class="nav-landlords-button" href="/landlords/referencing/download-application" >Download Application</a>
+            </div>
+            <!-- End of Tenant Referencing section -->
+            
+            
+            
+            <!--  Rent Guarantee Section -->
+            <h2 style="margin-top: 40px;">
+            	<span class="landlords">Rent Guarantee</span>
+            </h2>
+            
+            <div class="ref_start product_info_box">
+				<div>
+					<ul>
+						<li>
+							HomeLet can cover your rental payments for up to a year, if your tenant stops paying you. 
+						</li>
+						
+						<li>
+							We can also offer you Legal Expenses cover which means we are able to evict any problem tenant you may have. 
+						</li>
+					</ul>
+					
+					<ul>
+						<li>
+							HomeLet regularly pays out over £3 million every year in rent guarantee claims- money landlords cannot afford to lose. 
+						</li>
+					</ul>
+				</div>
+				
+				<!-- Vertical button bar -->
+				<a class="nav-landlords-button" href="/landlords/referencing/rent-guarantee-products">View our products</a><br/><br/>
+				<a class="nav-landlords-button" href="<?php echo $this->applicationUrl; ?>?pt=rg">Apply Online</a>
+				
+				<div class="dotted_line_sep">
+					<p>
+						Alternatively you can apply via email or post.
+					</p>
+				</div>
+                
+				<a class="nav-landlords-button" href="/landlords/referencing/download-application">Download Application</a>
+            </div>
+            <!-- End of Rent Guarantee Section -->
+            
+            
+        <!-- End of content section -->
+        </div>
+
+        
+		<div class="sidebar">
+		
+		    <div id="scroller-anchor"></div>
+		    <div id="scroller" style="margin-top:0px; width: 206px;">
+				
+				<h4 class="underline-landlords">Resources</h4>
+				<div class="white">
+					<?php $layout = $this->layout()->getView(); ?>
+					<a href="<?php echo $layout->urls['landlordsFaq']; ?>" class="nav-corporate-dark-button">Frequently Asked Questions</a>
+					<div style="clear:both;"></div>
+					
+					<a href="<?php echo $layout->urls['landlordsTopTips']; ?>" class="nav-corporate-dark-button">Top Tips</a>
+					<div style="clear:both;"></div>
+				</div>
+				
+				<h4 class="underline-landlords">What people say</h4>
+				<div class="blue ">
+					<div class="testyhearts">
+						<div id="testimonials-holder">
+							<ul>
+								<?php
+									echo $this->testimonials('landlords');
+								?>
+							</ul>
+							<div id="test-changer">
+								<a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+								<a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$(function() {
+    $('.form_section > div:even')
+        .not($('.form_section > div input.noalt').parent())
+        .addClass('alt');
+	});
+</script>

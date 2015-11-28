@@ -1,0 +1,82 @@
+{% block financial_referee_widget %}
+    {% spaceless %}
+        <div id="{{ form.vars.id }}" class="single-application-block minimise-outer">
+            <div class="section-toolbar">
+                <a class="badge badge-primary pull-left minimise-button"><i class="fa fa-minus-circle"></i> Collapse Section</a>
+                <a class="badge badge-danger pull-right remove-from-collection">Remove <i class="fa fa-times-circle"></i></a>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="single-application-section minimise-content">
+                {{ form_row(form.isVisible) }}
+                {{ form_row(form.financialRefereeType) }}
+
+                {% if form.companyName is defined %}
+                    {{ form_row(form.companyName) }}
+                {% endif %}
+
+                {% if form.address is defined %}
+                    {{ form_row(form.address) }}
+                {% endif %}
+
+                {% if form.contactName is defined %}
+                    {{ form_row(form.contactName) }}
+                {% endif %}
+
+                {% if form.contactPosition is defined %}
+                    {{ form_row(form.contactPosition) }}
+                {% endif %}
+
+                {% if form.phone is defined %}
+                    {{ form_row(form.phone) }}
+                {% endif %}
+
+                {% if form.fax is defined %}
+                    {{ form_row(form.fax) }}
+                {% endif %}
+
+                {% if form.email is defined %}
+                    {{ form_row(form.email) }}
+                {% endif %}
+
+                {% if form.applicantPositionHeld is defined %}
+                    {{ form_row(form.applicantPositionHeld) }}
+                {% endif %}
+
+                {% if form.isPermanent is defined %}
+                    <div class="radio-group">
+                        {{ form_row(form.isPermanent, {'attr': {'class': 'radio-group-options'}}) }}
+                    </div>
+                {% endif %}
+
+                {% if form.payrollNumber is defined %}
+                    {{ form_row(form.payrollNumber) }}
+                {% endif %}
+
+                {% if form.applicantAnnualIncome is defined %}
+                    {{ form_row(form.applicantAnnualIncome) }}
+                {% endif %}
+
+                {% if form.applicantAnnualEarnings is defined %}
+                    {{ form_row(form.applicantAnnualEarnings) }}
+                {% endif %}
+
+                {% if form.applicantAnnualPension is defined %}
+                    {{ form_row(form.applicantAnnualPension) }}
+                {% endif %}
+
+                {% if form.employmentStartDate is defined %}
+                    {{ form_row(form.employmentStartDate) }}
+                {% endif %}
+
+                {% if form.employmentChangeDuringTenancy is defined %}
+                    {{ form_row(form.employmentChangeDuringTenancy) }}
+                {% endif %}
+
+                {% if form.multipleJobOrPension is defined %}
+                    {{ form_row(form.multipleJobOrPension) }}
+                {% endif %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+
+    {# JavaScript assets #}
+
+    {{ parent() }}
+
+    {%
+        javascripts
+            '@BarbonHostedApiAppBundle/Resources/public/js/form.js'
+            '@BarbonHostedApiAppBundle/Resources/public/js/addressfinder.plugin.jquery.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
+
+{% block body %}
+    {#&#123;&#35; todo: make the banners controlled by options per-account &#35;&#125;#}
+    {#<div class="banner">#}
+    {#<a href="http://www.simplelandlordsinsurance.com/?utm_source=simpletenantreferencing&utm_medium=refferal&utm_campaign=STR01" target="_blank"><img src="/images/dg-tenant-referencing-banner.gif" alt="" /></a>#}
+    {#</div>#}
+    <div role="tabpanel" class="container mobile-full-width">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li id="register-tab" role="presentation"{% if selectedTab == 'register' %} class="active"{% endif %}><a href="#register" aria-controls="register" role="tab" data-toggle="tab">Register</a></li>
+            <li id="login-tab" role="presentation"{% if selectedTab == 'login' %} class="active"{% endif %}><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Log in</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade{% if selectedTab == 'register' %} in active{% endif %}" id="register">
+                {{ render(controller("barbon.hosted_api.landlord.authentication.controller.register_controller:indexAction")) }}
+            </div>
+            <div role="tabpanel" class="tab-pane fade{% if selectedTab == 'login' %} in active{% endif %}" id="login">
+                {{ render(controller("barbon.hosted_api.landlord.authentication.controller.login_controller:indexAction")) }}
+            </div>
+        </div>
+    </div>
+    <script>
+        // Enable tabs
+        $(function() {
+            $('a[role="tab"]').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
+        });
+    </script>
+{% endblock %}

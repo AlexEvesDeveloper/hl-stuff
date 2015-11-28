@@ -1,0 +1,123 @@
+<div class="col-xs-12">
+    <div class="breadcrumb"></div>
+</div>
+<div class="landlords landlords-referencing col-sm-9">
+
+    <div class="content">
+        <form action="" method="post" enctype="application/x-www-form-urlencoded" class="main validate">
+            <div class="form_section">
+                <div class="form-sub-section">
+                    <div class="form-help hidden-xs hidden-sm"></div>
+                    <h2 class="quaternary-colour">Referencing Registration</h2>
+
+                    <div class="section-help">
+                        <p>Fields marked with a * symbol are required.</p>
+                    </div>
+
+                    <?php if ($this->form->getDescription()): ?>
+                        <div class="alert alert-danger">
+                            <ul class="errors">
+                                <li><?php echo $this->form->getDescription(); ?></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <?php echo $this->form->title->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->first_name->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->last_name->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="property_postcode" class="required">Your Postcode *</label>
+                        <div class="input-group">
+                            <?php
+                            echo $this->form->property_postcode
+                                ->setOptions(array('label' => '', 'class' => 'form-control'))->render();
+                            ?>
+                            <span class="input-group-btn">
+                                <input type="submit" id="postcode_lookup" value="Find address" name="lookup"
+                                       onclick="getProperties($('#property_number_name').val(),
+                                $('#property_postcode').val(), 'property_postcode', 'property_address'); return false;" class="btn btn-quaternary btn-postcode" />
+                            </span>
+                        </div>
+                        <?php echo $this->form->property_number_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div id="ins_address_selector">
+                            <?php echo $this->form->property_address->setAttribs(array('class' => 'form-control'))->render(); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->phone_number->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->fax_number->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">Mobile number is only required if you do not provide a landline contact number.</div>
+                        <?php echo $this->form->mobile_number->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->email->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->password->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                    <?php echo $this->form->confirm_password->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->security_question->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->security_answer->setAttribs(array('class' => 'form-control'))->render(); ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insurance_renewal_date" class="optional"><?php echo $this->form->insurance_renewal_date->getLabel(); ?></label>
+                        <div class="input-group date">
+                            <input type="text" name="insurance_renewal_date" id="insurance_renewal_date" value="<?php echo htmlentities($this->form->insurance_renewal_date->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php echo $this->form->subform_dataprotection; ?>
+
+            <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => 0, 'stepMax' => 1000)); ?>
+        </form>
+    </div>
+</div>
+
+<div class="landlords col-sm-3">
+    <div class="panel panel-default">
+        <h3 class="quaternary-colour">Already registered?</h3>
+        <p>
+            <a href="/landlords/referencing/login" class="btn btn-quaternary">Click here to login</a>
+        </p>
+    </div>
+
+    <?php echo $this->partial(
+        'partials/sidebar.phtml', array(
+            'page' => 'register',
+            'hideProgressBar' => true
+        )
+    ); ?>
+</div>

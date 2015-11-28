@@ -1,0 +1,7 @@
+{% extends "iris-referee/generic-step.html.twig" %}
+
+{% block personalisation %}
+    <li>{{ refereeType | iris_lookup_name('lettingRefereeTypes') }} name: <strong>{{ refereeName }}</strong></li>
+    <li>Name: <strong>{{ applicantName }}</strong></li>
+    <li>HomeLet reference number: <strong>{{ applicationReferenceNumber }}</strong></li>
+{% endblock %}

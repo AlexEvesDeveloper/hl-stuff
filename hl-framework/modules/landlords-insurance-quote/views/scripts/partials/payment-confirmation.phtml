@@ -1,0 +1,124 @@
+<p><b>Your HomeLet policy number is <span class="policy_number"><?php echo $this->policyNumber; ?></span></b></p>
+<p>
+    Thank you for choosing HomeLet for your landlord insurance cover. As we mention above your
+    HomeLet policy number is <?php echo $this->policyNumber; ?>.
+    Please make sure you have this to hand if you <a href="/contact-us">contact us</a> in the future about your policy.
+</p>
+
+<h2 class="quaternary-colour">Your policy documents</h2>
+
+<?php if ('' != $this->form): ?>
+    <div class="panel panel-secondary">
+        As a HomeLet customer you can securely access all of your documents online through My HomeLet.
+        It&rsquo;s important that you register your My HomeLet account, so that you can access all of your
+        policy documents.
+    </div>
+
+    <form class="main" action="" method="post" enctype="application/x-www-form-urlencoded" autocomplete="off">
+        <?php echo $this->form; ?>
+    </form>
+<?php endif; ?>
+
+<?php if (isset($this->documentNumber) && '' != $this->documentNumber): ?>
+    <p>
+        <a class="btn btn-quaternary" target="_blank"
+           href="<?php echo $this->domain;?>/cgi-bin/UserAdmin/docs/dochistory.pl?instruction=dodoc&hash=<?php echo $this->documentNumber;?>">
+            View policy schedule
+        </a>
+    </p>
+    <h3 class="quaternary-colour">Registering your My HomeLet account is quick and easy</h3>
+
+    <ul>
+        <li>
+            Once you&rsquo;ve set a password we&rsquo;ll send you a registration email to validate your My HomeLet account, please
+            check your inbox and click on the validation link to confirm your email address
+        </li>
+        <li>
+            After validating your email address you&rsquo;ll be able
+            to <a href="/my-homelet/login">login to My HomeLet</a>
+        </li>
+    </ul>
+<?php endif; ?>
+
+<?php if ('' == $this->form): ?>
+    <div class="panel my-homelet-welcome">
+        <p>Thank you for registering for My HomeLet. For security, we&rsquo;ve sent you an email to validate your email address.</p>
+        <p>Please check your inbox and click the secure link in the email to activate your My HomeLet account.</p>
+    </div>
+    <p>
+        <a class="btn btn-quaternary" href="/my-homelet/login">My HomeLet Login</a>
+    </p>
+<?php endif; ?>
+
+<p>
+    We&rsquo;ll send you notifications by email to let you know if there are any new documents for
+    you to view online - so you&rsquo;ll never miss a thing.
+</p>
+
+<p>
+    When you access your documents it&rsquo;s important that you double check them and let us know immediately
+    if anything needs changing, this is to help ensure that you&rsquo;re fully covered should something happen.
+</p>
+<br>
+
+<h3 class="quaternary-colour">Your rights of cancellation</h3>
+
+<p>
+    You have the right to cancel your new policy during the 14 day period after the day of purchase.
+    And if you do decide to cancel within the 14 day period, you&rsquo;re entitled to a full refund
+    of the premium.
+</p>
+
+<h3 class="quaternary-colour">Let us know if anything changes</h3>
+
+<p>
+    Now that you&rsquo;re covered, we&rsquo;d like to remind you that you need to inform us of any changes in
+    circumstances that could affect your insurance cover. This is really important, because a
+    failure to disclose information may mean that your policy will not give you the protection you
+    require, or even invalidate your policy altogether. If something does change and you&rsquo;re not
+    sure what to disclose, please don&rsquo;t hesitate to <a href="/contact-us">contact us</a> - we&rsquo;re always happy to help.
+</p>
+
+<h3 class="quaternary-colour">So, here&rsquo;s a recap of what you need to do...</h3>
+
+<ul>
+    <li>Check your inbox for your My HomeLet registration email</li>
+    <li>Check your policy documents</li>
+    <li>Relax... we&rsquo;ve got you covered!</li>
+</ul>
+
+<p><b>Welcome to HomeLet!</b></p>
+
+<?php
+/**
+ * TODO: Move hardcoded Google Analytics property ID to parameters, do the same for the master layout in application/modules/cms/layouts/scripts/default.phtml too
+ * GA e-commerce tracking. Fields as follows:
+ * Transaction: transaction ID, affiliation, total, tax, shipping, city, state, country
+ * Item: transaction ID, SKU/code, product name, category or variation, unit price quantity
+ */
+
+if (isset($this->extraVars) && is_object($this->extraVars)): ?>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1926380-5']);
+        _gaq.push(['_addTrans',
+            '<?php echo $this->policy->policyNumber; ?>',
+            '<?php echo $this->policy->agentSchemeNumber; ?>',
+            '<?php echo $this->extraVars->quoteAnnual; ?>',
+            '<?php echo $this->extraVars->iptAnnual; ?>',
+            '',
+            '',
+            '',
+            ''
+        ]);
+        _gaq.push(['_addItem',
+            '<?php echo $this->policy->policyNumber; ?>',
+            '<?php echo $this->policy->policyName; ?>',
+            'Landlord\'s Insurance',
+            '<?php echo $this->policy->policyOptions; ?>',
+            '<?php echo $this->extraVars->quoteAnnual; ?>',
+            '1'
+        ]);
+        _gaq.push(['_trackTrans']);
+    </script>
+<?php endif; ?>

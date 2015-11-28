@@ -1,0 +1,48 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block body %}
+
+    <div class="referee-details">
+        <ul class="list-unstyled">
+            {% block personalisation %}
+                <li class="company">Company name: <strong>{{ companyName }}</strong></li>
+                <li>Name: <strong>{{ applicantName }}</strong></li>
+                <li>HomeLet reference number: <strong>{{ applicationReferenceNumber }}</strong></li>
+                {% if financialReference %}
+                    <li>Payroll / NI number: <strong>{{ financialReference }}</strong></li>
+                {% endif %}
+            {% endblock %}
+        </ul>
+    </div>
+
+    <form method="post" class="form-horizontal" novalidate>
+        <h2>{{ bodyTitle | trans }}</h2>
+        {{ form_widget(form) }}
+    </form>
+
+    <script>
+        (function ($) {
+            $('.row_step_step_contractDuration').hide();
+            var $employmentTypeField = $('.row_step_step_employmentType input[type=radio]');
+            toggleContractDuration($('.row_step_step_employmentType input[type=radio]:checked').val());
+            $employmentTypeField.change(function () {
+                toggleContractDuration($(this).val());
+            });
+            function toggleContractDuration(employmentType) {
+                if (2 == employmentType) {
+                    $('.row_step_step_contractDuration').show();
+                } else {
+                    $('.row_step_step_contractDuration').hide();
+                }
+            }
+        })(jQuery);
+    </script>
+
+{% endblock %}

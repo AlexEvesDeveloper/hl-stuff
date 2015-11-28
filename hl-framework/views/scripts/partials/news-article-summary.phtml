@@ -1,0 +1,12 @@
+<div class="news">
+    <div class="post">
+        <h2><?php echo $this->title ?></h2>
+        <p><?php echo $this->summary ?></p>
+        <div class="news-footer">
+            <span class="timestamp-label">Posted On:</span> <span class="timestamp"><?php echo $this->niceDate ?></span>
+            <a class="read-more" href="/news/article/<?php echo $this->id; ?>">Read More</a><br />
+            <a class="read-more" href="/news/article/<?php echo $this->id; ?>#disqus_thread" data-disqus-identifier="<?php echo $this->id; ?>">Comments</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>

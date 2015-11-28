@@ -1,0 +1,222 @@
+/*!
+ * Created on   : 20-Jan-2015, 13:36:00
+ * Author       : Ben Stapleton <ben.stapleton@barbon.com>
+ */
+
+/*!
+ * Base
+ */
+
+body {
+    font-family: @bodyfont;
+}
+
+main {
+    border-top: 3px solid @brandprimary;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: @headingfont;
+}
+
+p, ul, a {
+    font-family: @bodyfont;
+}
+
+a {
+    color: @brandprimary;
+
+    &:hover,
+    &:active {
+        color: darken(@brandprimary, 20%);
+    }
+}
+
+/*!
+ * Layout
+ */
+
+@media (min-width: 992px) {
+    .container {
+        width: 850px;
+    }
+}
+
+.step {
+    .circle {
+        .pointer {
+            border-top: 15px solid @brandprimary;
+        }
+    }
+
+    &.active {
+        .circle {
+            background-color: @brandprimary;
+
+            .pointer {
+                display: block;
+            }
+        }
+
+        .details {
+            color: @brandprimary;
+        }
+    }
+
+    &.complete {
+        color: @brandprimary;
+    }
+}
+
+/**
+ * Theme
+ */
+
+.panel-default .panel-heading .badge-primary,
+.badge-primary,
+.badge-primary {
+    background-color: @brandprimary;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: darken(@brandprimary, 10%);
+    }
+}
+
+/**
+ * Theme: Buttons
+ */
+
+.btn,
+a.btn {
+    color: #fff;
+    background: @brandprimary;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: darken(@brandprimary, 10%);
+        color: #fff;
+    }
+}
+
+.body-referencing {
+    background-color: @pagebackground;
+
+    input,
+    select,
+    textarea {
+        border: 2px solid @pagebackground;
+        background-color: @pagebackground;
+
+        &:focus {
+            border: 2px solid @brandprimary;
+            background-color: #fff;
+            box-shadow: none;
+        }
+    }
+
+    input[type="checkbox"] {
+        height: auto;
+        width: auto;
+    }
+
+    .btn,
+    .deleteFile {
+        background: @brandprimary none;
+        color: #fff;
+
+        &:hover {
+            background: darken(@brandprimary, 10%);
+            color: #fff;
+        }
+    }
+
+    .reference-message {
+        display: none;
+    }
+
+    #step_next {
+        float: right;
+    }
+
+    .row-date .field {
+        width: 30%;
+        float: left;
+        margin-right: 5%;
+
+        select {
+            width: 100%;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .radio-block .radio-option {
+        float: left;
+        margin-right: 30px;
+
+        label {
+            float: left;
+        }
+
+        input {
+            float: left;
+            margin-right: 10px;
+            width: auto;
+        }
+    }
+
+    .row-checkbox input {
+        width: auto;
+        float: right;
+        margin-left: 10px;
+    }
+
+    .input-group-addon {
+        border: 2px solid @pagebackground;
+        background-color: #e5e5e5;
+    }
+
+    .reference-summary-section {
+        background: #dee6e8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+}
+
+/*!
+ * Overrides
+ */
+
+.tablesorter-dropbox th,
+.tablesorter-dropbox thead td,
+.tablesorter-dropbox tfoot th,
+.tablesorter-dropbox tfoot td {
+    color: @brandprimary;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.tablesorter-dropbox tbody tr {
+    &:hover {
+        background: @pagebackground;
+    }
+}
+
+.editable-empty,
+.editable-empty:hover,
+.editable-empty:focus {
+    color: @brandprimary !important;
+}
+
+.form-navigation {
+    .active > a,
+    a:hover {
+        border-right: 3px solid @brandprimary;
+    }
+}

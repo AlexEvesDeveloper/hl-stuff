@@ -1,0 +1,18 @@
+<ul class="nav nav-tabs hidden-xs">
+    <li<?php if ('quotes' == $this->urlSegment) { echo ' class="active"'; } ?>><a href="/my-homelet/quotes" title="">My Quotes</a></li>
+    <li<?php if ('policies' == $this->urlSegment) { echo ' class="active"'; } ?>><a href="/my-homelet/policies" title="">My Policies</a></li>
+    <?php if ($this->displayReferences == 1) : ?>
+        <li<?php if ('references' == $this->urlSegment) { echo ' class="active"'; } ?>><a href="/my-homelet/references" title="">My References</a></li>
+    <?php endif; ?>
+    <li<?php if ('edit-account' == $this->urlSegment) { echo ' class="active"'; } ?>><a href="/my-homelet/edit-account" title="">My Account Details</a></li>
+</ul>
+<div class="page-selection visible-xs">
+    <select id="page-selection">
+        <option value="/my-homelet/quotes" <?php if ('quotes' == $this->urlSegment) { echo ' selected'; } ?>>My Quotes</option>
+        <option value="/my-homelet/policies" <?php if ('policies' == $this->urlSegment) { echo ' selected'; } ?>>My Policies</option>
+        <?php if ($this->displayReferences == 1) : ?>
+            <option value="/my-homelet/references" <?php if ('references' == $this->urlSegment) { echo ' selected'; } ?>>My References</option>
+        <?php endif; ?>
+        <option value="/my-homelet/edit-account" <?php if ('edit-account' == $this->urlSegment) { echo ' selected'; } ?>>My Account Details</option>
+    </select>
+</div>

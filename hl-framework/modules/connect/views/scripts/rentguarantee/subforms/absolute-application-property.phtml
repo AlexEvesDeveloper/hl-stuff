@@ -1,0 +1,98 @@
+<?php
+$session = new Zend_Session_Namespace('hl_connect');
+?>
+<script type="text/javascript">
+$(function() {
+    $('#tenant_startdate').datePicker({startDate: '01/01/1970'});
+    $('#policy_startdate').datePicker({startDate: '01/01/1970'});
+});
+    function cansellrgproducts(){
+        if($('#property_managed').val() != "" && $('#how_rg_offered').val() != ""){
+            fsa_status = '<?php echo $session->storage->fsastatusabbr;?>';
+            letType = $('#property_managed').val();
+            howRgOffered = $('#how_rg_offered').val();
+          // Handler for .ready() called.
+             $.ajax({
+                 type: "POST",
+                 dataType: 'json',
+                 url: "/json/can-offer-rent-guanantee",
+                 data : {
+                         fsa_status    : fsa_status,
+                         letType                : letType,
+                         howRgOffered        : howRgOffered
+                     },
+                        success: OnSuccess,
+                        error: OnError
+             });
+        }
+    }
+
+    function OnSuccess(returnJson, status)
+    {
+        var msgTitle = 'Warning';
+        var msg = 'Please note if you only offer a Rent Collect, Tenant Find/Let Only service to your landlords, you cannot also offer them Rent Guarantee for a separate charge as you are not providing a Fully Managed Service. Unfortunately this means you are unable to purchase this product.';
+        var fsa_status= '<?php echo $session->storage->fsastatusabbr;?>';
+        if (returnJson == false){
+            $.facebox(msgTitle, msg);
+            // Disable button
+            $('#complete').bind('click.OnSuccess', function() {
+                $.facebox(msgTitle, msg);
+                return false;
+            });
+        } else {
+            // Broken caveat
+            // Absolute can only be offered for Absolute for AR/NAR/DIR if
+            // How offered is FOC or Lettype is Managed
+            if ((fsa_status == 'Direct' || fsa_status == 'AR' || fsa_status == 'NAR')){
+                if ($('#property_managed').val() == '2' || $('#how_rg_offered').val() == '1'){
+                    $('#complete').unbind('.OnSuccess');
+                } else {
+                    $.facebox(msgTitle, msg);
+                    $('#complete').bind('click.OnSuccess', function() {
+                        $.facebox(msgTitle, msg);
+                        return false;
+                    });
+                }
+            } else {
+                $('#complete').unbind('.OnSuccess');
+            }
+        }
+        //alert (returnJson);
+    }
+
+    function OnError(request, status, error)
+    {
+        alert('error');
+    }
+</script>
+<h2>Property To Let</h2>
+
+<div class="form_section two-col">
+     <div class="autoAlt">
+        <?php echo $this->element->property_managed->setOptions(array('onchange'=>'cansellrgproducts()'))->render();?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->how_rg_offered->setOptions(array('onchange'=>'cansellrgproducts()'))->render();?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_address1->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->property_address2; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_postcode->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->property_address_lookup->setOptions(array('style' => 'margin: 0; clear: none;'))->render(); ?>
+        <div id="propertyAddressSelector" style="clear: both; padding: 0; margin: 0;">
+            <label>&nbsp;</label>
+            <?php echo $this->element->property_address->setAttribs(array('style' => 'width: 320px;'))->render(); ?>
+        </div>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_rental; ?>
+    </div>
+    <div class="autoAlt datePicker">
+        <?php echo $this->element->tenant_startdate; ?>
+    </div>
+    <div class="autoAlt datePicker">
+        <?php echo $this->element->policy_startdate; ?>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Summary</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/rentguarantee/rent-recovery-plus-summary" action="get">
+        <div id="refSubject">
+            <div class="left">
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Policy Number
+                    </div>
+                    <div class="datum">
+                        {{ summary.policyNumber }}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Policy Term
+                    </div>
+                    <div class="datum">
+                        {{ summary.policyLength }} Months
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Excess
+                    </div>
+                    <div class="datum">
+                        {% if summary.isNilExcess %}
+                            Nil Excess
+                        {% else %}
+                            1 Month Excess
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Property Address
+                    </div>
+                    <div class="datum">
+                        {{ summary.propertyAddress }}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Property Postcode
+                    </div>
+                    <div class="datum">
+                        {{ summary.propertyPostcode }}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Monthly Rental Amount
+                    </div>
+                    <div class="datum">
+                        £{{ summary.propertyRental }}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Policy Start Date
+                    </div>
+                    <div class="datum">
+                        {{ summary.policyStartAt | date('jS F, Y') }} ({{ summary.policyStartAt | date('d/m/Y') }})
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Policy End Date
+                    </div>
+                    <div class="datum">
+                        {{ summary.policyEndAt | date('jS F, Y') }} ({{ summary.policyEndAt | date('d/m/Y') }})
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Landlord Name
+                    </div>
+                    <div class="datum">
+                        {{ summary.landlordFullname }}
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Landlord E-mail
+                    </div>
+                    <div class="datum">
+                        <a href="mailto:{{ summary.landlordEmailAddress }}">{{ summary.landlordEmailAddress }}</a>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Landlord Telephone
+                    </div>
+                    <div class="datum">
+                        {{ summary.landlordPhoneNumber }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </br/>
+        <div class="application-options">
+            {% if acceptPolicy is defined %}
+                <a href="/rentguarantee/rent-recovery-plus-accept?policyNumber={{ summary.policyNumber }}" class="button">Accept Policy</a>
+            {% endif %}
+            {% if cancelPolicy is defined %}
+                <a href="/rentguarantee/rent-recovery-plus-cancel?policyNumber={{ summary.policyNumber }}" class="button">Cancel Policy</a>
+            {% endif %}
+            {% if amendPolicy is defined %}
+                <a href="/rentguarantee/rent-recovery-plus-mta?policyNumber={{ summary.policyNumber }}" class="button">Amend Policy</a>
+            {% endif %}
+            <a href="javascript:history.back()" class="button">Back</a>
+        </div>
+    </form>
+
+{% endblock %}
+

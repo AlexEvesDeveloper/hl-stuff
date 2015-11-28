@@ -1,0 +1,429 @@
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div align="center" class="oc_textheader">
+        <h5>Your Claim Details</h5>
+    </div>
+    <div>The information provided by you is as follows:</div>
+    <div class="print-claim">
+        <h3>About You</h3>
+        <dl>
+            <dt>Letting agent name</dt>
+            <dd><?php echo $this->claim_data->getAgentName();?></dd>
+
+            <dt>Agent scheme number</dt>
+            <dd><?php echo $this->agent_scheme_number;?></dd>
+
+            <dt>Contact name</dt>
+            <dd><?php echo $this->claim_data->getAgentContactName();?></dd>
+
+            <dt>Address</dt>
+            <dd><?php echo str_replace(', , ', ', ', $this->claim_data->getAgentAddress());?></dd>
+
+            <dt>Telephone number</dt>
+            <dd><?php echo $this->claim_data->getAgentTelephone();?></dd>
+
+            <dt>Email address</dt>
+            <dd><a href="mailto:<?php echo $this->claim_data->getAgentEmail();?>"><?php echo $this->claim_data->getAgentEmail();?></a></dd>
+
+            <dt>Directly Authorised by the Financial Conduct Authority</dt>
+            <dd><?php echo ($this->claim_data->getIsDir() == 1) ? "Yes" :  "No";?></dd>
+
+            <dt>Appointed Representatives for Barbon Insurance Group Ltd</dt>
+            <dd><?php echo ($this->claim_data->getIsAr() == 1) ? "Yes" :  "No";?></dd>
+        </dl>
+
+        <h3>About your landlord</h3>
+        <dl>
+            <dt>Full name</dt>
+            <dd><?php echo $this->claim_data->getLandlord1Name();?></dd>
+
+            <dt>Company name</dt>
+            <dd><?php echo $this->claim_data->getLandlordCompanyName();?></dd>
+
+            <dt>Address</dt>
+            <dd><?php echo str_replace(', , ', ', ', $this->claim_data->getLandlordAddress());?></dd>
+
+            <dt>Telephone number</dt>
+            <dd><?php echo $this->claim_data->getLandlordTelephone();?></dd>
+
+            <dt>Email address</dt>
+            <dd><a href="mailto:<?php echo $this->claim_data->getLandlordEmail();?>"><?php echo $this->claim_data->getLandlordEmail();?></a></dd>
+        </dl>
+
+        <h3>About the tenant and the property</h3>
+        <dl>
+            <dt>Is the property let in accordance with the Housing Acts of 1988, 1996, 2004 and any
+                subsequent or superseding legislation AND has the Landlord complied with the requirements of
+                the Tenancy Deposit Scheme?</dt>
+            <dd><?php echo ($this->claim_data->getHousingActAdherence() == 1) ? "Yes" :  "No";?></dd>
+
+            <dt>Tenancy start date</dt>
+            <dd><?php echo $this->claim_data->getTenancyStartDate()?></dd>
+
+            <dt>Tenancy end date</dt>
+            <dd><?php echo $this->claim_data->getTenancyEndDate()?></dd>
+
+            <dt>Policy start date</dt>
+            <dd><?php echo $this->claim_data->getOriginalCoverStartDate()?></dd>
+
+            <dt>Rental property address</dt>
+            <dd><?php echo str_replace(', , ', ', ', $this->claim_data->getTenancyAddress()) ?></dd>
+
+            <dt>Monthly rent on this property</dt>
+            <dd><?php echo $this->claim_data->getMonthlyRent()?></dd>
+
+            <dt>Date of first arrears</dt>
+            <dd><?php echo $this->claim_data->getFirstArrearDate()?></dd>
+
+            <dt>Deposit held</dt>
+            <dd><?php echo $this->claim_data->getDepositAmount()?></dd>
+
+            <dt>Date deposit received</dt>
+            <dd><?php echo $this->claim_data->getDepositReceivedDate()?></dd>
+
+            <dt>Total rent arrears</dt>
+            <dd><?php echo $this->claim_data->getRentArrears()?></dd>
+
+            <dt>Have there been any recent complaints, for example regarding disrepair?</dt>
+            <dd>
+                <?php $recentComplaints = $this->claim_data->getRecentComplaints(); ?>
+                <?php if ($recentComplaints == 0): ?>
+                    No
+                <?php else: ?>
+                    Yes. <?php echo $this->claim_data->getRecentComplaintsDetails(); ?>
+                <?php endif; ?>
+            </dd>
+        </dl>
+
+        <h3>Claim Details</h3>
+        <dl>
+            <dt>Policy number</dt>
+            <dd><?php echo $this->claim_data->getPolicyNumber(); ?></dd>
+
+            <dt>What are the grounds for this claim?</dt>
+            <dd>
+                <?php
+                    $groudsForClaim = $this->claim_data->getGroundsForClaim();
+
+                switch ($groudsForClaim) {
+                    case 'rent-arrears':
+                        echo 'Rent Arrears';
+                        break;
+
+                    case 'other':
+                        echo $this->claim_data->getGroundsForClaimDetails();
+                        break;
+                }
+
+                ?>
+            </dd>
+
+            <dt>Have the tenants vacated?</dt>
+            <dd>
+                <?php $tenantsVacated = $this->claim_data->getTenantVacated(); ?>
+                <?php echo ($tenantsVacated == 1) ? "Yes" :  "No";?>
+            </dd>
+
+            <?php if ($tenantsVacated == 1): ?>
+                <dt>Date tenants vacated</dt>
+                <dd><?php echo $this->claim_data->getTenantVacatedDate()?></dd>
+
+                <dt>Arrears at the date vacant possession was obtained to the nearest pound (£)</dt>
+                <dd><?php echo $this->claim_data->getArrearsAtVacantPossession()?></dd>
+
+                <dt>Tenant's forwarding address</dt>
+                <dd><?php echo str_replace(', , ', ', ', $this->claim_data->getTenantsForwardingAddress()); ?></dd>
+            <?php elseif ($tenantsVacated == 0): ?>
+                <dt>I confirmed the tenant is still in the property by</dt>
+                <dd>
+                    <?php
+                        $occupationConfirmedBy = str_replace(', , ', ', ', implode(', ', array(
+                            ($this->claim_data->getTenantsOccupationOfPropertyConfirmedByTel() == 1) ? 'telephone' : null,
+                            ($this->claim_data->getTenantsOccupationOfPropertyConfirmedByEmail() == 1) ? 'email' : null,
+                            ($this->claim_data->getTenantsOccupationOfPropertyConfirmedByVisit() == 1) ? 'visit' : null,
+                        )));
+
+                        // Remove any trailing commas and whitespace
+                        $occupationConfirmedBy = preg_replace('/, +$/', '', $occupationConfirmedBy);
+
+                        echo $occupationConfirmedBy;
+                    ?>
+                </dd>
+
+                <dt>Date of contact by telephone</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByTelDate(); ?></dd>
+
+                <dt>Name of tenant contacted by telephone</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByTelContact(); ?></dd>
+
+
+                <dt>Date of contact by email</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByEmailDate(); ?></dd>
+
+                <dt>Name of tenant contacted by email</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByEmailContact(); ?></dd>
+
+                <dt>Date of visit</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByVisitDate(); ?></dd>
+
+                <dt>Name of individual who attended the visit</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByVisitIndividual(); ?></dd>
+
+                <dt>Name of tenant spoken to in visit</dt>
+                <dd><?php echo $this->claim_data->getTenantsOccupationOfPropertyConfirmedByVisitContact(); ?></dd>
+            <?php endif ?>
+        </dl>
+
+
+        <h3>Section 21 Notice</h3>
+        <dl>
+            <dt>Have you served a Section 21 notice seeking possession?</dt>
+            <dd>
+                <?php
+                    $s21noticeserved = $this->claim_data->getS21NoticeServed();
+                    echo ($s21noticeserved == 1) ? 'Yes' : 'No';
+                ?>
+            </dd>
+
+            <?php if ($s21noticeserved == 1): ?>
+                <dt>Section 21 notice expiry date</dt>
+                <dd><?php echo $this->claim_data->getS21NoticeExpiry()?></dd>
+
+                <dt>Was a money deposit received on or after 6 April 2007?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticeMoneyDepositReceived() == 1) ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Was the deposit held under a tenancy deposit scheme (TDS) authorised
+                    under part 6 of the Housing Act 2004?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticeMoneyDepositHeldUnderTdsScheme() == 1) ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Had the initial requirements of the TDS been complied with in
+                    relation to the deposit?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticeTdsCompliedWith() == 1) ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Had you or the landlord given the tenant(s), and anyone who paid the deposit on
+                    behalf of the tenant(s), the prescribed information in relation to the deposit and the
+                    operation of the TDS?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticeTdsPrescribedToTenant() == 1) ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Did the landlord receive a deposit in the form of property on
+                    or after 6 April 2007?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticeLandlordDepositInPropertyForm() == 1) ? 'Yes' : 'No'; ?></dd>
+
+                <dt>At the date the Section 21 notice was served, had the property been
+                    returned to the person from whom it was received?</dt>
+                <dd><?php echo ($this->claim_data->getS21NoticePropertyReturnedAtNoticeServeDate() == 1) ? 'Yes' : 'No'; ?></dd>
+            <?php endif; ?>
+        </dl>
+
+        <h3>Section 8 Notice</h3>
+        <dl>
+            <dt>Have you served a Section 8 notice requiring possession?</dt>
+            <dd>
+                <?php
+                $s8noticeserved = $this->claim_data->getS8NoticeServed();
+                echo ($s8noticeserved == 1) ? 'Yes' : 'No';
+                ?>
+            </dd>
+
+            <?php if ($s8noticeserved == 1): ?>
+                <dt>Section 8 notice expiry date</dt>
+                <dd><?php echo $this->claim_data->getS8NoticeExpiry()?></dd>
+            <?php endif; ?>
+
+            <dt>Has a demand letter been sent to the tenant(s) requesting the outstanding
+                arrears? If yes, you will be required to provide copies.</dt>
+            <dd><?php echo ($this->claim_data->getS8NoticeDemandLetterSent() == 1) ? 'Yes' : 'No'; ?></dd>
+
+            <dt>All known occupiers of the property over the age of 18 years, who are NOT
+                named as tenants on the tenancy agreement</dt>
+            <dd>
+                <?php $s8Over18Occupants = $this->claim_data->getS8NoticeOver18Occupants(); ?>
+
+                <?php if ($s8Over18Occupants): ?>
+                    <?php echo $s8Over18Occupants; ?>
+                <?php else: ?>
+                     <i>None listed</i>
+                <?php endif; ?>
+            </dd>
+        </dl>
+
+        <h3>Tenant Details</h3>
+        <dl>
+            <dt>How many tenants are named on the tenancy agreement?</dt>
+            <dd><?php echo count($this->tenants); ?></dd>
+        </dl>
+
+        <!-- Tenants  -->
+        <?php if(count($this->tenants) > 0): ?>
+            <?php $tenantNum = 1; ?>
+            <?php foreach($this->tenants as $tenant): ?>
+                <h3>Tenant <?php echo $tenantNum; ?></h3>
+                <dl>
+                    <dt>Full name</dt>
+                    <dd><?php echo $tenant['tenant_name'];?></dd>
+
+                    <dt>Home telephone number</dt>
+                    <dd><?php echo $tenant['tenant_hometelno'];?></dd>
+
+                    <dt>Work telephone number</dt>
+                    <dd><?php echo $tenant['tenant_worktelno'];?></dd>
+
+                    <dt>Mobile number</dt>
+                    <dd><?php echo $tenant['tenant_mobiletelno'];?></dd>
+
+                    <dt>Email address</dt>
+                    <dd><?php echo $tenant['tenant_email'];?></dd>
+
+                    <dt>HomeLet reference number</dt>
+                    <dd><?php echo $tenant['rg_policy_ref'];?></dd>
+
+                    <dt>Date of birth</dt>
+                    <dd><?php echo $tenant['tenant_dob'];?></dd>
+                </dl>
+                <?php $tenantNum++; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <!-- Tenants  -->
+
+        <h3>Guarantor Details</h3>
+        <dl>
+            <dt>Are there any Guarantors?</dt>
+            <dd><?php echo (count($this->guarantors) > 0) ? "Yes" : "No"; ?></dd>
+
+            <?php if(count($this->guarantors) > 0): ?>
+                <dt>How many Guarantors are there?</dt>
+                <dd><?php echo count($this->guarantors); ?></dd>
+            <?php endif; ?>
+        </dl>
+
+        <!-- Guarantors  -->
+        <?php if(count($this->guarantors) > 0): ?>
+            <?php $guarantorNum = 1; ?>
+                <?php foreach($this->guarantors as $guarantor): ?>
+                    <h3>Guarantor <?php echo $guarantorNum; ?></h3>
+                    <dl>
+                        <dt>Full name</dt>
+                        <dd><?php echo $guarantor['guarantor_name'];?></dd>
+
+                        <dt>Home telephone number</dt>
+                        <dd><?php echo $guarantor['hometelno'];?></dd>
+
+                        <dt>Work telephone number</dt>
+                        <dd><?php echo $guarantor['worktelno'];?></dd>
+
+                        <dt>Mobile number</dt>
+                        <dd><?php echo $guarantor['mobiletelno'];?></dd>
+
+                        <dt>Email address</dt>
+                        <dd><?php echo $guarantor['email'];?></dd>
+
+                        <dt>Address</dt>
+                        <dd>
+                            <?php echo str_replace(', , ', ', ',
+                                       $guarantor['house_name'].", ".
+                                       $guarantor['street'].", ".
+                                       $guarantor['town'].", ".
+                                       $guarantor['city'].", ".
+                                       $guarantor['postcode']);?>
+                        </dd>
+
+                        <dt>HomeLet reference number</dt>
+                        <dd><?php echo $guarantor['homeletrefno'];?></dd>
+
+                        <dt>Date of birth</dt>
+                        <dd><?php echo $guarantor['dob'];?></dd>
+                    </dl>
+                    <?php $guarantorNum++; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <!-- Guarantors  -->
+
+        <h3>Additional information</h3>
+        <p><?php echo $this->claim_data->getAdditionalInfo();?></p>
+
+        <h3>Claim Payment</h3>
+        <dl>
+            <dt>Account name</dt>
+            <dd><?php echo $this->claim_data->getClaimPaymentBankAccountName(); ?></dd>
+
+            <dt>Account number</dt>
+            <dd><?php echo $this->claim_data->getClaimPaymentBankAccountNumber();?></dd>
+
+            <dt>Sort code</dt>
+            <dd><?php echo $this->claim_data->getClaimPaymentBankAccountSortCode();?></dd>
+        </dl>
+
+        <h3>Rental payments</h3>
+        <table width="65%" align="left" rules="all" border="1">
+            <tr>
+                <th height="25">Date</th>
+                <th>Amount Due</th>
+                <th>Amount Received</th>
+                <th>Arrears</th>
+            </tr>
+            <!-- Rent Payments -->
+            <?php
+            if (count($this->rent_payments) > 0) {
+                foreach ($this->rent_payments as $rent_payment) {
+                    if ($rent_payment['date_due'] != 'N/A') {
+                        ?>
+                        <tr>
+                            <td align="center" height="25"><?php echo $rent_payment['date_due'];?></td>
+                            <td align="center"><?php echo $rent_payment['amount_due'];?></td>
+                            <td align="center">-</td>
+                            <td align="center"><?php echo $rent_payment['arrear_amount'];?></td>
+                        </tr>
+                        <?php
+                    } else {
+                        ?>
+                        <tr>
+                            <td align="center" height="25"><?php echo $rent_payment['date_paid'];?></td>
+                            <td align="center">-</td>
+                            <td align="center"><?php echo $rent_payment['amount_paid'];?></td>
+                            <td align="center"><?php echo $rent_payment['arrear_amount'];?></td>
+                        </tr>
+                        <?php
+                    }
+                }
+            }
+            ?>
+            <!-- Rent Payments -->
+        </table>
+
+        <h3>Supporting documents</h3>
+        <p>You provided the following files with your application</p>
+        <div class="document_list" style="width:98%">
+            <ul class="grid" style="border:0">
+                <?php
+                    if(count($this->documents)>0)
+                    foreach($this->documents as $document){
+                    $name = basename($document->name);
+                    $file_path = "download?d=".$document->id."&crn=".$this->claim_data->getReferenceNumber();
+                ?>
+                <li><a href="<?php echo $file_path;?>" target="_blank" title="<?php echo $name;?>"><?php echo $name;?></a></li>
+                <?php }?>
+            </ul>
+        </div>
+
+        <div class="page-controls">
+            <input type="submit" name="exit" class="btn_orange" value="Exit "  onclick='window.location="home"'>
+            <?php if($this->mode == "print"): ?>
+                <input type="button" class="btn_orange" value=" Print " onclick="window.print()"/>
+            <?php endif; ?>
+
+            <?php if($this->mode == "delete"): ?>
+                <input type="button" class="btn_orange" value=" Delete " onclick="fnConfirmDelete()"/>
+                <form action="delete-claim" id="frm_delete" method="post">
+                    <input type="hidden" id="hid_ref_num" name="reference_num" value="<?php echo $this->claim_data->getReferenceNumber();?>"/>
+                </form>
+                <script type="text/javascript" >
+                    function fnConfirmDelete() {
+                        if(confirm("Are you sure you want to delete the claim <?php echo $this->claim_data->getReferenceNumber();?>.")) {
+                            $('#frm_delete').submit();
+                        }
+                    }
+                </script>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

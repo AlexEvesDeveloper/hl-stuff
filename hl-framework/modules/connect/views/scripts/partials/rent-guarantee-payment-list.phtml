@@ -1,0 +1,53 @@
+<?php
+
+if (count($this->paymentData) > 0) {
+
+    // Set accumulative arrears to zero
+    $accumulator = 0;
+    ?>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Amount Due</th>
+                <th>Amount Received</th>
+                <th>Arrears</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach($this->paymentData as $key => $data) {
+                ?>
+                <tr align="center"<?php if (isset($this->insert) && in_array($data['id'], $this->insert)) { echo ' class="newRow"'; } ?>>
+                    <?php
+                    if ($data['date_due'] != 'N/A') {
+                        ?>
+                        <td><div class="sizable"><?php echo $data['date_due']; ?></div></td>
+                        <td><div class="sizable"><span style="color: red;">&pound;<?php echo number_format($data['amount_due'], 2); ?></span></div></td>
+                        <td><div class="sizable">&nbsp;</div></td>
+                        <?php
+                    } else {
+                        ?>
+                        <td><div class="sizable"><?php echo $data['date_paid']; ?></div></td>
+                        <td><div class="sizable">&nbsp;</div></td>
+                        <td><div class="sizable"><span style="color: green;">&pound;<?php echo number_format($data['amount_paid'], 2); ?></span></div></td>
+                        <?php
+                    }
+                    ?>
+                    <td><div class="sizable"><span style="color: <?php echo (($data['arrear_amount'] > 0) ? 'red' : 'green'); ?>;">&pound;<?php echo number_format($data['arrear_amount'], 2); ?></span></div></td>
+                    <td><div class="sizable"><a href="#" onclick="showUpdating(true); $(this).parent().parent().parent().find('.sizable').slideUp('fast'); removeRgPaymentInfo('<?php echo $data['id']; ?>'); return false;">Remove</a></div></td>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    $(function() {
+        $('.newRow td div.sizable').hide().slideDown('slow');
+    });
+    </script>
+    <?php
+}
+?>

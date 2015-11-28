@@ -1,0 +1,261 @@
+<link rel="stylesheet" type="text/css" media="all" href="/assets/vendor/jquery-facebook-alert/css/jquery.facebook.alert.css" />
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+
+        <script type="text/javascript" src="/assets/vendor/jquery-facebook-alert/js/jquery.facebook.alert.js"></script>
+        <script type="text/javascript" src="/assets/connect/js/dog.js"></script>
+
+        <?php
+        /*
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'compliance',
+                'title' => 'Application forms',
+                'url'   => '/referencing/info/applicationforms'
+            )
+        ));
+         
+         */
+        ?>
+		
+        <h2 class="form" style="clear: both;">Referencing application forms</h2>
+                <?php
+        $this->iconLayout(array(
+            array(
+                'icon'      => '',
+                'title'     => 'Referencing application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Individual.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form can be filled out by any prospective tenant, whatever their income type or previous residential status.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Guarantor application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form is designed just for guarantors.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Company application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Company.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This is the form you need to fill out for a company application form. Don&rsquo;t forget you can submit company applications through Connect.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Student application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Student-guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This form is designed especially for students and already includes a section for their guarantor to fill out.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Unemployed application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Unemployed-guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form can be used for unemployed applicants or those who&rsquo;re on benefits. This also includes a section that their guarantor will need to fill out.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+		));
+		?>
+        
+		<h2 class="form" style="clear: both;">Referencing declaration forms</h2>
+        
+		<?php
+		$this->iconLayout(array(
+            array(
+                'icon'      => '',
+                'title'     => 'Tenant declaration',
+                'url'       => '/assets/connect/pdf/referencingApplication/Tenant-Declaration.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This document is handy if you complete your references using our &lsquo;email to tenant&rsquo; function. Remember, if a tenant doesn&rsquo;t complete a written application form they still must sign the tenant declaration form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Guarantor declaration',
+                'url'       => '/assets/connect/pdf/referencingApplication/Guarantor-Declaration.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This document is handy if you complete your references using our &lsquo;email to tenant&rsquo; function. Remember, if a guarantor doesn&rsquo;t complete a written application form they still must sign the guarantor declaration form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+      <p style="clear: both;">&nbsp;</p>
+        <h2 class="form" style="clear: both;">Help and guides</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info',
+                'title' => 'Referencing service guidelines',
+                'url'   => '/assets/connect/pdf/Referencing_Service_Guidelines.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This handy guide is designed to help you get the most out of being a HomeLet customer. It contains plenty of tips and explains our referencing process.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Referencing application help',
+                'url'   => '/assets/connect/pdf/Referencing_Application_Help.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'You can pass this useful one page help sheet to your prospective tenants before they fill in their application form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Reading your referencing reports',
+                'url'   => '/assets/connect/pdf/Reading_your_HomeLet_referencing_reports.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This quick guide outlines how to access your HomeLet referencing reports.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Referencing quick guide',
+                'url'   => '/assets/connect/pdf/Referencing_Quick_Guide.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This guide provides an overview of our referencing criteria, such as what Tenancy Application Scores are acceptable, and our couple&rsquo;s criteria.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Email to tenant form',
+                'url'   => '/assets/connect/pdf/Email_To_Tenant_Form.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'Tenants complete this to confirm they&rsquo;re happy to be referenced. Once you’ve entered the details on Connect and sent the Email to Tenant link, we&rsquo;ll then carry out the reference',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Email to guarantor form',
+                'url'   => '/assets/connect/pdf/Email_To_Guarantor_Form.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'Guarantors complete this to confirm they&rsquo;re happy to be referenced. Once you&rsquo;ve entered the details on Connect and sent the Email to Guarantor link, we&rsquo;ll then carry out the reference.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+			array(
+					'icon'  => 'info',
+					'title' => 'Document header',
+					'url'   => '/assets/connect/pdf/Document_Header.pdf',
+					'pdf_info'  => array(
+			                    'description'   => 'You can use this sheet to ensure that any sent documents are associated with the correct reference. You can also send documents through the Email Assessor function on Connect.',
+			                    'version'       => '',
+			                    'release_date'  => ''
+				)
+			)
+        ));
+        ?>
+
+        <h2 class="form" style="clear: both;">Documents for your tenants</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info',
+                'title' => 'Notification letter',
+                'url'   => '/assets/connect/pdf/Referencing_Notification_Letter.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'The letter contains some simple things that your tenants can do to speed up the referencing process. It&rsquo;s best to pass this to them before they&rsquo;ve filled out their application form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Tenant tracker guide',
+                'url'   => '/assets/connect/pdf/Tenant_Tracker_Guide.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'Pass this simple guide to tenants to explain how they can track their reference online using the Tenant Application Tracker.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => 'rg_book',
+                'title'     => 'Deed of guarantee',
+                'url'       => '#',
+                'special'   => 'deedOfGuarantee'
+            ),
+        ));
+        ?>
+
+        <h2 class="form" style="clear: both;">Optimum documents</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info',
+                'title' => 'Optimum service process',
+                'url'   => '/assets/connect/pdf/Optimum_Service_Process.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This document outlines the service process for our award winning Optimum reference and lets you know what you need to do, should the tenant fail to pay their rent.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Optimum service request form',
+                'url'   => '/assets/connect/pdf/Optimum_Service_Request_Form.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This is the form you need to complete to make a service request on an Optimum reference. If you&rsquo;re unsure about our process make sure you read our Optimum service process document.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Optimum terms &amp; conditions',
+                'url'   => '/assets/connect/pdf/Optimum_Terms_And_Conditions.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This document contains lots of important information about our Optimum reference, such as what our tenant eviction service is and how we gain possession of a property.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+
+    </div>
+</div>

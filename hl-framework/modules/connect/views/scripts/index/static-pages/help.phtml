@@ -1,0 +1,827 @@
+<?php
+
+//@todo: This page needs to have a specific controller to inject this kind of stuff into it, it's no longer static.
+
+// Exclude RARGO and whoever else from seeing banner links section
+$bannerLinkDisplay = !in_array($this->fsastatusabbr, array('REF'));
+
+$apiCredentialsDisplay = ($this->isAgentInIris && $this->canPerformReferencing);
+
+if ($bannerLinkDisplay) {
+    $homeletUrl = $this->params->homelet->domain . '/';
+    $homeletUrl = str_replace('http://', 'https://', $homeletUrl);
+
+    $qrCodeTenantsHash = substr(md5('tenants insurance quote QR secret string' . $this->agentSchemeNumber), 0, 8);
+    $qrCodeTenantsImage = "tenants_insurance_quote-{$qrCodeTenantsHash}";
+    $qrCodeTenantsUrl  = "{$homeletUrl}tenants/?asn={$this->agentSchemeNumber}";
+    $qrCodeTenantsUrl .= "&utm_source=agent&utm_medium=qr&utm_content=tenantsInsurance&utm_campaign=agentLinks";
+
+    $qrCodeLandlordsHash = substr(md5('landlords insurance quote QR secret string too' . $this->agentSchemeNumber), 0, 8);
+    $qrCodeLandlordsImage = "landlords_insurance_quote-{$qrCodeLandlordsHash}";
+    $qrCodeLandlordsUrl  = "{$homeletUrl}landlords/insurance-quote?asn={$this->agentSchemeNumber}";
+    $qrCodeLandlordsUrl .= "&utm_source=agent&utm_medium=qr&utm_content=landlordsInsurance&utm_campaign=agentLinks";
+}
+
+?>
+
+<link href="/assets/connect/css/help.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+    // Dashboard expander
+    $('.foldlink').each(function() {
+        $(this).next('.foldable').hide();
+        $(this).click(function() {
+            $(this).toggleClass('unfolded');
+            if ($(this).hasClass('unfolded')) {
+                $(this).next('.foldable').slideDown();
+            } else {
+                $(this).next('.foldable').slideUp();
+            }
+        });
+    });
+
+    // Sub expander
+    $('.expanders li a.expander').click(function() {
+        $(this).toggleClass('open');
+        $(this).next().slideToggle();
+        return false;
+    });
+
+$('#foldingBannerDiv').click();
+    <?php if (isset($_GET['show']) && $_GET['show'] == 'accountManager') { ?>
+        $('#salesPerson').show();
+    <?php } ?>
+
+
+
+});
+
+function expanderShowAll(eId, show) {
+    $('#' + eId + ' .expanders li a.expander').each(function() {
+        if ($(this).hasClass('open')) {
+            if (!show) {
+                // Fake click to open it
+                $(this).click();
+            }
+        } else {
+            if (show) {
+                // Fake click to close it
+                $(this).click();
+            }
+        }
+    });
+}
+</script>
+
+<?php
+
+if ($bannerLinkDisplay) {
+
+    ?>
+
+    <script type="text/javascript">
+
+    // Link generator
+    function updateLinkOutput() {
+        var styleImageMap = {
+            'col-medium' : 'HomeLet_col_200px.png',
+            'col-large' : 'HomeLet_col_350px.png',
+            'trans-medium' : 'HomeLet_white_200px.png',
+            'trans-large' : 'HomeLet_white_350px.png'
+        };
+        var destinationMap = {
+            'tenants' : {
+                'url' : '<?php echo $homeletUrl; ?>tenants/?asn=<?php echo $this->agentSchemeNumber; ?>&utm_source=agent&utm_content=tenantsInsurance&utm_campaign=agentLinks',
+                'title' : 'Tenant\'s Insurance from HomeLet',
+                'text' : 'homelet.co.uk/tenants/'
+            },
+            'landlords' : {
+                'url' : '<?php echo $homeletUrl; ?>landlords/insurance-quote?asn=<?php echo $this->agentSchemeNumber; ?>&utm_source=agent&utm_content=landlordsInsurance&utm_campaign=agentLinks',
+                'title' : 'Landlord\'s Insurance from HomeLet',
+                'text' : 'homelet.co.uk/landlords/'
+            },
+            'home' : {
+                'url' : '<?php echo $homeletUrl; ?>?asn=<?php echo $this->agentSchemeNumber; ?>&utm_source=agent&utm_content=website&utm_campaign=agentLinks',
+                'title' : 'HomeLet',
+                'text' : 'homelet.co.uk'
+            }
+        };
+        var imageLinkHtml = '<a href="%URL%&utm_medium=logolink" title="%TITLE%" target="_blank"><img src="<?php echo $homeletUrl; ?>assets/connect/images/banners/%IMAGE%" alt="%TITLE%" style="border: 0;" /></a>';
+        var textLinkHtml = '<a href="%URL%&utm_medium=textlink" title="%TITLE%" target="_blank">%TEXT%</a>';
+
+        // Get style and destination choices
+        var linkStyle = $("input[name='linkStyle']:checked").val();
+        var linkDest = $("input[name='linkDest']:checked").val();
+
+        // Build output HTML
+        var output = '';
+        if (linkStyle == 'text') {
+            output = textLinkHtml;
+        } else {
+            output = imageLinkHtml;
+            var imageFile = styleImageMap[linkStyle];
+            output = output.replace(/%IMAGE%/g, imageFile);
+        }
+
+        output = output.replace(/%URL%/g, destinationMap[linkDest].url);
+        output = output.replace(/%TITLE%/g, destinationMap[linkDest].title);
+        output = output.replace(/%TEXT%/g, destinationMap[linkDest].text);
+
+        // Update link preview - makes image links relative to work locally while images don't exist on Live
+        $('#linkPreview').html(output);
+
+        // Update link HTML - convert HTML entities particularly for IE
+        output = output.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+        $('#linkHtmlOutput').html(output);
+    }
+
+    $(function() {
+        $("input[name='linkStyle'], input[name='linkDest']").change(function() {
+            updateLinkOutput();
+        });
+
+        updateLinkOutput();
+    });
+    </script>
+
+    <!--[if lte IE 8]>
+    <script>
+    // Copy to clipboard feature for IE users, as IE lacks the security to prevent clipboard access
+
+    $(function() {
+        $('<a class="nav-corporate-dark-button toClipboard" onclick="selectAllAndCopy($(this).prev(\'.clipboardMe\').get(0)); return false;" href="#">Copy HTML to Clipboard</a>').insertAfter('.clipboardMe');
+    });
+
+    function selectAllAndCopy(obj) {
+        var text_val = eval(obj);
+        text_val.focus();
+        text_val.select();
+        if (!document.all) return; // IE only
+        r = text_val.createTextRange();
+        r.execCommand('copy');
+        alert('HTML copied to clipboard, you may use Ctrl + V to paste it into the HTML source of your website.');
+    }
+    </script>
+    <![endif]-->
+
+    <?php
+
+}
+
+?>
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) { echo $this->infoPanel($this->panelContent); echo "<br />\n"; } ?>
+
+        <div class="dashboard helppage" style="clear: both;">
+
+            <div class="header foldlink">
+                Frequently Asked Questions
+            </div>
+
+            <div class="dashboardContent foldable" id="faq" style="display: none;">
+
+                <p>
+                    (<a href="#" onclick="expanderShowAll('faq', true); return false;">show all</a> | <a href="#" onclick="expanderShowAll('faq', false); return false;">hide all</a>)
+                </p>
+                <ul class="expanders">
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">1. Referencing</a>
+                        <div class="details">
+                            <h3>What do I do if I can't find an address or a postcode for a property?</h3>
+                            <p>Check if the address exists on Royal Mail by using the handy link in the Referencing &gt; Useful Information and Documents section or next to the address fields.</p>
+                            <p>If the address can be found on the Royal Mail link then please notify our Referencing department and they'll add it to our system.</p>
+                            <p>If the address does not appear on Royal Mail then it has not been registered.  Your tenant will need to register the address with Royal Mail before we can update our system.</p>
+                            <br />
+                            <h3>I've logged an application on via Connect, why do I need to keep a hard copy of the Signed Declaration?</h3>
+                            <p>In the event of a Rent Guarantee claim or a fraudulent incident this might be requested as evidence to confirm the information that the tenant signed and agreed to the information provided.</p>
+                            <p>Also a large percentage of referees, such as employers require a copy of the Signed Declaration before they will release a reference. Ensuring you have a copy to hand will stop any delays in completing an application.</p>
+                            <br />
+                            <h3>How do I track progress of an application?</h3>
+                            <p>By searching for the applicant via the Reference Search option, then looking at the individuals Tenant Summary page.</p>
+                            <p>You can also look at the Referencing Report which can be located under the Report Section to see if a tenant's application has been complete.</p>
+                            <br />
+                            <h3>How do I generate the pending and final reports?</h3>
+                            <p>By selecting the Retrieve Report button in the Tenant Summary page.</p>
+                            <br />
+                            <h3>What information should I include in the Additional Information section?</h3>
+                            <p>This section gives you the opportunity to provide any information that you feel maybe relevant to processing this application.</p>
+                            <p>This could include things like additional contact names and numbers for referees or details of additional income.</p>
+                            <br />
+                            <h3>Can I print the information entered for a tenant on Connect?</h3>
+                            <p>Yes. You can do this by selecting the Application Form button in the Tenant Summary page.</p>
+                            <br />
+                            <h3>Is there an easy way to check how much monthly rent a tenant can afford based on their annual salary?</h3>
+                            <p>Yes. There is an Affordability Calculator in the Referencing section. This can be used for both tenants and guarantors.</p>
+                            <br />
+                            <h3>I need to know how many references we have completed this month, is there anywhere to check this on Connect?</h3>
+                            <p>There is a Referencing Report in the Report section. This report captures all applications logged by month and shows their completion status.</p>
+                            <br />
+                            <h3>I've run out of application forms please can you send me some more?</h3>
+                            <p>Connect gives you access to all application forms. These can be downloaded, printed and saved from the Referencing &gt; Useful Information and Documents Section.</p>
+                            <br />
+                            <h3>When can I go backwards and forwards when logging on a referencing applications?</h3>
+                            <p>You can go backwards and forwards through the referencing logging on pages at any point by selecting the back and next button before agreeing to the terms and conditions.</p>
+                            <br />
+                            <h3>Can I upgrade or downgrade referencing products on Connect?</h3>
+                            <p>Currently you're not able to upgrade or downgrade referencing applications on Connect. But if you wish to upgrade or downgrade a reference you can call our friendly referencing experts on 0845 111 2222.</p>
+                            <br />
+                            <h3>What happens if I input information incorrectly, how do I correct this?</h3>
+                            <p>You have the ability to go back and make any amends prior to the final stage of agreeing to the terms and conditions.</p>
+                            <p>If you need to amend any details once we have begun processing an application you can advise us of these amends by selecting the Email Assessor button in the Tenant Summary Page.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">2. Insurance</a>
+                        <div class="details">
+                            <h3>I've lost the tenant insurance quote which was sent with the final report, is this anywhere on Connect?</h3>
+                            <p>This can be generated on the Tenant Summary Page by selecting the Tenant Quote button.</p>
+                            <br />
+                            <h3>My landlord wants a copy of the policy wording for Rent Guarantee; can I send this to him?</h3>
+                            <p>Policy Wordings can be obtained from the Insurance &gt; Useful Information and Documents section. Simply click on the envelope icon next to the relevant Policy Wording and email it to your landlord.</p>
+                            <br />
+                            <h3>There is an Insurance section on Connect but I am not able to access it, why?</h3>
+                            <p>Access to the insurance section will depend on your FCA status. For more information about the FSA and your status please contact <a href="mailto:amt@homelet.co.uk">amt@homelet.co.uk</a>.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">3. Rent Guarantee</a>
+                        <div class="details">
+                            <h3>How do I make a claim on my Rent Guarantee policy?</h3>
+                            <p>
+                               All Rent Guarantee claims should be submitted on Connect via our <a href="/rentguaranteeclaims/home">online claims</a> facility. Sending us information this way is the quickest and easiest way to make a Rent Guarantee claim. 
+                               Our <a href="/assets/connect/pdf/Guide_to_making_a_rent_guarantee_claim.pdf">Guide to Making a Rent Guarantee claim</a> not only outlines what documents you need to provide as part of your claims, 
+                               but also shows the times you need to submit your information by so we’re able to process them.
+                            </p>
+                            <br/>
+                            <h3>Can I renew my Rent Guarantee policies on Connect?</h3>
+                            <p>Yes, you can renew your Rent Guarantee policies by using our <a href="/rentguarantee/renewals">Rent Guarantee renewals</a> facility.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">4. Tenant Link</a>
+                        <div class="details">
+                            <h3>I don't have time to enter all the applicants' information on Connect, is there a quicker way?</h3>
+                            <p>To save time you can use the 'tenant link'. This function allows you to send the application via email to your tenant so they can complete their application on-line.</p>
+                            <p>This saves you time and ensures the information entered is accurate. It also means that you can still track the progress of the reference on Connect and don't have to wait for us to log the reference.</p>
+                            <br />
+                            <h3>How will I know if my tenant has completed their application via the tenant link?</h3>
+                            <p>As soon as the tenant has submitted the information a confirmation will be sent to you via email.</p>
+                            <br />
+                            <h3>How do I link tenants?</h3>
+                            <p>You can log multiple tenants at the start of an application by selecting the number of tenants you wish to reference for a particular property.</p>
+                            <p>Alternatively, if you want to add a tenant at a later stage, simply click the 'Add Tenant' button in the Tenant Summary Page. This will link the application to the existing reference and property.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">5. Using Connect</a>
+                        <div class="details">
+                            <h3>We have a new member of staff in our office who needs a Connect login, please can I have one?</h3>
+                            <p>All Connect master users can create new users and maintain existing users accounts by selecting the Settings section.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">6. Company Applications</a>
+                        <div class="details">
+                            <h3>Can I log on a Company application form?</h3>
+                            <p>Yes. You can submit a company application via the Referencing section.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">7. HomeLet</a>
+                        <div class="details">
+                            <h3>How do I know what is happening at HomeLet or key information if I do not have access to post or emails?</h3>
+                            <p>The Connect homepage displays up to five news items at a time to ensure you are updated and notified about any changes and HomeLet news. You can also access information through the <a href="http://homeletuk.com/blog/" target="_blank">HomeLet Blog</a> at <a href="http://homeletuk.com/blog/" target="_blank">homeletuk.com/blog</a></p>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">8. Communication</a>
+                        <div class="details">
+                            <h3>I need to send you confirmation that a tenant is in receipt of tax credits by email, can I?</h3>
+                            <p>Yes. You can do this by selecting the Email Assessor button in the Tenant Summary Page.</p>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="header foldlink">
+                Contact Us
+            </div>
+
+            <div class="dashboardContent foldable" id="contactUs" style="display: none;">
+
+                <p>
+                    Connect is available to you 24/7, however if you need to contact us with a specific enquiry please don't hesitate to use this handy list of contact details.
+                </p>
+                <p>
+                    Click the section titles below to show the relevant information.
+                </p>
+                <p>
+                    (<a href="#" onclick="expanderShowAll('contactUs', true); return false;">show all</a> | <a href="#" onclick="expanderShowAll('contactUs', false); return false;">hide all</a>)
+                </p>
+                <ul class="expanders">
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Referencing</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Referencing team are on hand to deal with any of your referencing related queries.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3" width="560">Referencing Opening Hours</th>
+                                                <th rowspan="2" width="100">Telephone</th>
+                                                <th rowspan="2" width="168">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180">Monday to Friday</th>
+                                                <th width="140">Saturday</th>
+                                                <th width="240">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td width="180">8:30am - 6:00pm</td>
+                                                <td width="140">10am - 1pm</td>
+                                                <td width="240">Closed</td>
+                                                <td width="100">0845 111 2222</td>
+                                                <td width="168"><a href="mailto:connect@homelet.co.uk">connect@homelet.co.uk</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Insurance</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Insurance team will be happy to help you with all Insurance sales, queries or tenant and landlord claims.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3">Insurance Opening Hours</th>
+                                                <th rowspan="2">Telephone</th>
+                                                <th rowspan="2">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180px">Monday to Friday</th>
+                                                <th width="140px">Saturday</th>
+                                                <th width="240px">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td>8:30am - 8:00pm</td>
+                                                <td>9:30am - 1pm</td>
+                                                <td>Closed</td>
+                                                <td>0845 117 6000</td>
+                                                <td>N/A</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Claims</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Claims team will be happy to help you with Rent Guarantee and Legal Expenses claims.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3">Claims Opening Hours</th>
+                                                <th rowspan="2">Telephone</th>
+                                                <th rowspan="2">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180px">Monday to Friday</th>
+                                                <th width="140px">Saturday</th>
+                                                <th width="240px">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td>9am - 5:30pm</td>
+                                                <td>Closed</td>
+                                                <td>Closed</td>
+                                                <td>0845 155 6499</td>
+                                                <td><a href="mailto:rentguaranteeclaims@homelet.co.uk">rentguaranteeclaims@homelet.co.uk</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Compliance</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Compliance team will be able to assist you with any queries relating to regulated activities and to offer guidance on your FCA status.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3">Compliance Opening Hours</th>
+                                                <th rowspan="2">Telephone</th>
+                                                <th rowspan="2">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180px">Monday to Friday</th>
+                                                <th width="140px">Saturday</th>
+                                                <th width="240px">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td>9am - 5:30pm</td>
+                                                <td>Closed</td>
+                                                <td>Closed</td>
+                                                <td>0845 113 9015</td>
+                                                <td><a href="mailto:amt@homelet.co.uk">amt@homelet.co.uk</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Accounts</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Accounts team are available to deal with all financial queries, which include; direct debit queries, commission queries, refunds, Premier subscription payments and credit/debit card payments.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3">Accounts Opening Hours</th>
+                                                <th rowspan="2">Telephone</th>
+                                                <th rowspan="2">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180px">Monday to Friday</th>
+                                                <th width="140px">Saturday</th>
+                                                <th width="240px">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td>9am - 5:30pm</td>
+                                                <td>Closed</td>
+                                                <td>Closed</td>
+                                                <td>0845 117 6015</td>
+                                                <td><a href="mailto:lincolngeneralfinancequeries@homelet.co.uk">lincolngeneralfinancequeries@homelet.co.uk</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Credit Control</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <p>Our Credit Control team are on hand to help with payments relating to invoices and suspended accounts.</p>
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <thead>
+                                            <tr align="center">
+                                                <th colspan="3">Credit Control Opening Hours</th>
+                                                <th rowspan="2">Telephone</th>
+                                                <th rowspan="2">E-mail</th>
+                                            </tr>
+                                            <tr align="center">
+                                                <th width="180px">Monday to Friday</th>
+                                                <th width="140px">Saturday</th>
+                                                <th width="240px">Sunday &amp; Bank Holidays</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr align="center">
+                                                <td>9am - 5:30pm</td>
+                                                <td>Closed</td>
+                                                <td>Closed</td>
+                                                <td>01522 838852</td>
+                                                <td><a href="mailto:credit.control@homelet.co.uk">credit.control@homelet.co.uk</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a rel="nofollow" href="#" class="expander">Other Information</a>
+                        <div class="details">
+                            <div>
+                                <div class="text">
+                                    <table border="1" cellpadding="5" cellspacing="1" width="100%">
+                                        <tbody>
+                                            <tr align="center">
+                                                <td align="left">
+                                                    <strong>Adobe Reader</strong><br />
+                                                    Download the latest <a href="http://get.adobe.com/uk/reader/" target="_blank">Adobe Reader</a> if you need to install it, or want to upgrade your existing Reader.
+                                                </td>
+                                                <td>
+                                                    <a href="http://get.adobe.com/uk/reader/" target="_blank"><img src="/assets/connect/images/get_adobe_reader.gif" alt="Get Adobe Reader" border="0" height="33" width="112"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                 </ul>
+
+            </div>
+
+            <div class="header foldlink">
+                <a name="accountManager"></a>Your Account Manager
+            </div>
+
+            <div class="dashboardContent foldable" id="salesPerson" style="display: none;">
+
+                    <?php echo $this->salesperson($this->agentSchemeNumber, 'large'); ?>
+
+            </div>
+
+            <?php
+
+            // Check if OK to show API details section
+            if ($apiCredentialsDisplay) {
+
+                ?>
+
+                <div class="header foldlink">
+                    <a name="homeLetApi"></a>Your API Access Details
+                </div>
+
+                <div class="dashboardContent foldable" id="homeLetApiCredentials" style="display: none;">
+
+                    <p>
+                        If you use third party software in place of or alongside Connect, you may be asked to enter the
+                        details below.
+                    </p>
+
+                    <p>
+                        <strong>Important information</strong><br/>
+                        These access details are specific to you, and are equivalent to your username and password.
+                        You&rsquo;re responsible for keeping them safe - do not write them down, print them, or share
+                        them with anyone else.
+                    </p>
+
+                    <p>
+                        HomeLet and legitimate third parties will never ask you to provide these details remotely.
+                    </p>
+
+                    <p>
+                        If you&rsquo;re in any doubt about the use of these details or the software that might be asking
+                        you for them, please contact your Account Manager.
+                    </p>
+
+                    <?php echo $this->irisApiCredentials($this->agentSchemeNumber, $this->agentId); ?>
+
+                </div>
+
+            <?php
+
+            } // End of display check
+
+            ?>
+
+            <?php
+
+            // Check if OK to show banner link section
+            if ($bannerLinkDisplay) {
+
+                ?>
+
+                <div class="header foldlink" id="foldingBannerDiv">
+                    <a name="yourBannerLinks"></a>Your Banner Links
+                </div>
+
+                <div class="dashboardContent foldable" id="bannerLinks" style="display: none;">
+
+                    <p>
+                        Earn commission by adding our affiliate links on your website.
+                    </p>
+
+                    <ol style="margin-left: 30px;">
+                        <li>Choose which banners you would like to display from the options below.</li>
+                        <li>Copy the HTML from the text box in the right-hand column.</li>
+                        <li>Paste the HTML into your website!</li>
+                    </ol>
+
+                    <p>
+                        Please note that adding these links to your website requires you or your webmaster to edit your website&rsquo;s HTML.
+                    </p>
+
+                    <p>
+                        Your links contain your scheme number and are unique to your business.  If a tenant or landlord uses your link to visit the HomeLet website and buys an insurance policy, you&rsquo;ll automatically be assigned with commission for introducing the sale.
+                    </p>
+
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th colspan="2" width="100%">Step 1: Select a Link Style</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <img src="/assets/connect/images/banners/HomeLet_col_200px.png" />
+                                </td>
+                                <td align="right">
+                                    Medium logo, colour <input type="radio" name="linkStyle" value="col-medium" checked="checked" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <img src="/assets/connect/images/banners/HomeLet_col_350px.png" />
+                                </td>
+                                <td align="right">
+                                    Large logo, colour <input type="radio" name="linkStyle" value="col-large" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <img src="/assets/connect/images/banners/HomeLet_white_200px.png" />
+                                </td>
+                                <td align="right">
+                                    Medium logo, white/transparent <input type="radio" name="linkStyle" value="trans-medium" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <img src="/assets/connect/images/banners/HomeLet_white_350px.png" />
+                                </td>
+                                <td align="right">
+                                    Large logo, white/transparent <input type="radio" name="linkStyle" value="trans-large" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <span id="textLinkPreview"><a href="#">homelet.co.uk/tenants/</a></span>
+                                </td>
+                                <td align="right">
+                                    Text only <input type="radio" name="linkStyle" value="text" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br />
+
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th colspan="3" width="100%">Step 2: Select a Link Destination</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    Tenant&rsquo;s Insurance product page <input type="radio" name="linkDest" value="tenants" checked="checked" />
+                                </td>
+                                <td align="center">
+                                    Landlord&rsquo;s Insurance product page <input type="radio" name="linkDest" value="landlords" />
+                                </td>
+                                <td align="center">
+                                    HomeLet home page <input type="radio" name="linkDest" value="home" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br />
+
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th colspan="2" width="100%">Step 3: Your Link Preview and HTML</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <strong>Here&rsquo;s a preview of how the link will look</strong><br />
+                                    <span style="font-size: smaller;">(Don&rsquo;t worry, the grey bit won&rsquo;t appear, it&rsquo;s just so you can see the white logos)</span>
+                                </td>
+                                <td align="center" width="40%">
+                                   <strong>Here&rsquo;s the HTML code you need for your site</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="lightgray">
+                                    <span id="linkPreview"></span>
+                                </td>
+                                <td align="center" width="40%">
+                                    <textarea id="linkHtmlOutput" cols="50" rows="10" readonly="readonly" class="clipboardMe"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        You can include custom QR codes on your stationery and printed literature.  These will link to our website and record your unique scheme number, just like our web banner links.
+                    </p>
+
+                    <ol style="margin-left: 30px;">
+                        <li>Choose which insurance products you would like to promote from the selection below.</li>
+                        <li>Right-click the QR code and save the image.</li>
+                        <li>Insert the QR code in your literature!</li>
+                    </ol>
+
+                    <p>
+			<strong>Important information</strong><br />
+			If you&rsquo;re using HomeLet QR codes from the "Your banner link" section below in any of your literature you&rsquo;ll need to email <a href="mailto:amt@homelet.co.uk">AMT@homelet.co.uk</a>, so that we can review and approve the literature for you and provide guidance where it is needed.
+
+                    </p>
+                    <br />
+
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th width="50%">QR Code</th>
+                                <th width="50%">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <?php
+                                    echo $this->qrCode(
+                                        array(
+                                            'content' => $qrCodeTenantsUrl,
+                                            'filePath' => "{$this->params->connect->basePublicPath}{$this->params->connect->qrcode->path}{$qrCodeTenantsImage}-medium.png",
+                                            'urlPath' => "/{$this->params->connect->qrcode->path}{$qrCodeTenantsImage}-medium.png",
+                                            'name' => 'Tenant QR code',
+                                            'lifetime' => $this->params->connect->qrcode->lifetime,
+                                            'errorCorrection' => 'L',
+                                            'size' => 4,
+                                            'boundary' => 2
+                                        )
+                                    );
+                                    ?>
+                                </td>
+                                <td>
+                                    <strong>Tenant QR code</strong><br />
+                                    <br />
+                                    This QR code links to the Tenant&rsquo;s Insurance products on the HomeLet website and includes your Agent Scheme Number to track the source of the referral.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <?php
+                                    echo $this->qrCode(
+                                        array(
+                                            'content' => $qrCodeLandlordsUrl,
+                                            'filePath' => "{$this->params->connect->basePublicPath}{$this->params->connect->qrcode->path}{$qrCodeLandlordsImage}-medium.png",
+                                            'urlPath' => "/{$this->params->connect->qrcode->path}{$qrCodeLandlordsImage}-medium.png",
+                                            'name' => 'Landlord QR code',
+                                            'lifetime' => $this->params->connect->qrcode->lifetime,
+                                            'errorCorrection' => 'L',
+                                            'size' => 4,
+                                            'boundary' => 2
+                                        )
+                                    );
+                                    ?>
+                                </td>
+                                <td>
+                                    <strong>Landlord QR code</strong><br />
+                                    <br />
+                                    This QR code links to the Landlord&rsquo;s Insurance products on the HomeLet website and includes your Agent Scheme Number to track the source of the referral.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+
+                <?php
+
+            } // End of display check
+
+            ?>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,58 @@
+{% block referencing_case_widget %}
+    {% spaceless %}
+        <div id="rental-property" class="panel panel-default minimise-outer">
+            <div class="panel-heading">
+                Your Rental Property Information
+                <a class="badge badge-primary pull-right minimise-button"><i class="fa fa-minus-circle"></i> Collapse Section</a>
+            </div>
+
+            <div class="panel-body">
+                <div class="form-group-section minimise-content">
+                    {{ form_row(form.isVisible) }}
+
+                    {{ form_errors(form.address) }}
+                    {{ form_widget(form.address) }}
+
+                    {{ form_row(form.totalRent) }}
+                    {{ form_row(form.rentGuaranteeOfferingType) }}
+                    {{ form_row(form.propertyLetType) }}
+                    {{ form_row(form.numberOfBedrooms) }}
+                    {{ form_row(form.propertyType) }}
+                    {{ form_row(form.propertyBuiltInRangeType) }}
+                    {{ form_row(form.tenancyTerm) }}
+                    {{ form_row(form.numberOfTenants) }}
+                    {{ form_row(form.tenancyStartDate) }}
+                </div>
+            </div>
+        </div>
+
+        <div id="prospective-landlord" class="panel panel-default minimise-outer landlord">
+            <div class="panel-heading">
+                Prospective landlord
+                <a class="badge badge-primary pull-right minimise-button"><i class="fa fa-minus-circle"></i> Collapse Section</a>
+            </div>
+            <div class="panel-body">
+                <div class="form-group-section minimise-content">
+                    {{ form_errors(form.prospectiveLandlord) }}
+                    {{ form_widget(form.prospectiveLandlord) }}
+                </div>
+            </div>
+        </div>
+
+        <a id="add-tenant-to-collection" class="hidden add-to-collection"
+           data-prototype="{{ form_widget(form.applications.vars.prototype)|e }}"
+           data-collectionid="{{ form.applications.vars.id }}"
+           data-prototype-name="__applicationname__">Add</a>
+
+        {{ form_errors(form.applications) }}
+        {{ form_widget(form.applications) }}
+
+        <a class="badge badge-primary tenant-trigger"><i class="fa fa-plus-circle"></i> Add another application</a>
+        <script>
+            $('.tenant-trigger').click(function(){
+                $('#add-tenant-to-collection').click();
+            });
+        </script>
+
+    {% endspaceless %}
+{% endblock %}

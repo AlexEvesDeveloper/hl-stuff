@@ -1,0 +1,13 @@
+<div class="dialog">
+    <dl>
+        <?php echo $this->element->getElement('bank_property')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_name')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_account_number')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_address_line1')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_address_line2')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_address_line3')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_address_line4')->setOptions(array('class'=>'form-control'))->render();?>
+        <?php echo $this->element->getElement('bank_postcode')->setOptions(array('class'=>'form-control'))->render();?>
+    </dl>
+    <input class="btn btn-quaternary" type="button" id="cor_address_add" value="Add" name="cor_address_add" onclick="addBankInterest(); return false;" />
+</div>

@@ -1,0 +1,40 @@
+<div class="corporate main">
+    <div class="col-sm-8">
+        <div class="content">
+            <h1>An error has occurred.</h1>
+            <h2><?php echo $this->message ?></h2>
+
+            <?php if (isset($this->exception)): ?>
+                <h3>Exception information:</h3>
+                <p>
+                    <strong>Message:</strong> <?php echo $this->exception->getMessage() ?>
+                </p>
+
+                <h3>Stack trace:</h3>
+                <pre><?php echo $this->exception->getTraceAsString() ?></pre>
+
+                <h3>Request Parameters:</h3>
+                <pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+            <?php endif ?>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-secondary">
+            <h3>Need help?</h3>
+            <p class="large tertiary-colour">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+</div>

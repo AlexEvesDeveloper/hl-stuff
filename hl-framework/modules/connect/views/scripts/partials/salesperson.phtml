@@ -1,0 +1,50 @@
+        <div id="salesperson" class="<?php echo $this->size; ?>">
+            <?php
+            $name = trim(preg_replace('/[^a-zA-Z\-\ ]/', '', $this->salesperson->name));
+            $firstname = $name;
+            //$firstname = preg_replace('/^([^\s]+).*/', '$1', $name);
+            $filename = str_replace(' ', '-', strtolower($name));
+
+            $contactDetails = $this->salesperson->contactDetails;
+            ?>
+            <?php
+            if (file_exists(APPLICATION_PATH . "/../public/assets/connect/images/staff/{$filename}.jpg")) {
+                ?>
+                <a href="/help?show=accountManager#accountManager"><img src="/assets/connect/images/staff/<?php echo $filename; ?>.jpg" alt="<?php echo $name; ?>" class="photo" /></a>
+                <?php
+
+            } else {
+            	?>
+                <a href="/help?show=accountManager#accountManager"><img src="/assets/connect/images/staff/no_image.jpg" alt="<?php echo $name; ?>" class="photo" /></a>
+                <?php
+            }
+            ?>
+            <?php
+            if ($this->size == 'large') {
+                ?>
+                <div class="questionsAnswers">
+                <?php
+                foreach($this->salesperson->questionAnswers as $questionAnswer) {
+                    $question = $questionAnswer->question->question;
+                    $answer = $questionAnswer->answer;
+                    ?>
+                    <p>
+                        <h3>Q: <?php echo $question; ?></h3>
+                        <em>A: <?php echo $answer; ?></em>
+                    </p>
+                    <?php
+                }
+                ?>
+                </div>
+                <?php
+            }
+            ?>
+            <p class="contactInfo">
+                <?php
+                echo (!is_null($firstname) ? "<strong><span class=\"textalt\">{$firstname}</span></strong><br />\n" : '');
+                echo (!is_null($contactDetails->telephone1) && $contactDetails->telephone1 != '' ? "<strong>Contact Number (landline):</strong> <span class=\"textalt\">" . str_replace(' ', '&nbsp;', $contactDetails->telephone1) . "</span><br />\n" : '');
+                echo (!is_null($contactDetails->telephone2) && $contactDetails->telephone2 != '' ? "<strong>Contact Number (mobile):</strong> <span class=\"textalt\">" . str_replace(' ', '&nbsp;', $contactDetails->telephone2) . "</span><br />\n" : '');
+                echo (!is_null($contactDetails->email1 && $contactDetails->email1 != '') ? "<strong>Email Address:</strong> <a href=\"mailto:{$contactDetails->email1}?Subject=Connect Query from {$this->agent->name}\" class=\"textalt\">{$contactDetails->email1}</a><br />\n" : '');
+                ?>
+            </p>
+        </div>

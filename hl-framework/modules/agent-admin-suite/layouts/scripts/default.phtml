@@ -1,0 +1,98 @@
+<? // xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="en" />
+	<meta name="robots" content="noindex,nofollow" />
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/reset.css" />
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/main.css" />
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/2col.css" title="2col" />
+	<link rel="alternate stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/1col.css" title="1col" />
+	<!--[if lte IE 6]><link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/main-ie6.css" /><![endif]-->
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/style.css" />
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/custom.css" />
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/custom.css" />
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/agent_admin_suite/css/facebox.css" />
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/jquery.js"></script>
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/jquery.switcher.js"></script>
+    <script type="text/javascript" src="/assets/agent_admin_suite/js/jquery.facebook.alert.js"></script>
+    <script type="text/javascript" src="/assets/agent_admin_suite/js/jquery.facebox.js"></script>
+    <script language="javascript">
+        jQuery(document).ready(function($) {
+          $('a[rel*=facebox]').facebox({
+            opacity : 0.2,
+            closeImage : '/assets/agent_admin_suite/img/facebox/closelabel.gif',
+            loadingImage : '/assets/agent_admin_suite/img/facebox/loading.gif'
+          });
+        })
+    </script>
+
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/toggle.js"></script>
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/ui.core.js"></script>
+	<script type="text/javascript" src="/assets/agent_admin_suite/js/ui.tabs.js"></script>
+	<title>HomeLet - Agent Admin Suite</title>
+</head>
+
+<body>
+	<div id="main">
+		<!-- Tray -->
+		<div id="tray" class="box">
+			<p class="f-left box">
+				<!-- Switcher -->
+				<span class="f-left" id="switcher">
+					<a href="#" rel="1col" class="styleswitch ico-col1" title="Display one column"><img src="/assets/cms_admin/design/switcher-1col.gif" alt="1 Column" /></a>
+					<a href="#" rel="2col" class="styleswitch ico-col2" title="Display two columns"><img src="/assets/cms_admin/design/switcher-2col.gif" alt="2 Columns" /></a>
+				</span>
+				Agent: <strong>####</strong>
+			</p>
+			<?php
+			$auth = Zend_Auth::getInstance();
+	        $auth->setStorage(new Zend_Auth_Storage_Session('hl_admin'));
+	        $userRealName = $auth->getStorage()->read()->real_name;
+	        ?>
+			<p class="f-right">User: <strong><?php echo $userRealName ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><a href="/cms-admin/logout" id="logout">Log out</a></strong></p>
+		</div>
+		<hr class="noscreen" />
+	
+		<!-- Menu -->
+		<div id="menu" class="box">
+			<ul class="box f-right">
+				<li><a href="/agent-admin-suite/add-agent" ><span><strong>Add Agent</strong></span></a></li>
+				<li><a href="/agent-admin-suite/popup/agent-search" rel="facebox[.popup]"><span><strong>Agent Search</strong></span></a></li>
+			</ul>
+			<ul class="box">
+				<h2>HomeLet - Agent Admin Suite</h3> V0.1(beta)
+			</ul>
+		</div>
+		<hr class="noscreen" />
+		
+		<!-- Columns -->
+		<div id="cols" class="box">
+			<!-- Aside (Left Column) -->
+			<div id="aside" class="box">
+				<div class="padding box">
+					<!-- Logo (Max. width = 200px) -->
+					<p id="logo"><a href="#"><img src="/assets/cms_admin/img/homelet_logo.jpg" alt="Our logo" title="Visit Site" /></a></p>
+				</div>
+				<ul class="box">
+					<li id="submenu-active"><a href="#"><span>Agent Summary</span></a></li>
+				</ul>
+			</div>
+			<hr class="noscreen" />
+			<!-- Content (Right Column) -->
+			<div id="content" class="box">
+				<?php echo $this->layout()->content; ?>
+			</div>
+		</div>
+		<hr class="noscreen" />
+		
+		<!-- Footer -->
+		<div id="footer" class="box">
+			<p class="f-left">&copy; 2010 <a href="#">HomeLet Ltd.</a>, All Rights Reserved &reg;</p>
+			<p class="f-right"></p>
+		</div>
+	</div>
+</body>
+</html>

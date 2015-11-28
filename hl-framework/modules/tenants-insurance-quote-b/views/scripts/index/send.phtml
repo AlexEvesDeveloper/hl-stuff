@@ -1,0 +1,14 @@
+<p>How would you like us to send you your quote?</p>
+<form id="sendQuote" action="/tenants/insurance-quote-b/send" method="post">
+    <?php echo $this->sendForm->how_send; ?>
+    <?php echo $this->sendForm->send_quote; ?>
+</form>
+<script type="text/javascript">
+    // imageTick setup:
+    $('input[type=checkbox]').checkbox({
+  			empty: '/assets/cms/images/empty.png'
+		});
+		$('input[type=radio]').checkbox({
+  			empty: '/assets/cms/images/empty.png'
+		});
+</script>

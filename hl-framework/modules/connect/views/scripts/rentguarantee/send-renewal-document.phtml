@@ -1,0 +1,27 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php if (isset($this->documenttype) && $this->documenttype != ''): ?>
+            <?php if ($this->sendmethod == 'post'): ?>
+            <p>
+                <a href="<?php echo $this->documentpath; ?>" target="_blank">Download your landlords renewal <?php echo $this->documenttype; ?></a>
+            </p>
+            <?php else: ?>
+            <p>
+                Rent Guarantee renewal <?php echo $this->documenttype; ?> email successfully sent to <?php echo $this->landlordsemail; ?>.
+            </p>
+            <?php endif; ?>
+        <?php endif; ?>
+        
+        <?php if (isset($this->agentinvite) && $this->agentinvite == 1): ?>
+        <p>
+            Your renewal invitation has been resent.
+        </p>
+        <?php endif; ?>
+        
+        
+        <form method="get" action="/rentguarantee/renewals">
+            <input type="submit" class="round-button" value="Finished"/>
+        </form>
+    </div>
+</div>

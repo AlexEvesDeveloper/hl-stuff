@@ -1,0 +1,94 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'      => '',
+                'title'     => 'Referencing application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Individual.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form can be filled out by any prospective tenant, whatever their income type or previous residential status.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Guarantor application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form is designed just for guarantors.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Company application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Company.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This is the form you need to fill out for a company application form. Don&rsquo;t forget you can submit company applications through Connect.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Student application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Student-guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This form is designed especially for students and already includes a section for their guarantor to fill out.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Unemployed application',
+                'url'       => '/assets/connect/pdf/referencingApplication/Agent-Unemployed-guarantor.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This application form can be used for unemployed applicants or those who&rsquo;re on benefits. This also includes a section that their guarantor will need to fill out.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+		));
+		?>
+		<h2 class="form" style="clear: both;">Referencing declaration forms</h2>
+		<?php
+		$this->iconLayout(array(
+            array(
+                'icon'      => '',
+                'title'     => 'Tenant declaration',
+                'url'       => '/assets/connect/pdf/referencingApplication/Tenant-Declaration.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This document is handy if you complete your references using our &lsquo;email to tenant&rsquo; function. Remember, if a tenant doesn&rsquo;t complete a written application form they still must sign the tenant declaration form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'      => '',
+                'title'     => 'Guarantor declaration',
+                'url'       => '/assets/connect/pdf/referencingApplication/Guarantor-Declaration.pdf',
+                'special'   => 'referencingAgentForm',
+                'pdf_info'  => array(
+                    'description'   => 'This document is handy if you complete your references using our &lsquo;email to tenant&rsquo; function. Remember, if a guarantor doesn&rsquo;t complete a written application form they still must sign the guarantor declaration form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+        <div class="clear">
+            <a href="/referencing/agent-form?form=all" class="nav-corporate-button emailPdfToMe">Send all</a>
+        </div>
+    </div>
+</div>

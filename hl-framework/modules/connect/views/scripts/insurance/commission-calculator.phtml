@@ -1,0 +1,48 @@
+<form class="workflowform" method="post" action="/insurance/commission-calculator" onsubmit="return false;">
+	<table style="width: 600px">
+    	<tr>
+      		<td width="33%" align="left">
+        		Policy premium<br />
+        		&pound; <input type="text" id="new-amount" name="new-amount" value="<?php echo $this->values['amount']; ?>" style="width: 75%;" /><br />
+     		</td>
+      		<td width="34%" align="center">
+        		@ <?php echo $this->values['newBusCommissionRate']; ?>% (inception)<br />
+       			@ <?php echo $this->values['commissionRate']; ?>% (renewal)<br />
+      		</td>
+      		<td width="33%" align="right"><input onclick="calcCommission(); return false;" type="submit" name="Calculate" class="submit" value="Recalculate" /></td>
+    	</tr>
+    	<tr>
+      		<td colspan="3"><br /><hr /></td>
+    	</tr>
+    	<tr>
+      		<td>&nbsp;</td>
+      		<td align="center"><strong>Monthly</strong></td>
+      		<td align="center"><strong>Annual</strong></td>
+    	</tr>
+    	<tr>
+      		<td align="center"><strong>Inception</strong></td>
+      		<td id="inceptionMonthly" align="center">&pound;<?php echo $this->values['inceptionMonthly']; ?></td>
+      		<td id="inceptionAnnual" align="center">&pound;<?php echo $this->values['inceptionAnnual']; ?></td>
+    	</tr>
+    	<tr>
+      		<td align="center"><strong>Renewal</strong></td>
+      		<td id="renewalMonthly" align="center">&pound;<?php echo $this->values['renewalMonthly']; ?></td>
+      		<td id="renewalAnnual" align="center">&pound;<?php echo $this->values['renewalAnnual']; ?></td>
+    	</tr>
+  	</table>
+</form>
+<script type="text/Javascript">
+function calcCommission() {
+	inceptionMonthly = $('#new-amount').val() * <?php echo $this->values['newBusCommissionRate']/100; ?> / 12;
+    $('#inceptionMonthly').html("&pound;" + inceptionMonthly.toFixed(2) );
+
+    inceptionAnnual = $('#new-amount').val() * <?php echo $this->values['newBusCommissionRate']/100; ?>;
+    $('#inceptionAnnual').html("&pound;" + inceptionAnnual.toFixed(2) );
+
+    renewalMonthly = $('#new-amount').val() * <?php echo $this->values['commissionRate']/100; ?> / 12;
+    $('#renewalMonthly').html("&pound;" + renewalMonthly.toFixed(2) );
+
+    renewalAnnual = $('#new-amount').val() * <?php echo $this->values['commissionRate']/100; ?>;
+    $('#renewalAnnual').html("&pound;" + renewalAnnual.toFixed(2) );
+}
+</script>

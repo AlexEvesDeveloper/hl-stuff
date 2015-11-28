@@ -1,0 +1,70 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-insuredaddress')); ?>
+        </span>
+        Your Insured Address
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-insuredaddress'); ?>
+        </div>
+    </div>
+
+    <?php echo $this->element->ins_house_number_name; ?>
+
+    <div class="form-group">
+        <label for="ins_postcode" class="required">Please enter the postcode of the property you are renting:</label>
+        <div class="input-group">
+            <?php echo $this->element->ins_postcode; ?>
+            <span class="input-group-btn">
+                <input type="submit" id="ins_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#ins_house_number_name').val(), $('#ins_postcode').val(), 'ins_postcode', 'ins_address'); return false;" class="btn btn-quaternary" />
+            </span>
+        </div>
+    </div>
+
+    <div id="ins_address_selector" class="address-selector">
+        <div class="form-group">
+            <?php echo $this->element->ins_address; ?>
+        </div>
+    </div>
+
+    <div id="ins_address_details">
+        <p>You have selected the following address:</p>
+        <dl class="dl-horizontal">
+            <dt>Address:</dt>
+            <dd>
+                <?php echo $this->element->ins_address_line1; ?><br />
+                <?php echo $this->element->ins_address_line2; ?><br />
+                <?php echo $this->element->ins_address_line3; ?>
+            </dd>
+            <dt>Postcode:</dt>
+            <dd>
+                <?php echo $this->element->ins_address_postcode; ?>
+            </dd>
+        </dl>
+        <p>If this is incorrect, please search for a new postcode above.</p>
+    </div>
+
+    <div id="owned_for_selector" class="form-group">
+        <?php echo $this->element->owned_for; ?>
+    </div>
+
+    <div id="flood_cover_hideable" class="form-group">
+        <?php echo $this->element->exclude_flood_cover; ?>
+    </div>
+
+    <div id="no_claims_selector" class="form-group">
+        <?php echo $this->element->no_claims; ?>
+    </div>
+
+    <div id="tenants_type_selector" class="form-group">
+        <?php echo $this->element->tenants_type; ?>
+    </div>
+
+    <div id="through_letting_agent" class="radio form-group">
+        <?php echo $this->element->through_letting_agent; ?>
+    </div>
+</div>

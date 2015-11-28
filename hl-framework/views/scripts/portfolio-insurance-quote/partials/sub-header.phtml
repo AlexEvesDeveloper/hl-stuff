@@ -1,0 +1,54 @@
+<div id="sub_header_clean">
+    <h2>Portfolio Buildings Insurance Quote</h2>
+    <div id="steps" class="steps-landlords">
+        <div class="hidden-xs">
+            <div class="step">
+                <a<?php if (isset($this->stepNum) && $this->stepNum == 1) { echo " class=\"current\""; } ?> id="portfolio-quote-step1" href="/portfolio/insurance-quote/step1">
+                    <span class="circle">1</span>
+                    <span class="text">About you</span>
+                </a>
+            </div>
+            <div class="step">
+                <a<?php if (isset($this->stepNum) && $this->stepNum == 2) { echo " class=\"current\""; } ?> id="portfolio-quote-step2" href="/portfolio/insurance-quote/step2">
+                    <span class="circle">2</span>
+                    <span class="text">Your portfolio</span>
+                </a>
+            </div>
+            <div class="step">
+                <a<?php if (isset($this->stepNum) && $this->stepNum == 3) { echo " class=\"current\""; } ?> id="portfolio-quote-step3" href="/portfolio/insurance-quote/step3">
+                    <span class="circle">3</span>
+                    <span class="text">Quote</span>
+                </a>
+            </div>
+            <div class="step">
+                <a<?php if (isset($this->stepNum) && $this->stepNum == 4) { echo " class=\"current\""; } ?> id="portfolio-quote-step4" href="/portfolio/insurance-quote/step4">
+                    <span class="circle">4</span>
+                    <span class="text">Important information</span>
+                </a>
+            </div>
+            <div class="step">
+                <a<?php if (isset($this->stepNum) && $this->stepNum == 5) { echo " class=\"current\""; } ?> id="portfolio-quote-step5" href="/portfolio/insurance-quote/step5">
+                    <span class="circle">5</span>
+                    <span class="text">Thank you</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="visible-xs">
+            <?php if ($this->stepNum == 'dd') :
+                $num = 5;
+            else :
+                $num = $this->stepNum;
+            endif; ?>
+            <a class="current" id="tenants-quote-step<?php echo $num ?>" href="/portfolio/insurance-quote/step<?php echo $num ?>">
+                <span class="circle"><?php echo $num ?></span>
+                <span class="text">of</span>
+            </a>
+            <a href="#">
+                <span class="circle">5</span>
+                <span class="text">steps</span>
+            </a>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

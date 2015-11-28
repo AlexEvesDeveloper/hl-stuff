@@ -1,0 +1,57 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <form method="post">
+            <h2>Configure Renewal Document</h2>
+            
+            <div class="form_section two-col">
+                <div style="border: 1px solid black; padding: 10px; margin-top: 10px;">
+                    <?php echo $this->document_template; ?>
+                </div>
+                
+                <div>
+                    <label for="landlords_name">Landlords Name</label>
+                    <input type="text" id="landlords_name" name="landlords_name" value="<?php echo $this->configuredocumentform->getElement('landlords_name')->getValue(); ?>" class="first" />
+                    
+                    <label for="landlords_email">Landlords Email Address</label>
+                    <input type="text" id="landlords_email" name="landlords_email" value="<?php echo $this->configuredocumentform->getElement('landlords_email')->getValue(); ?>" />
+                    
+                    <?php if ($this->configuredocumentform->getElement('landlords_name')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('landlords_name')->getMessages()); ?>
+                    <?php if ($this->configuredocumentform->getElement('landlords_email')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('landlords_email')->getMessages()); ?>
+                </div>
+                
+                <div class="alt">
+                    <label for="agent_job_title">Job Title</label>
+                    <input type="text" id="agent_job_title" name="agent_job_title" value="<?php echo $this->configuredocumentform->getElement('agent_job_title')->getValue(); ?>" class="first" />
+                    
+                    <label for="agent_contact_number">Your Contact Number</label>
+                    <input type="text" id="agent_contact_number" name="agent_contact_number" value="<?php echo $this->configuredocumentform->getElement('agent_contact_number')->getValue(); ?>" />
+                    
+                    <?php if ($this->configuredocumentform->getElement('agent_job_title')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('agent_job_title')->getMessages()); ?>
+                    <?php if ($this->configuredocumentform->getElement('agent_contact_number')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('agent_contact_number')->getMessages()); ?>
+                </div>
+                
+                <div>
+                    <label for="policy_premium">Premium (&pound;)</label>
+                    <input type="text" id="policy_premium" name="policy_premium" value="<?php echo $this->configuredocumentform->getElement('policy_premium')->getValue(); ?>" class="first" />
+                    
+                    <label for="policy_term">Term</label>
+                    <input type="text" id="policy_term" name="policy_term" value="<?php echo $this->configuredocumentform->getElement('policy_term')->getValue(); ?>" />
+                    
+                    <?php if ($this->configuredocumentform->getElement('policy_premium')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('policy_premium')->getMessages()); ?>
+                    <?php if ($this->configuredocumentform->getElement('policy_term')->getMessages()) echo $this->formErrors($this->configuredocumentform->getElement('policy_term')->getMessages()); ?>
+                </div>
+                
+                <div style="float: left;">
+                        <input type="submit" id="formsubmit_refresh" name="formsubmit_refresh" value="Refresh" />
+                        <input type="submit" id="formsubmit_back" name="formsubmit_back" value="Renewals Suite"/>
+                </div>
+                
+                <div style="float: right;">
+                    <input type="submit" name="formsubmit_email" value="Email"/>
+                    <input type="submit" name="formsubmit_post" value="Post"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

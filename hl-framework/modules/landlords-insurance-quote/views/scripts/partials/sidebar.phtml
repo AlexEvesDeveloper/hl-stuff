@@ -1,0 +1,134 @@
+<?php if (isset($this->premiums) && '' != $this->premiums['monthly'] && '' != $this->premiums['annual']):
+    $monthly = '&pound;' . number_format((double)$this->premiums['monthly'] + $this->fees['landlords_insurance_plus_monthly_admin'],2);
+    $annually = '&pound;' . number_format((double)$this->premiums['annual'] + $this->fees['landlords_insurance_plus_yearly_admin'],2);
+else:
+    $monthly = 'N/A';
+    $annually = 'N/A';
+endif; ?>
+
+<div class="col-sm-4 col-md-3 hidden-xs">
+    <div id="scroller-anchor"></div>
+    <div id="scroller">
+
+        <div id="defaqto" class="panel panel-default">
+            <h4 class="quaternary-colour">Why choose HomeLet</h4>
+            <img src="/assets/landlords-insurance-quote/images/defaqto.png" alt="defaqto 5 star rated product" />
+            <ul class="defaqto">
+                <li>Defaqto 5 star rated landlord cover</li>
+                <li>Online documents</li>
+                <li>Secure online quote</li>
+                <li>15% cheaper when you buy online<br /><a href="#" data-toggle="modal" data-target="#save-online" onclick="_gaq.push('_trackEvent', 'Landlord Insurance', 'findoutmore_why', 'Quote Form');">Find out More</a></li>
+            </ul>
+        </div>
+
+        <?php if (isset($this->stepNum) && 'dd' != $this->stepNum): ?>
+            <?php if (1 != $this->stepNum): ?>
+                <div id="quote" class="panel panel-default">
+                    <h3 class="quaternary-colour">Your Premium</h3>
+
+                    <div id="premiums" class="row">
+                        <div class="premium col-md-6">
+                            <h5 class="base-colour">Monthly</h5>
+                            <span class="monthlyPremiumQuote quaternary-colour quote-price"><?php echo $monthly; ?></span>
+                        </div>
+
+                        <div class="premium col-md-6">
+                            <h5 class="base-colour">Annually</h5>
+                            <span class="annualPremiumQuote base-colour quote-price"><?php echo $annually; ?></span>
+                        </div>
+                    </div>
+                    <?php if ('production' != APPLICATION_ENV): ?>
+                        <p style="margin: 10px; text-align:center; display: block;">
+                            <a href="/landlords/insurance-quote/debug" target="_blank"><strong>DEBUG</strong></a>
+                        </p>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <div id="progress" class="panel panel-default">
+                <h4 class="quaternary-colour">Overall Progress</h4>
+                <div class="progress">
+                    <?php if('dd' == $this->stepNum):
+                        $fractionComplete = 1;
+                    else:
+                        if (isset($this->stepNum) && isset($this->stepMax)):
+                            $fractionComplete = $this->stepNum / ($this->stepMax + 1);
+                        else:
+                            $fractionComplete = 0;
+                        endif;
+                    endif; ?>
+                    <div class="progress-bar <?php if (5 == $this->stepNum || 'dd' == $this->stepNum): ?>plain-background<?php else: ?>quaternary-background<?php endif; ?>" role="progressbar" aria-valuenow="<?php echo round($fractionComplete * 100); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo round($fractionComplete * 100); ?>%;">
+                        <span class="sr-only"><?php echo round($fractionComplete * 100); ?>% complete</span>
+                    </div>
+                </div>
+
+                <div class="process-buttons">
+                    <?php if ($this->stepNum > 2 && $this->stepNum <= $this->stepMax): ?>
+                        <a class="btn<?php if (5 != $this->stepNum): ?> btn-quaternary<?php else: ?> btn-inverse<?php endif; ?> btn-sm col-sm-12 margin-10" onclick="$.facebox('Save my quote', { ajax: '/landlords/insurance-quote/save' }); return false;" href="#">Save<span class="hidden-sm"> my</span> Quote</a>
+                    <?php endif; ?>
+
+                    <?php if ($this->stepNum >= 4): ?>
+                        <a class="btn<?php if (5 != $this->stepNum): ?> btn-quaternary<?php else: ?> btn-inverse<?php endif; ?> btn-sm col-sm-12 margin-10" onclick="$.facebox('Send me my quote', { ajax: '/landlords/insurance-quote/send' }); return false;" href="#">Send<span class="hidden-sm"> me my</span> Quote</a>
+                    <?php endif; ?>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <?php if (1 == $this->stepNum): ?>
+                <div class="panel panel-default">
+                    <div class="security-details">
+                        <h4 class="quaternary-colour">We're Secure</h4>
+                        <img src="/assets/common/images/security-image.png" alt="HomeLet is secured by RapidSSL" />
+                        <div class="security-details-content">
+                            <p>Make your purchase confidently. We provide high security data encryption powered by RapidSSL</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <div class="panel panel-primary">
+            <h4>Need help?</h4>
+            <p class="large<?php if (5 != $this->stepNum): ?> quaternary-colour<?php endif ?>">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="modal fade" id="save-online" tabindex="-1" role="dialog" aria-labelledby="save-online-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title quaternary-colour" id="save-online-title">Why choose HomeLet</h4>
+            </div>
+
+            <div class="modal-body">
+                <strong>15% cheaper online</strong>
+                <p>Our prices are 15% cheaper when you buy online. This discount applies to Landlord Buildings Insurance and our Landlord Content's Insurance for Furnished Properties.</p>
+                <strong>Defaqto 5 Star rated cover</strong>
+                <p>Our Defaqto 5 Star Rating provides you with independent expert reassurance about the quality of the cover we provide to landlords.</p>
+                <strong>Online documents</strong>
+                <p>As a HomeLet customer you'll have access to My HomeLet, where you can view your documents quickly and securely online.</p>
+                <strong>Secure online quote</strong>
+                <p>We know that security is important, that's why our quote process and your personal information is protected by data encryption, which is powered by Rapid SSL.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-quaternary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

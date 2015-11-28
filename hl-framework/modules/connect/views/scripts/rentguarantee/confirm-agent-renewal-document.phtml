@@ -1,0 +1,16 @@
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <form method="post">
+            <input type="hidden" name="policynumber" value="<?php echo $this->policynumber; ?>" />
+            
+            <p>
+                Receive Renewal Invitation
+            </p>
+            
+            <input type="submit" class="round-button" name="formsubmit_back" value="Back"/>
+            <input type="submit" class="round-button" name="formsubmit_continue" value="Continue"/>
+        </form>
+	</div>
+</div>

@@ -1,0 +1,80 @@
+{% block stylesheets %}
+    <link id="ui-theme" rel="stylesheet" href="{{ asset('js/jquery-ui/jquery-ui.theme.min.css') }}">
+{% endblock %}
+
+<table id="reference-table" class="table tablesorter">
+    <thead>
+        <tr>
+            <th>Property Address<i class="ui-icon ui-icon-carat-2-n-s"></i></th>
+            <th>Status<i class="ui-icon ui-icon-carat-2-n-s"></i></th>
+            <th>Date<i class="ui-icon ui-icon-carat-2-n-s"></i></th>
+            <th>Application<i class="ui-icon ui-icon-carat-2-n-s"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if results is not empty %}
+            {% for reference in results.records %}
+                <tr>
+                    <td class="reference-table-link">
+                        {% if reference.caseId is defined %}
+                            <a href="{{ path(case_view_url, {'caseId': reference.caseId}) }}">
+                        {% endif %}
+                            {% if reference.flat is defined and reference.flat is not empty %}
+                                {{ reference.flat }},
+                            {% endif %}
+                            {% if reference.houseNumber is defined and reference.houseNumber is not empty %}
+                                {{ reference.houseNumber }},
+                            {% endif %}
+                            {% if reference.houseName is defined and reference.houseName is not empty %}
+                                {{ reference.houseName }},
+                            {% endif %}
+                            {{ reference.street }}
+                        {% if reference.caseId is defined %}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>{{ reference.statusId | iris_application_status_label }}</td>
+                    <td>{{ reference.createdAt | date("d-M-Y") }}</td>
+                    <td>
+                        <a href="{{ path(application_view_url, {'applicationId': reference.applicationUuid}) }}" class="badge badge-primary">
+                            {{ reference.referenceNumber }} <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %} 
+        {% endif %}
+    </tbody>
+</table>
+
+{% block javascripts %}
+    <!-- load tablesorter -->
+    <script type="text/javascript" src="{{asset('js/tablesorter/js/jquery.tablesorter.min.js')}}"></script>
+
+    <!-- tablesorter widgets (optional) -->
+    <script type="text/javascript" src="{{asset('js/tablesorter/js/jquery.tablesorter.widgets.js')}}"></script>
+
+    <script>
+        $(function(){
+            // custom parser to handle sorting of dd-mmm-yyyy dates
+            $.tablesorter.addParser({
+                id: "date",
+                is: function (s) {
+                    return false;
+                },
+                format: function (s, table) {
+                    return new Date(s).getTime() || '';
+                },
+                type: "numeric"
+            });
+
+            $('#reference-table').tablesorter({
+                theme: "dropbox",
+                headers: {
+                    2: { sorter: 'date' }
+                }
+            });
+
+            $('#reference-table td').css("color", "#333");
+        });
+    </script>
+{% endblock %}

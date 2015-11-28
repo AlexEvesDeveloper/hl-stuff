@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<?php echo $this->headLink(); echo $this->headScript();?>
+	</head>
+	<body>
+
+<img src="/assets/connect/images/homelet-logo.png"/>
+<br/><br/>
+<div class="reportHeading">Rent Guarantee Renewals Suite</div>
+<div class="separator"></div>
+<div style="margin:auto;">
+<div class="box" style="width:380px;margin:auto;" id="landlord_addresss">
+	<div class="box_title">Landlords Correspondence Address</div>
+	<div class="box_content">
+		<form method="post" name="printDocuments" id="printDocuments">
+		    <input type="hidden" name="landlorddocument" value="<?php echo $this->landlorddocument;?>" />
+		    
+		    <input type="hidden" name="brand" value="<?php echo $this->brand?>" />
+		    <input type="hidden" name="agentschemeno" value="<?php echo $this->agentschemeno?>" />
+		    <input type="hidden" name="sendby" value="print" />
+		    <input type="hidden" name="policynumber" value="<?php echo $this->policynumber?>" />
+	    
+		    <input type="hidden" name="agentsFieldLandlordName" value="<?php echo $this->agentsFieldLandlordName?>" />
+		    <input type="hidden" name="agentsFieldContactNumber" value="<?php echo $this->agentsFieldContactNumber?>" />
+		    <input type="hidden" name="agentsFieldAgentJobTitle" value="<?php echo $this->agentsFieldAgentJobTitle?>" />
+		    <input type="hidden" name="agentsFieldTerm" value="<?php echo $this->agentsFieldTerm?>" />
+		    <input type="hidden" name="agentsFieldPremium" value="<?php echo $this->agentsFieldPremium?>" />
+		    
+		    <table width="100%" border="0">
+		        <tr>
+		            <td width="140" class="mainbody">Postcode</td>
+		            <td><input type="text" id="propertyPostcode" name="propertyPostcode" value="" class="inputText"/></td>
+		            <td><input type="button" onclick="fnRapidSearch()" value=" FIND " class="round-button" /></td>
+		        </tr>
+		        
+		        <tr>
+		            <td class="mainbody" nowrap="nowrap">House Number + Street&nbsp;&nbsp;&nbsp; </td>
+		            <td colspan="2"><input type="text" id="propertyAddressStreet" name="propertyAddressStreet" value="" style="width: 200px;" class="inputText"/></td>
+		        </tr>
+		    
+		        <tr>
+		            <td class="mainbody">Town/City</td>
+		            <td colspan="2"><input type="text" id="propertyAddressTown" name="propertyAddressTown" value="" style="width: 200px;" class="inputText"/></td>
+		        </tr>
+		   </table>
+			<div class="separator"></div>
+			<input type="button" class="round-button" onclick="$('#sendDocuments').submit()" value=" Back "/>
+			<input type="submit" class="round-button" value=" Continue "/>
+		    
+		</form>
+		<form method="post" name="sendDocuments"  id="sendDocuments" style="display:none">
+			<label><input type="radio" name="landlorddocument" value="invite" checked="checked" /></label>
+			<label><input type="radio" name="landlorddocument" <?php if($this->landlorddocument == "reminder") echo "checked='checked'";?> value="reminder" /></label>
+			<label><input type="checkbox" name="agentdocument" <?php if(($this->agentdocument)) echo "checked='checked'";?> value="yes" /></label>
+			<input type="hidden" name="policynumber" value="<?php echo $this->policynumber;?>" />
+		</form>
+	</div>
+</div>
+
+<div class="box" style="width:380px;margin:auto;display:none" id="dv_find_address">
+	<div class="box_title">
+		Rapid Address<br/>
+		<i>If you know House Name or Number and Postcode enter here</i>
+	</div>
+	<div class="box_content">
+		<form method="post" action="">
+		<table width="100%" cellspacing="5">
+			<tr>
+				<td>House Name/Number</td>
+				<td><input type="text" name="ra_house" id="ra_house" /></td>
+			</tr>
+
+			<tr>
+				<td>Post Code</td>
+				<td><input type="text" name="ra_postcode" id="ra_postcode"  /></td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td><input class="round-button" type="button" onclick="fnFindByPostCode()" value="Find Address" /></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<center><b>OR</b></center>
+	<br/>
+	<div class="box_title">
+		Rapid Postcode<br/>
+		<i>If you only know part of address enter here to find postcode</i>
+	</div>
+	<div class="box_content">
+		<form method="post" action="">
+		<table width="100%" cellspacing="5">
+			<tr>
+	            <td>House Name/Number</td>
+	            <td><input type="text" name="rp_house" id="rp_house"/></td>
+	        </tr>
+	        
+	        <tr>
+	            <td>Street Name</td>
+	            <td><input type="text" name="rp_street" id="rp_street"/></td>
+	        </tr>
+	        
+	        <tr>
+	            <td>Post Code</td>
+	            <td><input type="text" name="rp_postcode" id="rp_postcode" value=""/></td>
+	        </tr>
+	        
+	        <tr>
+	        	<td></td>
+	            <td><input type="button" onclick="fnFindByHouse()" value="Find Postcode" class="round-button"/></td>
+	        </tr>
+		</table>
+		</form>
+	</div>
+</div>
+</div>
+
+<div id="dialog-list">
+	<div id="listings"></div>
+</div>
+
+<script language="javascript">
+function fnRapidSearch() {
+	$('#landlord_addresss').hide();
+	$('#dv_find_address').fadeIn();
+	postcode = $("#propertyPostcode").val();
+	$("#ra_postcode").val(postcode);
+	$("#rp_postcode").val(postcode);
+}
+
+function fnFindByPostCode() {
+	var ra_house = $('#ra_house').val();
+	var ra_postcode = $('#ra_postcode').val();
+	$("#dialog-list").dialog('open');
+	$.ajax({  
+		  type: "POST",  
+		  url: "/connect/find-address",  
+		  data: "mode=find_address&postcode="+ra_postcode+"&house="+ra_house,  
+		  success: function(res) {  
+			  fnGenerateList(jQuery.parseJSON(res));
+		  }  
+		});
+}
+
+function fnFindByHouse() {
+	var rp_house = $('#rp_house').val();
+	var rp_postcode = $('#rp_postcode').val();
+	$("#dialog-list").dialog('open');
+	$.ajax({  
+		  type: "POST",  
+		  url: "/connect/find-address",  
+		  data: "mode=find_postcode&postcode="+rp_postcode+"&house="+rp_house,  
+		  success: function(res) {  
+			  fnGenerateList(jQuery.parseJSON(res));
+		  }
+		}); 
+}
+
+function fnGenerateList(addresses) {
+	if(addresses.length == 0) {
+		alert("Sorry no matching record found! Try again.");
+		$("#dialog-list").dialog('close');
+		return false;
+	} else {
+		$("#listings").html("Loading..");
+		listStr = "<ul>";
+		jQuery.each(addresses, function(index,val){
+			 firstline = jQuery.trim(val.ORD)+" "+jQuery.trim(val.ORG)+" "+jQuery.trim(val.SBN)+" "+jQuery.trim(val.BNA)+" "+jQuery.trim(val.POB)+" "+jQuery.trim(val.NUM)+" "+jQuery.trim(val.address1)+" "+jQuery.trim(val.address2);
+			 secondline = jQuery.trim(val.address3)+" "+jQuery.trim(val.address4)+" "+jQuery.trim(val.address5);
+			 postcodeId = val.id;
+			 postcode = val.postcode;
+			 listStr += "<li><input type='radio' title='"+postcode+"' name='pcid' value='"+postcodeId+"' id='rad_"+postcodeId+"' /> <label id='lbl_"+postcodeId+"' for='rad_"+postcodeId+"' ><span>"+firstline+"</span><div>"+secondline+"</div></label></li>";
+	 	});
+		listStr += "</ul>";
+		$("#listings").html(listStr);
+		$("#dialog-list").dialog('open');
+	}
+}
+
+$("#dialog-list" ).dialog({
+	autoOpen: false,
+	height: 450,
+	title:"Select Address",
+	width: 540,
+	modal: true,
+	buttons: {
+		"OK": function() {
+			codeId = $('#dialog-list input:radio[checked=true]').val();
+			first = $('#lbl_'+codeId+' span').html();
+			second = $('#lbl_'+codeId+' div').html();
+			first = first.replace(/ +/g,' ').replace(/^ +/,'').replace(/ +$/,'');
+			$('#propertyAddressStreet').val(first);
+			$('#propertyAddressTown').val(jQuery.trim(second));
+			$('#propertyPostcode').val($('#dialog-list input:radio[checked=true]').attr('title'));
+			$('#dv_find_address').hide();
+			$('#landlord_addresss').fadeIn();
+			$(this).dialog("close");
+			
+		},
+		Cancel: function() {
+			$(this).dialog("close");
+		}
+	}
+});
+
+</script>
+</body>
+</html>

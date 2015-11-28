@@ -1,0 +1,17 @@
+<div id="agentsearch-results"></div>
+
+<div id="agentsearch-form">
+	<?php echo $this->form; ?>
+</div>
+
+<script type="text/javascript">
+	$('#agentsearch-form form .submit').click(function() {
+		$.post('/agent-admin-suite/popup/agent-search', $('#agentsearch-form form').serialize(),
+			   function(data) {
+			   		$('#agentsearch-form').hide();
+			   		$('#agentsearch-results').html(data).show();
+			   });
+		return(false);
+	});
+	
+</script>

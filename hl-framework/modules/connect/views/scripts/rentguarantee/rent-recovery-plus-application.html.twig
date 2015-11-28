@@ -1,0 +1,436 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Application</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <form name="{{ form.vars.id }}" id="{{ form.vars.id }}" action="/rentguarantee/rent-recovery-plus" method="post">
+        <div>
+            <div>
+                <h2>Product Selection
+                    <span class="_loader" style="display:none;">
+                        <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+                    </span>
+                </h2>
+            </div>
+            <div class="form_section one-col">
+                <div class="radio-group">
+                    {{ form_row(form.policyLength) }}
+                </div>
+                <div class="radio-group">
+                    {{ form_row(form.referenceType) }}
+                </div>
+                <div class="references">
+                    {% if form.references is defined %}
+                        <ul class="reference-list" data-prototype="{{ form_widget(form.references.vars.prototype)|e}}">
+                            {% for reference in form.references %}
+                                <li>{{ form_row(reference) }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="not"></div>
+                    {% endif %}
+                </div>
+                {% if form.otherProvider is defined %}
+                    {{ form_row(form.otherProvider) }}
+                {% endif %}
+                {{ form_row(form.isNilExcess) }}
+                <div class="radio-group">
+                    {{ form_row(form.isContinuationOfExistingPolicy) }}
+                </div>
+                {% if form.existingPolicyRef is defined %}
+                    {{ form_row(form.existingPolicyRef) }}
+                    {% if form.isExistingPolicyToBeCancelled is defined %}
+                        {{ form_row(form.isExistingPolicyToBeCancelled) }}
+                        {% if form.cancellationObjections is defined %}
+                            <p>Please be aware that if you don't cancel your existing RG policy this will mean that you
+                            will have two rent guarantee products on a single property.</p>
+                            {{ form_row(form.cancellationObjections) }}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <p>This product meets the demands and needs of those who wish to purchase rental protection in the event
+                    of a breach of tenancy agreement.</p>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>Property To Let
+                    <span class="_loader" style="display:none;">
+                        <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+                    </span>
+                </h2>
+            </div>
+            <div class="form_section two-col">
+                {{ form_row(form.propertyLetType) }}
+                {% if form.hasLandlordPermission is defined %}
+                    {{ form_row(form.hasLandlordPermission) }}
+                {%  endif %}
+                {{ form_row(form.propertyAddress1) }}
+                {{ form_row(form.propertyAddress2) }}
+                <div class="autoAlt" id="{{ form.propertyPostcode.vars.id }}">
+                    <div class="pull-left field-left">
+                        {{ form_label(form.propertyPostcode) }}
+                        <div class="form-field">
+                            {{ form_widget(form.propertyPostcode) }}
+                            {{ form_errors(form.propertyPostcode) }}
+                        </div>
+                    </div>
+
+                    <button type="button" id="propertyAddressLookup" name="propertyAddressLookup" class="button-rrpi">
+                        Find address
+                    </button>
+
+                    <div id="propertyAddressSelector" class="pull-right" style="display: block; padding: 0;">
+                        <select id="propertyAddress" name="propertyAddress" class="rrpi-address-select">
+                            <option value="">Please select</option>
+                        </select>
+                    </div>
+                </div>
+                {{ form_row(form.propertyRental) }}
+                {{ form_row(form.propertyDeposit) }}
+                {% if form.hasNilDepositInsurance is defined %}
+                    <div class="autoAlt" id="{{ form.hasNilDepositInsurance.vars.id }}">
+                        {{ form_row(form.hasNilDepositInsurance) }}
+                    </div>
+                {% endif %}
+                {% if form.hasPaidRentInAdvance is defined %}
+                    <div class="radio-group">
+                        {{ form_row(form.hasPaidRentInAdvance) }}
+                        {% if form.numberMonthsRentInAdvance is defined %}
+                            {{ form_row(form.numberMonthsRentInAdvance) }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {{ form_row(form.isDepositSufficient) }}
+                {{ form_row(form.tenancyStartAt) }}
+                {{ form_row(form.policyStartAt) }}
+                {{ form_row(form.policyEndAt) }}
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>Landlord Details
+                    <span class="_loader" style="display:none;">
+                        <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+                    </span>
+                </h2>
+                <strong>We will only contact your landlord in relation to their interest in your Rent Recovery Plus
+                    Insurance policy and will not solicit them for other services. This will involve a short survey
+                    to ensure they have received their documents and that they understand what having an interest in
+                    your policy means.</strong>
+            </div>
+            <div class="form_section two-col">
+                <div class="autoAlt">
+                    <div class="pull-left field-left">
+                        {{ form_label(form.landlordTitle) }}
+                        <div class="form-field">
+                            {{ form_widget(form.landlordTitle) }}
+                            {{ form_errors(form.landlordTitle) }}
+                        </div>
+                    </div>
+                    {% if form.landlordOtherTitle is defined %}
+                        <div class="pull-right field-right">
+                            {{ form_label(form.landlordOtherTitle) }}
+                            <div class="form-field">
+                                {{ form_widget(form.landlordOtherTitle) }}
+                                {{ form_errors(form.landlordOtherTitle) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="autoAlt">
+                    <div class="pull-left field-left">
+                        {{ form_label(form.landlordFirstName) }}
+                        <div class="form-field">
+                            {{ form_widget(form.landlordFirstName) }}
+                            {{ form_errors(form.landlordFirstName) }}
+                        </div>
+                    </div>
+
+                    <div class="pull-right field-right">
+                        {{ form_label(form.landlordLastName) }}
+                        <div class="form-field">
+                            {{ form_widget(form.landlordLastName) }}
+                            {{ form_errors(form.landlordLastName) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_row(form.landlordEmailAddress) }}
+                {{ form_row(form.landlordPhoneNumber) }}
+                {{ form_row(form.landlordAddress1) }}
+                {{ form_row(form.landlordAddress2) }}
+                <div class="autoAlt" id="{{ form.landlordPostcode.vars.id }}">
+                    <div class="pull-left field-left">
+                        {{ form_label(form.landlordPostcode) }}
+                        <div class="form-field">
+                            {{ form_widget(form.landlordPostcode) }}
+                            {{ form_errors(form.landlordPostcode) }}
+                        </div>
+                    </div>
+
+                    <button type="button" id="landlordAddressLookup" name="landlordAddressLookup" class="button-rrpi">
+                        Find address
+                    </button>
+
+                    <div id="landlordAddressSelector" class="pull-right" style="display: block; padding: 0;">
+                        <select id="landlordAddress" name="landlordAddress" class="rrpi-address-select">
+                            <option value="">Please select</option>
+                        </select>
+                    </div>
+                </div>
+                {{ form_row(form.landlordCountry) }}
+                {{ form_row(form.hasPossibleClaimCircumstances) }}
+                {% if form.claimInfo is defined %}
+                    {{ form_row(form.claimInfo) }}
+                {% endif %}
+                {{ form_row(form.hasPriorClaims) }}
+                {{ form_row(form.hasPermittedOccupiersOnly) }}
+                {{ form_row(form.hasTenancyDisputes) }}
+                {{ form_row(form.tenancyAgreementType) }}
+            </div>
+            <div>
+                <h2>Payment
+                    <span class="_loader" style="display:none;">
+                        <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+                    </span>
+                </h2>
+            </div>
+            <div class="form_section two-col radio-group">
+                {{ form_row(form.isPayMonthly) }}
+            </div>
+        </div>
+        <h2>Disclosure
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        <div class="form_section two-col">
+            <p>Any other facts known to you which are likely to affect acceptance or assessment of the insurance cover
+                you are requesting must be disclosed. Should you have any doubt about what you should disclose, do not
+                hesitate to tell us. Making sure we are informed is for your own protection, as failure to disclose may
+                mean that your policy will not give you the protection you require, or perhaps may invalidate the policy
+                altogether. For your reference, we recommend that you keep a record of any additional information given,
+                including copies of letters.</p>
+        </div>
+        <h2>Declaration
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+        <div class="form_section one-col">
+            <div class="autoAlt">
+                <p>Please read the declaration below and confirm by ticking the box that the information you've provided
+                    is true. <strong>It's important you do this as we're unable to continue with your application if you
+                    do not.</strong> I/We declare that the foregoing statements and particulars are, to the best of my
+                    knowledge and belief, true and complete, and that I/We have read and note the above, headed
+                    'Disclosure'. I/We consent to the information on this form and on any claim I/We make being supplied
+                    to IDS Ltd, the insurance industry's data collection agency, so that it can be made available to
+                    other insurers. I/We also agree that, in response to any searches you make in connection with this
+                    application or any claim, IDS Ltd may supply information it has received from other insurers about
+                    other claims I/We have made. I/We agree that the insurance will not be in force until this
+                    application has been accepted by HomeLet. I/We agree that the foregoing statements and particulars
+                    will form the basis of the contract between me/us and HomeLet. A copy of the completed
+                    proposal/application is automatically provided for retention at the time of completion.</p>
+                <p>This policy will be set up on the basis that:</p><br>
+                <ul>
+                    {% if 'Company' != form.vars.value.tenancyAgreementType %}
+                    <li>The property is let or to be let on a written Assured Shorthold Tenancy * with a minimum initial
+                        period of at least three months<br/>
+                        <em>* (In England & Wales or the equivalent in Scotland, Northern Ireland or the Isle of Man)</em>
+                    </li>
+                    {% endif %}
+                    <li> You are not aware of any circumstances which may give rise to a claim, or have been refused
+                        insurance or had special terms applied</li>
+                    <li>The property is in a good state of repair and regularly maintained</li>
+                    <li>All tenants have been referenced in accordance with HomeLet conditions before the policy start
+                        date</li>
+                    <li>All future tenants will be referenced in accordance with the conditions of this policy</li>
+                </ul>
+                {{ form_row(form.confirmation1) }}
+            </div>
+            <div class="autoAlt">
+                <p>Please read the following documents</p><br>
+                <ul>
+                    <li>
+                        <a href="/assets/connect/pdf/B338_Rent_Recovery_Plus_IDD.pdf" target="_blank">Initial Disclosure Document</a>
+                    </li>
+                    <li>
+                        <a href="/assets/connect/pdf/B334_Rent_Recovery_Plus_Policy_Summary.pdf" target="_blank">Policy Summary</a>
+                    </li>
+                </ul>
+                {{ form_row(form.confirmation2) }}
+            </div>
+            {{ form_row(form.update) }}
+            {{ form_row(form.updateList) }}
+            {{ form_row(form.isXhr) }}
+            {{ form_row(form.policyNumber) }}
+            {{ form_errors(form) }}
+            <button type="submit" class="btn btn-primary btn-submit">Calculate Premium</button>
+        </div>
+    </form>
+
+    <script>
+        (function ($) {
+            $('.content .form_section').each(function() {
+                $('.autoAlt:odd', this).addClass('alt');
+            });
+
+            // Hide the update button as it's intended to be fired only by the type change.
+            $('#{{ form.update.vars.id }}').hide();
+
+            // Hide the address dropdowns until needed
+            $('#propertyAddressSelector').hide();
+            $('#landlordAddressSelector').hide();
+
+            $('#propertyAddressLookup').click(
+                function() {
+                    return showAddressSelector('{{ form.propertyPostcode.vars.id }}', 'propertyAddress', 'propertyAddressSelector');
+                }
+            );
+
+            $('#landlordAddressLookup').click(
+                function() {
+                    return showAddressSelector('{{ form.landlordPostcode.vars.id }}', 'landlordAddress', 'landlordAddressSelector');
+                }
+            );
+
+            function showAddressSelector(postcodeId, addressId, addressSelector) {
+                getPropertiesByPostcode($('#' + postcodeId + ' input[type=text]').val(), postcodeId + ' input[type=text]', addressId + '', '');
+                $('#' + addressSelector).show();
+                return false;
+            }
+
+            $('#propertyAddress').change(
+                function() {
+                    setAddress('propertyAddress', '{{ form.propertyAddress1.vars.id }}', '{{ form.propertyAddress2.vars.id }}');
+                }
+            );
+
+            $('#landlordAddress').change(
+                function() {
+                    setAddress('landlordAddress', '{{ form.landlordAddress1.vars.id }}', '{{ form.landlordAddress2.vars.id }}');
+                }
+            );
+
+            function setAddress(addressId, address1Id, address2Id) {
+                var addressLine = $('#' + addressId + ' option[value=' + $('#' + addressId + '').val() + ']').text();
+                var addressLine1 = '';
+                var addressLine2 = '';
+                if (addressLine != 'Please select') {
+                    var addressParts = addressLine.split(', ');
+                    addressLine1 = addressParts[0];
+                    if (addressParts.length > 2) {
+                        for (var i = 1; i < addressParts.length - 1; i++) {
+                            addressLine1 += ', ' + addressParts[i];
+                        }
+                    }
+                    if (addressParts.length > 1) {
+                        addressLine2 = addressParts[addressParts.length - 1];
+                    }
+                }
+                $('#' + address1Id).val(addressLine1);
+                $('#' + address2Id).val(addressLine2);
+            }
+
+            $('#{{ form.policyStartAt.vars.id }}').change(
+                function() {
+                    var policyLength = $('#{{ form.policyLength.vars.id }} input[type=radio]:checked').val();
+                    if (policyLength && $('#{{ form.policyStartAt.vars.id }}').val()) {
+                        updatePolicyEndAt();
+                    } else {
+                        $('#{{ form.policyEndAt.vars.id }}').val(' ');
+                    }
+                }
+            );
+
+            $('#{{ form.policyLength.vars.id }}').change(
+                function() {
+                    if ($('#{{ form.policyStartAt.vars.id }}').val()) {
+                        updatePolicyEndAt();
+                    }
+                }
+            );
+
+            if ($('#{{ form.policyStartAt.vars.id }}').val() &&
+                $('#{{ form.policyLength.vars.id }} input[type=radio]:checked').val() &&
+                ! $('#{{ form.policyEndAt.vars.id }}').val()) {
+                updatePolicyEndAt();
+            }
+
+            function updatePolicyEndAt() {
+                var policyLength = $('#{{ form.policyLength.vars.id }} input[type=radio]:checked').val();
+
+                var startDateParts = $('#{{ form.policyStartAt.vars.id }}').val().split('/');
+                var endDay = parseInt(startDateParts[0], 10) - 1;
+                var endMonth = parseInt(startDateParts[1], 10) + parseInt(policyLength, 10) - 1;
+                var endYear = parseInt(startDateParts[2], 10);
+
+                // Update Policy end date (dd/mm/yyyy)
+                var tempPolicyEndAt = new Date(endYear, endMonth, endDay);
+
+                // Get calculate end date object details
+                endDay = tempPolicyEndAt.getDate();
+                if (endDay < 10) endDay = "0"+endDay;
+                endMonth = tempPolicyEndAt.getMonth() + 1;
+                if (endMonth < 10) endMonth="0"+endMonth;
+                endYear = tempPolicyEndAt.getFullYear();
+
+                // Update policy end date field
+                $('#{{ form.policyEndAt.vars.id }}').val(endDay + "/" + endMonth + "/" + endYear);
+            }
+
+        })(jQuery)
+    </script>
+    <script type="text/javascript" src="/assets/connect/js/rentguarantee/updateList.js"></script>
+
+    <script>
+        // setup an "add a reference" link
+        var $addReferenceLink = $('<a href="#" class="add_reference_link">Add a reference number</a>');
+        var $newLinkLi = $('<li></li>').append($addReferenceLink);
+        jQuery(document).ready(function() {
+            // Get the ul that holds the collection of references
+            var $collectionHolder = $('ul.reference-list');
+            // add the "add a reference" anchor and li to the reference-list ul
+            $collectionHolder.append($newLinkLi);
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addReferenceLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+                // add a new reference form (see code block below)
+                addReferenceForm($collectionHolder, $newLinkLi);
+            });
+        });
+        function addReferenceForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            // get the new index
+            var index = $collectionHolder.data('index');
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+            // Display the form in the page in an li, before the "Add a reference" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-reference">x</a>');
+            $newLinkLi.before($newFormLi);
+            // handle the removal, just for this example
+            $('.remove-reference').click(function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+                return false;
+            });
+        }
+    </script>
+
+{% endblock %}

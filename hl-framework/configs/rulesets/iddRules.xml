@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+
+Rules for which insurance IDD document to show/send depending on:
+* The associated agents' FSA status
+* Where a quote has originally come from, and
+* How it is bought
+
+Note that evaluation continues after a match, allowing for cascaded rules.
+
+There is a precondition for one rule, to account for when the original quote
+isn't possible to be completed for whatever reason and it's requoted through the
+buy method.
+
+Rules are queried via REST interface at:
+/rest/idd-rules/fetch/<fsatatus>/<quotebuy>/<buyby>[/<condition>]
+
+-->
+<rootnode>
+    <ruleset for="ar nar ar_ap nar_ap dir exp dir_ap">
+        <quote by="web">
+            <buy by="web connect telephone">hl_idd</buy>
+            <buy by="paper">none</buy>
+        </quote>
+        <quote by="connect">
+            <buy by="telephone">hl_idd</buy>
+            <buy by="web connect paper">none</buy>
+        </quote>
+        <quote by="telephone">
+            <buy by="connect telephone">hl_idd</buy>
+            <buy by="web paper">none</buy>
+        </quote>
+        <quote by="paper">
+            <buy by="web connect telephone paper">none</buy>
+            <buy by="telephone" precondition="requote">hl_idd</buy>
+        </quote>
+    </ruleset>
+    <ruleset for="io iar rargo none la cust">
+        <quote by="web">
+            <buy by="web telephone">hl_idd</buy>
+            <buy by="connect paper">none</buy>
+        </quote>
+        <quote by="connect">
+            <buy by="web connect telephone paper">none</buy>
+        </quote>
+        <quote by="telephone">
+            <buy by="telephone">hl_idd</buy>
+            <buy by="web connect paper">none</buy>
+        </quote>
+        <quote by="paper">
+            <buy by="web connect telephone paper">none</buy>
+        </quote>
+    </ruleset>
+</rootnode>

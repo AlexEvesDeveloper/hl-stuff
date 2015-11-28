@@ -1,0 +1,43 @@
+<div id="case-summary-widget" class="panel panel-default">
+    <div class="panel-heading">
+        Rental Property Summary
+        <a href="{{ path('barbon_hostedapi_landlord_reference_newreference_multi_new_index', {'caseId': caseId}) }}" class="badge badge-primary pull-right">Start a new reference <i class="fa fa-plus"></i></a>
+    </div><!-- panel-heading -->
+    <div class="panel-body">
+        <dl class="dl-horizontal col-md-6 pull-left">
+            <dt>Landlord</dt>
+            <dd>
+                {% if case.prospectiveLandlord is not null %}
+                    {{ case.prospectiveLandlord.title }}
+                    {{ case.prospectiveLandlord.firstName }}
+                    {{ case.prospectiveLandlord.lastName}}
+                {% endif %}
+            </dd>           
+            <dt>Tenancy start date</dt>
+            <dd>
+                {{ case.tenancyStartDate | date('jS F, Y') }}
+            </dd>
+            <dt>Tenancy term</dt>
+            <dd>
+                {{ case.tenancyTerm }} months
+            </dd>
+            <dt>Rent</dt>
+            <dd>
+                &pound{{ case.totalRent }}
+            </dd>
+            <dt>Number of bedrooms</dt>
+            <dd>
+                {{ case.numberOfBedrooms }}
+            </dd>
+        </dl>
+        <dl class="col-md-6 pull-left">
+            <dt>Property address</dt>
+            <dd>
+                {% if case.address is not null %}
+                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                        with { 'address': case.address } %}
+                {% endif %}
+            </dd>        
+        </dl>
+    </div><!-- panel-body -->
+</div><!-- panel panel-default -->

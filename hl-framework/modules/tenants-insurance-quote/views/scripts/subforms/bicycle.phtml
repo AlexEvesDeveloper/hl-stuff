@@ -1,0 +1,67 @@
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('tenants-insurance-quote-help-bicycle')); ?>
+        </span>
+        Your Bicycle
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-bicycle'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->bicycle; ?>
+    </div>
+
+    <div id="ownABicyclePromo" class="alert alert-info">
+        <?php
+        // Strip out empty paragraphs
+        $ownABicyclePromo = $this->promoContent('tenants-insurance-quote-bicycle-promo');
+        $ownABicyclePromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $ownABicyclePromo);
+        echo $ownABicyclePromo;
+        ?>
+    </div>
+
+    <div id="ownABicycleNoPromo" class="alert alert-warning">
+        <?php
+        // Strip out empty paragraphs
+        $ownABicycleNoPromo = $this->promoContent('tenants-insurance-quote-no-bicycle-promo');
+        $ownABicycleNoPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $ownABicycleNoPromo);
+        echo $ownABicycleNoPromo;
+        ?>
+    </div>
+
+    <div id="bicycle_hideable" class="hideable">
+        <div class="form-group">
+            <?php echo $this->element->bicycle_make; ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->element->bicycle_model; ?>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help tertiary-colour">
+                Please contact us on 0845 117 6000 to provide your serial number within 14 days to ensure you are covered at the point of a claim.
+            </div>
+            <?php echo $this->element->bicycle_serial; ?>
+        </div>
+
+        <div class="form-group">
+            <label for="possession_description" class="optional">Value of bicycle</label>
+            <div class="input-group">
+                <?php echo $this->element->bicycle_value; ?>
+                <div class="input-group-btn">
+                    <input type="submit" name="addBike" id="addBike" value="Add bike" class="btn btn-tertiary" />
+                </div>
+            </div>
+        </div>
+
+        <div id="ajaxBike" class="ajax_form_section form-group"><?php echo $this->yourBicycle(); ?></div>
+    </div>
+</div>

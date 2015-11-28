@@ -1,0 +1,17 @@
+<?php
+// Use base urls to allow for payment provider integration when served from
+// the payment providers url to link back into the site correctly.
+$baseURL = 'http';
+if (isset($_SERVER["HTTPS"])) {
+    if ($_SERVER["HTTPS"] == "on") {$baseURL .= "s";}
+}
+$baseURL .= "://";
+$baseURL .= $_SERVER["SERVER_NAME"];
+?>
+<div id="menu">
+    <div class="wrapper">
+        <ul id="main_nav">
+            <li class="letting_agents<?php if ($this->url == '' || $this->url == '/') {?>_selected<?php } ?> first last"><a style="width: 106px;" href="<?php echo $baseURL; ?>/">Connect Home</a></li>
+        </ul>
+    </div>
+</div>

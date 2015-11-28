@@ -1,0 +1,62 @@
+<?php
+echo $this->subHeader('global,' . $this->category, $this->category);
+
+// Was [$this->serverUrl() . Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();] but this allows XSS vulnerability.
+$thisUrl = $this->serverUrl() . '/news/article/' . $this->articleId;
+
+?>
+<script type="text/javascript">
+$(function() {
+    // Add popups for social links
+    $('.social-share a').click(function(e) {
+        e.preventDefault();
+        window.open($(this).attr('href'), 'popup', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+    });
+});
+</script>
+<div class="corporate">
+    <div class="wrapper one-col">
+        <div class="content newsarticle">
+            <div class="news">
+
+                <div class="post">
+                    <h2><?php echo $this->title; ?></h2>
+                    <?php echo $this->content; ?>
+                    <div class="news-footer">
+                        <span class="timestamp-label">Posted On:</span><span class="timestamp"><?php echo $this->date ?></span> | <a href="#" rel="nofollow" onclick="history.go(-1); return false;">Go Back</a>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+
+                <div class="social-share">
+                    <ul>
+                        <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[title]=<?php echo urlencode(html_entity_decode($this->title, ENT_QUOTES, 'UTF-8')); ?>&p[summary]=<?php echo $this->summary; ?>&p[url]=<?php echo $thisUrl; ?>" target="_blank" title="Share &quot;<?php echo htmlentities($this->title, ENT_QUOTES, 'UTF-8'); ?>&quot; on Facebook" rel="nofollow"> </a></li>
+
+                        <li><a class="twitter" href="https://twitter.com/share?text=Read the &quot;<?php echo urlencode(html_entity_decode($this->title, ENT_QUOTES, 'UTF-8')); ?>&quot; article by @HomeLet&amp;url=<?php echo $thisUrl; ?>&amp;hashtags=HomeLet" target="_blank" title="Share &quot;<?php echo htmlentities($this->title, ENT_QUOTES, 'UTF-8'); ?>&quot; on Twitter" rel="nofollow"> </a></li>
+
+                        <li><a class="googleplus" href="https://plus.google.com/share?url=<?php echo $thisUrl; ?>" target="_blank" title="Share &quot;<?php echo htmlentities($this->title, ENT_QUOTES, 'UTF-8'); ?>&quot; on Google+" rel="nofollow"> </a></li>
+
+                        <li><a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode($thisUrl); ?>&title=<?php echo urlencode($this->title); ?>&summary=<?php echo urlencode($this->summary); ?>&source=HomeLet" target="_blank" title="Share &quot;<?php echo htmlentities($this->title, ENT_QUOTES, 'UTF-8'); ?>&quot; on LinkedIn" rel="nofollow"> </a></li>
+                    </ul>
+                </div>
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    var disqus_shortname = 'hestia';<?php /* TODO: Move hardcoded parameter to config */ ?>
+                    var disqus_identifier = '<?php echo $this->articleId; ?>';
+                    var disqus_title = '<?php echo htmlentities($this->title, ENT_QUOTES, 'UTF-8'); ?>';
+                    var disqus_url = '<?php echo $thisUrl; ?>';
+            
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js?https';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            </div>
+        </div>
+    </div>
+</div>

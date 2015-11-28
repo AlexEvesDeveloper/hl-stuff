@@ -1,0 +1,31 @@
+<?php
+if (!isset($this->breadcrumbArray)) {
+    ?>
+    <ul id="connect_breadcrumb_homepage">
+        <li>Connect</li>
+    </ul>
+    <?php
+}
+else
+{
+    $currentPage = $this->breadcrumbArray['currentPage'];
+    unset($this->breadcrumbArray['currentPage']);
+    ?>
+    <ul id="connect_breadcrumb">
+        <li class="home<?php if (count($this->breadcrumbArray)==0) { ?> last<?php } ?>"><a href="/">Connect</a></li>
+        <?php
+        $i = 1;
+        $class = '';
+        foreach ($this->breadcrumbArray as $breadcrumb) {
+            if ($i==count($this->breadcrumbArray)) $class='last';
+            $i++;
+            ?>
+            <li class="<?php echo $class; ?>"><a href="<?php echo $breadcrumb['url'];?>" title="<?php echo $breadcrumb['title']; ?>"><?php echo $breadcrumb['title']; ?></a></li>
+            <?php
+        }
+        ?>
+        <li class="current_page"><?php echo $currentPage; ?></li>
+    </ul>
+    <?php
+}
+?>

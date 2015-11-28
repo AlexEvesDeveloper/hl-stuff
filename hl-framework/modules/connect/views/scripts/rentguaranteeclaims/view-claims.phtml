@@ -1,0 +1,77 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $("table#view-claim-summary tr:even").css("background-color", "#f7f9fa");
+  $("table#view-claim-summary tr:odd").css("background-color", "#ffffff");
+});
+function viewclaim(claimNo) {
+    document.forms['claimdetail_'+claimNo].submit();
+}
+</script>
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="view-claim-summary">
+        <table width="100%" align="center" border=0>
+            <tr>
+                <th width="10%">Claim No</th>
+                <th width="10%">Logged By</th>
+                <th width="10%">Date Logged</th>
+                <th width="16%">Property Address</th>
+                <th width="9%">Claims Handler</th>
+                <th width="20%">Last Activity</th>
+                <th width="15%">Date of last action</th>
+            </tr>
+        </table>
+        <div class="view-claim-summary-list">
+            <table width="100%" align="center" border=0>
+                <tr>
+                    <td>
+                    <?php
+                        if(count($this->claims)>0) {
+                            foreach ($this->claims as $claimData) {
+                    ?>
+                            <form name='claimdetail_<?php echo $claimData['ClaimNo']?>'
+                            	action='/rentguaranteeclaims/claim-details' method='post' id='claimdetail_<?php echo $claimData['ClaimNo']?>'>
+                                <table id="view-claim-summary">
+                                    <tr class='row-border'
+                                    	<?php
+                                    	if ($claimData['Number'] == 0) {?>
+                                    		onclick="$.facebox('Claim Pending', {ajax: '/rentguaranteeclaims/claim-pending'}); return false;"
+                                    	<?php }else{?>
+                                    		onclick="viewclaim('<?php echo $claimData['ClaimNo']?>')"
+                                    	<?php }?>
+                                    	 >
+                                        <?php
+                                        $this->form->claimNumber->setValue($claimData['ClaimNo']);
+                                        echo $this->form->claimNumber;
+                                        ?>
+                                        <td width="10%"><?php echo $claimData['ClaimNo']?></td>
+                                        <td width="10%"><?php echo $claimData['LoggedBy']?></td>
+                                        <td width="10%"><?php echo $claimData['DateStarted']?></td>
+                                        <td width="16%" class="claim-property"><?php echo $claimData['PROPERTYADDRESS']?></td>
+                                        <td width="9%"><?php echo $claimData['ClaimsHandler']?></td>
+                                        <td width="20%"><?php echo $claimData['LastActivity']?></td>
+                                        <td width="15%"><?php echo $claimData['LastActionDate']?></td>
+                                    </tr>
+                                </table>
+                            </form>
+                    <?php
+                            }
+                        } else {
+                    ?>
+                            <table id="view-claim-summary">
+                                    <tr class='row-border'>
+                                        <td colspan="8" align="center" class="no-cliams">No claim(s) found..</td>
+                                    </tr>
+                            </table>
+                    <?php
+                    }
+                    ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <?php echo $this->form->back; ?>
+</div>
+

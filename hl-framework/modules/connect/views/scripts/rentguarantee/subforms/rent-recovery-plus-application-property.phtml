@@ -1,0 +1,55 @@
+<?php
+$session = new Zend_Session_Namespace('hl_connect');
+?>
+<script type="text/javascript">
+	$(function() {
+		$('#policy_startdate').datePicker({startDate: '01/01/1970'});
+		$('#policy_enddate').datePicker({startDate: '01/01/1970'});
+        $('#tenancy_startdate').datePicker({startDate: '01/01/1970'});
+	});
+</script>
+
+<h2>Property To Let</h2>
+
+<div class="form_section two-col">
+    <div class="autoAlt"> 	 
+        <?php echo $this->element->property_managed; ?> 	 
+    </div>   
+    <div class="autoAlt" id="ll_permission">        
+        <?php echo $this->element->LL_Permission; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_address1->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->property_address2; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_address3->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->property_address4; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_postcode->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->property_address_lookup->setOptions(array('style' => 'margin: 0; clear: none;'))->render(); ?>
+        <div id="propertyAddressSelector" style="clear: both; padding: 0; margin: 0;">
+            <label>&nbsp;</label>
+            <?php echo $this->element->property_address->setAttribs(array('style' => 'width: 320px;'))->render(); ?>
+        </div>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_rental; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_deposit; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->rent_in_advance; ?>
+    </div>
+    <div class="autoAlt datePicker">
+        <?php echo $this->element->tenancy_startdate; ?>
+    </div>
+    <div class="autoAlt datePicker">
+        <?php echo $this->element->policy_startdate; ?>
+    </div>
+    <div class="autoAlt datePicker">
+        <?php echo $this->element->policy_enddate; ?>
+    </div>    
+</div>

@@ -1,0 +1,32 @@
+<?php echo $this->landlordsQuoteSubHeader($this->stepNum); ?>
+
+<div class="landlords col-sm-9">
+    <div class="content">
+        <form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+            <h2 class="quaternary-colour">
+                No Cover Selected
+            </h2>
+
+            <div class="panel my-homelet-welcome">
+                <p><strong>Oops, how did that happen?</strong></p>
+                <p>Thank you for taking the time to get this far, but you&rsquo;ve not selected any cover.</p>
+                <p>We&rsquo;d really like to provide you with a quotation, to do this please select the back button and select the cover that you require.</p>
+            </div>
+
+            <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+        </form>
+    </div>
+</div>
+
+<div class="col-sm-3 hidden-xs">
+    <div id="defaqto" class="panel panel-default">
+        <h4 class="quaternary-colour">Why choose HomeLet</h4>
+        <img src="/assets/landlords-insurance-quote/images/defaqto.png" alt="defaqto 5 star rated product">
+        <ul class="defaqto">
+            <li>Defaqto 5 star rated landlord cover</li>
+            <li>Online documents</li>
+            <li>Secure online quote</li>
+            <li>15% cheaper when you buy online<br><a href="#" data-toggle="modal" data-target="#save-online" onclick="_gaq.push('_trackEvent', 'Landlord Insurance', 'findoutmore_why', 'Quote Form');">Find out More</a></li>
+        </ul>
+    </div>
+</div>

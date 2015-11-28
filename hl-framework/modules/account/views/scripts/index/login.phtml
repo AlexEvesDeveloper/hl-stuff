@@ -1,0 +1,131 @@
+<?php $this->headScript()->prependFile('/assets/account/js/my-homelet-form.js'); ?>
+
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs ?>
+    <h1 class="my-homelet">Sign in to My HomeLet.</h1>
+</div>
+
+<div class="clearfix"></div>
+
+<?php if ($this->message == 'logout'): ?>
+
+<?php elseif ($this->message == 'account-already-validated'): ?>
+    <div class="col-xs-12">
+        <div class="panel panel-secondary">
+            <p><strong>You&rsquo;ve already validated your account</strong></p>
+            <p>Please note that you&rsquo;ve already completed the validation for your account.</p>
+            <p>Please enter your details below to sign in to My HomeLet.</p>
+        </div>
+    </div>
+<?php elseif ($this->message == 'registration-complete'): ?>
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <p><strong>Verification complete</strong></p>
+            <p>Thank you for verifying your account, please enter your details below to access My HomeLet.</p>
+        </div>
+    </div>
+<?php elseif ($this->message == 'session-expired'): ?>
+    <div class="col-xs-12">
+        <div class="panel panel-secondary">
+            <p><strong>We&rsquo;ve logged you out</strong></p>
+            <p>You can&rsquo;t be too careful</p>
+            <p>You haven&rsquo;t used My HomeLet for 15 minutes so we&rsquo;ve logged you out to protect your
+                privacy. We&rsquo;ve done this to stop anyone from seeing your details in case you have been away from your computer.</p>
+            <p>
+                We understand how inconvenient this is, but we value the security of your personal
+                details and ensure that they are always protected.</br />
+                Please log in again to access your My HomeLet account.
+            </p>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="col-md-7">
+    <div class="panel panel-my-homelet">
+        <div class="col-xs-12">
+            <h2>Existing Customers</h2>
+            <p>To log in to My HomeLet, all you need to do is enter your email address and password.</p>
+            <?php if ($this->form->getDescription()): ?>
+                <div class="well">
+                    <ul class="errorList">
+                        <li><strong><?php echo $this->escape($this->form->getDescription()); ?></strong></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <form enctype="application/x-www-form-urlencoded" method="post" action="" class="form-horizontal my-homelet">
+            <input type="hidden" name="referrerUrl" value="" id="referrerUrl">
+
+            <div class="form-group">
+                <label for="email" class="required col-md-3">Email address</label>
+                <div class="col-md-9">
+                    <?php
+                    echo $this->form->email
+                        ->setOptions(array('class'=>'form-control'))->render();
+                    ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="required col-md-3">Password</label>
+                <div class="col-md-9">
+                    <?php
+                    echo $this->form->password
+                        ->setOptions(array('class'=>'form-control'))->render();
+                    ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <ul class="list-inline list-collapsible">
+                    <li class="pull-right">
+                        <?php
+                        echo $this->form->submit
+                            ->setOptions(array('class' => 'btn btn-primary'))->render();
+                        ?>
+                    </li>
+                    <li>
+                        <?php
+                        echo $this->form->resendValidation
+                            ->setOptions(array('class' => 'btn btn-inverse resend-validation arrow'))->render();
+                        ?>
+                    </li>
+                    <li>
+                        <?php
+                        echo $this->form->forgottenPassword
+                            ->setOptions(array('class' => 'btn btn-inverse forgot-password arrow'))->render();
+                        ?>
+                    </li>
+                </ul>
+            </div>
+        </form>
+
+        <div class="col-xs-12">
+            <p>Don't have an account? <a href="/my-homelet/register">Sign up</a>.</p>
+            <p>Have a quote but don&rsquo;t want to register? <a href="/my-homelet/retrieve-quote" title="">Retrieve your quote</a>.</p>
+            <p>One of our Letting Agents looking for Connect? <a href="<?php echo $this->connectRootUrl; ?>">Login to Connect</a>.
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <hr class="visible-xs" />
+</div>
+
+<div class="col-md-5">
+    <div class="panel panel-dark login-form">
+        <h2 class="white">Register for My HomeLet</h2>
+        <br />
+        <p><a href="/my-homelet/register" title="" class="btn btn-primary">Register</a></p>
+        <br />
+        <strong>Why register for My HomeLet?</strong>
+        <ul>
+            <li>You can view your insurance polices</li>
+            <li>View and download your insurance documents</li>
+            <li>Change your login details</li>
+            <li>View and continue your saved insurance quotes</li>
+            <li>You don’t need to be a HomeLet customer to <a href="/my-homelet/register">register for My HomeLet</a></li>
+        </ul>
+
+        <strong>To register, all you need is a valid email address</strong>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('img#photo').imgAreaSelect({ handles: true, onSelectEnd: function (img, selection) {
+            $('input[name=x1]').val(selection.x1);
+            $('input[name=y1]').val(selection.y1);
+            $('input[name=x2]').val(selection.x2);
+            $('input[name=y2]').val(selection.y2);
+            $('input[name=w]').val(selection.width);
+            $('input[name=h]').val(selection.height);
+        }});
+    });
+</script>
+
+<div class="imageCrop">
+    <fieldset>
+        <legend>Crop Image</legend>
+        <img id="photo" src="/images/cms_uploads/previews/400_<?php echo $this->imageName ?>" /><br />
+        <div class="small low">*Drag a box to crop the image</div>
+        <br />
+        <form action="" method="post">
+            <input type="hidden" name="x1" value="" />
+            <input type="hidden" name="y1" value="" />
+            <input type="hidden" name="x2" value="" />
+            <input type="hidden" name="y2" value="" />
+            <input type="hidden" name="w" value="" />
+            <input type="hidden" name="h" value="" />
+            <input type="hidden" name="method" value="crop" />
+            <input type="submit" value="Crop" class="input-button" />
+        </form>
+    </fieldset>
+</div>
+<div class="imageFilters">
+    <fieldset>
+        <legend>Filters</legend>
+        <form class="inline" action="" method="post">
+            <p>
+                <label for="brightenAmount">Brighten (%):</label>
+                <input class="input-text" type="text" size="3" name="brightenAmount" id="brightenAmount" value="0" />
+            </p>
+            <p>
+                <label for="darkenAmount">Darken (%):</label>
+                <input class="input-text" type="text" size="3" name="darkenAmount" id="darkenAmount" value="0" />
+            </p>
+            <p>
+                <label for="contrastAmount">Contrast (%):</label>
+                <input class="input-text" type="text" size="3" name="contrastAmount" id="contrastAmount" value="0" />
+            </p>
+            <div style="clear:both;"></div>
+            <input type="hidden" name="method" id="method" value="crop" />
+            <input type="submit" value="Apply" class="input-button" />
+        </form>
+    </fieldset>
+</div>

@@ -1,0 +1,13 @@
+<p>Hello,</p>
+
+<p>
+    Your <?php echo $this->metaData['month'].'/'.$this->metaData['year']; ?> statement is ready to view online.
+    To view your statement please click below link:
+</p>
+
+<?php $_invoice_url = $this->metaData['connectURL'] . '/reports/view-invoice?asn='.$this->metaData['asn'].'&year='.$this->metaData['year'].'&month='.$this->metaData['month'].'&viewsource=email' ?>
+<a href="<?php echo $_invoice_url ?>">View your statement</a>
+<p>
+    Just to let you know, this is an automated message which is unable to receive or respond to replies.
+    If you have any problems accessing your statement please contact your account manager.
+</p>

@@ -1,0 +1,106 @@
+
+{% extends "iristat-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block body %}
+    <div class="col-xs-12 tracker-introduction">
+        <h1>HomeLet Tenant Referencing Application Tracker</h1>
+        <p>We know how important moving into a new home can be, that's why we do everything we can to make our referencing process as quick and easy as possible. Our Tenant Application Tracker will help to keep you informed every step of the way.</p>
+        <p>You can find out more about the checks that we carry out on our referencing information page.</p>
+        <p><a href="/tenants/help/being-referenced/" class="btn btn-default">Find out more</a></p>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="tenants col-sm-8">
+        <div class="panel panel-dark">
+            <p>
+                Please fill in the details below to login to your application tracker and check the progress of your reference.
+                <strong>All fields are mandatory.</strong>
+            </p>
+            {% if formMessage %}
+                <p class="warning">{{ formMessage | raw }}</p>
+            {% endif %}
+
+            {% if form %}
+                <form method="post" class="form-horizontal">
+                    {{ form_widget(form) }}
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-lets-move-tenant">
+            <img src="/assets/common/images/icon-default-house.png" alt="house" class="pull-right">
+            <h3 class="base-colour heavy">Let's Move App</h3>
+
+            <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+            <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+            <br />
+            <br />
+            <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <hr />
+
+    <h1 class="col-xs-12">Get Tenants Contents Insurance+ <strong>from &pound;10.75 per month*</strong></h1>
+
+    <div class="clearfix"></div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-contents">
+            <h3 class="base-colour"><strong>Contents Insurance+</strong></h3>
+            <p>Protect your belongings and your liability as a tenant too.</p>
+            <ul>
+                <li>Cover for your possessions</li>
+                <li>Fire, theft and flood protection</li>
+                <li>Accidental damage to your TV, audio, video, DVD and personal computer equipment</li>
+            </ul>
+            <ul class="list-inline list-buttons">
+                <li><a href="/tenants/insurance-quote/step1" class="btn btn-tertiary">Get a quote</a></li>
+                <li><a href="/tenants/contents-insurance" class="tertiary-colour arrow shadow-default">Find out more</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-extras">
+            <h3 class="base-colour"><strong>Additional Options</strong></h3>
+            <p>Tenants Contents Insurance+ includes some great optional extras.</p>
+            <ul>
+                <li>Cover the items that you take out of your home</li>
+                <li>Extra cover for bicycles that are worth over &pound;200</li>
+                <li>Cover for items that are worth over &pound;1,000</li>
+            </ul>
+            <a href="/tenants/insurance-quote/step1" class="btn btn-tertiary">Get a quote</a>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-liability">
+            <h3 class="base-colour"><strong>Tenancy Liability Cover</strong></h3>
+            <p>You may be liable to pay for accidents, so our Tenancy Liability cover is here to protect you.</p>
+            <ul>
+                <li>Up to &pound;5,000 to cover your liability as a tenant</li>
+            </ul>
+            <a href="/tenants/tenancy-liability/" class="btn btn-tertiary">Find out more</a>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12">
+        <div class="panel panel-primary">
+            <span class="large">*</span> Tenants Contents Insurance+ starts at &pound;10.75 per month for &pound;5,000 of contents cover; this price includes Insurance Premium Tax. Please note that a monthly admin fee of &pound;1.99 will be payable if you choose to pay for your policy monthly.
+        </div>
+    </div>
+{% endblock %}

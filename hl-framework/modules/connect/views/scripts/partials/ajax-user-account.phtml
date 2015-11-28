@@ -1,0 +1,6 @@
+<?php
+$userAccountHelper = $this->userAccounts($this->agentSchemeNumber);
+echo $userAccountHelper->listUsers(Model_Core_Agent_UserStatus::ACTIVATED, $this->agentId);
+echo $userAccountHelper->newUser();
+echo $userAccountHelper->listUsers(Model_Core_Agent_UserStatus::DEACTIVATED, $this->agentId);
+?>

@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="HomeLetServices"
+		  xmlns=""
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:typens="uri:homeletservicetypes"
+                  xmlns:tns="uri:homeletservices"
+                  targetNamespace="uri:homeletservices">
+    
+    <wsdl:documentation>
+	HomeLet API services.
+	Providing SOAP interface v1.1, conforming to WSI BP 1.0a
+    </wsdl:documentation>
+    
+    <!-- message types -->
+    <wsdl:types>
+        <xsd:schema xmlns=""
+                    xmlns:tns="uri:homeletservicetypes"
+                    targetNamespace="uri:homeletservicetypes"
+                    elementFormDefault="qualified">
+
+            <!-- Enumerations -->
+            <xsd:element name="EmailCategoryTarget">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="LANDLORD"/>
+                        <xsd:enumeration value="TENANT"/>
+                        <xsd:enumeration value="AGENT"/>
+                        <xsd:enumeration value="AGENT_AS_CUSTOMER"/>
+                        <xsd:enumeration value="AGENTS_LANDLORD"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+
+            <xsd:element name="EmailCategory">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="INCEPTION"/>
+                        <xsd:enumeration value="QUOTE"/>
+                        <xsd:enumeration value="RENEWAL"/>
+                        <xsd:enumeration value="MTA"/>
+                        <xsd:enumeration value="PAYMENT"/>
+                        <xsd:enumeration value="LAPSE"/>
+                        <xsd:enumeration value="UNDERWRITING"/>
+                        <xsd:enumeration value="CANCELLATION"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+
+            <xsd:complexType name="requestStatus">
+                <xsd:sequence>
+                    <xsd:element name="status">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="CREATED"/>
+                                <xsd:enumeration value="QUEUED"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+
+                    <xsd:element name="uniqueRequestID" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- 
+                Data types
+            -->
+            <xsd:complexType name="PolicyNumber">
+                <xsd:sequence>
+                    <xsd:element name="policynumber" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="DocumentName">
+                <xsd:sequence>
+                    <xsd:element name="documentName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="DeliveryMethod">
+                <xsd:sequence>
+                    <xsd:element name="deliveryMethod" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="DeliveryTarget">
+                <xsd:sequence>
+                    <xsd:element name="deliveryTarget" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="DocumentDelivery">
+                <xsd:sequence>
+                    <xsd:element name="documentDelivery" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+			
+            <xsd:complexType name="PrintBucket">
+                <xsd:sequence>
+                    <xsd:element name="printBucket" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="Property">
+                <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string"/>
+		    <xsd:element name="value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="ReferenceFields">
+                <xsd:all>
+                    <xsd:element name="agentSchemeNumber" type="xsd:int"/>
+                    <xsd:element name="targetPostcode" type="xsd:string"/>
+                </xsd:all>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PolicyCover">
+                <xsd:sequence>
+		            <xsd:element name="cover" type="xsd:string" />
+		            <xsd:element name="suminsured" type="xsd:string" />
+                    <xsd:element name="excess" type="xsd:string" />
+                    <xsd:element name="monthlypremium" type="xsd:string" />
+                    <xsd:element name="annualpremium" type="xsd:string" />
+                    <xsd:element name="presentation" type="xsd:string" />
+                    <xsd:element name="bulleted" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="Endorsement">
+                <xsd:sequence>
+                    <xsd:element name="endorsement" type="xsd:string"/>
+                    <xsd:element name="effectivedate" type="xsd:string"/>
+                    <xsd:element name="excess" type="xsd:float"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PedalCycle">
+                <xsd:sequence>
+                    <xsd:element name="make" type="xsd:string" />
+                    <xsd:element name="model" type="xsd:string" />
+                    <xsd:element name="serialno" type="xsd:string" />
+                    <xsd:element name="value" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="SpecPossession">
+                <xsd:sequence>
+                    <xsd:element name="description" type="xsd:string" />
+                    <xsd:element name="value" type="xsd:string" />
+                    <xsd:element name="confirmed" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="UnderwritingQuestion">
+                <xsd:sequence>
+                    <xsd:element name="question" type="xsd:string" />
+                    <xsd:element name="answer" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PropertyDetail">
+                <xsd:sequence>
+                    <xsd:element name="detail" type="xsd:string" />
+                    <xsd:element name="value" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+	        <xsd:complexType name="Insert">
+                <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="burst" type="xsd:boolean"/>
+                </xsd:sequence>
+	        </xsd:complexType>
+            
+            <!-- 
+		        Lists
+	        -->
+            <xsd:complexType name="Properties">
+                <xsd:sequence>
+                    <xsd:element name="property" type="typens:Property" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="Variables">
+                <xsd:sequence>
+                    <xsd:element name="variable" type="typens:Property" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PolicyCovers">
+                <xsd:sequence>
+                    <xsd:element name="policycover" type="typens:PolicyCover" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="Endorsements">
+                <xsd:sequence>
+                    <xsd:element name="endorsement" type="typens:Endorsement" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PedalCycles">
+                <xsd:sequence>
+                    <xsd:element name="pedalcycle" type="typens:PedalCycle" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="SpecPossessions">
+                <xsd:sequence>
+                    <xsd:element name="specpossession" type="typens:SpecPossession" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="UnderwritingQuestions">
+                <xsd:sequence>
+                    <xsd:element name="underwritingquestion" type="typens:UnderwritingQuestion" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="PropertyDetails">
+                <xsd:sequence>
+                    <xsd:element name="propertydetail" type="typens:PropertyDetail" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	    
+            <xsd:complexType name="Inserts">
+                <xsd:sequence>
+                    <xsd:element name="insert" type="typens:Insert" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!-- defined messages -->
+    <wsdl:message name="createDocumentRequest">
+        <wsdl:part name="policyNumber" type="typens:PolicyNumber"/>
+        <wsdl:part name="documentName" type="typens:DocumentName"/>
+        <wsdl:part name="csuId" type="xsd:int"/>
+        <wsdl:part name="deliveryMethod" type="typens:DeliveryMethod"/>
+        <wsdl:part name="deliveryTarget" type="typens:DeliveryTarget"/>
+        <wsdl:part name="printBucket" type="typens:PrintBucket"/>      
+        <wsdl:part name="emailCategoryTarget" type="typens:EmailCategoryTarget"/>
+        <wsdl:part name="emailCategory" type="typens:EmailCategory"/>
+        <wsdl:part name="documentDelivery" type="typens:DocumentDelivery"/>
+		
+        <wsdl:part name="referenceFields" type="typens:ReferenceFields"/>
+        <wsdl:part name="properties" type="typens:Properties"/>
+        <wsdl:part name="variables" type="typens:Variables"/>
+        <wsdl:part name="policycovers" type="typens:PolicyCovers"/>
+        <wsdl:part name="endorsements" type="typens:Endorsements"/>
+        <wsdl:part name="pedalcycles" type="typens:PedalCycles"/>
+        <wsdl:part name="specpossessions" type="typens:SpecPossessions"/>
+        <wsdl:part name="underwritingquestions" type="typens:UnderwritingQuestions"/>
+        <wsdl:part name="propertydetails" type="typens:PropertyDetails"/>
+        <wsdl:part name="inserts" type="typens:Inserts"/>
+    </wsdl:message>
+    
+    <wsdl:message name="createDocumentResponse">
+        <wsdl:part name="status" type="typens:requestStatus"/>
+    </wsdl:message>
+    
+    <wsdl:message name="queueDocumentRequest">
+        <wsdl:part name="policyNumber" type="typens:PolicyNumber"/>
+        <wsdl:part name="documentName" type="typens:DocumentName"/>
+        <wsdl:part name="csuId" type="xsd:int"/>
+        <wsdl:part name="deliveryMethod" type="typens:DeliveryMethod"/>
+        <wsdl:part name="deliveryTarget" type="typens:DeliveryTarget"/>
+        <wsdl:part name="printBucket" type="typens:PrintBucket"/>
+        <wsdl:part name="referenceFields" type="typens:ReferenceFields"/>
+        <wsdl:part name="emailCategoryTarget" type="typens:EmailCategoryTarget"/>
+        <wsdl:part name="emailCategory" type="typens:EmailCategory"/>
+        <wsdl:part name="documentDelivery" type="typens:DocumentDelivery"/>
+		
+        <wsdl:part name="referenceFields" type="typens:ReferenceFields"/>
+        <wsdl:part name="properties" type="typens:Properties"/>
+        <wsdl:part name="variables" type="typens:Variables"/>
+        <wsdl:part name="policycovers" type="typens:PolicyCovers"/>
+        <wsdl:part name="endorsements" type="typens:Endorsements"/>
+        <wsdl:part name="pedalcycles" type="typens:PedalCycles"/>
+        <wsdl:part name="specpossessions" type="typens:SpecPossessions"/>
+        <wsdl:part name="underwritingquestions" type="typens:UnderwritingQuestions"/>
+        <wsdl:part name="propertydetails" type="typens:PropertyDetails"/>
+        <wsdl:part name="inserts" type="typens:Inserts"/>
+    </wsdl:message>
+    
+    <wsdl:message name="queueDocumentResponse">
+        <wsdl:part name="status" type="typens:requestStatus"/>
+    </wsdl:message>
+    
+    <wsdl:message name="fetchDocumentRequest">
+	<wsdl:part name="requestHash" type="xsd:string"/>
+	<wsdl:part name="documentName" type="typens:DocumentName"/>
+    </wsdl:message>
+    
+    <wsdl:message name="fetchDocumentResponse">
+	<wsdl:part name="redirectUrl" type="xsd:string"/>
+    </wsdl:message>
+    
+    <!-- Available operations -->
+    <wsdl:portType name="homeletservicesPortType">
+        <wsdl:operation name="createDocument">
+            <wsdl:input message="tns:createDocumentRequest"/>
+            <wsdl:output message="tns:createDocumentResponse"/>
+        </wsdl:operation>
+	
+        <wsdl:operation name="queueDocument">
+            <wsdl:input message="tns:queueDocumentRequest"/>
+            <wsdl:output message="tns:queueDocumentResponse"/>
+        </wsdl:operation>
+	
+        <wsdl:operation name="fetchDocument">
+            <wsdl:input message="tns:fetchDocumentRequest"/>
+            <wsdl:output message="tns:fetchDocumentResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <!-- SOAP 1.1 binding. Always use rpc literal for best interopability as not all SOAP clients support document -->
+    <wsdl:binding name="soap11SoapBinding" type="tns:homeletservicesPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <wsdl:operation name="createDocument">
+	    <wsdl:documentation>
+		Request syncronous document creation. If the document could not be created, queue it for
+		creation later, and report this in the response.
+	    </wsdl:documentation>
+            <soap:operation soapAction="createDocument" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+            <wsdl:fault name="failure">
+                <soap:fault name="failure" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </wsdl:fault>
+        </wsdl:operation>
+	
+        <wsdl:operation name="queueDocument">
+	    <wsdl:documentation>
+		  Request asyncronous document creation. The document will be queued for creation later.
+	    </wsdl:documentation>
+            <soap:operation soapAction="queueDocument" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+            <wsdl:fault name="failure">
+                <soap:fault name="failure" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </wsdl:fault>
+        </wsdl:operation>
+	
+	
+        <wsdl:operation name="fetchDocument">
+	    <wsdl:documentation>
+		Fetch a generated document.
+	    </wsdl:documentation>
+            <soap:operation soapAction="fetchDocument" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="uri:homeletservices" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+            <wsdl:fault name="failure">
+                <soap:fault name="failure" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="insuranceDocuments">
+        <wsdl:documentation>SOAP v1 interface</wsdl:documentation>
+        <wsdl:port name="soap11Port" binding="tns:soap11SoapBinding">
+            <soap:address location="http://www.homelet.co.uk/soap/insurance-document" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

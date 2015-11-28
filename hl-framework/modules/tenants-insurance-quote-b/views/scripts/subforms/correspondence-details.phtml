@@ -1,0 +1,41 @@
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-correspondencedetails'); ?>
+        </div>
+        Your Correspondence Details
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-correspondencedetails'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->cor_same_address; ?>
+    </div>
+
+    <?php echo $this->element->cor_house_number_name; ?>
+
+    <div class="form-group">
+        <label for="cor_postcode" class="required">Postcode</label>
+        <div class="input-group">
+            <?php
+            echo $this->element->cor_postcode
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+            <span class="input-group-btn">
+                <input type="submit" id="cor_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#cor_house_number_name').val(), $('#cor_postcode').val(), 'cor_postcode', 'cor_address'); return false;" class="btn btn-tertiary" />
+            </span>
+        </div>
+    </div>
+
+    <div id="cor_address_selector" class="form-group">
+        <?php
+        echo $this->element->cor_address
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div id="progress" class="panel panel-default">
+    <?php if ($this->hideProgressBar): ?>
+        <!-- Progress bar not applicable. -->
+    <?php else: ?>
+        <h3 class="quaternary-colour">Overall Progress</h3>
+        <div class="progress">
+            <div class="progress-bar quaternary-background" role="progressbar" aria-valuenow="<?php echo round($this->fractionComplete); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo round($this->fractionComplete); ?>%;">
+                <span class="sr-only"><?php echo round($this->fractionComplete); ?>% complete</span>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<div class="panel panel-secondary">
+    <h3>Landlord Tenant Referencing</h3>
+    <p class="large quaternary-colour">Call: 0845 111 2222</p>
+    <p><a href="mailto:Privatelandlordqueries@homelet.co.uk">Email us</a></p>
+    <p>We&rsquo;re open from 8:30am - 6:30pm Monday to Friday, and 10am - 1pm on Saturday.</p>
+</div>

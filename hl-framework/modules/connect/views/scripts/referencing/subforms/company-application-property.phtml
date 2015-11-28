@@ -1,0 +1,114 @@
+<?php
+// soap example
+#$client = new Zend_Soap_Client("http://homelet.centos5.dev/soap/rg-product-offered?wsdl");
+#$result = $client->fetchProductsSoap("Io","letonly","separate_charge");
+#Zend_Debug::dump($result);
+$session = new Zend_Session_Namespace('hl_connect');
+?>
+
+<script type="text/javascript">
+
+	$().ready(function() {
+		// Get valid product list from server
+		getrgproducts();
+        
+        $('#property_postcode').change(function() {
+            getrgproducts();
+        });
+	});
+
+	function setProduct() {
+		$('#previously_selected_product').val($('#product').val());
+	}
+
+	function getrgproducts(){
+		if($('#property_managed').val() != "" && $('#how_rg_offered').val() != "" && $('#property_postcode').val() != ""){
+			fsa_status = '<?php echo $session->storage->fsastatusabbr;?>';
+			letType = $('#property_managed').val();
+            var howRgOffered = 0;
+            var pattern=new RegExp("^(GY|JE|IM)","gi");
+            
+            if (pattern.test($('#property_postcode').val())){
+                howRgOffered = 4;
+            }else{
+                howRgOffered = $('#how_rg_offered').val();
+            }
+			
+		  // Handler for .ready() called.
+			 $.ajax({
+				 type: "POST",
+				 dataType: 'json',
+				 url: "/json/fetch-rg-products",
+				 data : {
+					 	fsa_status	: fsa_status,
+					 	letType		: letType,
+					 	howRgOffered		: howRgOffered,
+					 	isCompanyApplication: true
+					 },
+			            success: OnSuccess,
+			            error: OnError
+			 });
+		}
+	}
+
+	function OnSuccess(returnJson, status)
+    {
+		$("#product").get(0).options.length = 0;
+		$("#product").get(0).options[0] = new Option("--- Please Select ---", "-1");
+		//alert(data.product);
+		 var howRgOffered = $('#how_rg_offered').val();
+		var msgTitle = 'Warning';
+        var msg = 'Please note if you only offer a Rent collect, Tenant find or Let Only service to your landlords, you cannot also offer them Rent Guarantee for a separate charge as you are not providing a fully managed service. Unfortunately this means you are unable to purchase a Rent Guarantee product.';
+		if((fsa_status.toUpperCase() != "AR" && fsa_status.toUpperCase() != "DIRECT" && fsa_status.toUpperCase() != "NAR") &&
+		   (howRgOffered == 4 || ((letType == "1" || letType == "3") && howRgOffered != "1"))){
+				$.facebox(msgTitle,msg);
+		}
+
+        $.each(returnJson, function(index, item) {
+
+            	$("#product").get(0).options[$("#product").get(0).options.length] = new Option(item.name, item.value);
+	           // alert (item.name);
+        });
+        //alert (returnJson[0]);
+
+		//Select the previously selected product, if applicable.
+		if($('#previously_selected_product').length) {
+			var productId = $('#previously_selected_product').val();
+			$('#product').val(productId);
+		}
+    }
+
+    function OnError(request, status, error)
+    {
+        alert('error');
+    }
+    
+    function restrictionPoductionSelection(){
+            
+    }
+</script>
+<h2>Property To Let</h2>
+<div class="form_section two-col">
+
+     <div class="autoAlt">
+        <?php echo $this->element->property_managed->setOptions(array('onchange'=>'getrgproducts()'))->render();?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->how_rg_offered->setOptions(array('onchange'=>'getrgproducts()'))->render();?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->property_address->setOptions(array('onchange'=>'getrgproducts()'))->render(); ?>
+        <?php echo $this->element->property_postcode; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->tenant_renttotal->setOptions(array('class'=>'first currency'))->render(); ?>
+        <?php echo $this->element->tenant_rentshare; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->tenant_term->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->tenant_startdate; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->tenant_number; ?>
+    </div>
+</div>

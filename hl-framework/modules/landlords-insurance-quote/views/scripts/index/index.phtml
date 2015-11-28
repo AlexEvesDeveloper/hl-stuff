@@ -1,0 +1,45 @@
+<?php echo $this->subHeader('landlords', 'landlords'); ?>
+<div class="corporate">
+    <div class="wrapper two-col">
+        <div class="content">
+            <?php echo $this->content ?>
+            <div class="landlordsQuotePromo">
+                <h2>Landlords Insurance+</h2>
+                <h3>I have <strong>1</strong> property</h3>
+                <p>Comprehensive landlord's insurance for a single property</p>
+                <a class="nav-landlords-button" href="/landlords/insurance-quote/step1">Get a <strong>Quote</strong></a>
+            </div>
+            <div class="portfolioQuotePromo">
+                <h2>Landlords Portfolio Insurance</h2>
+                <h3>I have <strong>more than 1</strong> property</h3>
+                <p>Specialist insurance for property portfolios</p>
+                <a class="nav-landlords-button" href="/portfolio/insurance-quote/step1">Get a <strong>Quote</strong></a>
+            </div>
+            <div class="clear"><br /></div>
+            <div class="product_info_box" style="width: 295px; float: left;">
+                <p>HomeLet understands that landlords need very specialist cover to protect their investment property. That's why our market leading insurance solution includes exactly the cover you need for your rental property, whether it's cover for your rent if your tenant needs to move out because of a disaster; new for old replacement for your contents, an extended no-restriction period between lets; emergency assistance so we'll sort out disasters day or night; or the option of a malicious damage by tenant upgrade. </p>
+            </div>
+            <div class="product_info_box" style="width: 295px; float: right;">
+                <p>HomeLet also insures property portfolios. We will give you one policy and one renewal date and cover is available for your buildings and up to &pound;100,000 for your contents. We can protect your rent and give you employer's and property owner's liability insurance. It is also very easy to add or remove properties as your portfolio develops. Our portfolio insurance will also vastly reduce your administration time and can reduce premiums by up to 45%.  </p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <?php $layout = $this->layout()->getView(); ?>
+            <h4 class="underline-corporate">What our customers say</h4>
+            <div class="blue">
+                <div class="testyhearts">
+                    <div id="testimonials-holder">
+                        <ul>
+                            <?php echo $this->testimonials( 'landlords' ); ?>
+                        </ul>
+                        <div id="test-changer">
+                            <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                            <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<style>
+    .report-view-wrapper {
+        position:relative;
+    }
+    .report_controls{
+        position:absolute;
+        top:25px;
+        right:0;
+    }
+</style>
+               
+<div class="wrapper one-col report-view-wrapper">
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="home"><a href="/referencing" title="Referencing">Referencing</a></li>
+        <li class="last"><a href="/referencing/summary?refno=<?php echo $this->refNo?>" title="Referencing">Reference no: <?php echo$this->refNo?> </a></li>
+        <li class="current_page">View Report</li>
+    </ul>
+            
+    <div class="report_controls">
+        <a href="/reports/view-report-pdf?refno=<?php echo $this->refNo?>&repType=<?php echo $this->repType?>&contentDisposition=attachment" class="nav-corporate-dark-button">Download &amp; Print</a>
+    </div>
+    
+    <br/>
+    
+    <iframe src="/reports/view-report-pdf?refno=<?php echo $this->refNo?>&repType=<?php echo $this->repType?>&contentDisposition=view" width="100%" height="1000" border="0" id="report_preview"></iframe>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        timegenerated1 = <?php echo $this->timegenerated1 ?>;                
+        timegenerated2 = <?php echo $this->timegenerated2 ?>;
+        
+        if (timegenerated1 > 0 && Math.abs(timegenerated1-timegenerated2)>20) {            
+            var message = 'We\'ve noticed that you\'ve used an old link to access this particular referencing report. Just to let you know, this ' +
+                          'report has been updated. To make sure you\'re accessing the latest information, you\'ll now be directed to the latest' +
+                          ' version of the referencing report.' +
+                          '<div style="clear: both; float: right;"><a class="nav-corporate-dark-button" href="#" onclick="$(document).trigger(\'close.facebox\'); return false;">OK, Thanks!</a></div>';
+            $.facebox("Note", message);
+        }
+    });
+
+</script>

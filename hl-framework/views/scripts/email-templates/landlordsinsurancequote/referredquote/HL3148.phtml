@@ -1,0 +1,257 @@
+<?php
+$imageBaseUrl = $this->metaData['imageBaseUrl'] . 'assets/tenant_mailer/images/';
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><?php echo $this->metaData['pageTitle']; ?></title>
+
+    <style type="text/css">
+        body {
+            background-color: #ffffff;
+        }
+
+        h3 {
+            color: #00acac;
+        }
+    </style>
+
+    <?php echo $this->partial('partials/my-homelet-email-styles.phtml') ?>
+
+</head>
+
+<body marginwidth="0" marginheight="0" bgcolor="#ffffff" style="background-color:#ffffff;">
+
+<table width="600" class="table" cellpadding="0" cellspacing="0" id="email-content" align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+    <tr>
+        <td style="background-color:#ffffff;">
+            <table border="0" cellspacing="0" cellpadding="20" align="center" bgcolor="#f1f1f1" style="background-color:#f1f1f1;">
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table style="width:188px;" width="188" class="collapsed" cellpadding="0" cellspacing="0" border="0" align="left">
+                                        <tr>
+                                            <td>
+                                                <a href="http://homelet.co.uk/landlord?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Landlord%20Insurance%20e4%20&amp;utm_campaign=Landlord%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>homelet-logo.png" alt="HomeLet" width="188" height="81" border=0 /></a><br><br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table style="width:372px; height:81px;" width="372" class="collapsed" cellpadding="0" cellspacing="0" border="0" align="right">
+                                        <tr>
+                                            <td valign="middle">
+                                                <p class="right" style="text-align:right;">
+                                                    <strong><span class="larger" style="font-size:17px;">Call us on 0330 333 7190</span><br>
+                                                        to discuss your quote</strong></p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class="reference" style="font-size: 22px;">Your Quote number: <span style="color: #01447b;"><?php echo $this->metaData['quoteNumber']; ?></span></p>
+                        <h1 style="font-size: 26px; color: #01447b;">Your quote has been referred to our underwriting team</h1>
+
+                        <table border="0" cellspacing="0" cellpadding="0" align="center" width="560" class="wide-mobile">
+                            <tr>
+                                <!--left column table-->
+                                <td valign="top">
+                                    <table border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td class="content" width="336">
+                                            <span>
+                                                Dear <?php echo $this->metaData['title']; ?> <?php echo $this->metaData['lastName']; ?>,<br>
+                                                <br>
+                                                Thanks for starting the process of asking us for a quote – your quote has been referred to our Underwriting team because there's something we need to check. We'll be in touch shortly to discuss your quote with you or, alternatively, you can contact us on 0330 333 7190*.<br>
+                                                <br>
+                                                <span class="faded" style="color:#444444;">* You may notice we provide an 0330 telephone number. These numbers are cheaper than 0845 or 0870 numbers and cost the same as calls to local numbers (i.e. 01 and 02 area codes) from both landlines and mobiles.</span><br>
+                                                <br>
+                                                Kind regards,<br>
+                                                <br>
+                                                The HomeLet Team
+                                            </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!--left column table-->
+
+                                <!--right column table-->
+                                <td class="hidden-mobile" valign="top" width="222">
+                                    <table border="0" cellspacing="0" cellpadding="0" class="collapsed" align="right" width="212">
+                                        <tr>
+                                            <td style="background-color: #e5eaed; font-size:1px; line-height:0; -webkit-text-size-adjust:none; height:10px; padding:0;">
+                                                <img src="<?php echo $imageBaseUrl; ?>pod-top.png" alt="pod top" class="hidden-mobile" width="212" height="10" style="font-size:1px; line-height:0; -webkit-text-size-adjust:none; height:10px; padding:0;">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="20" cellspacing="0" class="pod">
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <h3>Why choose HomeLet</h3>
+                                                            <img src="<?php echo $imageBaseUrl; ?>defaqto.png" alt="defaqto 5-star rated landlord cover" width="172" height="107">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <img class="tick" src="<?php echo $imageBaseUrl; ?>tick.png" alt="tick-icon"> Defaqto 5 star rated landlord cover
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <img class="tick" src="<?php echo $imageBaseUrl; ?>tick.png" alt="tick-icon"> Online documents
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <img class="tick" src="<?php echo $imageBaseUrl; ?>tick.png" alt="tick-icon"> Secure online quote
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <img class="tick" src="<?php echo $imageBaseUrl; ?>tick.png" alt="tick-icon"> 15% cheaper when you buy online
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #e5eaed; padding:5px 20px;">
+                                                            <a href="http://homelet.co.uk/landlord?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Landlord%20Insurance%20e4%20&amp;utm_campaign=Landlord%20Insurance" target="_blank">Find out more</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="background-color: #e5eaed; font-size:1px; line-height:0; -webkit-text-size-adjust:none; height:10px;">
+                                                <img src="<?php echo $imageBaseUrl; ?>pod-bottom.png" alt="pod bottom" class="hidden-mobile" width="212" height="10">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!--right column table-->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table border="0" cellpadding="20" cellspacing="0" align="center" bgcolor="#f1f1f1" style="background-color:#f1f1f1;">
+                <tr>
+                    <td colspan="2">
+                        <h2>Product literature for Landlords.</h2>
+                        When you're researching your Landlord Insurance or Rent Guarantee cover it's important that you read the full Policy Documents.<br>
+                        Below you can select the cover that you're interested in and view the relevant Policy Documents.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" width="330">
+                        <img src="<?php echo $imageBaseUrl; ?>pdfIcon.png" alt="PDF" /> <a href="http://homelet.co.uk/assets/documents/Landlord-Insurance+-Policy-Wording-B151-0314.pdf" target="_blank">Landlord Insurance+ Policy Wording</a><br>
+                        <br>
+                        <img src="<?php echo $imageBaseUrl; ?>pdfIcon.png" alt="PDF" /> <a href="http://homelet.co.uk/assets/documents/Landlord-Insurance+-Policy-Summary-HL1238-0314.pdf" target="_blank">Landlord Insurance+ Policy Summary</a>
+                    </td>
+
+                    <td class="landlord-houses" width="230">
+                        <img src="<?php echo $imageBaseUrl; ?>landlord-houses.png" alt="Landlord Insurance" width="230" height="110" />
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color:#ffffff;">
+                <tr>
+                    <td style="width:600px;">
+                        <table width="280" border="0" cellspacing="0" cellpadding="20" class="collapsed" align="left" style="float:left;">
+                            <tr>
+                                <td style="background-color: #e5eaed;">
+                                    <h3>Top tips for Landlords</h3>
+                                    Tips to be a successful landlord, including dealing with problem tenants and property maintenance.<br>
+                                    <br>
+                                    <a href="http://homelet.co.uk/landlord/tips?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Landlord%20Insurance%20e4%20&amp;utm_campaign=Landlord%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>findout-on-grey.png" alt="Find Out More" /></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="280" border="0" cellspacing="0" cellpadding="20" class="collapsed" align="right" style="float:right;">
+                            <tr>
+                                <td style="background-color: #e5eaed;">
+                                    <h3>FAQs</h3>
+                                    All you need to know about what’s covered by our Landlord Insurance<br>
+                                    <ul>
+                                        <li>What does buildings sum insured mean?</li>
+                                        <li>Is Accidental Damage included as standard?</li>
+                                        <li>Can I cover DSS and student properties?</li>
+                                    </ul>
+                                    <a href="http://homelet.co.uk/landlord/help/faq?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Landlord%20Insurance%20e4%20&amp;utm_campaign=Landlord%20Insurance" target="_blank">View our FAQs</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#f1f1f1" style="background-color:#f1f1f1;">
+                <tr>
+                    <td>
+                        <table width="300" border="0" cellspacing="0" cellpadding="10" class="collapsed" align="left" style="float:left;">
+                            <tr>
+                                <td>
+                                    <a href="http://homelet.co.uk/landlord?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Landlord%20Insurance%20e4%20&amp;utm_campaign=Landlord%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>footer-logo.jpg" alt="HomeLet" width="132" height="57" /></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="300" border="0" cellspacing="0" cellpadding="10" class="collapsed" align="right" style="float:right;">
+                            <tr>
+                                <td>
+                                    <a href="https://www.facebook.com/pages/HomeLet/106776409363786" target="_blank"><img src="<?php echo $imageBaseUrl; ?>facebook.png" alt="HomeLet on Facebook" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://twitter.com/homelet" target="_blank"><img src="<?php echo $imageBaseUrl; ?>twitter.png" alt="HomeLet on Twitter" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://www.linkedin.com/company/homelet" target="_blank"><img src="<?php echo $imageBaseUrl; ?>linkedin.png" alt="HomeLet on LinkedIn" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://plus.google.com/u/0/+HomeletCoUkInsurance/" target="_blank"><img src="<?php echo $imageBaseUrl; ?>googleplus.png" alt="HomeLet on Google+" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://www.youtube.com/channel/UCKsMF7b0QBdGj0_o4M3p0Tg" target="_blank"><img src="<?php echo $imageBaseUrl; ?>youtube.png" alt="HomeLet on YouTube" /></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="600" border="0" cellpadding="10" cellspacing="0" align="center">
+                            <tr>
+                                <td colspan="2"><span class="disclaimer" style="font-size:10px; color:#808080; font-weight:bold;">HomeLet is a trading name of Barbon Insurance Group Limited which is authorised and regulated by the Financial Conduct Authority for insurance mediation.</span><br></td>
+                            </tr>
+                            <tr>
+                                <td><p class="disclaimer" style="font-size:10px; color:#808080; font-weight:bold;">Registered in England number 3135797. Registered office address: Hestia House, Unit 2 Edgewest Road, Lincoln LN6 7EL.</p></td>
+                                <td style="width:100px;"><span class="disclaimer" style="float:right; text-align:right; font-size:10px; color:#808080; font-weight:bold;">HL3148 10/14</span><br></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

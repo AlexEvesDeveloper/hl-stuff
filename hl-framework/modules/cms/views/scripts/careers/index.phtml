@@ -1,0 +1,24 @@
+<?php
+echo $this->subHeader('global,careers,corporate', 'corporate');
+?>
+<div class="corporate">
+    <div class="wrapper one-col">
+		<div class="content">
+            <script type="text/javascript">
+                $(function() {
+                    //wire up expander
+                    $('.expanders li a.jobheader').click(function() {
+                        $(this).toggleClass("open");
+                        $(this).next().slideToggle();
+                        return false;
+                    })
+                });
+            </script>
+            <h2 class="orange">Current Vacancies</h2>
+            <ul class="expanders">
+                <?php echo $this->content ?>
+            </ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

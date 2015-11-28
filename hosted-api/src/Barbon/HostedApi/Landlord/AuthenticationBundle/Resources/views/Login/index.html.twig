@@ -1,0 +1,36 @@
+<div class="col-xs-12">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData) }}</div>
+    {% endif %}
+
+    <p>
+        Please enter your login details.  If you don't have a login, please <a id="register-link" href="#register" aria-controls="register" role="tab" data-toggle="tab">register</a> to create your tenant referencing account.
+    </p>
+
+    <div class="authentication-form">
+        <form action="{{ path('barbon_hostedapi_landlord_authentication_login_logincheck') }}" method="post" name="landlord_login_form">
+            <div class="form-group">
+                <label class="control-label required" for="username">E-mail:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label required" for="password">Password:</label>
+                <input type="password" id="password" name="_password" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" id="direct_landlord_login" name="direct_landlord[login]" class="btn-primary pull-right btn">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<script>
+    $('#register-link').click(function(){
+        $('#register-tab').toggleClass('active');
+        $('#login-tab').toggleClass('active');
+    });
+</script>

@@ -1,0 +1,28 @@
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('tenants-insurance-quote-help-idd')); ?>
+        </span>
+        Initial Disclosure Document
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-idd'); ?>
+        </div>
+    </div>
+
+    <div class="form-group idd-group">
+        <p>Please read our short Initial Disclosure Document, this provides information on who regulates us and the services that we offer.</p>
+
+        <a href="/assets/legacy-cms/media/policy-documents/HL2173_IDD_Tenant.pdf" target="_blank" class="idd">Tenant's Insurance Initial Disclosure Document</a>
+
+        <div class="checkbox checkbox-idd">
+            <label for="idd">
+                <?php echo $this->element->idd; ?>
+                I confirm that I have read this document
+            </label>
+        </div>
+    </div>
+</div>

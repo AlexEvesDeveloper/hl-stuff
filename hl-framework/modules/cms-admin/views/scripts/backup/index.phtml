@@ -1,0 +1,133 @@
+<?php
+
+// Config-controlled disabling
+$disabledBackup = $disabledRestore = ' disabled="disabled"';
+$disableBackupMessage = $disableRestoreMessage = '<div class="disabledMessage">(disabled in config)</div>';
+if ($this->enabled == 'partial') {
+    $disabledBackup = '';
+    $disableBackupMessage = '';
+} elseif ($this->enabled == 'full') {
+    $disabledBackup = $disabledRestore = '';
+    $disableBackupMessage = $disableRestoreMessage = '';
+}
+
+?>
+<style type="text/css">
+.left {
+    width: 49%;
+    height: 10em;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+.right {
+    width: 49%;
+    height: 10em;
+    float: right;
+    position: relative;
+    text-align: center;
+}
+.stupidlyBigButton {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    font-size: 200%;
+    width: 50%;
+    height: 50%;
+    -webkit-appearance: button;
+}
+.disabledMessage {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+.code {
+    font-family: 'Courier New', Courier, monospace;
+}
+</style>
+<?php
+
+$badMessages = $goodMessages = $neutralMessages = '';
+
+if (isset($this->messages) && count($this->messages) > 0) {
+
+    foreach($this->messages as $message) {
+        if (substr($message, 0, 1) == '-') {
+            $badMessages .= htmlentities(substr($message, 1)) . "<br />\n";
+        } elseif (substr($message, 0, 1) == '+') {
+            $goodMessages .= htmlentities(substr($message, 1)) . "<br />\n";
+        } else {
+            $neutralMessages .= htmlentities($message) . "<br />\n";
+        }
+    }
+}
+
+?>
+<script type="text/javascript">
+setTimeout(function() {
+    $('.done, .error, .meh').animate({opacity: '0'}, 1000).slideUp(500);
+}, 3000);
+</script>
+<h1>CMS Backup / Restore</h1><br />
+<?php
+
+if ($badMessages != '') {
+    ?>
+    <p class="msg error">
+        <?php echo $badMessages; ?>
+    </p>
+    <?php
+}
+if ($goodMessages != '') {
+    ?>
+    <p class="msg done">
+        <?php echo $goodMessages; ?>
+    </p>
+    <?php
+}
+if ($neutralMessages != '') {
+    ?>
+    <p class="msg meh">
+        <?php echo $neutralMessages; ?>
+    </p>
+    <?php
+}
+
+?>
+<p>
+    Use this feature to create a complete backup of CMS content, or to restore a previously made complete backup of CMS content.
+</p>
+<p>
+    <strong>Warning:</strong> Use with extreme caution.  Beware that if there is a mismatch between the system versions when backing up and restoring between different servers (or the same server before and after any code changes) that a restore of an incorrectly matched version may break the entire CMS and anything it feeds into.  Also note that the backup contains sensitive data such as CMS user names and encrypted passwords.  The restore facility overwrites <em>all</em> CMS database structure and content, including:
+</p>
+<ul>
+    <li>CMS user details including user names, access levels and passwords.</li>
+    <li>Live images.</li>
+    <li>Pages.</li>
+    <li>Testimonials.</li>
+    <li>Header quotes.</li>
+    <li>News.</li>
+    <li>Job vacancies.</li>
+    <li>Connect messages.</li>
+    <li>And everything else.</li>
+</ul>
+<p>
+    <strong>Important note:</strong> When using the restore facility you must upload a previously made backup with the <strong>original backup filename</strong> intact.  There is a security hash within the filename that mitigates dangerous/malicious data from entering the system.
+</p>
+<p>
+    <strong>Important note:</strong> Feature may be fully or partially disabled from the <span class="code">cms.ini</span> configuration (see <span class="code">cms.backups.enabled</span>) - current value is &quot;<span class="code"><?php echo $this->enabled; ?></span>&quot;.  Also, <span class="code">php.ini</span> configuration (<span class="code">post_max_size</span> and <span class="code">upload_max_filesize</span>) may need temporary changes to allow for large uploads when restoring a backup.
+</p>
+<p>
+    <strong>Important note:</strong> <em>Use of this feature is logged for your security.</em>
+</p>
+<form id="backup_restore" name="backup_restore" action="" method="post" enctype="multipart/form-data">
+    <div class="left">
+        <input type="submit" name="backup" value="Backup" class="stupidlyBigButton"<?php echo $disabledBackup; ?> /><?php echo $disableBackupMessage; ?>
+    </div>
+    <div class="right">
+        <input type="file" name="restorefile"<?php echo $disabledRestore;?> /><br />
+        <input type="submit" name="restore" value="Restore" class="stupidlyBigButton"<?php echo $disabledRestore; ?> /><?php echo $disableRestoreMessage; ?>
+    </div>
+</form>

@@ -1,0 +1,17 @@
+<?php echo $this->headLink(); echo $this->headScript();?>
+<img src="/assets/connect/images/homelet-logo.png"/>
+<br/><br/>
+<div class="reportHeading">Rent Guarantee Renewals Suite</div>
+<div class="separator"></div>
+<div class="box" style="width:50%">
+	<div class="box_title">Print Landlord Renewal <?php echo $this->documentType;?></div>
+	<div class="box_content">
+		<?php if($this->fileName!="") {?>
+			<p><a target="_blank" href="/connect/download-document?f=<?php echo $this->fileName;?>">Download your Landlords Renewal <?php echo $this->documentType;?></a></p>
+		<?php } else {?>
+			<p>Error in generating the Renewal Document. Please try again.</p>
+		<?php }?>
+		<div class="separator"></div>
+		<input type="button" class="round-button" onclick="location.href='/connect/rentguarantee-renewal'" value=" Return to Renewals Suite "/>&nbsp;
+	</div>
+</div>

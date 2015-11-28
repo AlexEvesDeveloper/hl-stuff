@@ -1,0 +1,82 @@
+services:
+    barbon.hosted_api.app.form.common.type.prospective_landlord_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\ProspectiveLandlordType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.titles
+            - @barbon.hosted_api.app.form.common.type.address_type
+            - @barbon.hosted_api.app.form.common.event_listener.not_prospective_landlords_email_bridge_subscriber
+
+
+    barbon.hosted_api.app.form.common.type.letting_referee_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\LettingRefereeType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.letting_referee_type
+            - @barbon.hosted_api.app.form.common.type.address_type
+            - @barbon.hosted_api.app.form.common.event_listener.letting_referee_phone_constraint_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.letting_referee_email_constraint_subscriber
+
+    barbon.hosted_api.app.form.common.type.address_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\AddressType
+
+    barbon.hosted_api.app.form.common.type.bank_account_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\BankAccountType
+
+    barbon.hosted_api.app.form.common.type.financial_referee_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\FinancialRefereeType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.financial_referee_type
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_decorator_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_phone_constraint_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_email_constraint_subscriber
+
+    barbon.hosted_api.app.form.common.type.previous_address_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\PreviousAddressType
+
+    barbon.hosted_api.app.form.common.type.uploaded_file_collection_item_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\UploadedFileCollectionItemType
+
+    barbon.hosted_api.app.form.common.type.file_collection_item_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Type\FileCollectionItemType
+
+    # Event listeners
+    barbon.hosted_api.app.form.common.event_listener.not_in_array_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\NotInArrayBridgeSubscriber
+        calls:
+            - [addConstraintSubscriber, [@barbon.hosted_api.app.form.common.event_listener.letting_referee_phone_constraint_subscriber]]
+            - [addConstraintSubscriber, [@barbon.hosted_api.app.form.common.event_listener.financial_referee_phone_constraint_subscriber]]
+
+    barbon.hosted_api.app.form.common.event_listener.not_applicant_email_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\NotInArrayBridgeSubscriber
+        calls:
+            - [addConstraintSubscriber, [@barbon.hosted_api.app.form.common.event_listener.letting_referee_email_constraint_subscriber]]
+            - [addConstraintSubscriber, [@barbon.hosted_api.app.form.common.event_listener.financial_referee_email_constraint_subscriber]]
+
+    barbon.hosted_api.app.form.common.event_listener.not_prospective_landlords_email_bridge_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\NotInArrayBridgeSubscriber
+        calls:
+            - [addConstraintSubscriber, [@barbon.hosted_api.app.form.common.event_listener.applicant_email_constraint_subscriber]]
+
+    barbon.hosted_api.app.form.common.event_listener.applicant_email_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\ApplicantEmailConstraintSubscriber
+
+    barbon.hosted_api.app.form.common.event_listener.letting_referee_phone_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\LettingRefereePhoneConstraintSubscriber
+
+    barbon.hosted_api.app.form.common.event_listener.letting_referee_email_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\LettingRefereeEmailConstraintSubscriber
+
+    barbon.hosted_api.app.form.common.event_listener.financial_referee_phone_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\FinancialRefereePhoneConstraintSubscriber
+
+    barbon.hosted_api.app.form.common.event_listener.financial_referee_email_constraint_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\FinancialRefereeEmailConstraintSubscriber
+
+    barbon.hosted_api.app.form.common.event_listener.financial_referee_decorator_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\FinancialRefereeDecoratorSubscriber
+        arguments:
+            - @barbon.hosted_api.app.form.common.type.address_type
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_phone_constraint_subscriber
+            - @barbon.hosted_api.app.form.common.event_listener.financial_referee_email_constraint_subscriber
+
+    barbon.hosted_api.app.form.common.event_listener.financial_referee_status_designation_subscriber:
+        class: Barbon\HostedApi\AppBundle\Form\Common\EventListener\FinancialRefereeStatusDesignationSubscriber

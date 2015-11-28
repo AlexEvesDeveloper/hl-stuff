@@ -1,0 +1,32 @@
+<?php
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_tradingaddress'];
+?>
+<h2>Your Trading Address</h2>
+<?php echo $this->helpPopup('Your Trading Address', 'letting-agents-application-help-tradingaddressdetails'); ?>
+<div class="clear"></div>
+
+<div class="form_section one-col">
+    <div class="alt">
+  		<?php echo $this->element->trading_uid; ?>
+        <?php echo $this->element->trading_postcode; ?>
+        <input type="submit" id="trading_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#trading_house_number_name').val(), $('#trading_postcode').val(), 'trading_postcode', 'trading_address'); return false;" />
+    </div>
+    <div id="trading_address_selector">
+        <?php echo $this->element->trading_address->setAttribs(array('style' => 'width: 320px;'))->render(); ?>
+    </div>
+    <div id="trading_address_details">
+    	<div>
+    		<?php echo $this->element->trading_address_line1; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->trading_address_line2; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->trading_address_line3; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->trading_address_postcode; ?>
+    	</div>
+    </div>
+</div>

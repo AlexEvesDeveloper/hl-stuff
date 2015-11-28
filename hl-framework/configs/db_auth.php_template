@@ -1,0 +1,76 @@
+<?php
+// Define DB access constants
+
+// Server names/ip addresses
+$dbParams = array(
+    'MYSQL4_HOST'                       => 'centos4.dev',
+    'MYSQL5_HOST'                       => 'centos5.dev',
+    
+    // Slave replication servers, read only
+    'MYSQL4SLAVE_HOST'                  => 'centos4.dev',
+    'KEYHOUSE_HOST'                     => 'VLNSVKHT001',
+
+    // Legacy Homelet - MYSQL4 'homeletuk_com'
+    'LEGACY_HOMELET_USER'               => 'root',
+    'LEGACY_HOMELET_PASSWORD'           => 'Password1',
+    
+    // Legacy Insurance - MYSQL4 'homeletuk_com'
+    'LEGACY_SLAVE_HOMELET_USER'         => 'root',
+    'LEGACY_SLAVE_HOMELET_PASSWORD'     => 'Password1',
+
+    // Legacy Webleads - MYSQL4 'FORMWATCHER'
+    'LEGACY_WEBLEADS_USER'              => 'root',
+    'LEGACY_WEBLEADS_PASSWORD'          => 'Password1',
+
+    // Legacy Referencing - MYSQL4 'referencing_uk'
+    'LEGACY_REFERENCING_USER'           => 'root',
+    'LEGACY_REFERENCING_PASSWORD'       => 'Password1',
+    
+    // Legacy Referencing - MYSQL4 'referencing_uk'
+    'LEGACY_SLAVE_REFERENCING_USER'     => 'root',
+    'LEGACY_SLAVE_REFERENCING_PASSWORD' => 'Password1',
+
+    // Referencing - MYSQL5 'referencing'
+    'REFERENCING_USER'                  => 'root',
+    'REFERENCING_PASSWORD'              => 'Password1',
+
+    // Homelet Admin - MYSQL5 'homelet_admin'
+    'HOMELET_ADMIN_USER'                => 'root',
+    'HOMELET_ADMIN_PASSWORD'            => 'Password1',
+
+    // Portfolio - MYSQL5 'portfolio'
+    'PORTFOLIO_USER'                    => 'root',
+    'PORTFOLIO_PASSWORD'                => 'Password1',
+
+    // Legacy Insurance - MYSQL4 'homelet_insurance_com'
+    'LEGACY_INSURANCE_USER'             => 'root',
+    'LEGACY_INSURANCE_PASSWORD'         => 'Password1',
+
+    // Connect - MYSQL5 'connect'
+    'CONNECT_USER'                      => 'root',
+    'CONNECT_PASSWORD'                  => 'Password1',
+
+    // Homelet - MYSQL5 'homelet'
+    'HOMELET_USER'                      => 'root',
+    'HOMELET_PASSWORD'                  => 'Password1',
+
+    // Homelet CMS - MYSQL5 'homelet_cms'
+    'HOMELET_CMS_USER'                  => 'root',
+    'HOMELET_CMS_PASSWORD'              => 'Password1',
+
+    // Legacy Homelet Data Warehouse - MYSQL4 'homeletDW'
+    'LEGACY_DATAWAREHOUSE_USER'         => 'root',
+    'LEGACY_DATAWAREHOUSE_PASSWORD'     => 'Password1',
+
+    // Keyhouse DB
+    'KEYHOUSE_USER'                     => 'chrisramsay',
+    'KEYHOUSE_PASSWORD'                 => 'Password1',
+
+    // Letting Agents MYSQL 5 database
+    'LETTING_AGENT_USER'                => 'root',
+    'LETTING_AGENT_PASSWORD'            => 'Password1',
+	
+    // Legacy FSA MYSQL 4 database
+    'LEGACY_FSA_USER'                   => 'root',
+    'LEGACY_FSA_PASSWORD'               => 'Password1',
+);

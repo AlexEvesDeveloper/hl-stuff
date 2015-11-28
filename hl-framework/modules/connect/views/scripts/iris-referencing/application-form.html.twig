@@ -1,0 +1,428 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li><a href="/iris-referencing">Referencing</a></li>
+        <li class="last"><a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">Reference no: {{ application.referenceNumber }}</a></li>
+        <li class="current_page">Application Form</li>
+    </ul>
+{% endblock %}
+
+{% macro changeButton(application, formUrls) %}
+    {% set url = ((1 == application.applicationType) ? formUrls.tenant : formUrls.guarantor) ~ '?continue=1&changeOnlyThisForm=1' %}
+    <a class="application-form-change-link" href="/iris-new-reference/tenant-continue-application?uuid={{ application.referencingApplicationUuId }}&formUrl={{ url | url_encode(true) }}">
+        {{ 'Change' | trans }}
+    </a>
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% block body %}
+    <div class="reference-summary">
+        <h2>Application Form</h2>
+
+        {#<div class="reference-summary-section">#}
+            {#<div class="reference-summary-section-heading">#}
+                {#<h3>Agent Details</h3>#}
+            {#</div>#}
+            {#<p>#}
+                {#<em>TODO: Request agent details</em>#}
+            {#</p>#}
+        {#</div>#}
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Property Details</h3>
+            </div>
+            <dl>
+                <dt><strong>Property Address</strong></dt>
+                <dd>{% include '/iris-referencing/includes/address.html.twig' with { 'address': case.address } %}</dd>
+
+                <dt><strong>Share of Rent</strong></dt>
+                <dd>&pound; {{ application.rentShare | number_format(2) }}</dd>
+
+                <dt><strong>Tenancy Start Date</strong></dt>
+                <dd>{{ case.tenancyStartDate | date('jS F, Y') }}</dd>
+
+                <dt><strong>Tenancy Term</strong></dt>
+                <dd>{{ case.tenancyTermInMonths }} Months</dd>
+
+                <dt><strong>Number of Tenants</strong></dt>
+                <dd>{{ case.numberOfTenants }}</dd>
+
+            </dl>
+
+            <div class="clearfix">
+                {{ macros.changeButton(application, { tenant: '/iris-new-reference', guarantor: '' }) }}
+            </div>
+
+        </div>
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Tenant Personal Details</h3>
+            </div>
+            <dl>
+                <dt><strong>Name</strong></dt>
+                <dd>{{ application.title }} {{ application.firstName }} {{ application.lastName }}</dd>
+
+                {% if application.otherName %}
+                    <dt><strong>Previous/Other Name</strong></dt>
+                    <dd>{{ application.otherName }}</dd>
+                {% endif %}
+
+                <dt><strong>Date of Birth</strong></dt>
+                <dd>{{ application.birthDate | date('jS F, Y') }} ({{ application.birthDate | date('d/m/Y') }})</dd>
+
+                {% if application.bankAccount %}
+                    <dt><strong>Bank Account No.</strong></dt>
+                    <dd>{{ application.bankAccount.accountNumber }}</dd>
+
+                    <dt><strong>Bank Sort Code</strong></dt>
+                    <dd>{{ application.bankAccount.accountSortCode }}</dd>
+                {% endif %}
+
+                {% if application.phone %}
+                    <dt><strong>Telephone</strong></dt>
+                    <dd>{{ application.phone }}</dd>
+                {% endif %}
+
+                {% if application.mobile %}
+                    <dt><strong>Mobile</strong></dt>
+                    <dd>{{ application.mobile }}</dd>
+                {% endif %}
+
+                {% if application.email %}
+                    <dt><strong>Email</strong></dt>
+                    <dd><a href="mailto:{{ application.email }}">{{ application.email }}</a></dd>
+                {% endif %}
+
+                {% if application.residentialStatus %}
+                    <dt><strong>Residential Status</strong></dt>
+                    <dd>{{ application.residentialStatus | iris_lookup_name('residentialStatuses') }}</dd>
+                {% endif %}
+
+                {% if application.employmentStatus %}
+                    <dt><strong>Employment Status</strong></dt>
+                    <dd>{{ application.employmentStatus | iris_lookup_name('employmentStatuses') }}</dd>
+                {% endif %}
+
+                <dt><strong>Likely to Change</strong></dt>
+                <dd>{{ application.hasEmployedChanged ? 'Yes' : 'No' }}</dd>
+
+                <dt><strong>Income</strong></dt>
+                <dd>
+                    {% if application.grossIncome is not null %}
+                        &pound; {{ application.grossIncome | number_format(2) }}
+                    {% else %}
+                        <em>Not Provided</em>
+                    {% endif %}
+                </dd>
+
+                <dt><strong>Share of Rent</strong></dt>
+                <dd>&pound; {{ application.rentShare | number_format(2) }}</dd>
+
+                <dt><strong>Any CCJs or adverse credit history?</strong></dt>
+                <dd>{{ application.hasCCJ ? 'Yes' : 'No' }}</dd>
+
+            </dl>
+
+            <div class="clearfix">
+                {{ macros.changeButton(application, { tenant: '/iris-new-reference/tenant-details', guarantor: '' }) }}
+            </div>
+
+        </div>
+
+        {% if application.lettingReferee %}
+            <div class="reference-summary-section">
+                <div class="reference-summary-section-heading">
+            
+                    {% if application.lettingReferee.type==1 %}
+                        {% set lettingRefereeType = "Letting/Estate Agent" %}   
+                    {% elseif application.lettingReferee.type==2 %}
+                        {% set lettingRefereeType = "Solicitor" %}
+                    {% elseif application.lettingReferee.type==3 %}
+                        {% set lettingRefereeType = "Managing Agent" %}
+                    {% else %}
+                        {% set lettingRefereeType = "Landlord" %}
+                    {% endif %}
+                    <h3>Current {{ lettingRefereeType }} Details</h3>
+                </div>
+                    <dl>
+                        <dt><strong>Name</strong></dt>
+                        {% if application.lettingReferee.name %}
+                            <dd>{{ application.lettingReferee.name }}</dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+                        
+                        <dt><strong>Address</strong></dt>
+                        {% if application.lettingReferee.address %}
+                            <dd>{% include '/iris-referencing/includes/address.html.twig' with { 'address': application.lettingReferee.address } %}</dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+
+                        <dt><strong>Tel Day</strong></dt>
+                        {% if application.lettingReferee.dayPhone %}
+                            <dd>{{ application.lettingReferee.dayPhone }}</dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+
+                        <dt><strong>Fax</strong></dt>
+                        {% if application.lettingReferee.fax %}
+                            <dd>{{ application.lettingReferee.fax }}</dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+
+                        <dt><strong>Tel Eve</strong></dt>
+                        {% if application.lettingReferee.dayPhone %}
+                            <dd>{{ application.lettingReferee.eveningPhone }}</dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+                        
+                        <dt><strong>Email</strong></dt>
+                        {% if application.lettingReferee.email %}
+                            <dd><a href="mailto:{{ application.lettingReferee.email }}">{{ application.lettingReferee.email }}</a></dd>
+                        {% else %}
+                            <dd></dd>
+                        {% endif %}
+                    </dl>
+
+                <div class="clearfix">
+                    {{ macros.changeButton(application, { tenant: '/iris-new-reference/letting-referee', guarantor: '' }) }}
+                </div>
+
+            </div>
+        {% endif %}
+
+        {% if application.addressHistories %}
+            <div class="reference-summary-section">
+                <div class="reference-summary-section-heading">
+                    <h3>Address History</h3>
+                </div>
+                {% for addressHistoryItem in application.addressHistories %}
+                    {% if loop.first %}
+                        <h4 class="clearfix">Current Address of Prospective Tenant</h4>
+                    {% else %}
+                        <h4 class="clearfix">Previous Address of Prospective Tenant</h4>
+                    {% endif %}
+                    <dl>
+                        <dt><strong>Address</strong></dt>
+                        <dd>{% include '/iris-referencing/includes/address.html.twig' with { 'address': addressHistoryItem.address } %}</dd>
+
+                        <dt><strong>Duration</strong></dt>
+                        <dd>
+                            {{ addressHistoryItem.durationMonths | iris_duration_years }} Years
+                            {{ addressHistoryItem.durationMonths | iris_duration_months }} Months
+                        </dd>
+                    </dl>
+                {% endfor %}
+
+                <div class="clearfix">
+                    {{ macros.changeButton(application, { tenant: '/iris-new-reference/address-history', guarantor: '' }) }}
+                </div>
+
+            </div>
+        {% endif %}
+
+        {% if application.financialReferees  %}
+
+            {% for financialReferee in application.financialReferees %}
+                <div class="reference-summary-section">
+                    <div class="reference-summary-section-heading">
+                        <h3>{{ financialReferee.financialRefereeStatus | iris_lookup_name('financialRefereeStatuses') }} Financial Referee</h3>
+                    </div>
+                    <dl>
+
+                        {% if financialReferee.companyName %}
+                            <dt><strong>Company Name</strong></dt>
+                            <dd>{{ financialReferee.companyName }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.contactName %}
+                            <dt><strong>Contact Name</strong></dt>
+                            <dd>{{ financialReferee.contactName }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.contactPosition %}
+                            <dt><strong>Contact Position</strong></dt>
+                            <dd>{{ financialReferee.contactPosition }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.address %}
+                            <dt><strong>Address</strong></dt>
+                            <dd>{% include '/iris-referencing/includes/address.html.twig' with { 'address': financialReferee.address } %}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.phone %}
+                            <dt><strong>Tel</strong></dt>
+                            <dd>{{ financialReferee.phone }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.fax %}
+                            <dt><strong>Fax</strong></dt>
+                            <dd>{{ financialReferee.fax }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.email %}
+                            <dt><strong>Email</strong></dt>
+                            <dd><a href="mailto:{{ financialReferee.email }}">{{ financialReferee.email }}</a></dd>
+                        {% endif %}
+
+                        {% if financialReferee.applicantAnnualIncome %}
+                            <dt><strong>Annual Income</strong></dt>
+                            <dd>&pound; {{ financialReferee.applicantAnnualIncome | number_format(2) }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.applicantPositionHeld %}
+                            <dt><strong>Position Held by Applicant</strong></dt>
+                            <dd>{{ financialReferee.applicantPositionHeld }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.payrollNumber %}
+                            <dt><strong>Payroll Number</strong></dt>
+                            <dd>{{ financialReferee.payrollNumber }}</dd>
+                        {% endif %}
+
+                        {% if financialReferee.employmentStartDate %}
+                            <dt><strong>Start Date</strong></dt>
+                            <dd>{{ financialReferee.employmentStartDate | date('jS F, Y') }} ({{ financialReferee.employmentStartDate | date('d/m/Y') }})</dd>
+                        {% endif %}
+
+                    </dl>
+                    <div class="clearfix">
+                        {{ macros.changeButton(application, { tenant: '/iris-new-reference/financial-referee', guarantor: '' }) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+        <div class="reference-summary-section">
+            <div class="reference-summary-section-heading">
+                <h3>Tenant Declaration</h3>
+            </div>
+            <p>
+                Your reference will be completed by HomeLet on behalf of your letting agent.
+                HomeLet is part of the Barbon Insurance Group Limited and for the purposes of this application,
+                Barbon is the Data Controller as defined in the Data Protection Act 1998 (the “Act”).
+            </p>
+
+            <p>
+                In order to complete your application, HomeLet will consult with a number of sources to
+                verify the information, including a licensed credit reference agency.
+                As a result of the information received:
+            </p>
+
+            <ul class="reset-ul">
+                <li>
+                    HomeLet may pass on any information supplied to your landlord and/or letting agent,
+                    including the results of any linked verification checks.
+                </li>
+                <li>
+                    By consulting with a credit reference agency, HomeLet will share your information
+                    with them and the agency may record the results of this search.  This search may
+                    show how you conduct payments with other organisations.  From time to time, this
+                    information may also be used for debt tracing and fraud prevention.  You may request
+                    the name and address of the Credit Reference agency HomeLet use and you may also
+                    apply for a copy of the information they provided to HomeLet.
+                </li>
+                <li>
+                    If you default on your rental payments, HomeLet may record this on a centrally held
+                    database of defaulting tenants, and such a default could affect any future application
+                    for tenancies, credit, and/or insurance.
+                </li>
+                <li>
+                    HomeLet may use debt collection agencies or tracing agents to trace your whereabouts
+                    and recover any monies owed to HomeLet.
+                </li>
+                <li>
+                    If false or inaccurate information is provided and fraud is identified, details will be passed to fraud
+                    prevention agencies to prevent fraud and money laundering.
+                </li>
+            </ul>
+
+            <p>
+                Information may be sent to you and your nominated referees by email.  This information
+                will only be sufficient enough to identify you and it won&rsquo;t be excessive; however you
+                should be aware that information sent via electronic means can&rsquo;t be guaranteed to
+                be secure.
+            </p>
+
+            <p>
+                The provisions of Ground 17 of the Housing Act 1996 will apply to this application.
+                If any information within this application is found to be untrue it may be grounds to
+                terminate the tenancy agreement.
+            </p>
+
+            <p>
+                <strong>
+                    Please read and complete the following statements carefully – it&rsquo;s important that
+                    you provide your consent for the checks by marking the boxes next to the text.
+                </strong>
+            </p>
+
+            <p>
+                <input class="dpa-check" type="checkbox" checked="checked" readonly="readonly" disabled="disabled" />
+
+                Yes, I confirm that the information provided in this application form is true to the best
+                of my knowledge, and I&rsquo;m happy with the checks which HomeLet will complete as detailed above.
+                These results may be accessed again if I apply for a tenancy in the future.
+            </p>
+
+            <p>
+                <input class="dpa-check" type="checkbox" checked="checked" readonly="readonly" disabled="disabled" />
+
+                Yes, I&rsquo;m happy for HomeLet to contact my referees (including those outside the EEA),
+                with personal information which has been provided in this form to allow them to
+                verify the information about my earnings, dates of employment and previous tenancy term.
+            </p>
+
+            <p>
+                Please note, if you&rsquo;d like to find out more about any of the information sources we
+                access to complete your application, please visit
+                <a href="http://homelet.co.uk/ref-info" target="_blank">homelet.co.uk/ref-info</a>.
+            </p>
+
+            <p>
+                Following the completion of your reference, HomeLet or other Barbon Group Companies may
+                contact you about additional services we can offer which may be of interest to you.
+                These services could help protect your liability as a tenant as well as your personal contents.
+                If you don&rsquo;t want us to contact you, please tick this box
+                <input class="dpa-check" type="checkbox" {{ application.canContactApplicantByPhoneAndPost ?: 'checked="checked"' }} readonly="readonly" disabled="disabled" />.
+                We&rsquo;ll never pass your
+                details on to a third party unless we ask for your express permission.  If you&rsquo;d like to
+                unsubscribe from any services at any time, then please contact HomeLet on unsubscribe@homelet.co.uk
+            </p>
+
+            <p>
+                <input class="dpa-check" type="checkbox" {{ application.canContactApplicantBySMSAndEmail ? 'checked="checked"' }} readonly="readonly" disabled="disabled" />
+                Yes, I&rsquo;m happy for HomeLet and other Barbon Group Companies to contact me occasionally by email or SMS with exclusive offers, together with other information from selected third parties about products and services which could benefit me as a tenant.
+            </p>
+
+            <br>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Name</td>
+                    <td class="to-sign">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Signed</td>
+                    <td class="to-sign">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td class="to-sign">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+
+        <a onclick="window.print(); return false;" class="btn btn-primary">Print</a>
+    </div>
+{% endblock %}

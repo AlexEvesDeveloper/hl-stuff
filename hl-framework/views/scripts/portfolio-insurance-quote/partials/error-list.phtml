@@ -1,0 +1,26 @@
+<?php
+if (count($this->errors) > 0) {
+    ?>
+    <p>There's only <?php echo count($this->errors); ?> mandatory field<?php echo count($this->errors) > 1 ? 's' : ''; ?> left to complete in this step:</p>
+    <ul class="errorList">
+        <?php
+        foreach ($this->errors as $error)
+        {
+            if (is_array($error)) {
+                foreach ($error as $key => $value)
+                {
+                    ?>
+                    <li><?php echo $value; ?></li>
+                    <?php
+                }
+            } else {
+                ?>
+                <li><?php echo $error; ?></li>
+                <?php
+            }
+        }
+        ?>
+    </ul>
+    <?php
+}
+?>

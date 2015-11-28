@@ -1,0 +1,24 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <div class="half_form">
+        	<?php echo $this->landlordssalesreport; ?>
+        </div>
+        <div class="half_form">
+        	<?php echo $this->tenantssalesreport; ?>
+    	</div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function()
+	{
+		$('#landlordsinsurancesalesreport_end, #tenantsinsurancesalesreport_end').datePicker().val(new Date().asString()).trigger('change');
+		$('#landlordsinsurancesalesreport_start, #tenantsinsurancesalesreport_start').datePicker(
+			{
+				
+				startDate: '01/01/1970', // This needs to be a date range that we can provide without killing the database
+				endDate: (new Date()).asString()
+			}
+		).val(Date.parse('3 months ago').asString()).trigger('change');
+	});
+</script>

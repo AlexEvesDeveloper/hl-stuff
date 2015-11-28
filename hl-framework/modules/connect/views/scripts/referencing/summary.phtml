@@ -1,0 +1,490 @@
+<?php
+
+//Zend_Debug::dump($this->reference);
+//Zend_Debug::dump($this->linkedRefs);
+
+$title = $firstName = $lastName = $maidenName = $dob =
+    $applicantType =
+    $email1 = $telephone1 = $telephone2 =
+    $residentialStatus = $employmentStatus = $grossAnnualIncome = $rentShare =
+    $propertyAddressWithoutPostcode = $propertyAddressPostcode =
+    '';
+
+if (!is_null($this->reference->referenceSubject)) {
+    $refSub = $this->reference->referenceSubject;
+
+    // Personal details
+    $title      = $refSub->name->title;
+    $firstName  = $refSub->name->firstName;
+    $lastName   = $refSub->name->lastName;
+    $maidenName = $refSub->name->maidenName;
+    $dob        = (!is_null($refSub->dob)) ? $refSub->dob->toString('dd/MM/YYYY') : '';
+    $email1     = $refSub->contactDetails->email1;
+    $telephone1 = $refSub->contactDetails->telephone1;
+    $telephone2 = $refSub->contactDetails->telephone2;
+
+    // Applicant type
+    $applicantTypes = array_flip(Model_Referencing_ReferenceSubjectTypes::iterableKeys());
+    $applicantType = ucwords(strtolower($applicantTypes[$this->reference->referenceSubject->type]));
+    $applicantType = ($applicantType == 'Tenant') ? 'Applicant' : $applicantType;
+
+    // Residential status
+    $currentResidenceManager = new Manager_Referencing_Residence();
+    $currentResidence = $currentResidenceManager->findSpecificResidence(
+        $refSub->residences,
+        Model_Referencing_ResidenceChronology::CURRENT
+    );
+    if (!is_null($currentResidence) && !is_null($currentResidence->status)) {
+        $currentResidenceStatus = $currentResidence->status;
+        $residentialStatii = array_flip(Model_Referencing_ResidenceStatus::iterableKeys());
+
+        $residentialStatus = ucwords(strtolower($residentialStatii[$currentResidenceStatus]));
+    }
+
+    // Current employment status
+    $currentOccupationManager = new Manager_Referencing_Occupation();
+    $currentOccupation = $currentOccupationManager->findSpecificOccupation(
+        $refSub->occupations,
+        Model_Referencing_OccupationChronology::CURRENT,
+        Model_Referencing_OccupationImportance::FIRST
+    );
+    if (!is_null($currentOccupation) && !is_null($currentOccupation->type)) {
+        $currentOccupationType = $currentOccupation->type;
+        $occupationTypes = array_flip(Model_Referencing_OccupationTypes::iterableKeys());
+
+        $employmentStatus = ucwords(strtolower($occupationTypes[$currentOccupationType]));
+    }
+
+    // Gross annual income
+    $secondOccupationManager = new Manager_Referencing_Occupation();
+    $secondOccupation = $secondOccupationManager->findSpecificOccupation(
+        $refSub->occupations,
+        Model_Referencing_OccupationChronology::CURRENT,
+        Model_Referencing_OccupationImportance::SECOND
+    );
+    $grossAnnualIncome = 0;
+    if (!is_null($currentOccupation) && !is_null($currentOccupation->income)) {
+        $grossAnnualIncome += $currentOccupation->income->getValue();
+    }
+    if (!is_null($secondOccupation) && !is_null($secondOccupation->income)) {
+        $grossAnnualIncome += $secondOccupation->income->getValue();
+    }
+
+    // Share of rent
+    $rentShare = $refSub->shareOfRent->getValue();
+
+}
+
+// Property address
+$propertyAddressWithoutPostcode = clone $this->reference->propertyLease->address;
+$propertyAddressWithoutPostcode->postCode = null;
+$propertyAddressWithoutPostcode = $propertyAddressWithoutPostcode->toString("<br />\n");
+// Clean up any XSS in address, but leave <br /> intact by tokenizing it first.  Bleh.
+$propertyAddressWithoutPostcode = str_replace('<br />', '***BR***', $propertyAddressWithoutPostcode);
+$propertyAddressWithoutPostcode = htmlentities($propertyAddressWithoutPostcode);
+$propertyAddressWithoutPostcode = str_replace('***BR***', '<br />', $propertyAddressWithoutPostcode);
+
+$propertyAddressPostcode = $this->reference->propertyLease->address->postCode;
+
+// Progress items line 1
+$progressItems1 = array(
+    'Property Details' =>       Model_Referencing_ProgressItemVariables::PROPERTY_DETAILS_SUBMITTED,
+    'New Landlord Details' =>   Model_Referencing_ProgressItemVariables::PROPERTY_LANDLORD_DETAILS_SUBMITTED,
+    'Tenant Details' =>         Model_Referencing_ProgressItemVariables::REFERENCE_SUBJECT_DETAILS_SUBMITTED,
+    'Address Details' =>        Model_Referencing_ProgressItemVariables::RESIDENTIAL_DETAILS_SUBMITTED,
+    'Landlord Details' =>       Model_Referencing_ProgressItemVariables::RESIDENTIAL_REFEREE_DETAILS_SUBMITTED,
+    'Employment Details' =>     Model_Referencing_ProgressItemVariables::OCCUPATION_DETAILS_SUBMITTED
+);
+$progressItemsDisplayLine1 = array();
+foreach ($progressItems1 as $name => $const) {
+    $item = Manager_Referencing_Progress::findSpecificProgressItem(
+        $this->reference->progress,
+        $const
+    );
+    if (!is_null($item)) {
+        if ($item->itemState == Model_Referencing_ProgressItemStates::COMPLETE) {
+            $progressItemsDisplayLine1[$name] = '<img src="/assets/connect/images/tick.png" alt="tick" />';
+        } else {
+            $progressItemsDisplayLine1[$name] = '<img src="/assets/connect/images/cross.png" alt="cross" />';
+        }
+    }
+}
+
+// Progress items line 2
+$progressItems2 = array(
+    'Terms Agreed' =>   Model_Referencing_ProgressItemVariables::TERMS_AGREED,
+    // TODO: 'Agent Approved' actually comes from llapproved, and only makes
+    //   sense to display when the reference has been e-mailed to the tenant
+    //   (the agent gets asked to agree to the terms after the tenant has
+    //   remotely).
+    //'Agent Approved' => Model_Referencing_ProgressItemVariables::?,
+    'Charge Paid' =>    Model_Referencing_ProgressItemVariables::PAYMENT_ARRANGED,
+    'Transmitted' =>    Model_Referencing_ProgressItemVariables::CREDIT_DATA_REQUESTED,
+    'Interim Report' => Model_Referencing_ProgressItemVariables::INTERIM_REPORT_BUILT,
+    'Final Report' =>   Model_Referencing_ProgressItemVariables::FINAL_REPORT_BUILT,
+    'Result Sent' =>    Model_Referencing_ProgressItemVariables::FINISHED // TODO: Is this the right mapping?
+);
+$progressItemsDisplayLine2 = array();
+foreach ($progressItems2 as $name => $const) {
+    $item = Manager_Referencing_Progress::findSpecificProgressItem(
+        $this->reference->progress,
+        $const
+    );
+    if (!is_null($item)) {
+        if ($item->itemState == Model_Referencing_ProgressItemStates::COMPLETE) {
+            $progressItemsDisplayLine2[$name] = '<img src="/assets/connect/images/tick.png" alt="tick" />';
+        } else {
+            $progressItemsDisplayLine2[$name] = '<img src="/assets/connect/images/cross.png" alt="cross" />';
+        }
+    }
+}
+
+?>
+<script type="text/javascript">
+$(function() {
+    $('.mailLink').each(function() {
+        $(this).click(function() {
+
+            emlRefNo = $('.data .refNo', this).text();
+            emlName = $('.data .name', this).text();
+            emlType = $('.data .type', this).text();
+
+            $.facebox(
+                'Resend completion e-mail to ' + emlName + ' (' + emlType + ')',
+                {
+                    ajax: '/referencing/resend-email?refno=' + emlRefNo
+                }
+            );
+
+            return false;
+        });
+    });
+});
+</script>
+<div class="wrapper one-col">
+
+    <?php
+    $breadcrumbArray = array(
+        array(
+            'url'   => '/referencing',
+            'title' =>  'Referencing'
+        ),
+        'currentPage' => "Reference no: {$this->reference->externalId}"
+    );
+    if (!is_null($this->reference->productSelection)) {
+        $breadcrumbArray['currentPage'] .= " - {$this->reference->productSelection->product->name}";
+    }
+
+    echo $this->partial('partials/breadcrumb.phtml', array('breadcrumbArray' => $breadcrumbArray));
+    ?>
+
+    <div class="content">
+
+        <div id="refSubject">
+            <div class="left">
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        <?php echo $applicantType; ?> Name
+                    </div>
+                    <div class="datum">
+                        <?php echo htmlspecialchars("{$title} {$firstName} {$lastName}"); ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Maiden Name
+                    </div>
+                    <div class="datum">
+                        <?php echo htmlspecialchars($maidenName); ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Date of Birth
+                    </div>
+                    <div class="datum">
+                        <?php echo $dob; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Residential Status
+                    </div>
+                    <div class="datum">
+                        <?php echo $residentialStatus; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Employment Status
+                    </div>
+                    <div class="datum">
+                        <?php echo $employmentStatus; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Gross Annual Income
+                    </div>
+                    <div class="datum">
+                        &pound;<?php echo $grossAnnualIncome; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Share of Rent
+                    </div>
+                    <div class="datum">
+                        &pound;<?php echo $rentShare; ?>
+                    </div>
+                </div>
+
+            </div>
+            <div class="right">
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Property Address
+                    </div>
+                    <div class="datum">
+                        <?php echo $propertyAddressWithoutPostcode; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Postcode
+                    </div>
+                    <div class="datum">
+                        <?php echo htmlspecialchars($propertyAddressPostcode); ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        E-mail
+                    </div>
+                    <div class="datum">
+                        <a href="mailto:<?php echo "{$email1}?subject={$this->agentObj->name} - HomeLet Reference {$this->reference->externalId}"; ?>"><?php echo $email1; ?></a>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Telephone
+                    </div>
+                    <div class="datum">
+                        <?php echo $telephone1; ?>
+                    </div>
+                </div>
+
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Mobile
+                    </div>
+                    <div class="datum">
+                        <?php echo $telephone2; ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <?php
+
+        if (!$this->refComplete && !is_null($this->reference->referenceSubject)) {
+            ?>
+            <a class="nav-agents-button mailLink" href="#" style="float: right;">
+                Resend e-mail to <?php echo $applicantType; ?>
+                <span style="display: none;" class="data">
+                    <span class="refNo"><?php echo $this->reference->externalId; ?></span>
+                    <span class="name"><?php echo "{$title} {$firstName} {$lastName}"; ?></span>
+                    <span class="type"><?php echo $applicantType; ?></span>
+                </span>
+            </a>
+            <br style="clear: both;" />
+            <?php
+        }
+
+        ?>
+
+        <div id="progressrow1">
+            <table width="100%" class="progress">
+                <tr>
+                    <?php
+                    foreach ($progressItemsDisplayLine1 as $name => $result) {
+                        ?>
+                        <td align="center">
+                            <?php echo $name; ?>
+                            <br />
+                            <?php echo $result; ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+            </table>
+        </div>
+
+        <div id="progressrow2">
+            <table width="100%" class="progress">
+                <tr>
+                    <?php
+                    foreach ($progressItemsDisplayLine2 as $name => $result) {
+                        ?>
+                        <td align="center">
+                            <?php echo $name; ?>
+                            <br />
+                            <?php echo $result; ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+            </table>
+        </div>
+
+        <div style="text-align: center;">
+
+            <?php
+                if(!empty($this->refLinks['tenantQuote'])) {
+
+                    echo popupButton('Tenant Quote', $this->refLinks['tenantQuote'], 'tenantQuote');
+                }
+            ?>
+
+            <?php
+                if(!empty($this->refLinks['retrieveReport'])) {
+
+                    echo popupButton('View Report', $this->refLinks['retrieveReport'], 'retrieveReport');
+                }
+            ?>
+
+            <?php
+                if(!empty($this->refLinks['continueReference'])) {
+
+                    echo popupButton('Continue Reference', $this->refLinks['continueReference'], 'continueReference');
+                }
+            ?>
+
+            <?php echo popupButton('Application Form', $this->refLinks['applicationForm'], 'applicationForm'); ?>
+
+            <?php
+                if ($this->allowAddGuarantor) {
+
+                    echo popupButton('Add Guarantor', $this->refLinks['addGuarantor'], 'addGuarantor', array('isManualAddGuarantor' => 1));
+                }
+                else {
+
+                    echo '<button class="button"><strong>Add Guarantor</strong></button>';
+                }
+            ?>
+
+            <?php echo popupButton('Add Tenant', $this->refLinks['addTenant'], 'addTenant'); ?>
+
+            <br />
+
+            <?php echo popupButton('View Case Log', $this->refLinks['viewCaseLog'], 'viewCaseLog'); ?>
+            <?php echo popupButton('Email Assessor', $this->refLinks['emailAssessor'], 'emailAssessor'); ?>
+
+            <?php
+                if ($this->allowAddGuarantor) {
+
+                    echo popupButton('Print Guarantor Form', $this->refLinks['printGuarantorForm']);
+
+                } else {
+                    ?>
+                    <button class="button"><s>Print Guarantor Form</s></button>
+                    <?php
+            }
+            ?>
+        </div>
+
+        <br />
+        <br />
+
+        <?php
+
+        // List of related references
+        if (count($this->linkedRefs) > 0) {
+            ?>
+            <table width="100%" border="0">
+                <thead>
+                    <tr>
+                        <th>Reference no</th>
+                        <th>Start date</th>
+                        <th>Applicant</th>
+                        <th>Status</th>
+                        <th>Tenant name</th>
+                        <th>Completion by applicant via e-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($this->linkedRefs as $linkedRef) {
+                        ?>
+                        <tr<?php if ($linkedRef['RefNo'] == $this->reference->externalId) { echo ' style="background-color: #CCC;"'; } ?>>
+                            <td><a href="summary?refno=<?php echo $linkedRef['RefNo']; ?>"><?php echo $linkedRef['RefNo']; ?></a></td>
+                            <td><?php echo $linkedRef['start_time']; ?></td>
+                            <td><?php echo $linkedRef['applicantType']; ?></td>
+                            <td><?php echo $linkedRef['refStatus']; ?></td>
+                            <td><?php echo htmlspecialchars($linkedRef['title']); ?> <?php echo htmlspecialchars($linkedRef['firstname']); ?> <?php echo htmlspecialchars($linkedRef['lastname']); ?></td>
+                            <td>
+                                <?php
+
+                                if (substr($linkedRef['refStatus'], 0, 10) == 'Incomplete' && $linkedRef['TenantID'] != 0) {
+                                    ?>
+                                    <a class="nav-agents-button mailLink" href="#" style="margin: 0;">
+                                        Resend e-mail to <?php echo $linkedRef['applicantType']; ?>
+                                        <span style="display: none;" class="data">
+                                            <span class="refNo"><?php echo $linkedRef['RefNo']; ?></span>
+                                            <span class="name"><?php echo htmlspecialchars($linkedRef['title']); ?> <?php echo htmlspecialchars($linkedRef['firstname']); ?> <?php echo htmlspecialchars($linkedRef['lastname']); ?></span>
+                                            <span class="type"><?php echo $linkedRef['applicantType']; ?></span>
+                                        </span>
+                                    </a>
+                                    <?php
+                                } else {
+                                    echo '&nbsp;';
+                                }
+
+                                ?>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<?php
+function popupButton($buttonText, $url, $popupName = '', $queryParams = array()) {
+
+	if(is_array($queryParams) && count($queryParams)) {
+		foreach($queryParams as $param => $value) {
+			$url .= "&$param=$value";
+		}
+	}
+	
+    if ($popupName != '') {
+        echo "<a href=\"#\" style=\"text-decoration: none;\" onclick=\"window.open('{$url}','{$popupName}','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=800,height=650'); return false;\" >";
+        echo "<button class=\"button\">{$buttonText}</button>";
+        echo "</a>";
+    } else {
+        // The use of the onclick event in place of the href is for IE, which doesn't otherwise work.
+        echo "<a href=\"#\" style=\"text-decoration: none;\" target=\"_blank\" onclick=\"window.open('{$url}'); return false;\">";
+        echo "<button class=\"button\">{$buttonText}</button>";
+        echo "</a>";
+    }
+}
+?>

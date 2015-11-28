@@ -1,0 +1,27 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-legalexpenses')); ?>
+        </span>
+        Legal Expenses
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-legalexpenses'); ?>
+        </div>
+    </div>
+
+    <div id="legalExpensesIncludedPromo">
+        <div class="alert alert-success">
+            <?php echo $this->promoContent('landlords-insurance-quote-legalexpenses-free'); ?>
+        </div>
+    </div>
+
+    <div id="legalExpensesNotIncluded">
+        <div class="radio form-group">
+            <?php echo $this->element->need_legal_expenses; ?>
+        </div>
+    </div>
+</div>

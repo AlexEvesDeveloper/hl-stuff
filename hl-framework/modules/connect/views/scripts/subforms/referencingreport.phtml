@@ -1,0 +1,22 @@
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Referencing</h2>
+    
+    <div class="form_section one-col">
+        <p style="height:80px;">
+            This report provides a summary of all of your referencing applications.
+            Simply select the date range you need to check by entering the dates below
+        </p>
+        
+        <div class="datePicker">
+            <?php echo $this->element->referencingreport_start; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->referencingreport_end; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->referencingreport_producereport; ?>
+            <?php echo $this->element->referencingreport_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,39 @@
+<script type="text/javascript">
+<?php
+
+$insuranceAccessAllowed = false;
+
+// The "no access" message for IO and IAR agents trying to access insurance functionality.
+if (in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+    ?>
+    function showNoAccess() {
+        $.facebox(
+            'You\'re unable to access this section',
+            'We\'re sorry but due to your HomeLet agent status you\'re unable to access this particular section of Connect, if you want to discuss this further please contact your Account Manager.'
+        );
+    }
+    <?php
+} else {
+    
+    $insuranceAccessAllowed = true;
+     
+}
+?>
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">                             
+        <br style="clear: both;" />
+
+        <p>I confirm that the relevant Initial Disclosure Document has been provided to the customer.</p>
+            
+        <ul class="connect_button_list">
+            <li class="single_button"> 
+                <a href="#" class="nav-corporate-dark-button" onclick="
+                    <?php echo (($insuranceAccessAllowed) ? "window.open('/insurance/landlords-plus','newInsurance','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=1100,height=650');" : 'showNoAccess();'); ?> return false;">
+                    Agree and Continue
+                </a>                
+            </li>           
+        </ul>                  
+    </div>
+</div>

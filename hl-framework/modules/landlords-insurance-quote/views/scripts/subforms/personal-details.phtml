@@ -1,0 +1,77 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-personaldetails')); ?>
+        </span>
+        Your Details
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-personaldetails'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php if ($this->element->title->getAttrib('disabled') == 'disabled'): ?>
+            <?php echo $this->element->title; ?>
+            <input type="hidden" name="title" value="<?php echo $this->element->title->getValue(); ?>" class="form-control" />
+        <?php else: ?>
+            <?php echo $this->element->title; ?>
+        <?php endif ?>
+    </div>
+
+    <div id="other_title_field" style="display:none;">
+        <div class="form-group">
+            <?php echo $this->element->other_title; ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->first_name; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->last_name; ?>
+    </div>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help quaternary-colour">Contact number, including dialling code.</div>
+        <?php echo $this->element->phone_number; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->mobile_number; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->email_address; ?>
+    </div>
+
+    <div class="form-group">
+        <label for="date_of_birth_at"><?php echo $this->element->date_of_birth_at->getLabel(); ?></label>
+        <div class="input-group date">
+            <input type="text" name="date_of_birth_at" data-required="required" data-validate="validate" data-type="date" id="date_of_birth_at" value="<?php echo htmlentities($this->element->date_of_birth_at->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function displayOtherTitleField() {
+        if($('#title').val() == "Other") {
+            $('#other_title_field').slideDown('fast');
+        } else {
+            $('#other_title_field').slideUp('fast');
+        }
+    }
+    displayOtherTitleField();
+    $(document).ready(function() {
+        $('#title').change(function() {
+            displayOtherTitleField();
+        });
+    });
+</script>

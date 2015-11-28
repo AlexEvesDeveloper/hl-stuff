@@ -1,0 +1,200 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Your daily referencing summary report</h2>
+        <table width="100%" border="0" cellspacing="0" cellpadding="4">
+          <tr>
+            <td><h3>For status and progress updates made in the last 24hrs on your applications please  view below.<br /></h3>
+            </td>
+          </tr>
+        </table>
+        <table width="100%" border="0" cellspacing="0" cellpadding="4">
+          <tr>
+            <th align="center">Completed Application</th>
+          </tr>
+          <tr>
+            <td><h3>The following applications have now been completed and a final report has been issued.</h3></td>
+          </tr>
+        </table>
+        <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <th width="84">Reference Number</th>
+            <th width="144">Property Address</th>
+            <th width="132">Tenant Name</th>
+            <th width="72">Type</th>
+            <th width="108">Final Decision</th>
+            <th width="120">Reason</th>
+          </tr>
+        <!-- Start Dynamic Rows Here -->
+            <?php foreach ($this->reportcompleteddata as $rowdata): ?>
+                <?php $summaryUrl = $this->getHelper('ReferenceSummaryUrlResolver')->getReferenceSummaryUrl($rowdata['Reference_Number']) ?>
+                <?php if (null !== $summaryUrl): ?>
+                    <tr>
+                        <td><strong><a target="_blank" href="<?php echo $summaryUrl ?>"><?php echo $rowdata['Reference_Number'] ?></a>&nbsp;</strong></td>
+                        <td><?php echo $rowdata['Property_Address'] ?>&nbsp;</td>
+                        <td><?php echo $rowdata['Tenant_Name'] ?>&nbsp;</td>
+                        <td><?php echo $rowdata['Type'] ?></td>
+                        <td><?php echo $rowdata['Final_Decision'] ?></td>
+                        <td><?php echo html_entity_decode($rowdata['Reason'], ENT_COMPAT, 'UTF-8') ?></td>
+                    </tr>
+                <?php endif ?>
+            <?php endforeach ?>
+        <!-- End Dynamic Rows Here --> 
+        </table>
+        <p>&nbsp;</p>
+
+        <?php /* Only show this section for HRT users as IRIS does not provide this data. Need to use Jasper instead. */ ?>
+        <?php if ( ! $this->isAgentInIris): ?>
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="4">
+              <tr>
+                <th align="center">Temporary Final Decision - Applications Awaiting Further Information</th>
+              </tr>
+              <tr>
+                <td><h3>
+            The following applications have received a temporary
+            &lsquo;Incomplete - awaiting further information or completion of an associated tenant&rsquo; report as they are
+            awaiting further information before the final decision can be made.
+            </h3></td>
+              </tr>
+            </table>
+
+
+            <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#000000">
+              <tr>
+                <th width="158">Reference Number</th>
+                <th width="271">Property Address</th>
+                <th width="249">Tenant Name</th>
+                <th width="146">Type</th>
+                <th width="149">Employer Ref</th>
+                <th width="135">Future Emp Ref</th>
+                <th width="140">Landlord Ref</th>
+              </tr>
+            <!-- Start Dynamic Rows Here -->
+            <?php
+            foreach ($this->reporttemporarydata as $rowdata){
+                $futref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Future_Emp_Ref'], "Incomplete") == 0) {
+                        $futref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+
+                    if (strcasecmp($rowdata['Future_Emp_Ref'], "Complete") == 0) {
+                        $futref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+
+                    $eref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Employer_Ref'], "Incomplete") == 0) {
+                        $eref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+
+                    if (strcasecmp($rowdata['Employer_Ref'], "Complete") == 0) {
+                        $eref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+
+                    $lref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Landlord_Ref'], "Incomplete") == 0) {
+                        $lref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+
+                    if (strcasecmp($rowdata['Landlord_Ref'], "Complete") == 0) {
+                        $lref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+
+                    $summaryUrl = $this->getHelper('ReferenceSummaryUrlResolver')->getReferenceSummaryUrl($rowdata['Reference_Number']);
+
+                    if (null !== $summaryUrl) {
+                        echo "
+                            <tr>
+                            <td width=\"157\"><a target=\"_blank\" href=\"{$summaryUrl}\">{$rowdata['Reference_Number']}</a>&nbsp;</td>
+                            <td width=\"271\">{$rowdata['Property_Address']}&nbsp;</td>
+                            <td width=\"249\">{$rowdata['Tenant_Name']}&nbsp;</td>
+                            <td width=\"146\" align=\"center\">{$rowdata['Type']}</td>
+                            <td width=\"149\" align=\"center\">$eref</td>
+                            <td width=\"135\" align=\"center\">$futref</td>
+                            <td width=\"140\" align=\"center\">$lref</td>
+                            </tr>
+                            <tr>
+                            <td colspan=\"7\"><strong>Case Log:&nbsp;</strong><dl>". html_entity_decode($rowdata['Notes'], ENT_COMPAT, 'UTF-8') ."</dl></td>
+                            </tr>";
+                    }
+            }
+
+            ?>
+            <!-- End Dynamic Rows Here -->
+            </table>
+            <p>&nbsp;</p>
+        <?php endif ?>
+
+        <table width="100%" border="0" cellpadding="4" cellspacing="0">
+          <tr>
+            <th align="center">Live Applications</th>
+          </tr>
+          <tr>
+            <td><h3>The following applications are currently being processed by the Referencing teams to ensure a final decision is with you as quickly as possible.
+        </h3></td>
+          </tr>
+        </table>
+        <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <th width="158">Reference Number</th>
+            <th width="271">Property Address</th>
+            <th width="249">Tenant Name</th>
+            <th width="146">Type</th>
+            <th width="149">Employer Ref</th>
+            <th width="135">Future Emp Ref</th>
+            <th width="140">Landlord Ref</th>
+          </tr>
+        <!-- Start Dynamic Rows Here -->
+        <?php 
+            foreach ($this->reportlivedata as $rowdata){
+//Zend_Debug::dump($rowdata);
+                    $futref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Future_Emp_Ref'], "Incomplete")  == 0) {
+                        $futref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+                    
+                    if (strcasecmp($rowdata['Future_Emp_Ref'], "Complete") == 0) {
+                        $futref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+                        
+                    $eref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Employer_Ref'], "Incomplete") == 0) {
+                        $eref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+                    
+                    if (strcasecmp($rowdata['Employer_Ref'], "Complete") == 0) {
+                        $eref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+                    
+                    $lref = "<strong>N/A</strong>";
+                    if (strcasecmp($rowdata['Landlord_Ref'], "Incomplete") == 0) {
+                        $lref = "<img src=\"/assets/connect/images/reports/cross.jpg\" align=\"center\" />";
+                    }
+                    
+                    if (strcasecmp($rowdata['Landlord_Ref'], "Complete") == 0) {
+                        $lref = "<img src=\"/assets/connect/images/reports/tick.jpg\" align=\"center\" />";
+                    }
+
+                $summaryUrl = $this->getHelper('ReferenceSummaryUrlResolver')->getReferenceSummaryUrl($rowdata['Reference_Number']);
+
+                if (null !== $summaryUrl) {
+                    echo "
+                        <tr>
+                            <td width=\"157\"><a target=\"_blank\" href=\"{$summaryUrl}\">{$rowdata['Reference_Number']}</a>&nbsp;</td>
+                            <td width=\"271\">{$rowdata['Property_Address']}&nbsp;</td>
+                            <td width=\"249\">{$rowdata['Tenant_Name']}&nbsp;</td>
+                            <td width=\"146\" align=\"center\">{$rowdata['Type']}</td>
+                            <td width=\"149\" align=\"center\">$eref</td>
+                            <td width=\"135\" align=\"center\">$futref</td>
+                            <td width=\"140\" align=\"center\">$lref</td>
+                        </tr>
+                        <tr>
+                            <td colspan=\"7\"><strong>Case Log:&nbsp;</strong><dl>". html_entity_decode($rowdata['Notes'], ENT_COMPAT, 'UTF-8') ."</dl></td>
+                        </tr>";
+                }
+            }
+            ?>
+        <!-- End Dynamic Rows Here -->  
+    </table>
+    </div>
+</div>

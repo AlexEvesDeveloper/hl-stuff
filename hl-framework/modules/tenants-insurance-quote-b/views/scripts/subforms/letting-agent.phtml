@@ -1,0 +1,27 @@
+<h2>Your Letting Agent</h2>
+<?php echo $this->helpPopup('Your Letting Agent', 'tenants-insurance-quote-help-lettingagent'); ?>
+<div class="clear"></div>
+
+<div class="form_section one-col">
+    <div class="alt">
+        <?php echo $this->element->letting_agent_has; ?>
+    </div>
+    <div id="lettingAgentPromo" class="protip">
+        <?php echo $this->promoContent('tenants-insurance-quote-lettingagent-promo'); ?>
+    </div>
+    <div id="letting_agent_hideable" class="hideable">
+        <div>
+            <?php echo $this->element->letting_agent_name; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->letting_agent_town; ?>
+        </div>
+        <div>
+            <?php echo $this->element->letting_agent_asn; ?>
+            <input type="submit" value="Find agent" onclick="getAgents(); return false;" />
+        </div>
+        <div id="letting_agent_selector" class="alt">
+            <?php echo $this->element->letting_agent->setAttribs(array('style' => 'width: 196px;'))->render(); ?>
+        </div>
+    </div>
+</div>

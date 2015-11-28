@@ -1,0 +1,33 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "popup-base.html.twig" %}
+
+{% block body %}
+
+    {% for error in errors %}
+        <div style="color:red;">
+            <p>
+                {{ error }}
+            </p>
+        </div>
+    {% else %}
+
+        {% if policyLengthInMonths %}
+            <p>
+                The price for an <strong>{{ product.name }}</strong> {{ policyLengthInMonths }} month service
+                with a rent share of <strong>&pound; {{ shareOfRent | number_format(2) }}</strong> is
+                <strong>&pound; {{ price.grossPrice | number_format(2) }}</strong>
+            </p>
+        {% else %}
+            <p>
+                The price for an <strong>{{ product.name }}</strong>
+                with a rent share of <strong>&pound; {{ shareOfRent | number_format(2) }}</strong> is
+                <strong>&pound; {{ price.grossPrice | number_format(2) }}</strong>
+            </p>
+        {% endif %}
+    {% endfor %}
+
+    <div>
+        <a href="javascript:window.close();"><strong>Close</strong></a>
+    </div>
+
+{% endblock %}

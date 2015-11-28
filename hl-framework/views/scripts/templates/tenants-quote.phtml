@@ -1,0 +1,58 @@
+<div id="sub_header_clean">
+    <div class="wrapper">
+        <div id="steps">
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 1) { echo " class=\"current\""; } ?> id="tenants-quote-step1" href="step1"><span>&gt; Step 1</span>About you</a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 2) { echo " class=\"current\""; } ?> id="tenants-quote-step2" href="step2"><span>&gt; Step 2</span>Your cover</a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 3) { echo " class=\"current\""; } ?> id="tenants-quote-step3" href="step3"><span>&gt; Step 3</span>Your possessions</a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 4) { echo " class=\"current\""; } ?> id="tenants-quote-step4" href="step4"><span>&gt; Step 4</span>Your address details</a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 5) { echo " class=\"current\""; } ?> id="tenants-quote-step5" href="step5"><span>&gt; Step 5</span>Important information</a>
+            <a<?php if (isset($this->stepNum) && $this->stepNum == 6) { echo " class=\"current\""; } ?> id="tenants-quote-step6" href="step6"><span>&gt; Step 6</span>Payment</a>
+            <h2>Tenants Contents - Insurance Quote</h2>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>
+<div class="corporate">
+    <div class="wrapper">
+        <div class="content">
+        </div>
+        <div class="sidebar">
+            <div id="progress">
+                <h4>Overall Progress</h4>
+                <div>
+                    <span class="progress_bar">
+                        <?php if (isset($this->stepNum) && isset($this->stepMax)) { $fractionComplete = $this->stepNum / $this->stepMax; } else { $fractionComplete = 0; } ?>
+                        <span class="current_progress" style="width: <?php echo round(165 * $fractionComplete); ?>px;">&nbsp;</span>
+                    </span>
+                </div>
+                <div id="errorList">
+                <?php
+                if ($this->errorCount > 0) {
+                    printf(
+                        '<p>There %s only %d mandatory field%s left to complete in step %d:</p>',
+                        (($this->errorCount == 1) ? 'is' : 'are'),
+                        $this->errorCount,
+                        (($this->errorCount == 1) ? '' : 's'),
+                        $this->stepNum
+                    );
+                    echo $this->errorsHtml;
+                }
+                ?>
+                </div>
+            </div>
+            <div id="promo">
+                <?php
+                // Add in any hidden promo panels to be triggered by JavaScript
+                if (isset($this->promo)) {
+                    foreach ($this->promo as $promoId => $promoText) {
+                        echo "<div id=\"{$promoId}\" class=\"subPromo\" style=\"display: none;\">\n";
+                        echo "  <p>\n    " . implode("\n  </p>\n  <p>\n    ", explode("\n", $promoText)) . "\n  </p>\n";
+                        echo "</div>\n";
+                    }
+                }
+                ?>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

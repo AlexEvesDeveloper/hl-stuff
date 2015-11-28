@@ -1,0 +1,15 @@
+<?php
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view'); 
+$addressString = "";
+if ($this->houseNumber != "") $addressString = " {$this->houseNumber}";
+if ($this->address1 != "") $addressString .= " {$this->address1}";
+if ($this->address2 != "") $addressString .= " {$this->address2}";
+if ($this->address3 != "") $addressString .= " {$this->address3}";
+if ($this->address4 != "") $addressString .= " {$this->address4}";
+if ($this->address5 != "") $addressString .= " {$this->address5}";
+if ($this->postcode != "") $addressString .= " {$this->postcode}";
+if ($this->bankname != "") $addressString .= " ({$this->bankname})";
+?>
+<div class="form_section property_list">
+ <?php echo $addressString;?>  (<a style="float:none; display:inline" href="#" onclick="removeBankInterest(<?php echo $this->interestID; ?>); return false;">remove</a>)
+</div>

@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.app.service.brand.system_brand:
+        class: Barbon\HostedApi\AppBundle\Service\Brand\SystemBrand
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @doctrine_cache.providers.file_system_iris
+        calls:
+            - [ setRequestFromStack, [ @request_stack ] ]

@@ -1,0 +1,31 @@
+<div class="col-xs-12">
+    <div class="breadcrumb"></div>
+</div>
+<div class="landlords landlords-referencing col-sm-9">
+    <div class="content">
+        <form action="" method="post" enctype="application/x-www-form-urlencoded" class="main validate">
+            <h2 class="quaternary-colour">Property Lease</h2>
+
+            <p>
+                Please enter the details of the property you are letting below. Simply enter the property
+                postcode and click on "Find Address". Then select the house name or number from the drop
+                down box that will appear. Please ensure that you enter the total rental value for the
+                property below.
+            </p>
+
+            <div class="form_section">
+                <?php echo $this->form->subform_propertyaddress; ?>
+
+                <?php echo $this->form->subform_propertymisc; ?>
+            </div>
+
+            <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => 0, 'stepMax' => 1000)); ?>
+        </form>
+    </div>
+</div>
+
+<div class="landlords col-sm-3">
+    <?php echo $this->partial('partials/sidebar.phtml', array('page' => 'property-lease', 'fractionComplete' => $this->fractionComplete)); ?>
+</div>
+
+<div class="clear"></div>

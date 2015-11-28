@@ -1,0 +1,25 @@
+<?php echo $this->tenantsQuoteSubHeader(5); ?>
+<div class="tenants">
+    <div class="wrapper two-col">
+        <div class="content">
+            <h2>We&rsquo;ve got you covered!</h2>
+            <div class="clear"></div>
+
+            <?php
+                echo $this->partial('partials/payment-confirmation.phtml',
+                    array(
+                        'policyNumber' => $this->policyNumber,
+                        'companyName' => $this->companyName,
+                        'domain' => $this->domain,
+                        'documentNumber' => $this->documentNumber,
+                        'openingTimes' => $this->openingTimes,
+                        'policy' => $this->policy,
+                        'extraVars' => $this->extraVars
+                    )
+                );
+            ?>
+            <?php echo $this->form; ?>
+        </div>
+        <?php // echo $this->tenantsQuoteSidebar($this->premiums, $this->fees, $this->errorsHtml, $this->stepNum, $this->stepMax); ?>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.landlord.authentication.event_listener.attempted_landlord_login_listener:
+        class:  Barbon\HostedApi\Landlord\AuthenticationBundle\EventListener\AttemptedLandlordLoginListener
+        arguments:
+            - @barbon.hosted_api.app.service.authentication.mac_manager
+            - @doctrine_cache.providers.file_system_iris
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }

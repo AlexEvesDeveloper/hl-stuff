@@ -1,0 +1,159 @@
+<style type="text/css">
+
+    #facebox .body {
+        
+        <?php
+            if(!empty($this->motd['width'])) {
+            
+                echo("width: {$this->motd['width']}px !important;");
+            }
+        ?>
+    }
+    
+</style>
+
+<script type="text/javascript">
+$(function() {
+    <?php
+    if (isset($this->motd['message']) && $this->motd['message'] != '') {
+        $message = str_replace(
+            array("'", "\n", "\r"),
+            array('\'', '', ''),
+            $this->motd['message']
+        );
+        ?>
+        
+        //MOTD. Enforce modality.
+        $(document).bind('loading.facebox', function() {
+            $(document).unbind('keydown.facebox');
+            $('#facebox_overlay').unbind('click');
+        });
+        
+        //Display MOTD.
+        var acceptButton = '<a class="nav-corporate-dark-button" href="/?motdaccept=<?php echo $this->motd['id']; ?>">OK, thanks!</a>';
+        $.facebox(
+            "<?php echo $this->motd['title']; ?>",
+            '<?php echo $message; ?><div style="clear: both; float: right;">' + acceptButton + '</div>');
+
+        //Hide default close button.
+        $('.close').css('display', 'none');
+        
+        <?php
+    }
+    ?>
+    
+    <?php /* Decide if main news item needs to be visually truncated */ ?>
+    var mainNewsText = $('#main_news_text');
+    <?php /* 205px is the height of a main article image - main article text must not exceed this */ ?>
+    if (mainNewsText.height() > 205) {
+        <?php /* Convert main news text's span into a block-level element, set a height, and hide its overflow */ ?>
+        mainNewsText.addClass('truncate');
+    }
+
+    <?php /* Decide if main news item has an image, for whether to show the "read more" fadeoff at full width */ ?>
+    if (!$('.main_news_content .blogMainImage').length) {
+        $('.main_news_content .read_more_outer').addClass('no_image');
+    }
+});
+</script>
+<div class="wrapper connect_homepage">
+    <div class="content blog">
+        <h2 class="news">Latest News</h2>
+        <div class="main_news_content">
+            <?php
+            if (($this->blogMainImage != '') && (substr($this->blogMainImage, -1, 1) != '/')) {
+                ?>
+                <img class="blogMainImage" src="<?php echo $this->blogMainImage; ?>" alt="<?php echo $this->blogMainTitle; ?>" />
+                <?php
+            }
+            ?>
+            <span id="main_news_text">
+                <h3><?php echo $this->blogMainTitle; ?></h3>
+                <?php /*echo Application_Core_Utilities::truncateHtml(450, $this->blogMainContent, '...');*/ ?>
+                <?php echo $this->blogMainContent; ?>
+            </span>
+            <div class="read_more_outer">
+                <a class="read_more" href="/news/articletitle">Read more...</a>
+            </div>
+        </div>
+    
+        
+        <h2 class="recent_news">Recent News</h2>
+        <div id="recent_news">
+            <?php
+            $i = 1;
+            foreach ($this->blogSummaries as $summary) {
+                ?>
+                <div class="news_summary">
+                    <a href="/news/single/<?php echo $i; ?>">
+                        <img src="<?php echo $summary['image']; ?>" />
+                        <h4><?php echo $summary['title']; ?></h4>
+                    </a>
+                    <p><?php echo $summary['description']; ?></p>
+                </div>
+                <?php
+                $i++;
+            }
+            ?>
+        </div>
+        
+
+        <h2 class="find_news">Find news stories</h2>
+        <div class="search">
+            <div class="bar">
+                <form method="post" action="/news">
+                    <input type="hidden" name="searchType" value="keyword" />
+                    <div class="left" style="margin-top: 5px"><a href="/news/all">Show all messages</a></div>
+                    <div class="right">
+                        Search by keyword:
+                        <select name="param1">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchKeywords as $keyword) {
+                            echo "    <option value=\"{$keyword['tag']}\">{$keyword['tag']}</option>";
+                        }
+                        ?>
+                        </select>
+                        <input type="submit" name="Search" value="Search" style="margin: 0" />
+                    </div>
+                </form>
+            </div>
+            
+            <div class="bar">
+                <form method="post" action="/news">
+                    <input type="hidden" name="searchType" value="date" />
+                    <div class="right">
+                        Search by date:
+                        <select name="param2">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchMonths as $month) {
+                            echo "    <option value=\"{$month}\">{$month}</option>";
+                        }
+                        ?>
+                        </select>
+                        <select name="param1">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchYears as $year) {
+                            echo "    <option value=\"{$year}\">{$year}</option>";
+                        }
+                        ?>
+                        </select>
+                        <input type="submit" name="Search" value="Search" style="margin: 0" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="sidebar">
+        <h3 class="account_manager">Your Account Manager</h3>
+        <?php echo $this->salesperson($this->agentSchemeNumber, 'small'); ?>
+        
+        <h3 class="rental_index">HomeLet Rental Index</h3>
+        <?php echo $this->rpiLink(); ?>
+    </div>
+
+</div>

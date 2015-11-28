@@ -1,0 +1,26 @@
+services:
+    barbon.hosted_api.landlord.authentication.controller.entry_point_controller:
+        class: Barbon\HostedApi\Landlord\AuthenticationBundle\Controller\EntryPointController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @doctrine_cache.providers.file_system_iris
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.landlord.authentication.controller.register_controller:
+        class: Barbon\HostedApi\Landlord\AuthenticationBundle\Controller\RegisterController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.landlord.authentication.form.type.direct_landlord_type
+            - @barbon.hosted_api.security.provider.user_provider
+            - @barbon.hosted_api.app.service.brand.system_brand
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.landlord.authentication.controller.login_controller:
+        class: Barbon\HostedApi\Landlord\AuthenticationBundle\Controller\LoginController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.landlord.authentication.form.type.login_type
+        calls:
+            - [ setContainer,[ @service_container ] ]

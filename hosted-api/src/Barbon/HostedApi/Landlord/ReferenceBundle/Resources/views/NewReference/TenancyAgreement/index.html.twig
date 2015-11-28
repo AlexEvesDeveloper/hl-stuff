@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container framework-content">
+        {# Vendor's optional Ts and Cs from DisplayPreferences #}
+
+        {%
+        set termsTypeArray =
+        {
+            0: {'id': 'all', 'title': 'General Terms and Conditions'},
+            1: {'id': 'agent', 'title': 'Agent Declaration'},
+            2: {'id': 'landlord', 'title': 'Landlord Declaration'},
+            3: {'id': 'tenant', 'title': 'Tenant Declaration'},
+            4: {'id': 'referee', 'title': 'Financial Referee Declaration'},
+        }
+        %}
+
+        {% for termsType in termsTypeArray %}
+            {% if vendorTerms[termsType.id] is defined and vendorTerms[termsType.id] is not empty %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ termsType.title }}
+                    </div><!-- panel-heading -->
+                    <div class="panel-body">
+                        <div>
+                            {{ vendorTerms[termsType.id] }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {# Our static Ts and Cs from file #}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Referencing Terms and Conditions
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <div>
+                    {% include '@BarbonHostedApiLandlordReferenceBundle/Resources/views/NewReference/TenancyAgreement/referencingTerms.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

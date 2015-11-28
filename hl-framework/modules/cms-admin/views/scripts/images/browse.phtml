@@ -1,0 +1,33 @@
+<?php
+if ($this->uploadSuccess)
+{
+    ?>
+    <p class="msg done">File uploaded successfully!</p>
+    <?php
+}
+?>
+<?php echo $this->message; ?>
+<script type="text/javascript" >
+    function selectImage($url) {
+        window.opener.CKEDITOR.tools.callFunction(<?php echo $this->editorFuncNum ?>, $url);
+        window.close();
+    }
+</script>
+
+<div id="image_browser">
+    <?php echo $this->imageList ?>
+</div>
+<div style="clear:both;"></div>
+<hr />
+<form id="image_uploader" name="image_uploader" action="" method="post" enctype="multipart/form-data">
+    <p>
+        <label for="upload_file"> Upload a new file : </label>
+        <input type="file" id="upload_file" name="upload_file">
+    </p>
+    <p>
+        <input type="submit" value="Upload" />
+</form>
+
+<!-- When we have a filename we have to call this javascript
+window.opener.CKEDITOR.tools.callFunction(CKEditorFuncNum, url);
+-->

@@ -1,0 +1,223 @@
+<?php $session = new Zend_Session_Namespace('referencing_global'); ?>
+
+<h2 class="quaternary-colour">
+    <?php
+    //Prepare the variable text in the heading.
+    if ($session->occupationChronology == Model_Referencing_OccupationChronology::FUTURE):
+        $header = 'Future';
+    else:
+        if ($session->occupationClassifier == Model_Referencing_OccupationImportance::FIRST):
+            $header = 'Current';
+        else:
+            $header = 'Second';
+        endif;
+    endif;
+    ?>
+    <?php echo $header; ?> Earnings Verification Details
+</h2>
+
+<p>
+    <?php
+    //Prepare the variable text in the introductory paragraph.
+    if ($session->occupationType == Model_Referencing_OccupationTypes::EMPLOYMENT):
+        if ($session->occupationChronology == Model_Referencing_OccupationChronology::CURRENT):
+            $referee = 'employer';
+        else:
+            $referee = 'future employer';
+        endif;
+    elseif ($session->occupationType == Model_Referencing_OccupationTypes::CONTRACT):
+        $referee = 'agency';
+    elseif (($session->occupationType == Model_Referencing_OccupationTypes::INDEPENDENT)
+        || ($session->occupationType == Model_Referencing_OccupationTypes::SELFEMPLOYMENT)):
+        $referee = 'accountant, or auditor, or solicitor, or financial advisor';
+    elseif ($session->occupationType == Model_Referencing_OccupationTypes::RETIREMENT):
+        $referee = 'pensions administrator, or financial advisor';
+    endif;
+    ?>
+    Please provide details of your <strong><?php echo $referee; ?></strong> in order that we may verify
+    your earnings.
+</p>
+
+
+<?php if ($this->description): ?>
+    <div class="alert alert-warning">
+        <ul class="errors">
+            <li><?php echo $this->description; ?></li>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<div class="form_section">
+    <div class="form-sub-section">
+        <div class="form-help hidden-xs hidden-sm"></div>
+        <?php
+        //Allow the user to cancel their future occupation.
+        if ($session->occupationChronology == Model_Referencing_OccupationChronology::FUTURE): ?>
+            <div class="form-group">
+                <?php echo $this->cancel_future_employment; ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                Please enter the company name.
+            </div>
+            <?php echo $this->company_name; ?>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                Please enter the name of an individual within the company we can contact.
+            </div>
+            <?php echo $this->contact_name; ?>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                Please enter the position within the company that this contact holds.
+            </div>
+            <?php echo $this->contact_position; ?>
+        </div>
+
+        <div class="form-group">
+            <label for="property_postcode" class="required">Postcode</label>
+            <div class="input-group">
+                <?php echo $this->property_number_name; ?>
+                <?php echo $this->property_postcode; ?>
+                <span class="input-group-btn">
+                    <input type="submit" id="postcode_lookup" value="Find address" name="lookup"
+                           onclick="getProperties($('#property_number_name').val(),
+                    $('#property_postcode').val(), 'property_postcode', 'property_address'); return false;" class="btn btn-quaternary btn-postcode" />
+                </span>
+            </div>
+            <div id="ins_address_selector">
+                <?php echo $this->property_address; ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                Please enter a valid contact telephone number.
+            </div>
+            <?php echo $this->telephone_number; ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->fax_number; ?>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                Please enter a valid email address for the company.
+            </div>
+            <?php echo $this->email; ?>
+        </div>
+
+        <?php
+        /*
+         * Add the optional elements for employment and contract occupation types
+         */
+        if (($session->occupationType == Model_Referencing_OccupationTypes::EMPLOYMENT)
+            || ($session->occupationType == Model_Referencing_OccupationTypes::CONTRACT)): ?>
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter income form this position.
+                </div>
+                <?php echo $this->income; ?>
+            </div>
+
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter the reference/payroll number for this position.
+                </div>
+                <?php echo $this->reference_number; ?>
+            </div>
+
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter the position held at this company.
+                </div>
+                <?php echo $this->position; ?>
+            </div>
+
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter the starting date for this position.
+                </div>
+                <label for="tenancy_start_date" class="optional"><?php echo $this->tenancy_start_date->getLabel(); ?></label>
+                <div class="input-group date">
+                    <input type="text" name="tenancy_start_date" data-required="required" data-validate="validate" data-type="date" id="tenancy_start_date" value="<?php echo htmlentities($this->tenancy_start_date->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please select whether or not this position is permanent.
+                </div>
+                <?php echo $this->is_permanent; ?>
+            </div>
+
+            <?php
+            /*
+             * Future employment does not display some elements, so check for this.
+             */
+            if($session->occupationChronology != Model_Referencing_OccupationChronology::FUTURE): ?>
+                <div class="form-group">
+                    <div class="help-trigger"><a class="show-help"></a></div>
+                    <div class="field-help quaternary-colour">
+                        Please select whether this position will change during the tenancy.
+                    </div>
+                    <?php echo $this->will_change; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <?php
+        /*
+         * Add the optional elements for retirement occupation types.
+         */
+        if ($session->occupationType == Model_Referencing_OccupationTypes::RETIREMENT): ?>
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter income.
+                </div>
+                <?php echo $this->income; ?>
+            </div>
+
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter a payroll/reference number.
+                </div>
+                <?php echo $this->reference_number; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php
+        /*
+         * Add the optional elements for selfemployment and financially independent
+         * occupation types.
+         */
+        if (($session->occupationType == Model_Referencing_OccupationTypes::SELFEMPLOYMENT)
+            || ($session->occupationType == Model_Referencing_OccupationTypes::INDEPENDENT)): ?>
+            <div class="form-group">
+                <div class="help-trigger"><a class="show-help"></a></div>
+                <div class="field-help quaternary-colour">
+                    Please enter income.
+                </div>
+                <?php echo $this->income; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

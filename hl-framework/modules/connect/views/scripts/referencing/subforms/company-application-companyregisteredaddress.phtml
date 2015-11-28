@@ -1,0 +1,13 @@
+<h2>Company Registered Address</h2>
+<div class="form_section two-col">
+    <div class="autoAlt">
+        <?php echo $this->element->registered_address; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->registered_postcode; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->registered_years->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->registered_months; ?>
+    </div>
+</div>

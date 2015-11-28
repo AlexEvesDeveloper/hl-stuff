@@ -1,0 +1,23 @@
+<div id="login-box">
+    <p class="nom t-center"><a href="#"><img src="/assets/cms_admin/img/homelet_logo.jpg" alt="Our logo" title="Visit Site" /></a></p>
+
+    <!-- <p class="msg error">The password you have entered is incorrect</p> -->
+    <p class="msg info">Enter your username and password.</p>
+
+    <!-- Form -->
+    <form name="login-form" action="/cms-admin/login" method="POST" enctype="multipart/form-data">
+        <table class="nom nostyle">
+            <tr>
+                <td style="width:75px;"><label for="username"><strong>Username:</strong></label></td>
+                <td><input type="text" size="45" name="username" class="input-text" id="username" /></td>
+            </tr>
+            <tr>
+                <td><label for="password"><strong>Password:</strong></label></td>
+                <td><input type="password" size="45" name="password" class="input-text" id="password" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="t-right"><input id="submit" type="submit" class="input-submit" value="Sign In &raquo;" /></td>
+            </tr>
+        </table>
+    </form>
+</div>

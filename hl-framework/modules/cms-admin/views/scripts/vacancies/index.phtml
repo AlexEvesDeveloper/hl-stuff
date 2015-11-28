@@ -1,0 +1,59 @@
+<script>
+$(function() {
+    $(".ico-delete").click(function(e){
+        if (!confirm("Are you sure you want to delete this vacancy?\n\nThis action cannot be undone!")) { e.preventDefault(); }
+    });
+    <?php if ($this->deleted || $this->saved) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);    
+    <?php } ?>
+});
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<?php if ($this->deleted) { ?>
+    <p class="msg done">Career vacancy deleted successfully!</p>
+<?php } ?>
+<h1>Job Vacancies</h1><br />
+<h5>Active Vacancies</h5>
+<table class="vacancies">
+    <tbody>
+        <tr>
+            <th>Job Title</th>
+            <th>Location</th>
+            <th>Start</th>
+            <th>End</th>
+            <th width="120"></th>
+        </tr>
+        <?php echo $this->activeCareerList ?>
+    </tbody>
+</table><br />
+<h5>Future Vacancies</h5>
+<table class="futureVacancies">
+    <tbody>
+        <tr>
+            <th>Job Title</th>
+            <th>Location</th>
+            <th>Start</th>
+            <th>End</th>
+            <th width="120"></th>
+        </tr>
+        <?php echo $this->futureCareerList ?>
+    </tbody>
+</table><br />
+<h5>Expired Vacancies</h5>
+<table class="expiredVacancies">
+    <tbody>
+        <tr>
+            <th>Job Title</th>
+            <th>Location</th>
+            <th>Start</th>
+            <th>End</th>
+            <th width="120"></th>
+        </tr>
+        <?php echo $this->expiredCareerList ?>
+    </tbody>
+</table><br />
+<a href="/cms-admin/vacancies/add">Add a new vacancy</a>

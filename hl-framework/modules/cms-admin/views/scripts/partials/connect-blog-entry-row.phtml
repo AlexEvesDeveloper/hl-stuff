@@ -1,0 +1,50 @@
+<tr>
+    <td class="connect-blog-col1"><?php echo $this->lastUpdated ?></td>
+    
+    <td class="connect-blog-col2">
+        <?php echo substr(trim($this->title), 0, 30).'...'; ?>
+    </td>
+    
+    <td class="connect-blog-col3">
+        <?php echo substr(trim($this->summary), 0, 30).'...'; ?>
+    </td>
+    
+    
+    <td class="connect-blog-col4">
+
+        <?php if($this->status == 1) { ?>
+        
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=2"
+                title="Move to Summary">S</a>
+            &nbsp;
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=3"
+                title="Move to Pool">P</a>
+            &nbsp;
+        
+        <?php } else if($this->status == 2) { ?>
+        
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=1"
+                title="Move to Main">M</a>
+            &nbsp;
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=3"
+                title="Move to Pool">P</a>
+            &nbsp;
+        
+        <?php } else { ?>
+        
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=1"
+                title="Move to Main">M</a>
+            &nbsp;
+            <a href="/cms-admin/connect/set-blog-entry-status?id=<?php echo $this->id ?>&setBlogEntryStatus=2"
+                title="Move to Summary">S</a>
+            &nbsp;
+        
+        <?php } ?>
+        
+        
+        <a href="/cms-admin/connect/upsert-blog-entry?id=<?php echo $this->id ?>"><img src="/assets/cms_admin/design/ico-edit.gif" title="Edit" alt="Edit" /></a>
+        &nbsp;
+        
+        <a class="blog-delete" href="/cms-admin/connect/archive-blog-entry?id=<?php echo $this->id ?>"><img src="/assets/cms_admin/design/ico-delete.gif" title="Delete" alt="Delete" /></a>
+    </td>
+</tr>

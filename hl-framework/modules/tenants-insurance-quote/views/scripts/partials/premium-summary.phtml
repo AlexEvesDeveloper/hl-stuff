@@ -1,0 +1,78 @@
+<h2 class="tertiary-colour">Your Premium</h2>
+
+<?php if (!isset($this->premiums->total) || 0 == $this->premiums->total):
+    // We don't have any premiums to show
+    $monthlyPremium = '-';
+    $annualPremium = '-';
+    $monthlyIPT = '-';
+    $annualIPT = '-';
+    $monthlyFees = '-';
+    $annualFees = '-';
+    $monthlyPayable = 'N/A';
+    $annualPayable = 'N/A';
+else:
+    $monthlyPremium = '&pound;' . number_format($this->premiums->total, 2);
+    $annualPremium = '&pound;' . number_format($this->premiums->annualTotal, 2);
+    $monthlyIPT = '(&pound;' . number_format($this->premiums->iptAmount, 2) . ')';
+    $annualIPT = '(&pound;' . number_format($this->premiums->annualIptAmount, 2) . ')';
+    $monthlyFees = '&pound;' . number_format($this->fees->monthlyFeeSP, 2);
+    $annualFees = '-';
+    $monthlyPayable = '&pound;' . number_format($this->premiums->total + $this->fees->monthlyFeeSP, 2);
+    $annualPayable = '&pound;' . number_format($this->premiums->annualTotal, 2);
+endif; ?>
+
+<table id="premium_summary" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th class="number">Monthly</th>
+            <th class="number">Annually</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Your Premium
+            </td>
+            <td class="number">
+                <span class="monthlyPremiumQuote"><?php echo $monthlyPremium; ?></span>
+            </td>
+            <td class="number">
+                <span class="annualPremiumQuote"><?php echo $annualPremium; ?></span>
+            </td>
+        </tr>
+        <tr class="ipt">
+            <td>
+                IPT Included @ 6%
+            </td>
+            <td class="number">
+                <span class="monthlyIpt"><?php echo $monthlyIPT; ?></span>
+            </td>
+            <td class="number">
+                <span class="annualIpt"><?php echo $annualIPT; ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Monthly Admin Fee
+            </td>
+            <td class="number">
+                <span class="monthlyAdminFee"><?php echo $monthlyFees; ?></span>
+            </td>
+            <td class="number">
+                <span class="annualAdminFee"><?php echo $annualFees; ?></span>
+            </td>
+        </tr>
+        <tr class="payable">
+            <td>
+                <strong class="tertiary-colour">Amount Payable</strong>
+            </td>
+            <td class="number">
+                <span class="monthlyPayable tertiary-colour"><?php echo $monthlyPayable; ?></span>
+            </td>
+            <td class="number">
+                <span class="annualPayable tertiary-colour"><?php echo $annualPayable; ?></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

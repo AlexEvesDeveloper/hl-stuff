@@ -1,0 +1,162 @@
+<h1>Edit <?php echo $this->siteDescription; ?> page</h1>
+<script type="text/javascript">
+$(function() {
+    $(".ico-delete").click(function(e){
+        if (!confirm("Are you sure you want to delete this menu item?\n\nThis action cannot be undone!")) { e.preventDefault(); }
+    });
+    $( "#sortable" ).sortable({
+        opacity: 0.6,
+        update : function () { 
+            $('#menuorder').val($('#sortable').sortable('toArray')); 
+        } 
+    });
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);    
+    <?php } ?>
+
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);
+    <?php } ?>
+
+    var testimonialTags = [<?php echo $this->testimonialTags; ?>];
+    var quoteTags = [<?php echo $this->quoteTags; ?>];
+    
+    function split( val ) {
+        return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+        return split( term ).pop();
+    }
+    $( ".testimonialTags" )
+        .bind( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                    $( this ).data( "autocomplete" ).menu.active ) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 0,
+            source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                    testimonialTags, extractLast( request.term ) ) );
+            },
+            focus: function() {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+            }
+        });
+    $( ".quoteTags" )
+        .bind( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                    $( this ).data( "autocomplete" ).menu.active ) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 0,
+            source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                    quoteTags, extractLast( request.term ) ) );
+            },
+            focus: function() {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+            }
+        });
+});
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<form method="post">
+    <p>
+        <label for="pageTitle" class="req">Page Title:</label><br />
+        <input type="text" size="60" name="pageTitle" class="input-text" id="pageTitle" value="<?php echo $this->pageTitle ?>"/>
+    </p>
+    <p>
+        <label for="pageURL" class="req">URL:</label><br />
+        <?php
+        if ($this->urlEditable) {
+            ?>
+            <span class="smaller low">(no leading forward slash - E.g., letting-agents/about-us)</span><br />
+            <?php if ($this->siteBasePath != '') { echo $this->siteBasePath; } ?>
+            <input type="text" size="60" name="pageURL" class="input-text" id="pageURL" value="<?php echo $this->pageURL ?>"/>
+            <?php
+        } else {
+            ?>
+            <p class="msg warning">URL can't be changed for this page - as it is used in the top menu</p>
+            <input type="text" size="60" name="pageURL" class="input-text readonly" id="pageURL" readonly value="<?php echo $this->pageURL ?>"/>
+            <?php
+        }
+        ?>
+    </p>
+    <p>
+        <label for="metaDescription" class="req">Meta Description:</label><br />
+        <span class="smaller low">(Meaningful description of the page's content)</span><br />
+        <textarea class="input-text" name="metaDescription" id="metaDescription" cols="100" rows="2"><?php echo $this->metaDescription ?></textarea>
+    </p>
+    <p>
+        <label for="metaKeywords" class="req">Meta Keywords:</label><br />
+        <span class="smaller low">(separated by comma)</span><br />
+        <input type="text" size="100" name="metaKeywords" class="input-text" id="metaKeywords" value="<?php echo $this->metaKeywords ?>"/><br />
+    </p>
+    <p>
+        <label for="pageContent" class="req">
+        <?php if ($this->siteHandle == 'hl-connect') { ?>
+            Breadcrumb Trail:
+        <?php } else { ?>
+            Content:
+        <?php } ?>
+        </label><br />
+        <textarea class="editor input-text" name="pageContent" id="pageContent" cols="100" rows="10"><?php echo $this->pageContent ?></textarea>
+    </p>
+    <p>
+        <label for="template" class="req">Layout:</label><br />
+        <select name="template" class="input-text" id="template">
+            <?php echo $this->templateFields ?>
+        </select>
+        <br />
+    </p>
+    <?php echo $this->metaFields ?>
+    <!-- <div class="box-01">
+        <p class="nom"><input type="submit" value="Publish" class="input-submit" /> or <input type="submit" value="Archive" class="input-submit-02" /></p>
+    </div>  -->
+    <div class="box-02">
+        <input type="hidden" name="site" id="site" value="<?php echo $this->siteHandle ?>" />
+        <input type="hidden" name="id" id="id" value="<?php echo $this->pageID ?>" />
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="javascript:history.go(-1)" />
+        </p>
+    </div>
+</form>

@@ -1,0 +1,8 @@
+<?php
+	$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view'); 
+?>
+<div>
+	<table id="contact-list" class="stripeMe" width="100%">
+		<?php echo $view->contacts; ?>
+	</table>
+</div>

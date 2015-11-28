@@ -1,0 +1,57 @@
+<?php echo $this->portfolioQuoteSubHeader($this->stepNum); ?>
+<div class="portfolio col-sm-9">
+    <div class="content">
+            <?php
+            // This lists the properties added on step 2
+            if (($this->stepNum == 2)) : ?>
+                <div id="properties" class="form_section">
+                    <h2 class="quaternary-colour main-heading">Your Portfolio</h2>
+                    <?php
+                    $pageSession = new Zend_Session_Namespace('portfolio_insurance_quote');
+                    $countOfProperties = 0;
+                    if(isset($pageSession->CustomerRefNo) && $pageSession->CustomerRefNo !=""){
+                        $propertiesManager = new Manager_Insurance_Portfolio_Property();
+                        $countOfProperties = count($propertiesManager->fetchAllProperties($pageSession->CustomerRefNo));
+                    }
+                    if ($countOfProperties == 0){
+                        echo $this->partial('portfolio-insurance-quote/partials/intro.phtml');
+                    }else{ ?>
+                    <?php
+                        echo $this->partialLoop('portfolio-insurance-quote/partials/property-list.phtml', $this->propertyList->toArray()); ?>
+                    <?php } ?>
+                </div>
+            <?php endif; ?>
+        <div>
+            <?php
+            $pageSession = new Zend_Session_Namespace('portfolio_insurance_quote');
+            $countOfProperties = 0;
+            if(isset($pageSession->CustomerRefNo) && $pageSession->CustomerRefNo !=""){
+                $propertiesManager = new Manager_Insurance_Portfolio_Property();
+                $countOfProperties = count($propertiesManager->fetchAllProperties($pageSession->CustomerRefNo));
+                ($countOfProperties == 0) ? $style =' style="display:none"' : $style="";
+            }
+            if (($this->stepNum == 2)){ ?>
+
+            <div class="properties" id="add-property-button" <?php echo $style;?>>
+                <a class="btn btn-default pull-right" href="/portfolio/insurance-quote/insured-address"><strong>Add</strong> Next Property</a>
+                <div class="clearfix"></div>
+            </div>
+            <?php } ?>
+        </div>
+
+        <form action="" class="main validate" method="post" enctype="application/x-www-form-urlencoded">
+            <?php if (($this->stepNum == 2) || ($this->stepNum == 3)) {
+                echo $this->form;
+            } else { ?>
+                <div class="form_section">
+                    <?php echo $this->form; ?>
+                </div>
+            <?php } ?>
+            <?php echo $this->partial('portfolio-insurance-quote/partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+        </form>
+    </div>
+</div>
+
+<div class="col-sm-3">
+    <?php echo $this->portfolioQuoteSidebar($this->premiums['premiums'], $this->fees, $this->errorsHtml, $this->stepNum, $this->stepMax); ?>
+</div>

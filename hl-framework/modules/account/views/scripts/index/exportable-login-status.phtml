@@ -1,0 +1,31 @@
+<script src="/assets/vendor/jquery-cookie/js/jquery.cookie.js" type="text/javascript"></script>
+
+<div class="login-status">
+    <ul class="hidden-xs list-inline">
+    <?php
+    if ($this->loggedIn) {
+        ?>
+        <script>
+            $(function() {
+                $.cookie('hl_my_homelet-logged_in', '1', { path: '/' });
+                $.cookie('hl_my_homelet-name', '<?php echo htmlentities($this->firstName); ?>', { path: '/' });
+            });
+        </script>
+        <li class="login-name">Hi, <?php echo htmlentities($this->firstName); ?></li>
+        <li><a class="btn btn-inverse" role="button" href="<?php echo $this->hlfBaseUrl; ?>/my-homelet" target="_top">My HomeLet</a></li>
+        <li><a class="btn btn-inverse" role="button" href="<?php echo $this->hlfBaseUrl; ?>/logout" target="_top">Log out</a></li>
+        <?php
+    } else {
+        ?>
+        <script>
+            $(function() {
+                $.cookie('hl_my_homelet-logged_in', '0', { path: '/' });
+                $.removeCookie('hl_my_homelet-name', { path: '/' });
+            });
+        </script>
+        <li><a class="btn btn-inverse" role="button" href="<?php echo $this->hlfBaseUrl; ?>/my-homelet" target="_top">Existing customers</a></li>
+        <?php
+    }
+    ?>
+    </ul>
+</div>

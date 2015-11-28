@@ -1,0 +1,9 @@
+<div class="content">
+    <form id="previousClaim" class="validate" action="" method="post">
+        <?php echo $this->form; ?>
+    </form>
+    
+    <div id="claims-list">
+        <?php echo $this->partialLoop('partials/claims-list.phtml', $this->claimsList); ?>
+    </div>
+</div>

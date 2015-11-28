@@ -1,0 +1,29 @@
+<?php
+//Get the details of the claim
+$claimDesc = $this->claim->getClaimType()->getClaimTypeText();
+$claimDate = $this->claim->getClaimMonth() . '/' . $this->claim->getClaimYear();
+$claimValue = $this->claim->getClaimValue()->getValue();
+$claimRefNo = $this->claim->getRefno();
+?>
+
+<div class="form_section one-col property_list" style="float: left;">
+    <div style="float: left; width: 500px;">
+        <strong>
+            <?php echo $claimDesc;?>
+        </strong>
+        (<?php echo $claimDate; ?>)
+        &pound;<?php echo $claimValue; ?>
+    </div>
+
+    <div style="float: right;">
+        <a style="float:none; display:inline" href="#" onclick="removeClaim(
+            '<?php echo $claimRefNo; ?>',
+            <?php echo $this->claim->getClaimMonth(); ?>,
+            <?php echo $this->claim->getClaimYear(); ?>,
+            '<?php echo $claimValue; ?>',
+            <?php echo $this->claim->getClaimType()->getClaimTypeID(); ?>
+            ); return false;">Remove</a>
+    </div>
+</div>
+
+<div class="clearfix"></div>

@@ -1,0 +1,45 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li><a href="/iris-referencing">Referencing</a></li>
+        <li class="last"><a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">Reference no: {{ application.referenceNumber }}</a></li>
+        <li class="current_page">Case Log</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div class="form-horizontal">
+
+        <h2>Case Log</h2>
+
+        {% for entry in entries %}
+            <div class="note">
+                <div class="note-meta">
+                    Added on
+                    <strong><time datetime="{{ entry.recordedAt | date(constant('DATE_ATOM')) }}">{{ entry.recordedAt | date('jS M, Y') }} at {{ entry.recordedAt | date('g:ia') }}</time></strong>
+                    {% if entry.createdBy is defined and entry.createdBy %}
+                        by
+                        <strong>{{ entry.createdBy }}</strong>
+                    {% endif %}
+                </div>
+                <div class="note-content">
+                    {% if 'note' == entry.type %}
+                        <p>{{ entry.content | raw }}</p>
+                    {% elseif 'activity' == entry.type %}
+                        {{ entry.content | raw }}
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p>
+                <em>No log items have been found</em>
+            </p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

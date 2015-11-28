@@ -1,0 +1,18 @@
+<div >
+    <form id="portfolioProperty" action="" class="validate" method="post">
+        <div>
+            <?php echo $this->form; ?>
+            Are you sure you wish to remove this property?
+        </div>
+        <input class="btn btn-default" id="remove" type="button" name="remove" value="Remove Property" onclick="removeProperty()";>
+    </form>
+    <script type="text/javascript">
+        // imageTick setup:
+        $('input[type=checkbox]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        $('input[type=radio]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+    </script>
+</div>

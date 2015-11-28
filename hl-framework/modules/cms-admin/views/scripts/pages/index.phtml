@@ -1,0 +1,35 @@
+<h1><?php echo $this->siteDescription; ?> pages</h1><br />
+
+<script>
+$(function() {
+    $(".ico-delete").click(function(e){
+        if (!confirm("Are you sure you want to delete this page?\n\nThis action cannot be undone!")) { e.preventDefault(); }
+    });
+    $( "#sortable" ).sortable({
+        opacity: 0.6,
+        update : function () { 
+            $('#menuorder').val($('#sortable').sortable('toArray')); 
+        } 
+    });
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->deleted) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);    
+    <?php } ?>
+});
+</script>
+<?php if ($this->deleted) { ?>
+    <p class="msg done">Page deleted successfully!</p>
+<?php } ?>
+<table>
+    <tbody>
+        <tr>
+            <th>URL</th>
+            <th>Page Title</th>
+            <th width="90"></th>
+        </tr>
+        <?php echo $this->pageList ?>
+    </tbody>
+</table><br />
+<a href="/cms-admin/pages/add?site=<?php echo $this->siteHandle ?>">Add a new page</a>

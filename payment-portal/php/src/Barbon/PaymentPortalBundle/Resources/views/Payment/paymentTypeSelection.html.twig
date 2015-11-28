@@ -1,0 +1,120 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ url('barbon_paymentportal_payment_getuserpaymentportalstylesheet', { id: order.user.id }) }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block header %}
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="hidden-xs hidden-sm visible-md visible-lg">
+                <div class="branding">
+                    <div class="row">
+                        <div class="col-md-6"><img src="{{ asset('images/logo-large.png') }}" class="hl-logo" alt="HomeLet logo" /></div>
+                        <div class="col-md-6"><img class="pull-right pp-logo" src="{{ asset('images/pp-logo.png') }}" alt="PayPoint logo" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="visible-xs visible-sm hidden-md hidden-lg">
+            <div class="branding-bar">
+                <div class="mobile-steps">
+                    <div class="circle last">3</div>
+                    <div class="circle">2</div>
+                    <div class="circle active">1</div>
+                    <div class="text">Step:</div>
+                </div>
+                <span class="brand-name initial"><img src="{{ asset('images/logo-mobile.png') }}" alt="HomeLet" /></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mobile-full-width">
+        <div class="steps">
+            <div class="step active">
+                <div class="circle">1</div>
+                <div class="details"><span class="hidden-xs">{{ 'Select' | trans }} </span>{{ 'Payment Method' | trans }}</div>
+            </div>
+
+            <div class="step">
+                <div class="circle"></div>
+                <div class="details">{{ 'Make Payment' | trans }}</div>
+            </div>
+
+            <div class="step">
+                <div class="circle"></div>
+                <div class="details">{{ 'Payment Confirmed' | trans }}</div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="col-xs-12">
+        <div class="bpp-form">
+            <h1>{{ 'Select Payment Method' | trans }}</h1>
+
+            <form action="{{ url('barbon_paymentportal_payment_paymenttypeselection', { uuid: order.uuid }) }}" method="post">
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">{{ 'Pay Now' | trans }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div class="prefooter banner-bg">
+        <div class="prefooter-banner">
+            <div class="container"></div>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        <div class="container">
+            <div class="row information-footer">
+                <div class="col-sm-3">
+                    <h3>HomeLet</h3>
+                </div>
+
+                <div class="col-sm-9">
+                    <ul class="list-inline">
+                        <li><a href="http://homelet.co.uk/terms-of-use" target="_blank">Terms of use</a></li>
+                        <li><a href="http://homelet.co.uk/cookies" target="_blank">Cookie policy</a></li>
+                        <li><a href="http://homelet.co.uk/contact-us" target="_blank">Contact us</a></li>
+                        <li class="large pull-right">Tel. 0845 117 6000</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row company-footer">
+                <div class="col-sm-8">
+                    <div class="copyrights">
+                        &copy;2015 HomeLet. All rights reserved.
+                    </div>
+                    <p>HomeLet is a trading name of Barbon Insurance Group Limited which is authorised and regulated by the Financial Conduct Authority for insurance mediation.<br>
+                        Registered in England number 3135797. Registered office address: Hestia House, Edgewest Road, Lincoln, LN6 7EL.</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <ul class="list-inline pull-right">
+                        <li><a href="https://www.facebook.com/pages/HomeLet/106776409363786" class="social-link facebook" target="_blank"><span class="sr-only">Like on Facebook</span></a></li>
+                        <li><a href="https://twitter.com/homelet" class="social-link twitter" target="_blank"><span class="sr-only">Follow on Twitter</span></a></li>
+                        <li><a href="https://www.linkedin.com/company/homelet" class="social-link linkedin" target="_blank"><span class="sr-only">Connect on LinkedIn</span></a></li>
+                        <li><a href="https://plus.google.com/u/0/b/103037991794476213721/+HomeletCoUkInsurance" class="social-link google" target="_blank"><span class="sr-only">HomeLet on Google Plus</span></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCKsMF7b0QBdGj0_o4M3p0Tg" class="social-link youtube" target="_blank"><span class="sr-only">HomeLet YouTube channel</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/barbon-payment-portal.js') }}"></script>
+{% endblock %}

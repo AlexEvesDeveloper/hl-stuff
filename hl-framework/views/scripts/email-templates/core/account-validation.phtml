@@ -1,0 +1,30 @@
+<?php if (isset($this->metaData['firstname']) && $this->metaData['firstname']): ?>
+    <p>Hello <?php echo $this->metaData['firstname'] ?>,</p>
+<?php else: ?>
+    <p>Hello,</p>
+<?php endif; ?>
+
+<p>
+    You&rsquo;re almost there! We just need you to validate the email address for your
+    My HomeLet account by clicking on the validation link below:
+</p>
+
+<?php $_activation_url = $this->metaData['homeletWebsite'] . '/my-homelet/activate-account?' .
+    $this->metaData['activationLink']. '&utm_source=Automated+email&utm_medium=Email&utm_content=Validate+account&utm_campaign=MyHomeLet' ?>
+
+<p class="wrapped">
+    <a href="<?php echo $_activation_url ?>">
+        Activate My HomeLet account.
+    </a>
+</p>
+
+<p>
+    Once you&rsquo;ve validated your email address, you&rsquo;ll be able to access the full range
+    of features and benefits available to you through your My HomeLet account.
+</p>
+
+<p>
+    Just to let you know, this is an automated message which is unable to receive or respond to replies.
+    If you&rsquo;d like to get in touch with us please visit our
+    <a href="<?php echo $this->metaData['homeletWebsite']; ?>/contact-us?utm_source=Automated+email&utm_medium=Email&utm_content=Validate+account&utm_campaign=MyHomeLet">contact us page</a>.
+</p>

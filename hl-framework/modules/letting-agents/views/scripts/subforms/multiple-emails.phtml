@@ -1,0 +1,32 @@
+<div class="form_section one-col">
+	<div>
+	<p>We believe the best way of contacting all of our letting agents is by email - its fast, and it means that you&rsquo;ll get our messages straight away. We realise though that in any office, there could be several different people who need to receive emails about different things.</p>
+	<br />
+	<p>So we&rsquo;ve begun to stream our correspondence through up-to six different fields, meaning you can now have up to six different email addresses on your account, for six different users.</p>
+	<br />
+	<p>Please note, not all of the fields are ready yet, because we&rsquo;re making the changes to our system gradually. However we&rsquo;d like to take all of your preferences now, and until they&rsquo;re all set up and ready to go, we&rsquo;ll send Insurance correspondence to your Insurance correspondence address and everything else will be sent to your General correspondence address.</p>
+	
+	</div>
+	<div>
+		<?php echo $this->element->general_email_address; ?>
+	</div>
+	<div>
+		<input type="button" value="copy" style="width: 50px" id="copyEmails"/>
+	</div>
+	<div>
+		<?php echo $this->element->email_for_referencing; ?>
+		<?php //echo $this->element->referencing_same_as_general; ?>
+		
+	</div>
+	<div>
+		<?php echo $this->element->email_for_insurance; ?>
+		<?php //echo $this->element->insurance_same_as_general; ?>
+		
+	</div>
+		
+	<div>
+		<?php echo $this->element->email_for_marketing; ?>
+		<?php //echo $this->element->marketing_same_as_general; ?>
+		
+	</div>		
+</div>

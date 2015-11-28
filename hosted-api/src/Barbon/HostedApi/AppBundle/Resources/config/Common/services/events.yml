@@ -1,0 +1,27 @@
+services:
+  barbon.hosted_api.app.event.new_multi_reference_event:
+    class: Barbon\HostedApi\AppBundle\Event\NewMultiReferenceEvent
+
+  barbon.hosted_api.app.event.new_guarantor_reference_event:
+    class: Barbon\HostedApi\AppBundle\Event\NewGuarantorReferenceEvent
+
+  barbon.hosted_api.app.event.confirm_multi_reference_event:
+    class: Barbon\HostedApi\AppBundle\Event\ConfirmMultiReferenceEvent
+    arguments:
+      - @kernel
+      - @request_stack
+
+  barbon.hosted_api.app.event.confirm_individual_reference_event:
+    class: Barbon\HostedApi\AppBundle\Event\ConfirmGuarantorReferenceEvent
+    arguments:
+      - @kernel
+      - @request_stack
+
+  barbon.hosted_api.app.event.new_reference_success_event:
+    class: Barbon\HostedApi\AppBundle\Event\NewReferenceSuccessEvent
+
+  barbon.hosted_api.app.event.new_reference_failure_event:
+    class: Barbon\HostedApi\AppBundle\Event\NewReferenceFailureEvent
+
+  barbon.hosted_api.app.event.new_reference_finish_event:
+    class: Barbon\HostedApi\AppBundle\Event\NewReferenceFinishEvent

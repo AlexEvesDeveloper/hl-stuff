@@ -1,0 +1,43 @@
+parameters:
+    security.exception_listener.class: Barbon\HostedApi\SecurityBundle\Firewall\ExceptionListener
+    
+services:
+    barbon.hosted_api.security.provider.user_provider:
+        class: Barbon\HostedApi\SecurityBundle\Provider\UserProvider
+        arguments:
+            - @barbon.iris_rest_client.client.iris_agent_client
+
+    security.authentication.listener.abstract:
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+        arguments: [@security.context, @security.authentication.manager, @security.authentication.session_strategy, @security.http_utils, "asn_secured",@security.authentication.success_handler, @security.authentication.failure_handler, {}, @logger, @event_dispatcher]
+        class: Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener
+
+    security.authentication.success_handler:
+        class:  Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler
+        arguments:  ["@security.http_utils", {}]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    security.authentication.failure_handler:
+        class:  Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler
+        arguments:  ["@http_kernel", "@security.http_utils", {}, "@logger"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    barbon.hosted_api.security.firewall.asn_username_password_authentication_listener:
+        class: Barbon\HostedApi\SecurityBundle\Firewall\AsnUsernamePasswordFormAuthenticationListener
+        parent: security.authentication.listener.abstract
+        arguments:
+            index_5: @barbon.hosted_api.security.authentication.handler.login_success_handler
+        abstract: true
+
+    barbon.hosted_api.security.firewall.asn_username_password_authentication_provider:
+        class: Barbon\HostedApi\SecurityBundle\Authentication\Provider\AsnUsernamePasswordAuthenticationProvider
+        arguments: ["", "@security.user_checker", "asn_secured", "@security.encoder_factory", "%security.authentication.hide_user_not_found%"]
+
+    barbon.hosted_api.security.authentication.handler.login_success_handler:
+        class: Barbon\HostedApi\SecurityBundle\Authentication\Handler\LoginSuccessHandler
+        arguments: ["@security.context", "@router"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }

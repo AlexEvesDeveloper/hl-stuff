@@ -1,0 +1,42 @@
+services:
+    # Add New Reference
+    barbon.hosted_api.landlord.reference.controller.new_reference.multi.new_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\NewReference\Multi\NewController
+        arguments:
+            - @event_dispatcher
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.app.form.reference.type.reference_type
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.landlord.reference.controller.new_reference.guarantor.new_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\NewReference\Guarantor\NewController
+        arguments:
+            - @event_dispatcher
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @barbon.hosted_api.app.form.reference.type.referencing_guarantor_type
+            - @barbon.hosted_api.app.form.reference.event_listener.referencing_guarantor_decorator_bridge_subscriber
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    # Confirmation
+    barbon.hosted_api.landlord.reference.controller.new_reference.abstract_confirmation_controller:
+        abstract: true
+        arguments:
+            - @kernel
+            - @event_dispatcher
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.landlord.reference.controller.new_reference.guarantor.confirmation_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\NewReference\Guarantor\ConfirmationController
+        parent: barbon.hosted_api.landlord.reference.controller.new_reference.abstract_confirmation_controller
+        arguments:
+            - @barbon.hosted_api.app.event.confirm_individual_reference_event
+
+    barbon.hosted_api.landlord.reference.controller.new_reference.multi.confirmation_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\NewReference\Multi\ConfirmationController
+        parent: barbon.hosted_api.landlord.reference.controller.new_reference.abstract_confirmation_controller
+        arguments:
+            - @barbon.hosted_api.app.event.confirm_multi_reference_event

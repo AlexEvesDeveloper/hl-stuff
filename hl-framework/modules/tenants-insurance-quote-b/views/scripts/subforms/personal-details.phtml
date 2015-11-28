@@ -1,0 +1,100 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-heading">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-personaldetails'); ?>
+        </div>
+        Your Details
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-personaldetails'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php if ($this->element->title->getAttrib('disabled') == 'disabled'):
+            echo $this->element->title
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+            <input type="hidden" name="title" value="<?php echo $this->element->title->getValue(); ?>" />
+        <?php else:
+            echo
+            $this->element->title
+                ->setOptions(array('class'=>'form-control'))->render();
+        endif ?>
+    </div>
+
+    <div id="other_title_field" style="display:none;">
+        <div class="form-group">
+            <?php
+            echo $this->element->other_title
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <?php
+        echo $this->element->first_name
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->last_name
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help">Contact number, including dialling code.</div>
+        <?php
+        echo $this->element->phone_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->mobile_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->email_address
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <label for="date_of_birth_at"><?php echo $this->element->date_of_birth_at->getLabel(); ?></label>
+        <div class="input-group date">
+            <input type="text" name="date_of_birth_at" id="date_of_birth_at" value="<?php echo htmlentities($this->element->date_of_birth_at->getValue()); ?>" class="form-control" /><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+	function displayOtherTitleField() {
+		if($('#title').val() == "Other") {
+			$('#other_title_field').slideDown('fast');
+		} else {
+			$('#other_title_field').slideUp('fast');
+		}
+	}
+	displayOtherTitleField();
+	$(document).ready(function() {
+		$('#title').change(function() {
+			displayOtherTitleField();
+		});
+	});
+</script>

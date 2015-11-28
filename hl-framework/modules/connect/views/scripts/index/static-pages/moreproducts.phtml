@@ -1,0 +1,42 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) { 	echo $this->infoPanel($this->panelContent); }?>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'      => 'ebrochures',
+                'title'     => 'Order marketing literature',
+                'help_text' => 'Place an order today for free!',
+                'url'       => 'http://homelet.fastant.org.uk/'
+            ),
+            array(
+                'icon'      => 'epc-alternate',
+                'title'     => 'Energy Performance Certificates',
+                'help_text' => 'Arrange an EPC for your landlords',
+                'url'       => 'http://www.greenenergymatters.co.uk/homelet-epc-order/'
+            ),
+            array(
+                'icon'      => 'general-info',
+                'title'     => 'Property Agent Professional Insurance',
+                'help_text' => 'Find out more about our specialist cover',
+                'url'       => '/moreproducts/pi'
+            ),
+            array(
+                'icon'      => 'documents',
+                'title'     => 'Documents for new customers',
+                'help_text' => 'Some useful documents to help get you started',
+                'url'       => '/moreproducts/newcustomerdocs'
+            ),
+            array(
+                'icon'      => 'compliance',
+                'title'     => 'Compliance information',
+                'help_text' => 'Useful info on data security &amp; treating customers fairly',
+                'url'       => '/moreproducts/complianceinfo'
+            )
+        ));
+        ?>
+    </div>
+</div>

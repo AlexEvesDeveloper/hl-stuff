@@ -1,0 +1,7 @@
+services:
+    barbon.hosted_api.landlord.reference.controller.lookup.product_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\Lookup\ProductController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]

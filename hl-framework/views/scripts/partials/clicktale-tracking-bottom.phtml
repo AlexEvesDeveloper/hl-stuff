@@ -1,0 +1,16 @@
+<!-- ClickTale Bottom part -->
+<script type='text/javascript'>
+    (function () {
+        var ct_filter = document.querySelectorAll('[data-ctfilter="yes"]');
+        if (ct_filter) {
+            for (var ct_node in ct_filter) {
+                ct_filter[ct_node].className += ct_filter[ct_node].className ? ' ClickTaleSensitive' : 'ClickTaleSensitive';
+            }
+        }
+    })();
+    document.write(unescape("%3Cscript%20src='"+
+        (document.location.protocol=='https:'?
+            "https://cdnssl.clicktale.net/www08/ptc/9a7e49eb-5a63-4753-8b7f-52ac4e397689.js":
+            "http://cdn.clicktale.net/www08/ptc/9a7e49eb-5a63-4753-8b7f-52ac4e397689.js")+"'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- ClickTale end of Bottom part -->

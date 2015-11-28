@@ -1,0 +1,35 @@
+<div id="userAccounts">
+
+    <div>
+        <table cellspacing="0" cellpadding="2" border="0" width="100%" id="userListing">
+            <caption>
+                Add New User
+            </caption>
+        </table>
+    </div>
+
+    <form method="post" action="/settings?show=userAdministration#userAdministration">
+        <input type="hidden" name="userId" value="<?php echo $this->userId; ?>" />
+        <div class="foldable1" id="foldable1_<?php echo $this->userId; ?>">
+
+            <table cellspacing="0" cellpadding="2" border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td width="90%">Add new user account</td>
+                        <td width="10%"><a href="#" onclick="$('.foldable1').slideDown(); $('.foldable2').slideUp(); $('#foldable1_<?php echo $this->userId; ?>').slideUp(); $('#foldable2_<?php echo $this->userId; ?>').slideDown(); return false;">Add</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="foldable2" id="foldable2_<?php echo $this->userId; ?>">
+            <h3>Add new user</h3>
+
+            <?php echo $this->form; ?>
+
+            <input class="nav-agents-button" type="reset" name="cancel" value="Cancel" onclick="$('.foldable1').slideDown(); $('.foldable2').slideUp(); return true;" />
+            <input class="nav-agents-button" type="submit" name="insertAccount" value="Add account" style="float: right;" />
+        </div>
+    </form>
+</div>

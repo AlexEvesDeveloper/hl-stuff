@@ -1,0 +1,76 @@
+<?php
+
+// Grab view to show form-level errors
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+if (count($view->errors) > 0) : ?>
+    <div class="alert">
+        <ul class="errors">
+            <?php foreach($view->errors as $error) : ?>
+                <li><?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<form enctype="application/x-www-form-urlencoded" method="post" action="" id="loginform" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-md-4 col-sm-6 control-label" for="letting_agent_asn">
+            Agent Scheme Number:
+        </label>
+        <div class="col-md-8 col-sm-6">
+            <?php echo $this->element->letting_agent_asn->
+                removeDecorator('label')->
+                setAttribs(
+                    array(
+                        'class' => 'text form-control',
+                        'required' => 'required',
+                        'aria-required' => 'true'
+                    )
+                )->render();
+            ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 col-sm-6 control-label" for="tenant_reference_number">
+            HomeLet Reference Number:
+        </label>
+        <div class="col-md-8 col-sm-6">
+            <?php echo $this->element->tenant_reference_number->
+                removeDecorator('label')->
+                setAttribs(
+                    array(
+                        'class' => 'text form-control',
+                        'required' => 'required',
+                        'aria-required' => 'true'
+                    )
+                )->render();
+            ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 col-sm-6 control-label" for="tenant_dob">
+            Date of birth (dd/mm/yyyy):
+        </label>
+        <div class="col-md-8 col-sm-6">
+            <?php echo $this->element->tenant_dob->
+                removeDecorator('label')->
+                setAttribs(
+                    array(
+                        'class' => 'text form-control',
+                        'required' => 'required',
+                        'aria-required' => 'true'
+                    )
+                )->render();
+            ?>
+        </div>
+    </div>
+    <?php echo $this->element->next->
+        setAttribs(
+            array(
+                'class' => 'action btn btn-tertiary pull-right',
+                'id' => ''
+            )
+        )->render(); ?>
+    <div class="clearfix"></div>
+</form>

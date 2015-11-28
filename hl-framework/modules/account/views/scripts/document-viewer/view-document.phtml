@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <link href="/assets/account/css/document-viewer.css" media="all" rel="stylesheet" type="text/css"/>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+      <script>
+          $().ready(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                  $('head').append('<link href="/assets/account/css/document-viewer-mobile.css" media="all" rel="stylesheet" type="text/css"/>');
+              }
+              else {
+                  // Add the iframe url only if not a small device
+                  $('#documentviewerframe').attr('src', '<?php echo $this->documentUrl ?>');
+              }
+          });
+      </script>
+  </head>
+
+  <body>
+    <!-- desktop version -->
+    <div id="sidebarcontent">
+      <div class="innertube">
+        <h1>Document Viewer</h1>
+        <a target="documentviewerframe" href="<?php echo $this->escape($this->documentUrl) ?>"><?php echo $this->customers_template_description ?></a>
+
+        <h2>Your Document Attachments</h2>
+        <?php if (is_array($this->documentAttachments) && count($this->documentAttachments)): ?>
+            <ul>
+            <?php foreach($this->documentAttachments as $_documentAttachment): ?>
+                <li><a target="documentviewerframe" href="<?php echo $_documentAttachment['url'] ?>"><?php echo $_documentAttachment['name'] ?></a></li>
+            <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            No attachments
+        <?php endif ?>
+      </div>
+    </div>
+
+    <!-- mobile version -->
+    <div id="mobilecontent">
+        <div class="innertube">
+            <h1>Document Viewer</h1>
+            <a href="<?php echo $this->escape($this->documentUrl) ?>"><?php echo $this->customers_template_description ?></a>
+
+            <h2>Your Document Attachments</h2>
+            <?php if (is_array($this->documentAttachments) && count($this->documentAttachments)): ?>
+                <ul>
+                    <?php foreach($this->documentAttachments as $_documentAttachment): ?>
+                        <li><a href="<?php echo $_documentAttachment['url'] ?>"><?php echo $_documentAttachment['name'] ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                No attachments
+            <?php endif ?>
+        </div>
+    </div>
+
+    <div id="maincontent">
+      <iframe id="documentviewerframe">
+      </iframe>
+    </div>
+  </body>
+</html>

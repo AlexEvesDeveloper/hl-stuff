@@ -1,0 +1,33 @@
+<?php
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_paymentselection'];
+?>
+
+<div class="form-sub-section payment-selection">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-heading">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-paymentselection'); ?>
+        </div>
+        Payment
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-paymentselection'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->payment_method; ?>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->payment_frequency; ?>
+    </div>
+
+    <div class="clearfix"></div>
+</div>

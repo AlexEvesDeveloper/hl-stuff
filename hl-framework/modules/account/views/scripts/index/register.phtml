@@ -1,0 +1,85 @@
+<?php // echo $this->subHeader('global,corporate,tenants,landlords', 'corporate'); ?>
+<?php $this->headScript()->prependFile('/assets/account/js/my-homelet-form.js'); ?>
+
+<div class="col-xs-12">
+    <?php echo $this->breadcrumbs ?>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper">
+    <div class="col-sm-9">
+        <h1 class="base-colour">My HomeLet Registration</h1>
+        <p><?php echo $this->message; ?></p>
+        <?php if ($this->form->getDescription()) : ?>
+            <div class="dynamicErrors">
+                <div class="dynamicError"><?php echo $this->escape($this->form->getDescription()) ?></div>
+            </div>
+        <?php endif; ?>
+
+        <form enctype="application/x-www-form-urlencoded" method="post" action="">
+            <div class="form_section">
+                <div class="form-sub-section">
+                    <div class="form-help hidden-xs hidden-sm"></div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->title ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->first_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->last_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->email; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->password; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->confirm_password; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->security_question; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->security_answer; ?>
+                    </div>
+                </div>
+            </div>
+            <?php echo $this->form->refno; ?>
+            <?php echo $this->form->submit; ?>
+            <div class="clearfix"></div>
+        </form>
+
+        <p>Existing customer? <a href="/my-homelet/login" title="">Please log in to My HomeLet</a>.</p>
+        <p>Have a quote but don&rsquo;t want to register? <a href="/my-homelet/retrieve-quote" title="">Retrieve your quote</a>.</p>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="panel panel-secondary">
+            <h3>Need help?</h3>
+            <p class="large quaternary-colour">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+</div>

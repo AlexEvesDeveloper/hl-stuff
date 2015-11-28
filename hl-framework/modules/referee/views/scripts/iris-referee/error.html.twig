@@ -1,0 +1,25 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block body %}
+
+    <p>
+        The link you&rsquo;ve followed appears to have been used already, or is missing a crucial piece of security
+        information.
+    </p>
+
+    <p>
+        If this link has been resent to you recently, please wait for the new email to come through and use that one instead.
+    </p>
+
+    <p>
+        {{ errorMessage }}
+    </p>
+
+{% endblock %}

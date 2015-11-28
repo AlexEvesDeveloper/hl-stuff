@@ -1,0 +1,169 @@
+<?php
+echo $this->subHeader('corporate', 'corporate');
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+		<div class="content contactus">
+			<h2>Contact Us</h2>
+			<div class="section">
+				<img src="/assets/cms/images/contact-house.png" alt="summer icon" />
+				<div class="two-col-text">
+					<div>
+						<h5>Insurance</h5>
+						<p>
+							0845 117 6000<br />
+							<a href="mailto:help@homelet.co.uk">help@homelet.co.uk</a>
+						</p>
+						<h5>Referencing</h5>
+						<p>
+							0845 111 2222<br />
+							<a href="mailto:connect@homelet.co.uk">connect@homelet.co.uk</a>
+						</p>
+						<h5>Rent Guarantee</h5>
+						<p>
+							0845 142 0264<br />
+							<a href="mailto:connect@homelet.co.uk">connect@homelet.co.uk</a>
+						</p>
+					</div>
+					<div>
+						<h5>New Agent Team</h5>
+						<p>
+							0845 155 7999<br />
+							<a href="mailto:agentmembership@homelet.co.uk">agentmembership@homelet.co.uk</a>
+						</p>
+						<h5>Claims</h5>
+						<p>
+							0845 117 6000 option 5<br />
+							<a href="mailto:rentguaranteeclaims@homelet.co.uk">rentguaranteeclaims@homelet.co.uk</a>
+						</p>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="section">
+				<div>
+					<img src="/assets/cms/images/contact-online.png" alt="summer icon" />
+					<div class="text">
+						<h5>Complaints</h5>
+						<p><a style="font-size:12px;line-height:19px;height:19px;font-weight:normal;margin:0;background:none" href="/complaints">www.homelet.co.uk/complaints</a></p>
+						<p><a style="font-size:12px;line-height:19px;height:19px;font-weight:normal;margin:0;background:none" href="mailto:complaints@homelet.co.uk">complaints@homelet.co.uk</a></p>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<img src="/assets/cms/images/contact-mail.png" alt="summer icon" />
+					<div class="two-col-text">
+						<div>
+							<h5>Main Office</h5>
+							<p>
+								Hestia House<br />
+								Unit 2 Edgewest Road<br />
+								Lincoln LN6 7EL
+							</p>
+						</div>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+			<br />
+			<h2>Ask Us a Question</h2>
+			<script type="text/javascript">
+				$(document).ready(function()
+				{
+					$('#contact_form').submit(function() {
+						sendContactUsEmail($(this).serialize());
+						return false;
+					});
+				});
+
+				function sendContactUsEmail(params) {
+					$.ajax({
+						url: "/json/contact-us",
+						type: "post",
+						data: params,
+						dataType: "json",
+						success: function(data){
+							if (data.success) {
+								$('#contact_success').html('Thank you for contacting us, we will reply shortly.');
+							}
+						}
+					});
+				}
+
+				function displayResults(rsp) {
+
+				}
+			</script>
+			<div class="section">
+				<form id="contact_form" action="" method="post" onsubmit="">
+					<input type="hidden" name="type" value="corporate" />
+					<input type="hidden" name="action" value="site_enquiry" />
+					<p class="first">
+						<label for="name">Name</label>
+						<input type="text" name="name" id="name" />
+					</p>
+					<p>
+						<label for="tel">Contact Telephone Number</label>
+						<input type="text" name="tel" id="tel" />
+					</p>
+					<p>
+						<label for="email">Email Address</label>
+						<input type="text" name="email" id="email" />
+					</p>
+					<p>
+						<label for="enquiry">Please enter your enquiry</label>
+						<textarea name="enquiry" id="enquiry" rows="" cols=""></textarea>
+						<input type="submit" value="Submit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;" />
+					</p>
+					<div id="contact_success"></div>
+					<div style="clear:both;"></div>
+				</form>
+			</div>
+            <br />
+            <h2>Our Location</h2>
+            <div class="section map_container">
+                <img src="/assets/cms/images/homelet-map.jpg" alt="HomeLet Map" />
+                <div class="vcard">
+                    <span class="fn org">HomeLet</span><br />
+                    <span class="adr">
+                        <span class="street-address">
+                            Hestia House<br />
+                            Unit 2 Edgewest Road
+                        </span><br />
+                        <span class="region">Lincoln</span><br />
+                        <span class="postal-code">LN6 7EL</span>
+                    </span>
+                </div>
+            </div>
+		</div>
+		<div class="sidebar">
+			 <div id="right">
+				<h4 class="underline-corporate">Resources</h4>
+				<div class="white">
+					<?php $layout = $this->layout()->getView(); ?>
+					<a href="<?php echo $layout->urls['connectLogin']; ?>" class="nav-corporate-dark-button">Login to <strong>Connect</strong></a>
+					<div style="clear:both;"></div>
+				</div>
+				<h4 class="underline-corporate">What people say</h4>
+				<div class="blue">
+					<div class="testyhearts">
+						<div id="testimonials-holder">
+							<ul>
+								<?php
+									echo $this->testimonials('corporate');
+								?>
+							</ul>
+							<div id="test-changer">
+								<a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+								<a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+    </div>
+</div>

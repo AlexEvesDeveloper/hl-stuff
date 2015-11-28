@@ -1,0 +1,28 @@
+<div class="container framework-content framework-banner">
+    <?php
+
+    // Display banner image
+    if ($this->imageLink != null) {
+        printf('<a href="%s" target="_blank">', $this->imageLink);
+    }
+    printf('<img src="%s" alt="%s" title="%s" />', $this->imagePath, $this->imageAlt, $this->imageAlt);
+    if ($this->imageLink != null) {
+        echo '</a>';
+    }
+
+    // Display optional extra [link] text
+    echo "\n";
+    if ($this->additionalText != null) {
+        echo '<p>';
+        if ($this->additionalTextLink != null) {
+            printf('<a href="%s" target="_blank" onclick="_gaq.push(\'_trackEvent\', \'Landlord Insurance\', \'findoutmore_banner\', \'Quote Form\');">', $this->additionalTextLink);
+        }
+        echo $this->additionalText;
+        if ($this->additionalTextLink != null) {
+            echo '</a>';
+        }
+        echo '</p>';
+    }
+
+    ?>
+</div>

@@ -1,0 +1,50 @@
+<h2>Site Statistics</h2>
+<?php
+
+if (isset($this->statsUnavailable)) {
+
+    ?>
+    <p>Stats currently unavailable.</p>
+    <?php
+
+} else {
+
+    ?>
+    <p><?php echo $this->startDate; ?> - <?php echo $this->today; ?></p>
+    <br />
+    <div class="dashboard">
+        <div class="full">
+            <h5>Site Visits</h5>
+            <img class="chart" src="<?php echo $this->visitorGraphUrl; ?>" /><br />
+        </div>
+        <div class="left">
+            <h5>Top 20 Keywords</h5>
+            <table class="slim">
+                <tr>
+                    <th>Keyword</th>
+                    <th>Visits</th>
+                </tr>
+                <?php
+                foreach ($this->keywordList as $keyword => $visits) {
+                    ?>
+                    <tr>
+                        <td><?php echo $keyword ?></td>
+                        <td><?php echo $visits ?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+        </div>
+        <div class="right">
+            <h5>Visitor Sources</h5>
+            <img class="chart" src="<?php echo $this->sourcesGraphUrl; ?>" />
+        </div>
+        <div class="right">
+            <h5>New vs Returning Visitors</h5>
+            <img class="chart" src="<?php echo $this->newReturningUrl; ?>" />
+        </div>
+    </div>
+    <?php
+
+}

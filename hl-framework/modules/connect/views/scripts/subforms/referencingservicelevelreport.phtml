@@ -1,0 +1,22 @@
+
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Referencing Service Level</h2>
+    
+    <div class="form_section one-col">
+        <p style="height:80px;">
+            Track the Service Level we've achieved on all your referencing applications
+        </p>
+        
+        <div>
+            <?php echo $this->element->slareport_month; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->slareport_year; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->slareport_producereport; ?>
+            <?php echo $this->element->slareport_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

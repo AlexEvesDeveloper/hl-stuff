@@ -1,0 +1,72 @@
+<?php
+/*
+    Copyright 2015 Barbon Insurance Group <oss@barbon.com>
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+/**
+ * Kick off script for Simple Landlord Insurance / Direct Group
+ *
+ * @author William Lawrence <william.lawrence@barbon.com>
+ * @author Paul Swift <paul.swift@barbon.com>
+ */
+
+// Configure array with vendor specific data
+$config = array(
+    'systemKey' => 'e358ed82-0e26-4463-9a12-2fd62bce1940',
+    'systemSecret' => '3de1b941-d98d-4195-a02a-9aee4b6417d1'
+);
+
+// Detect the real port used
+if ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) || 443 == $_SERVER['SERVER_PORT']) {
+    $proto = 'https';
+}
+else {
+    $proto = 'http';
+}
+
+// System MAC validation url
+$curlUrl = sprintf(
+    '%s://%s/app_dev.php/system/authentication/mac/landlord',
+    $proto,
+    $_SERVER['HTTP_HOST']
+);
+
+// GET variables
+$getVars = ('' != $_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+
+// Form data string
+$postString = http_build_query($config, '', '&');
+
+// Get cURL resource
+$curl = curl_init();
+
+// Set some cURL options
+curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => $postString,
+    CURLOPT_URL => $curlUrl
+));
+
+// Send the request and save response to $resp
+$resp = curl_exec($curl);
+
+// Decode the JSON object to an array
+$json = json_decode($resp, true);
+
+// Close request to clear up some resources
+curl_close($curl);
+
+// Redirect the user to received MAC url address add any get variables to the end
+$header = sprintf('Location: %s%s', $json['url'], $getVars);
+header($header);

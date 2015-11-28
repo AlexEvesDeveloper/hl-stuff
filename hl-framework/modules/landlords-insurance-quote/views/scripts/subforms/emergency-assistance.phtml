@@ -1,0 +1,22 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-emergencyassistance')); ?>
+        </span>
+        Emergency Assistance
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-emergencyassistance'); ?>
+        </div>
+    </div>
+
+    <div id="emergencyAssistanceNotIncluded">
+        <div class="radio form-group">
+            <?php echo $this->element->need_emergency_assistance; ?>
+        </div>
+    </div>
+</div>

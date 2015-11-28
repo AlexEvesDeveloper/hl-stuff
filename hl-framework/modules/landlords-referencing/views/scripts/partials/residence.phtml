@@ -1,0 +1,158 @@
+<script type="text/javascript">
+    $(function() {
+
+        $('#is_foreign_address-Yes').click(function(){
+            $('#property_postcode').attr('disabled','disabled');
+            $('#property_address').attr('disabled','disabled');
+            $('#residence_section').hide();
+            $('#ins_address_selector').hide();
+        });
+
+        $('#is_foreign_address-No').click(function(){
+            $('#property_postcode').attr('disabled',false);
+            $('#property_address').attr('disabled',false);
+            $('#residence_section').show();
+            $('#ins_address_selector').show();
+        });
+
+        $('#noOfYears').change(calculateDuration);
+        $('#noOfMonths').change(calculateDuration);
+    });
+
+    function calculateDuration() {
+
+        var noOfYears = $('#noOfYears').val();
+        var noOfMonths = $('#noOfMonths').val();
+
+        if(noOfYears == '60') {
+
+            if(noOfMonths == 'Please select') {
+
+                noOfMonths = 0;
+                $('#noOfMonths').val(noOfMonths);
+            }
+        }
+
+        if((noOfYears == 'Please select') || (noOfMonths == 'Please select')) {
+
+            $('#duration_at_address').val('');
+        }
+        else {
+
+            $('#duration_at_address').val( parseInt(noOfYears) + parseInt(noOfMonths) );
+        }
+    }
+</script>
+
+<h2 class="quaternary-colour">
+    <?php
+    //Prepare the variable text in the heading.
+    $session = new Zend_Session_Namespace('referencing_global');
+    switch($session->residentialChronology) {
+
+        case Model_Referencing_ResidenceChronology::CURRENT:
+            $header = 'Current';
+            $nonHeader = 'current';
+            break;
+
+        case Model_Referencing_ResidenceChronology::FIRST_PREVIOUS:
+            $header = 'First Previous';
+            $nonHeader = 'first previous';
+            break;
+
+        case Model_Referencing_ResidenceChronology::SECOND_PREVIOUS:
+            $header = 'Second Previous';
+            $nonHeader = 'second previous';
+            break;
+    }
+    ?>
+    <?php echo $header; ?> Address Details
+</h2>
+
+<?php if ($this->is_duplicate_address): ?>
+    <div class="alert alert-warning">
+        The address that you have entered is the same as the previous address, please provide an alternative address
+    </div>
+<?php endif; ?>
+
+<p>
+    Please enter details of your <?php echo $nonHeader; ?> address here. Please enter the postcode first, click on "GO",
+    then enter the house name or number in the box that will appear. Once your full address is shown
+    in the form below please correct the first line if necessary. Please complete the other fields.
+</p>
+
+<?php if ($this->description): ?>
+    <div class="alert alert-warning">
+        <ul class="errors">
+            <li><?php echo $this->description; ?></li>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<div class="form_section">
+    <div class="form-sub-section">
+        <div class="form-help hidden-xs hidden-sm"></div>
+
+        <div class="form-group form-group-radio">
+            <div class="radio">
+                <?php echo $this->is_foreign_address; ?>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div id="residence_section" class="form-group">
+            <label for="property_postcode" class="required">Postcode</label>
+            <div class="input-group">
+                <?php echo $this->property_number_name; ?>
+                <?php
+                echo $this->property_postcode
+                    ->setOptions(array('label' => '', 'class' => 'form-control'))->render();
+                ?>
+                <span class="input-group-btn">
+                    <input type="submit" id="postcode_lookup" value="Find address" name="lookup"
+                           onclick="getProperties($('#property_number_name').val(),
+                    $('#property_postcode').val(), 'property_postcode', 'property_address'); return false;" class="btn btn-quaternary btn-postcode" />
+                </span>
+            </div>
+        </div>
+
+        <div  id="ins_address_selector" class="form-group">
+            <?php echo $this->property_address->setAttribs(array('class' => 'form-control'))->render(); ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->duration_at_address; ?>
+
+            <div class="years">
+                <select id="noOfYears" class="form-control">
+                    <option value="Please select">Please select</option>
+                    <option value="0">0</option>
+                    <option value="12">1</option>
+                    <option value="24">2</option>
+                    <option value="36">3</option>
+                    <option value="48">4</option>
+                    <option value="60">5+</option>
+                </select> years
+            </div>
+
+            <div class="months">
+                <select id="noOfMonths" class="form-control">
+                    <option value="Please select">Please select</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select> months
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

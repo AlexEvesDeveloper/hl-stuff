@@ -1,0 +1,30 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-policydetails')); ?>
+        </span>
+        Your Policy Details
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-policydetails'); ?>
+        </div>
+    </div>
+
+    <div id="subform-policy-details" class="form-group">
+        <div class="help-trigger"><a class="show-help"></a></div>
+        <div class="field-help quaternary-colour">
+            Your policy will start on <span id="dateStatementStart"><em>(please enter a date)</em></span>
+            and end on <span id="dateStatementEnd"><em>(please enter a date)</em></span>.
+        </div>
+        <label for="policy_start"><?php echo $this->element->policy_start->getLabel(); ?></label>
+        <div class="input-group date">
+            <input type="text" name="policy_start" id="policy_start" data-required="required" data-validate="validate" data-type="date" value="<?php echo htmlentities($this->element->policy_start->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+        </div>
+        <div class="hidden">
+            <?php echo $this->element->policy_end; ?>
+        </div>
+    </div>
+</div>

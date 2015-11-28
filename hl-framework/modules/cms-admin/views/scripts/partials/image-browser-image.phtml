@@ -1,0 +1,10 @@
+<div class="gallery">
+    <p>
+        <span class="image_title"><?php echo $this->fileName ?></span><br />
+        <span class="smaller">
+            Size: <strong><?php echo $this->width; ?>&times;<?php echo $this->height ?></strong>, Date: <strong><?php echo $this->niceDate ?></strong>
+        </span>
+        <div class="image_wrapper"> <img src="/assets/legacy-cms/images/cms_uploads/previews/200_<?php echo $this->fileName; ?>" class="gallery-img" alt="" onclick="selectImage('/assets/legacy-cms/images/cms_uploads/<?php echo $this->fileName; ?>');" /> </div>
+        <a href="#" class="ico-delete">Delete</a> &nbsp; <a href="/cms-admin/images/edit?id=<?php echo $this->id ?>" class="ico-edit">Edit</a>
+    </p>
+</div>

@@ -1,0 +1,14 @@
+<h2>Applicant Details</h2>
+<div class="form_section two-col">
+    <div class="autoAlt">
+    	<?php echo $this->element->title;?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->first_name->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->last_name; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->phone_number->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->mobile_number; ?>
+    </div>
+</div>

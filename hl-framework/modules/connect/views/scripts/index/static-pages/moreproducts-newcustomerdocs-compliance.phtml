@@ -1,0 +1,57 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <h2 class="form" style="clear: both;">Compliance information</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info_page',
+                'title' => 'HomeLet Guidance Notes',
+                'url'   => '/assets/connect/pdf/Compliance_Guidance_Notes.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This guide outlines what insurance activities you can and cannot carry out depending on your HomeLet/FCA status.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+
+        <h2 class="form" style="clear: both;">Treating Customers Fairly</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info_tick',
+                'title' => 'Quick Guide to Treating Customers Fairly',
+                'url'   => '/assets/connect/pdf/B323_Quick_guide_to_Treating_Customers_Fairly_(0713).pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This quick guide includes important information on the principles of treating customers fairly, and tips on how to demonstrate them to your own customers.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+
+        <h2 class="form" style="clear: both;">Data Security</h2>
+
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'page_header_tick',
+                'title' => 'Quick Guide to Data Protection',
+                'url'   => '/assets/connect/pdf/B324_Quick_guide_to_Data_Protection_(0713).pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This quick guide outlines the principles of the Data Protection Act, and offers advice on how to make sure the confidential and personal customer data you obtain is secure.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+
+    </div>
+</div>

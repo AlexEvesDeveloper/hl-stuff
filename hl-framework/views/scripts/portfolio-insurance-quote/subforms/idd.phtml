@@ -1,0 +1,26 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('portfolio-insurance-quote-help-idd'); ?>
+        </span>
+        Initial Disclosure Document
+    </h2>
+
+    <div class="visible-xs visible-sm section-help">
+        <?php echo $this->promoContent('portfolio-insurance-quote-help-idd'); ?>
+    </div>
+
+    <div class="form-group idd-group">
+        <p>Please read the following statement and accept before continuing to the next step.</p>
+
+        <a href="/assets/legacy-cms/media/policy-documents/HL2172_IDD_LL.pdf" target="_blank" class="idd">HomeLet Initial Disclosure Document</a>
+
+        <div class="checkbox checkbox-idd">
+            <label for="idd">
+                <?php echo $this->element->idd; ?>
+                I confirm that I have read and agree to this document
+            </label>
+        </div>
+    </div>
+</div>

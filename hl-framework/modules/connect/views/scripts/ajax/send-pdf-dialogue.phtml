@@ -1,0 +1,65 @@
+<script type="text/javascript">
+
+    $(function() {
+        
+        $('#closeDialog').click(function() {
+            
+            $(document).trigger('close.facebox');
+        });
+        
+        $('#sendPdfSubmit').click(function() {
+
+            $('#sendPdfSubmit').hide();
+            $('#submission-wait-icon').show();
+            
+            $.getJSON(
+                '/json/send-pdf',
+                $('form#sendPdf').serialize(),
+                function(jsonData) {
+                    
+                    if (jsonData.errorMessage) {
+                        
+                        $('#message').html(jsonData.errorMessage);
+                    }
+                    else {
+                        
+                        $('#message').html(jsonData.successMessage);
+                    }
+                    
+                    $('#sendPdf').hide();
+                    $('#notice').show();
+                }
+            );
+    
+            return false;
+        });
+    });
+</script>
+
+<div class="popup_form_section">
+    <div id="notice" style="display: none;">
+        <div id="message"></div>
+        <div>
+            <label style="float:right"><input type="submit" name="submit" id="closeDialog" value="Close" /></label>
+        </div>
+    </div>
+    
+    <form id="sendPdf" name="sendPdf" action="/ajax/send-pdf-dialogue">
+        <input type="hidden" name="fromForm" value="1" />
+        <input type="hidden" name="filename" value="<?php echo $this->filename; ?>" />
+        <div class="alt">
+            <label>Email Address</label>
+            <input type="text" id="to" name="to" value="" />
+        </div>
+        <div>
+            <label>Message</label>
+            <textarea id="message" name="message"></textarea>
+        </div>
+        <div>
+            <label style="float:right">
+                <input type="submit" name="submit" id="sendPdfSubmit" value="Send" />
+                <img style="float: right; display: none;" id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+            </label>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,227 @@
+<?php
+$imageBaseUrl = $this->metaData['imageBaseUrl'] . 'assets/tenant_mailer/images/';
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><?php echo $this->metaData['pageTitle']; ?></title>
+
+    <style type="text/css">
+        body {
+            background-color: #f1f1f1;
+        }
+
+        h3 {
+            color: #bd1a8d;
+        }
+    </style>
+
+    <?php echo $this->partial('partials/my-homelet-email-styles.phtml') ?>
+
+</head>
+
+<body marginwidth="0" marginheight="0" bgcolor="#f1f1f1" style="background-color:#f1f1f1;">
+
+<table width="600" class="table" cellpadding="0" cellspacing="0" id="email-content" align="center">
+    <tr>
+        <td>
+            <table border="0" cellspacing="0" cellpadding="20" align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table style="width:188px;" width="188" class="collapsed" cellpadding="0" cellspacing="0" border="0" align="left">
+                                        <tr>
+                                            <td>
+                                                <a href="http://homelet.co.uk/tenants?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>homelet-logo.png" alt="HomeLet" width="188" height="81" border=0 /></a><br><br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table style="width:372px; height:81px;" width="372" class="collapsed" cellpadding="0" cellspacing="0" border="0" align="right">
+                                        <tr>
+                                            <td valign="middle">
+                                                <p class="right" style="text-align:right; line-height:30px;">
+                                                    <strong><span class="larger" style="font-size:17px;">Call us on 0845 117 6000</span><br>
+                                                    <a href="<?php echo $this->metaData['link']; ?>&amp;utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank" style="text-decoration: underline !important;">Complete your quote</a></strong>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <a href="<?php echo $this->metaData['link']; ?>&amp;utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank">
+                            <img src="<?php echo $imageBaseUrl; ?>tenants-banner.png" alt="Main Image" width="560" height="145" border="0" class="main-image" />
+                        </a>
+                        <br>
+                        <p class="reference" style="font-size: 22px;">Your Quote number: <span style="color: #01447b;"><?php echo $this->metaData['quoteNumber']; ?></span></p>
+                        <h1 style="font-size: 26px; color: #01447b;">You've made the first steps towards receiving your quote...</h1>
+                        Hi <?php echo $this->metaData['firstName']; ?>,<br>
+                        <br>
+                        Thanks for starting the process of asking us for a quote – please complete your details by following the link below and we'll get a quote to you as soon as you're done:<br>
+                        <br>
+                        <a href="<?php echo $this->metaData['link']; ?>&amp;utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>complete-on-white.png" alt="Complete Your Quote" /></a><br>
+                        <br>
+                        Need some help? Call our friendly insurance team on 0845 117 6000 – they'd be more than happy to help!<br>
+                        <br>
+                        We currently cover thousands of tenants and with over 20 years' experience, we understand what tenants want and need and can provide comprehensive and affordable cover for your belongings, as well as cover for your liability as a tenant, for your landlord's property, furniture, fittings and fixtures.<br>
+                        <br>
+                        Kind regards,<br>
+                        <br>
+                        The HomeLet Team
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table border="0" cellpadding="20" cellspacing="0" align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+                <tr>
+                    <td colspan="2">
+                        <h2>Product literature for Tenants.</h2>
+                        It's really important that you read our Policy Documents to understand exactly what's covered. You can find out more about Tenants Contents Insurance+ and Tenancy Liability in the documents below.<br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" width="428">
+                        <img src="<?php echo $imageBaseUrl; ?>pdfIcon.png" alt="PDF" /> <a href="http://homelet.co.uk/assets/documents/Tenants-Insurance-Policy-Wording-B270-0314.pdf" target="_blank">Tenants Insurance Policy Wording</a><br>
+                        <br>
+                        <img src="<?php echo $imageBaseUrl; ?>pdfIcon.png" alt="PDF" /> <a href="http://homelet.co.uk/assets/documents/B269-TI-Policy-Summary-0314.pdf" target="_blank">Tenants Insurance Policy Summary</a>
+                    </td>
+
+                    <td class="picture-frame" width="132">
+                        <img src="<?php echo $imageBaseUrl; ?>picture-frame.jpg" alt="Tenants Contents Insurance" width="132" height="113" />
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width:600px;">
+                        <table width="280" border="0" cellspacing="0" cellpadding="20" class="collapsed" align="left" style="float:left;">
+                            <tr>
+                                <td style="background-color: #e5eaed;">
+                                    <h3>Our Tenants Contents Insurance+ offers:</h3>
+                                    <ul>
+                                        <li>Fire, theft and flood protection</li>
+                                        <li>Family cover for you, your partner and any family members living with you permanently</li>
+                                        <li>Accidental damage to your TV, audio, video, DVD and personal computer equipment</li>
+                                        <li>Valuables, including jewellery (up to 33% of the total sum insured)</li>
+                                        <li>Cover for tenant liability (if you damage the property or anything in it, you're covered up to &pound;5,000)</li>
+                                    </ul>
+                                    <br>
+                                    <a href="<?php echo $this->metaData['link']; ?>&amp;utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>complete-on-grey.png" alt="Complete Your Quote" /></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="280" border="0" cellspacing="0" cellpadding="20" class="collapsed" align="right" style="float:right;">
+                            <tr>
+                                <td style="background-color: #e5eaed;">
+                                    <h3>Need help?</h3>
+                                    Call us on <strong>0845 117 6000</strong> and one of our team will be happy to answer any questions you might have about our cover, or arrange your insurance over the phone.<br>
+                                    <br>
+                                    We’re open:<br>
+                                    Monday to Friday 8.30am – 8.00pm<br>
+                                    Saturday 9.30am – 1.00pm.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table border="0" cellpadding="20" cellspacing="0" align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+                <tr>
+                    <td valign="top" width="468" class="wide-mobile">
+                        <h2>Download the FREE Let's Move App.</h2>
+                        Our app has been designed to make your move as easy as possible, with a <strong>personalised moving checklist:</strong>
+                        <ul>
+                            <li>Find local doctors and schools in your area</li>
+                            <li>Save money by comparing the latest TV, broadband and utilities deals</li>
+                            <li>Quickly create letters to update service providers that you're moving</li>
+                            <li>Exclusive deals from retailers</li>
+                            <li>Notifications for all of your important tasks</li>
+                            <li>Quickly get quotes from local removals companies</li>
+                        </ul>
+                        <br>
+                        The Let's Move app is quick, easy and FREE to use.<br>
+                        <br>
+                        <a href="http://homelet.co.uk/app?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>findout-on-white.png" alt="Find Out More" /></a>
+                    </td>
+
+                    <td class="picture-frame" width="132">
+                        <img src="<?php echo $imageBaseUrl; ?>phone.png" width="131" height="247" alt="Let's Move app"><br>
+                        <br>
+                        <a href="https://itunes.apple.com/us/app/homelet/id901821733?ls=1&mt=8?utm_source=App-download-iOS&utm_medium=Email&utm_campaign=Lets-Move-app-download-iOS" target="_blank"><img src="<?php echo $imageBaseUrl; ?>apple.png" width="129px" height="40" alt="download from the app store"></a><br>
+                        <br>
+                        <a href="https://play.google.com/store/apps/details?id=com.twentyci.homeletpartner&utm_source=App-download-Play&utm_medium=Email&utm_campaign=Lets-Move-app-download-Play" target="_blank"><img src="<?php echo $imageBaseUrl; ?>google.png" width="129" height="45" alt="download from the Google Play store"></a>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#f1f1f1" style="background-color:#f1f1f1;">
+                <tr>
+                    <td>
+                        <table width="300" border="0" cellspacing="0" cellpadding="10" class="collapsed" align="left" style="float:left;">
+                            <tr>
+                                <td>
+                                    <a href="http://homelet.co.uk/tenants?utm_source=Quote%20Retrieval%20Emails&amp;utm_medium=Email&amp;utm_content=Tenants%20Insurance%20e1%20&amp;utm_campaign=Tenants%20Insurance" target="_blank"><img src="<?php echo $imageBaseUrl; ?>footer-logo.jpg" alt="HomeLet" width="132" height="57" /></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="300" border="0" cellspacing="0" cellpadding="10" class="collapsed" align="right" style="float:right;">
+                            <tr>
+                                <td>
+                                    <a href="https://www.facebook.com/pages/HomeLet/106776409363786" target="_blank"><img src="<?php echo $imageBaseUrl; ?>facebook.png" alt="HomeLet on Facebook" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://twitter.com/homelet" target="_blank"><img src="<?php echo $imageBaseUrl; ?>twitter.png" alt="HomeLet on Twitter" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://www.linkedin.com/company/homelet" target="_blank"><img src="<?php echo $imageBaseUrl; ?>linkedin.png" alt="HomeLet on LinkedIn" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://plus.google.com/u/0/+HomeletCoUkInsurance/" target="_blank"><img src="<?php echo $imageBaseUrl; ?>googleplus.png" alt="HomeLet on Google+" /></a>
+                                </td>
+                                <td>
+                                    <a href="https://www.youtube.com/channel/UCKsMF7b0QBdGj0_o4M3p0Tg" target="_blank"><img src="<?php echo $imageBaseUrl; ?>youtube.png" alt="HomeLet on YouTube" /></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="600" border="0" cellpadding="10" cellspacing="0" align="center">
+                            <tr>
+                                <td colspan="2"><span class="disclaimer" style="font-size:10px; color:#808080; font-weight:bold;">HomeLet is a trading name of Barbon Insurance Group Limited which is authorised and regulated by the Financial Conduct Authority for insurance mediation.</span><br></td>
+                            </tr>
+                            <tr>
+                                <td><p class="disclaimer" style="font-size:10px; color:#808080; font-weight:bold;">Registered in England number 3135797. Registered office address: Hestia House, Unit 2 Edgewest Road, Lincoln LN6 7EL.</p></td>
+                                <td style="width:100px;"><span class="disclaimer" style="float:right; text-align:right; font-size:10px; color:#808080; font-weight:bold;">HL3241 03/15</span><br></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

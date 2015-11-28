@@ -1,0 +1,140 @@
+<?php
+
+// Grab view to show form-level errors
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+if (count($view->errors) > 0) : ?>
+    <div class="alert alert-warning">
+        <ul class="errors">
+            <?php foreach($view->errors as $error) : ?>
+                <li><?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<div class="panel panel-dark">
+    <form enctype="application/x-www-form-urlencoded" method="post" action="" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-6 col-md-4">
+                First name
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $view->firstName;
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-6 col-md-4">
+                Last name
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $view->lastName;
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="mobile_number" class="col-sm-6 col-md-4">
+                Mobile number
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $this->element->mobile_number
+                    ->removeDecorator('label')
+                    ->setAttribs(
+                        array(
+                            'class' => 'text form-control',
+                            'required' => 'required',
+                        )
+                    )->render();
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="landline_number" class="col-sm-6 col-md-4">
+                Landline number
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $this->element->landline_number
+                    ->removeDecorator('label')
+                    ->setAttribs(
+                        array(
+                            'class' => 'text form-control',
+                            'required' => 'required',
+                        )
+                    )->render();
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="additional_info" class="col-sm-6 col-md-4">
+                Any additional information
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $this->element->additional_info
+                    ->removeDecorator('label')
+                    ->setAttribs(
+                        array(
+                            'class' => 'text form-control'
+                        )
+                    )->render();
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="time_to_call" class="col-sm-6 col-md-4">
+                When is the best time to call
+            </label>
+            <div class="col-sm-6 col-md-8">
+                <?php
+                echo $this->element->time_to_call
+                    ->removeDecorator('label')
+                    ->setAttribs(
+                        array(
+                            'class' => 'text form-control',
+                            'required' => 'required',
+                        )
+                    )->render();;
+                ?>
+            </div>
+        </div>
+
+        <p class="col-sm-offset-6 col-md-offset-4">
+            By selecting &lsquo;Submit&rsquo; you are confirming you are happy for HomeLet to contact you about Tenant&rsquo;s Insurance.
+        </p>
+
+        <ul class="list-inline list-buttons pull-right">
+            <li>
+                <?php
+                echo $this->element->back
+                    ->setAttribs(
+                        array(
+                            'class' => 'btn btn-primary',
+                            'onClick' => 'history.go(-1)'
+                        )
+                    )->render();
+                ?>
+            </li>
+            <li>
+                <?php
+                echo $this->element->next
+                    ->setAttribs(
+                        array(
+                            'class' => 'btn btn-primary'
+                        )
+                    )->render();
+                ?>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </form>
+</div>

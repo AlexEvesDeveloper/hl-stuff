@@ -1,0 +1,64 @@
+<script type="text/javascript">
+<?php
+// The "no access" message for IO and IAR agents trying to access insurance functionality.
+if (in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+    ?>
+    function showNoAccess() {
+        $.facebox(
+            'You\'re unable to access this section',
+            'We\'re sorry but due to your HomeLet agent status you\'re unable to access this particular section of Connect, if you want to discuss this further please contact your Account Manager.'
+        );
+    }
+    <?php
+}
+?>
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php
+
+        // Check if agent status allows access to generating quotes.
+        if (!in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+            // Insurance function access allowed.
+
+            // Get old LI+ URL from parameters and insert ASN and agent ID into string
+            $liPlusUrl = str_replace(
+                array('{|asn|}', '{|agentId|}'),
+                array($this->agentSchemeNumber, $this->agentId),
+                $this->params->connectUrl->newLandlordsPlusPolicy
+            );
+
+            $this->iconLayout(array(
+                array(
+                    'icon'          => 'house-possessions',
+                    'title'         => 'Tenant\'s Insurance',
+                    'url'           => '/insurance/quote/tenants'
+                ),
+                array(
+                    'icon'          => 'house-fence',
+                    'title'         => 'Landlord\'s Insurance+',
+                    'url'           => '#',
+		    'javascript'    => "window.open('/insurance/quote/idd','newInsurance','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=1100,height=950');"
+                )
+            ));
+        } else {
+            // Insurance function access not allowed.
+            $this->iconLayout(array(
+                array(
+                    'icon'          => 'house-possessions',
+                    'title'         => 'Tenant\'s Insurance',
+                    'url'           => '#',
+                    'javascript'    => 'showNoAccess(); return false;'
+                ),
+                array(
+                    'icon'          => 'house-fence',
+                    'title'         => 'Landlord\'s Insurance',
+                    'url'           => '#',
+                    'javascript'    => 'showNoAccess(); return false;'
+                )
+            ));
+        }
+        ?>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+
+        <div {{ block('widget_container_attributes') }} class="radio-block">
+            {% for child in form %}
+                <div class="radio-option">
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block submit_widget %}
+    {{ form_widget(form) }}
+    <script>
+        (function ($) {
+            $('#{{ form.vars.id }}').click(function (e) {
+                $(this)
+                    .attr('disabled', 'disabled')
+                    .after('<div style="padding: 15px 0 0 12px;">Loading, please wait&hellip;</div>')
+                    .closest('form')
+                    .submit()
+                ;
+            });
+        })(jQuery);
+    </script>
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}

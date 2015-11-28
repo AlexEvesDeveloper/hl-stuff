@@ -1,0 +1,37 @@
+<?php
+
+// Grab view for outputting values
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+?>
+
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-directdebit')); ?>
+        </span>
+        Direct Debit Confirmation
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-directdebit'); ?>
+        </div>
+    </div>
+
+    <div class="section-help">
+        <p>Thank you. Your Bank Details have been verified.</p>
+        <p>If the details shown above are correct and you wish to confirm the Direct Debit Instruction please click on the "Confirm" button.</p>
+
+        <ul class="list-unstyled">
+            <?php foreach ($view->branchLines as $branchLine): ?>
+                <?php if ($branchLine): ?>
+                    <li><?php echo $branchLine ?></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+        <p>We will send a letter confirming the set up of this Direct Debit Instruction to you within 3 working days. We will provide a separate notice of the payment collection amounts and dates no later than 10 working days prior to the first collection.</p>
+    </div>
+</div>

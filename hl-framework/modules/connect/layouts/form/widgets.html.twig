@@ -1,0 +1,1081 @@
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block step_widget %}
+    {% spaceless %}
+
+        <script>
+            var _hasDblClickProtection = true;
+        </script>
+
+        {{ form_errors(form) }}
+
+        <div class="form_section one-col">
+            {{ form_errors(form.step) }}
+            {{ form_widget(form.step) }}
+        </div>
+
+        {% if form.next %}
+            {{ form_widget(form.next) }}
+            <script>
+                (function ($) {
+                    $('#{{ form.next.vars.id }}').click(function(e) {
+                        if (_hasDblClickProtection) {
+                            $(this).data('default-label', $(this).text());
+                            $(this).html('Please Wait&hellip;');
+                            if ($(this).data('clicked')) {
+                                e.preventDefault();
+                                return;
+                            }
+                            $(this).data('clicked', true);
+                        }
+                    });
+                })(jQuery);
+            </script>
+        {% endif %}
+
+        {% if form.back %}
+            {{ form_widget(form.back) }}
+        {% endif %}
+
+        {% if form.submit %}
+            {{ form_widget(form.submit) }}
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block form_row %}
+    {% spaceless %}
+
+        {% if (form.vars.name == 'step') or (form.vars.name == 'address') or (form.vars.name == 'bankAccount') or (form.vars.name == 'prospectiveLandlord') or (form.vars.name == 'lettingReferee') or (form.vars.name == 'uploadFileCollection') or (form.vars.name == 'uploadedFileCollection') %}
+            {{ form_widget(form) }}
+        {% else %}
+            <div class="row row_{{ form.vars.id }}">
+                {{ form_label(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {%  endif %}
+
+        {{ form_errors(form) }}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block form_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize|title %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}
+                {% if 'step_step_rentShare' == form.vars.id or 'step_step_financialReferees_0_applicantAnnualIncome' == form.vars.id or 'step_step_financialReferees_1_applicantAnnualIncome' == form.vars.id or 'step_step_financialReferees_2_applicantAnnualIncome' == form.vars.id %}
+                    [<a href="javascript:void(0);" onclick="showRentAffordabilityCalculator()">Check Affordability</a>]
+                {% endif %}
+                {% if 'step_step_productId' == form.vars.id %}
+                    [<a href="javascript:void(0);" onclick="showProductHelp()">Help</a>]
+                {% endif %}
+            </label>
+            {% if 'step_step_rentShare' == form.vars.id or 'step_step_financialReferees_0_applicantAnnualIncome' == form.vars.id or 'step_step_financialReferees_1_applicantAnnualIncome' == form.vars.id or 'step_step_financialReferees_2_applicantAnnualIncome' == form.vars.id %}
+                <script>
+                    function showRentAffordabilityCalculator() {
+                        window.open('/iris-referencing/rent-affordability?isPopup=1', null, "height=350,width=800,status=yes,toolbar=no,menubar=no,location=no");
+                        return false;
+                    }
+                </script>
+            {% endif %}
+            {% if 'step_step_productId' == form.vars.id %}
+                <script>
+                    function showProductHelp() {
+
+                        var policyLengthField = document.getElementById('step_step_policyLength');
+
+                        var policyLength = null;
+                        if (null !== policyLengthField) {
+                            policyLength = policyLengthField.value;
+                        }
+
+                        window.open('/iris-referencing/product-help?productId=' +
+                                document.getElementById('step_step_productId').value +
+                                '&shareOfRent=' + document.getElementById('step_step_rentShare').value +
+                                (null !== policyLength ? '&policyLengthInMonths=' + policyLength : ''),
+                                null,
+                                "height=300,width=450,status=yes,toolbar=no,menubar=no,location=no"
+                        );
+                        return false;
+                    }
+                </script>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block checkbox_row %}
+    {% spaceless %}
+
+        <div class="row row-checkbox">
+            {{ form_widget(form) }}
+        </div>
+        {{ form_errors(form) }}
+
+    {%  endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block radio_row %}
+    {% spaceless %}
+
+        <div class="row row-radio">
+            {{ form_widget(form) }}
+        </div>
+        {{ form_errors(form) }}
+
+    {%  endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block financial_referees_widget %}
+    {% spaceless %}
+
+        <ul class="unstyled">
+            {% for financialReferee in form.financialReferees %}
+                <li class="unstyled-item">
+                    {{ form_errors(financialReferee) }}
+                    {{ form_widget(financialReferee) }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block financial_referee_widget %}
+    {% spaceless %}
+
+        <div class="financial-referee-selection">
+            <h3>{{ form.financialRefereeStatus.vars.data | iris_lookup_name('financialRefereeStatuses') }} financial referee</h3>
+        </div>
+
+        {{ form_widget(form.financialRefereeStatus) }}
+        {{ form_widget(form.update) }}
+
+        <div class="clearfix"></div>
+
+        {% if form.vars.suppress_errors %}
+            <style type="text/css">
+                .warning-message {
+                    display: none;
+                }
+            </style>
+        {% endif %}
+
+        {# This logic was removed due to the stakeholder wanting to display the entire form before selection #}
+        {# as this is how the current COnnect behaves #}
+        {#{% if form.financialRefereeType.vars.data %}#}
+            <div class="referee-entry">
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {#{% endif %}#}
+
+        <script>
+            (function ($) {
+                // Progressive enhancement: hide the update button as it's intended to be fired only by the type change.
+                $('#{{ form.update.vars.id }}').hide();
+
+                // Wire up the type field to submit the form when it's changed.
+                $('#{{ form.financialRefereeType.vars.id }}').change(function(e) {
+
+                    // Make sure we work with the right form, in case there's more than one.
+                    var $form = $(this).closest('form');
+
+                    // Remove the HTML5 validation to ensure the form will submit.
+                    var $required = $form.find('[required]');
+                    $required.removeAttr('required');
+
+                    $('._loader').show();
+
+                    $('#{{ form.vars.id }}').find('input, select').addClass('readonly').attr('readonly', 'readonly');
+
+                    // Trigger the update button to indicate what caused the submit event.
+                    $('#{{ form.update.vars.id }}').trigger('click');
+                });
+            })(jQuery)
+        </script>
+
+        <!-- establish the referee type (0, 1, or 2), so we can work with the correct DOM element -->
+        {% set refereeType = form.financialRefereeStatus.vars.data - 1 %}
+
+        <script>
+            // autocomplete the applicantPositionHeld with values fetched from referencing.autocomplete_job_titles database
+            // first grab hold of all autocomplete job titles
+            jQuery.ajax({
+                url: "/json/get-auto-complete-job-titles",
+                success: function(data) {
+                    jobTitles = [];
+                    fastTrack = [];
+                    // disect the results into an array of jobTitles, and an array of fastTrack statuses
+                    // the index of the jobTitles array will be in sync with the index of the fastTrack array
+                    // i.e the fast_track status of jobTitles[4] is at fastTrack[4]
+                    for (i = 0; i < data.length; i++) {
+                        if (i % 2 == 0) {
+                            jobTitles[jobTitles.length] = data[i].title;
+                        }
+                        else {
+                            fastTrack[fastTrack.length] = data[i].fast_track;
+                        }
+                    }
+                },
+                async: false // let the ajax call finish otherwise variables are used below before they exist
+            });
+
+            // apply the autocomplete library when entering text in the field
+            jQuery(document).ready(function(){
+                jQuery("#step_step_financialReferees_{{refereeType}}_applicantPositionHeld").autocomplete({
+                    source: jobTitles,
+                    open: function (e, ui) {
+                        var acData = $(this).data('ui-autocomplete');
+                        acData
+                        .menu
+                        .element
+                        .find('li')
+                        .each(function () {
+                            // highlight the matched characters in bold
+                            var me = $(this);
+                            var keywords = acData.term.split(' ').join('|');
+                            me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), '<b>$1</b>'));
+                        });
+                    },
+                    minLength: 2 // only autocomplete when 2 or more characters are entered
+                });  
+            });
+
+            // depending on the user input, a popup will appear when the User leaves the field. Here we inject the popup html
+            jQuery(".row_step_step_financialReferees_{{refereeType}}_applicantPositionHeld")
+                .after("<div id='fast-track-popup-{{refereeType}}' style='display:none'>
+                            <h4>If you’ve seen this applicant’s professional ID card, please let us know their position as it appears on the card, by adding notes at the end of the application. We’ll then be able to fast track this for you. Please remember not to take any copies of their identification.</h4>
+                        </div>"
+                );
+
+            // as we exit the input field, see if the value entered matches a 'fast track' job title,
+            // in which case display the popup text injected above
+            jQuery("#step_step_financialReferees_{{refereeType}}_applicantPositionHeld").focusout(function(){
+                var input = jQuery("#step_step_financialReferees_{{refereeType}}_applicantPositionHeld").val();
+                // loop each 'fast track' job title for a match against the input
+                found = false;
+                for (i = 0; i < jobTitles.length && !found; i++) {
+                    if (input == jobTitles[i] && fastTrack[i] == true) {
+                        jQuery("#fast-track-popup-{{refereeType}}").fadeIn();
+                        document.cookie = "fast_track_job_title_{{refereeType}}=1";
+                        found = true;
+                    }
+                }
+
+                if ( ! found) {
+                    // fade out the pop up, in case it was there 
+                    jQuery("#fast-track-popup-{{refereeType}}").fadeOut();
+                    // delete any previously set cookies
+                    document.cookie = "fast_track_job_title_{{refereeType}}=; expires-Thu, 01 Jan 1970 00:00:00 UTC";
+                }
+            })
+
+            // if there is any input after returning back to the screen, we may need to display the popup, if a cookie is set
+            if (jQuery("#step_step_financialReferees_{{refereeType}}_applicantPositionHeld").val()) {
+                var cookieArray = document.cookie.split(';');
+                for (i = 0; i < cookieArray.length; i++) {
+                    var c = cookieArray[i];
+                    while (c.charAt(0)==' ') {
+                        c = c.substring(1);
+                    }                    
+                    if (c.indexOf("fast_track_job_title_{{refereeType}}") == 0) {
+                        // found our cookie
+                        if (c.slice(-1) != '=') {
+                            // it doesn't end in '=', which means it has a value; i.e it's set, so display the popup
+                            jQuery("#fast-track-popup-{{refereeType}}").fadeIn();
+                        }
+                    }
+                }
+            }
+
+        </script>    
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block form_widget_simple %}
+    {% spaceless %}
+
+        {% set type = type|default('text') %}
+        <input type="{{ type | default('text') }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control" />
+
+    {% endspaceless %}
+{% endblock form_widget_simple %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+
+        {% if 'policyLength' == form.vars.name or constant('Iris\\Referencing\\Form\\Type\\BooleanExpandedType::FIELD_NAME') == form.vars.name %}
+            <div {{ block('widget_container_attributes') }} class="radio-block radio-block-policy-length">
+                {% for child in form %}
+                    <div class="radio-option">
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    {{ form_widget(child) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+
+        <label for="{{ id }}"><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
+
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block money_widget %}
+    {% spaceless %}
+
+        <div class="input-group">
+            <span class="input-group-addon">&pound;</span>
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control" />
+        </div>
+
+    {% endspaceless %}
+{% endblock money_widget %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block date_widget %}
+    {% spaceless %}
+
+        {% if widget == 'single_text' %}
+
+            <div class="iris-date-field">
+                {{ block('form_widget_simple') }}
+            </div>
+
+            <script>
+                (function ($) {
+                    $('#{{ form.vars.id }}').datePicker({
+                        startDate: '{{ 'now' | date('d/m/Y') }}',
+                        verticalPosition: $.dpConst.POS_BOTTOM
+                    });
+                })(jQuery);
+            </script>
+
+        {% else %}
+            <div {{ block('widget_container_attributes') }} class="row-date">
+                <div class="field">
+                    {{ form_widget(form.day) }}
+                </div>
+
+                <div class="field">
+                    {{ form_widget(form.month) }}
+                </div>
+
+                <div class="field">
+                    {{ form_widget(form.year) }}
+                </div>
+            </div>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock date_widget %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block address_widget %}
+    {% spaceless %}
+
+        <div class="address-area">
+            <h4>Address</h4>
+
+            <div class="form-row">
+                {{ form_label(form.postcode) }}
+                {{ form_errors(form.postcode) }}
+                {{ form_widget(form.postcode) }}
+            </div>
+
+            <div id="find_address_{{ form.vars.id }}">
+                <a href="javascript:void(0);" onclick="displayAddressFinderHelp()" class="address-finder-help">
+                    <span>Help</span>
+                </a>
+            </div>
+
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+
+            {# todo: refactor this so that there's a generic endpoint for the address finder #}
+            {% set addressFinderUri = 'connect' == _request.host | slice(0, 7) ? '/iris-referencing/find-addresses?postcode=' : '/continue-reference/find-addresses?postcode=' %}
+
+            <script>
+                (function ($) {
+
+                    $('#find_address_{{ form.vars.id }}').addressfinder({
+                        formId: '{{ form.vars.id }}',
+                        preExecutionCallback: function () {
+                            $('#find_address_{{ form.vars.id }} .postcode-error').remove();
+                        },
+                        findAddressButtonClass: 'btn btn-default pull-right',
+                        addressFinderUri: '{{ addressFinderUri }}',
+                        postcodeBlankErrorCallback: function () {
+                            $('#find_address_{{ form.vars.id }}').prepend('<div class="warning-message postcode-error">Please enter a postcode</div>');
+                        }
+                    });
+
+                    $(document).ready(function () {
+                        $('#step_next').click(function (e) {
+                            var $addressStreet = $('#{{ form.street.vars.id }}');
+                            if ($addressStreet && !$addressStreet.val()) {
+                                if (confirm('Are you sure you\'d like to proceed without a street for this address?')) {
+                                    var $addressTown = $('#{{ form.town.vars.id }}');
+                                    if ($addressTown.val()) {
+                                        $addressStreet.val($addressTown.val());
+                                    }
+                                }
+                                else {
+                                    e.preventDefault();
+                                    _hasDblClickProtection = false;
+                                    $('#step_next').text($('#step_next').data('default-label') ? $('#step_next').data('default-label') : 'Next');
+                                    $addressStreet.css('border', '1px solid red');
+                                }
+                            }
+                        });
+                    });
+
+                })(jQuery);
+
+                function displayAddressFinderHelp()
+                {
+                    window.open('/iris-referencing/address-finder-help', null, "height=200,width=400,status=yes,toolbar=no,menubar=no,location=no");
+                    return false;
+                }
+            </script>
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block address_history_widget %}
+    {% spaceless %}
+
+        {% set addressHistoriesPrototype = form_widget(form.addressHistories.vars.prototype) %}
+
+        <ul data-prototype="{{ addressHistoriesPrototype | e }}" class="unstyled">
+            {% set addressCount = 0 %}
+            {% set addressHighestIndex = 0 %}
+            {% for index, previousAddress in form.addressHistories %}
+                {% if index > addressHighestId %}
+                    {% set addressHighestIndex = index %}
+                {% endif %}
+                <li id="{{ previousAddress.vars.id }}" class="unstyled-item">
+                    <div class="address-history-entry">
+                        {% if 0 == addressCount %}
+                            <h3>Current Address</h3>
+                        {% elseif 1 == addressCount %}
+                            <h3>Previous Address</h3>
+                        {% elseif 2 == addressCount %}
+                            <h3>2nd Previous Address</h3>
+                        {% endif %}
+
+                        <div class="address-content">
+                            {{ form_errors(previousAddress) }}
+                            {{ form_widget(previousAddress) }}
+                        </div>
+                    </div>
+                </li>
+                {% set addressCount = addressCount + 1 %}
+            {% endfor %}
+            {% if
+                (
+                    form.addressHistories.vars.data is null or
+                    (form.addressHistories.vars.data is iterable and 0 == form.addressHistories.vars.data | length)
+                )
+                or addressHistoryConstraintViolation
+            %}
+                <li id="{{ form.vars.id }}_addressHistories_prototype" class="unstyled-item">
+                    <div class="address-history-entry">
+                        {% set addressHistoriesCount = form.addressHistories | length %}
+                        {% if 0 == addressHistoriesCount %}
+                            <h3>Current Address</h3>
+                        {% elseif 1 == addressHistoriesCount %}
+                            <h3>Previous Address</h3>
+                        {% elseif 2 == addressHistoriesCount %}
+                            <h3>2nd Previous Address</h3>
+                        {% endif %}
+
+                        <div class="address-content">
+                            {{ addressHistoriesPrototype | replace({'__name__': addressHighestIndex + 1}) | raw }}
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+
+        <script>
+            (function ($) {
+
+                var addressFormCount = {{ form.addressHistories | length }};
+
+                /**
+                 * Show or hide a block of address fields, depending on whether it's a foreign address.  Also pre-fills
+                 * postcode with special value when switching to foreign address, and blanks out fields when switching
+                 * to UK address.
+                 */
+                function showHideAddress(formIndex, firstRun)
+                {
+                    var formId = '{{ form.addressHistories.vars.id }}_' + formIndex;
+
+                    var isForeignAddressId = formId + '_isForeign';
+
+                    // Get if isForeignAddress is checked
+                    var isForeign = $('#' + isForeignAddressId).is(':checked');
+
+                    // Hide any foreign address blocks
+                    if (isForeign) {
+                        $('#' + formId).find('.address-area').hide();
+
+                        // If this is not the first run (ie, user-triggered), put the "special" postcode in place
+                        if (!firstRun) {
+                            $('#' + formId + '_address_postcode').val('1001');
+                            $('#' + formId + '_address_flat').val('');
+                            $('#' + formId + '_address_houseName').val('Abroad');
+                            $('#' + formId + '_address_houseNumber').val('');
+                            $('#' + formId + '_address_street').val('Abroad');
+                            $('#' + formId + '_address_town').val('Abroad');
+                        }
+                    } else {
+                        $('#' + formId).find('.address-area').show();
+
+                        // If this is not the first run (ie, user-triggered), remove the "special" postcode and blank out the other fields
+                        if (!firstRun) {
+                            $('#' + formId + '_address_postcode').val('');
+                            $('#' + formId + '_address_flat').val('');
+                            $('#' + formId + '_address_houseName').val('');
+                            $('#' + formId + '_address_houseNumber').val('');
+                            $('#' + formId + '_address_street').val('');
+                            $('#' + formId + '_address_town').val('');
+                        }
+                    }
+                }
+
+                // Add foreign address override for each address
+                $('li[id^={{ form.addressHistories.vars.id }}]').each(
+                    function () {
+
+                        // $(this)'s ID is not accurate (could be "prototype") so find index from a specific div within
+                        var $div = $(this).find('.address-content > div[id^={{ form.addressHistories.vars.id }}]').first();
+
+                        // Get the unique index for this address
+                        var index = $div.attr('id').replace(/{{ form.addressHistories.vars.id }}_/, '');
+
+                        var formId = '{{ form.addressHistories.vars.id }}_' + index;
+
+                        var isForeignAddressId = formId + '_isForeign';
+
+                        // Add a data attribute to the isForeignAddress checkbox to remember its index by
+                        $('#' + isForeignAddressId).attr('data-index', index);
+
+                        // Run showHideAddress during first run
+                        showHideAddress(index, true);
+
+                        // Wire up change event too
+                        $('#' + isForeignAddressId).change(function ()
+                        {
+                            showHideAddress(
+                                $(this).attr('data-index'),
+                                false
+                            );
+                        });
+
+                    }
+                );
+
+                // Add remove button for each address
+                $('li[id^={{ form.addressHistories.vars.id }}]').each(
+                    function () {
+
+                        // Only render button if this is not the only form
+                        if (1 > addressFormCount) {
+                            return;
+                        }
+
+                        // Get the unique index for this address
+                        var index = $(this).attr('id').replace(/{{ form.vars.id }}_addressHistories_/, '');
+
+                        // Create an ID for the new remove button
+                        var id = '{{ form.vars.id }}_addressHistories_remove_' + index;
+
+                        // Append button to address
+                        $(this).children('.address-history-entry').append('<div class="clearfix">&nbsp;</div><div class="clearfix"><button type="submit" id="' + id + '" data-index="' + index + '" class="btn btn-default btn-remove-property">Remove this Address</button></div><div class="clearfix"></div>');
+
+                        // Give the button a click event that removes its associated address from the DOM
+                        $('#' + id).click(function () {
+                            var addressId = '{{ form.vars.id }}_addressHistories_' + $(this).attr('data-index');
+                            $('#' + addressId).remove();
+                        });
+
+                    }
+                );
+            })(jQuery)
+        </script>
+        <div class="clearfix"></div>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block additional_details_widget %}
+    {% spaceless %}
+
+        {% set formItemPrototype = form_widget(form.uploadFileCollection.vars.prototype) %}
+
+        <ul id="{{ form.uploadFileCollection.vars.id }}" data-prototype="{{ formItemPrototype|e }}" class="unstyled">
+            {% for fileItem in form.uploadFileCollection %}
+                <li class="unstyled-item">
+                    {{ form_widget(fileItem) }}
+                </li>
+            {% endfor %}
+
+            {# Initial file uploader #}
+            <li class="unstyled-item">
+                {{ formItemPrototype | replace({'__name__': form.uploadFileCollection|length}) | raw  }}
+            </li>
+        </ul>
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        <script>
+            var fileCount = {{ form.uploadFileCollection|length }} + 1;
+
+            /**
+             * Attach a new file collection row.
+             * Registers the delete file button event handler
+             * for new row.
+             */
+            function attachFile(collectionId)
+            {
+                // Attach new file collection prototype
+                var $fileList = $('#' + collectionId);
+                var filePrototype = $fileList.attr('data-prototype');
+
+                // Replace the "__name__" used in the id and name of the prototype
+                // with the next counter position
+                filePrototype = filePrototype.replace(/__name__/g, fileCount);
+                fileCount++;
+
+                // Create new list item
+                var $fileRow = $('<li></li>').html(filePrototype);
+                $fileRow.find('.deleteFile').click(function(e) {
+                    deleteFile(collectionId, this);
+                    e.preventDefault();
+                });
+
+                $fileRow.appendTo('#' + collectionId);
+            }
+
+            /**
+             * Delete a file collection row
+             */
+            function deleteFile(collectionId, row) {
+                $(row).closest('li').remove();
+                fileCount--;
+
+                if (0 == fileCount) {
+                    // Attach new blank file upload row if no more rows
+                    attachFile(collectionId);
+                }
+            }
+
+            (function ($) {
+                /**
+                 * Register any existing delete file buttons to event handler
+                 */
+                $('#{{ form.uploadFileCollection.vars.id }}').find('.deleteFile').click(function(e) {
+                    deleteFile('{{ form.uploadFileCollection.vars.id }}', this);
+                    e.preventDefault();
+                });
+
+                /**
+                 * Attach file collection row based on prototype.
+                 */
+                $('#{{ form.attachFile.vars.id }}').click(function(e) {
+                    attachFile('{{ form.uploadFileCollection.vars.id }}');
+                    e.preventDefault();
+                })
+            })(jQuery)
+        </script>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block uploaded_file_collection_item_widget %}
+    {% spaceless %}
+        {{ form.fileItem.vars.data }}
+
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block file_collection_item_widget %}
+    {% spaceless %}
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        <div class="file-entry">
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block button_row %}
+    {% spaceless %}
+
+        <div class="btn-row">
+            {{ form_widget(form) }}
+        </div>
+
+    {% endspaceless %}
+{% endblock button_row %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block button_widget %}
+    {% spaceless %}
+
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <button type="{{ type|default('button') }}" {{ block('button_attributes') }} class="btn btn-default">{{ label|trans({}, translation_domain) }}</button>
+
+    {% endspaceless %}
+{% endblock button_widget %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block field_errors %}
+    {% spaceless %}
+
+        {% if errors|length > 0 %}
+            <div class="warning-message">
+                {% for error in errors %}
+                    {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}<br />
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock field_errors %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block form_errors %}
+    {% spaceless %}
+
+        {% if errors|length > 0 %}
+            <div class="warning-message">
+                {% for error in errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block product_widget %}
+    {% spaceless %}
+
+        {% set productId = form.productId.vars.data %}
+
+        <div class="reference-message">
+            <p>
+                <strong>Please note that our product names have changed:</strong>
+            </p>
+            <ul>
+                <li>Credit Profile Plus is now called <strong>Insight</strong></li>
+                <li>Comprehensive Plus is now called <strong>Enhance</strong></li>
+            </ul>
+            <p>
+                [ <a href="https://ref.homeletuk.com/criteria/pdf/referencing_service_guidelines.pdf" target="_blank">View Referencing Service Guidelines</a> ]
+            </p>
+        </div>
+
+        {% if form.productId is defined %}
+            <div class="row">
+                {{ form_label(form.productId) }}
+                {{ form_errors(form.productId) }}
+                {{ form_widget(form.productId) }}
+            </div>
+        {% endif %}
+
+        {# Insight or Xpress #}
+        {% if 20 == productId or 11 == productId %}
+            <div class="row clearfix">
+                <p>
+                    Please be aware that your applicant must have been living in the UK for a minimum of 6 months to be referenced on this product.
+                </p>
+            </div>
+        {% endif %}
+
+        {% if form.update is defined %}
+            {{ form_widget(form.update) }}
+        {% endif %}
+
+        {% if form.policyLength is defined %}
+            <div class="row">
+                {% if 'hidden' == form.policyLength.vars.block_prefixes.1 %}
+                    <p>{{ form.policyLength.vars.label|trans({}, translation_domain) }}</p>
+                {% else %}
+                    {{ form_label(form.policyLength) }}
+                {% endif %}
+                {{ form_errors(form.policyLength) }}
+                {{ form_widget(form.policyLength) }}
+            </div>
+        {% endif %}
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        {# Optimum or Enhance #}
+        {% if 19 == productId or 21 == productId %}
+            <div class="clearfix reference-message">
+                <h4>Have you considered Rent Guarantee for this tenant?</h4>
+                <p>
+                    In today's uncertain economic climate making sure that you have adequate cover is simply common sense.
+                    Even the best of tenants can fall on hard times, so protect yourself and your landlords by selecting Rent
+                    Guarantee for this reference.
+                </p>
+            </div>
+        {% endif %}
+
+        {% if form.productId is defined and form.update is defined %}
+            <script>
+                (function ($) {
+                    // Progressive enhancement: hide the update button as it's intended to be fired only by the product change.
+                    $('#{{ form.update.vars.id }}').hide();
+
+                    // Wire up the type field to submit the form when it's changed.
+                    $('#{{ form.productId.vars.id }}').change(function(e) {
+
+                        // Make sure we work with the right form, in case there's more than one.
+                        var $form = $(this).closest('form');
+
+                        // Remove the HTML5 validation to ensure the form will submit.
+                        var $required = $form.find('[required]');
+                        $required.removeAttr('required');
+
+                        $('._loader').show();
+
+                        // Disable fields whilst loading
+                        $('#{{ form.vars.id }}')
+                                .find('input[type=text], input[type=email], select')
+                                .attr('disabled', 'disabled')
+                        ;
+
+                        // Trigger the update button to indicate what caused the submit event.
+                        $('#{{ form.update.vars.id }}').trigger('click');
+                    });
+
+                })(jQuery)
+            </script>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block property_widget %}
+    {% spaceless %}
+
+        <div class="reference-message">
+            <p><strong>Important - Please Note</strong></p>
+            <p>
+                This reference will be saved as you complete each section of the form. If you require to add any additional
+                information, or need to correct any data you have input, there is a page at the end to do this.
+            </p>
+            <p>
+                Please be aware that if you reside in the Channel Islands or the Isle of Man, we'll be unable to offer you
+                any Rent Guarantee products. For more information, or if you have any queries or questions, please call
+                your Account Manager.
+            </p>
+        </div>
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block letting_referee_widget %}
+    {% spaceless %}
+
+        {% if form.vars.agent is defined %}
+            <div class="row">
+                <p>
+                    If your current letting agent details are the same as your prospective letting agent details
+                    please click here.
+                </p>
+                <div>
+                    <a href="javascript:void(0);" id="same_agent_button" class="btn btn-default pull-right">Same Agent</a>
+                </div>
+            </div>
+        {% endif %}
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        {% if form.vars.agent is defined %}
+            <script>
+                var agent = {{ form.vars.agent | json_encode | raw }};
+                (function ($) {
+                    $('#same_agent_button').click(function () {
+                        $('#{{ form.lettingReferee.type.vars.id }}').val(agent.type);
+                        $('#{{ form.lettingReferee.name.vars.id }}').val(agent.name);
+                        $('#{{ form.lettingReferee.address.flat.vars.id }}').val(agent.flat);
+                        $('#{{ form.lettingReferee.address.houseName.vars.id }}').val(agent.houseName);
+                        $('#{{ form.lettingReferee.address.houseNumber.vars.id }}').val(agent.houseNumber);
+                        $('#{{ form.lettingReferee.address.street.vars.id }}').val(agent.street);
+                        $('#{{ form.lettingReferee.address.town.vars.id }}').val(agent.town);
+                        $('#{{ form.lettingReferee.address.postcode.vars.id }}').val(agent.postcode);
+                        $('#{{ form.lettingReferee.dayPhone.vars.id }}').val(agent.dayPhone);
+                        $('#{{ form.lettingReferee.eveningPhone.vars.id }}').val(agent.eveningPhone);
+                        $('#{{ form.lettingReferee.email.vars.id }}').val(agent.email);
+                    });
+                })(jQuery)
+            </script>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block year_month_duration_widget %}
+    {% spaceless %}
+
+        <div class="period-at-address-row">
+            {{ form_errors(form.years) }}
+            {{ form_errors(form.months) }}
+            <div class="period-at-address-row-container">
+                <div class="period-at-address-row-field">
+                    {{ form_label(form.years) }}
+                    {{ form_widget(form.years) }}
+                </div>
+                <div class="period-at-address-row-field">
+                    {{ form_label(form.months) }}
+                    {{ form_widget(form.months) }}
+                </div>
+            </div>
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block boolean_expanded_widget %}
+    {% spaceless %}
+
+        {{ form_errors(form.value) }}
+        {{ form_widget(form.value) }}
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block tenant_details_widget %}
+    {% spaceless %}
+
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        <script>
+            (function ($) {
+
+                $(document).ready(function () {
+                    toggleGrossIncomeRow($('#{{ form.employmentStatus.vars.id }} :selected').val());
+                });
+
+                $('#{{ form.employmentStatus.vars.id }}').change(function () {
+                    toggleGrossIncomeRow($(this).val());
+                });
+
+                function toggleGrossIncomeRow(status)
+                {
+                    var showGrossIncome = true;
+                    if (3 == status) {
+                        showGrossIncome = false;
+                    } else if (7 == status) {
+                        showGrossIncome = false;
+                    }
+                    if (showGrossIncome) {
+                        $('.row_step_step_grossIncome').show();
+                    }
+                    else {
+                        $('.row_step_step_grossIncome').hide();
+                    }
+                }
+
+            })(jQuery);
+        </script>
+
+    {% endspaceless %}
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}

@@ -1,0 +1,31 @@
+<?php
+$baseURL = 'http';
+if (isset($_SERVER["HTTPS"])) {
+    if ($_SERVER["HTTPS"] == "on") {$baseURL .= "s";}
+}
+$baseURL .= "://";
+$baseURL .= $_SERVER["SERVER_NAME"];
+?>
+<div class="core-navigation">
+    <div class="container">
+        <nav>
+            <ul class="site-sections list-inline pull-left">
+                <li><a href="/letting-agents/" class="link-1 <?php if ($this->selected == 'letting-agents') {?>current<?php } else { ?>link<?php } ?>">Letting Agents</a></li>
+                <li><a href="/tenants/" class="link-2 <?php if ($this->selected == 'tenants') {?>current<?php } else { ?>link<?php } ?>">Tenants</a></li>
+                <li><a href="/landlords/" class="link-3 <?php if ($this->selected == 'letting-agents') {?>current<?php } else { ?>link<?php } ?>">Landlords</a></li>
+            </ul>
+        </nav>
+        <nav class="navbar navbar-default pull-right" role="navigation">
+            <div class="collapse navbar-collapse" id="homelet-navigation-collapse">
+                <?php if ('letting-agents' != $this->selected) { ?>
+                    <div id="my-homelet">&nbsp;</div>
+                    <script>
+                        $(function() {
+                            $('#my-homelet').load('/my-homelet/login-status');
+                        });
+                    </script>
+                <?php } ?>
+            </div>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<?php
+
+$stdout = fopen('php://output', 'a');
+fputcsv
+(
+    $stdout,
+    array('Policy Number', 'Policyholder Name', 'Risk Address', 'Type of Cover',
+          'Payment Schedule (months)', 'Inception Date', 'Expiry Date', 'Status')
+);
+
+if (count($this->reportdata))
+{
+    $count = 0;
+    foreach ($this->reportdata as $row)
+    {
+        $address = array();
+        
+        if (isset($row['propaddress1']) && $row['propaddress1'] != '')
+            $address = array_merge($address, explode(',', $row['propaddress1']));
+            
+        if (isset($row['propaddress5']) && $row['propaddress5'] != '')
+            $address = array_merge($address, explode(',', $row['propaddress5']));
+        
+        foreach ($address as &$value) $value = trim($value);
+        $address = implode(', ', $address);
+        
+        fputcsv
+        (
+            $stdout,
+            array
+            (
+                $row['policynumber'],
+                $row['firstname'] . ' ' . $row['lastname'],
+                $address,
+                $row['policyname'],
+                $row['policylength'],
+                $row['startdate'],
+                $row['enddate'],
+                $row['paystatus'],
+            )
+        );
+        
+        $count++;
+    }
+}
+else
+{
+    fputcsv($stdout, array('No data found'));
+}
+
+if (isset($count) && $count > 0) fputcsv($stdout, array('', '', '', '', '', '', 'Total policies', $count));
+
+fclose($stdout);

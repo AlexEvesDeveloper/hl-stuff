@@ -1,0 +1,11 @@
+<?php
+
+$stdout = fopen('php://output', 'a');
+
+// Main data
+fputcsv($stdout, array('Period', 'Count'));
+
+foreach ($this->reportdata as $data)
+    fputcsv($stdout, array($data['label'], $data['count']));
+
+fclose($stdout);

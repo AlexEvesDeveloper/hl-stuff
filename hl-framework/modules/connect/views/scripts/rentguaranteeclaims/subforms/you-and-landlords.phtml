@@ -1,0 +1,130 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	// Hide address dropdowns until needed.
+//	$('#agent_address').hide();
+	$('#landlord_address').hide();
+	$(".input-pos-float").limitkeypress({ rexp: /^\d*[0-9]?\d*$/ });
+    if (
+        (
+            $('#landlord_address option').length > 1 && $('#landlord_postcode').val() != ''
+        ) || (
+            $('#landlord_address option').length == 1 && $('#landlord_postcode').val() == ''
+        )
+    ) {
+        $('#no_landlord_address_selector').hide();
+    }
+    $('#landlord_address').val($('#landlord_address_id').val());
+    $('#agent_address').val($('#agent_address_id').val());
+});
+<?php if ($this->element->landlord_address_id->getValue() != '') { ?>
+//Trigger post code search and then choose option
+$(function() {
+    $.ajaxSetup({ async: false });
+    getPropertiesByPostcode(
+            $('#landlord_postcode').val(),
+            'landlord_postcode',
+            'landlord_address',
+            'no_landlord_address_selector'
+        );
+    $.ajaxSetup({ async: true });
+
+    $('#landlord_address').val("<?php echo $this->element->landlord_address_id->getValue(); ?>");
+
+    addressShowHideManualFields('<?php echo $this->element->landlord_address_id->getValue(); ?>', 'no_landlord_address_selector');
+});
+<?php } ?>
+</script>
+
+<form enctype="application/x-www-form-urlencoded" method="post" action="" id="loginform">
+	<h2>Your Details</h2>
+	<div class="form_section one-col">
+		<div>
+			<?php echo $this->element->agent_name; ?>
+		</div>
+        <div class="alt">
+            <?php echo $this->element->agent_schemenumber; ?>
+        </div>
+		<div>
+			<?php echo $this->element->agent_contact_name; ?>
+		</div>
+		<div class="alt">
+			<?php echo $this->element->agent_housename; ?>
+		</div>
+		<div>
+			<?php echo $this->element->agent_street; ?>
+		</div>
+		<div class="alt">
+			<?php echo $this->element->agent_town; ?>
+		</div>
+		<div>
+			<?php echo $this->element->agent_postcode;?>
+		</div>
+		<div class="alt">
+			<?php echo $this->element->agent_telephone; ?>
+		</div>
+		<div>
+			<?php echo $this->element->agent_email; ?>
+		</div>
+        <div class="alt">
+            <?php echo $this->element->agent_dir_by_fca; ?>
+        </div>
+        <div>
+            <?php echo $this->element->agent_ar_by_barbon; ?>
+        </div>
+	</div>
+
+    <h2>About the Landlord</h2>
+	<div class="form_section one-col">
+		<div>
+			<?php echo $this->element->landlord1_name; ?>
+		</div>
+		<div class="alt">
+			<?php echo $this->element->landlord_company_name; ?>
+		</div>
+		<div>
+			<?php
+				echo $this->element->landlord_postcode;
+				echo $this->element->landlords_address_lookup;
+			?>
+		</div>
+        <?php echo $this->element->landlord_address_id; ?>
+		<div class="alt-bottom">
+			<label>&nbsp;</label>
+            <?php
+            echo $this->element->landlord_address->setAttribs(
+                array(
+                    'style' => 'width: 320px;',
+                    'onchange' => 'addressShowHideManualFields($(this).val(), \'no_landlord_address_selector\');'
+                )
+            )->render();
+            ?>
+		</div>
+		<div id="no_landlord_address_selector" class="no-padding">
+			<div>
+				<?php echo $this->element->landlord_housename; ?>
+			</div>
+			<div class="alt">
+				<?php echo $this->element->landlord_street; ?>
+			</div>
+			<div>
+				<?php echo $this->element->landlord_town; ?>
+			</div>
+			<div class="alt">
+				<?php echo $this->element->landlord_city; ?>
+			</div>
+		</div>
+		<div>
+	    	<?php echo $this->element->landlord_telephone; ?>
+		</div>
+		<div class="alt">
+			<?php echo $this->element->landlord_email; ?>
+		</div>
+	</div>
+	<div class="clear"></div>
+    <div class="two-col">
+        <div id="navigationmenu">
+            <?php echo $this->element->back; ?>
+            <?php echo $this->element->next; ?>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,169 @@
+
+<?php
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$actionname = $request->getActionName();
+?>
+
+<script language="javascript">
+var chart = null;
+
+$().ready
+(
+    function()
+    {
+        // when first loading, display a blank chart
+        chart = $.jqplot('visual_chart_container',  [[[]]]);
+        
+        var chartDataLoader = function (userdata, plot, options)
+        {
+            var ret = null;
+            var dataurl = null;
+            var refdata = null;
+            var landdata = null;
+            var tendata = null;
+            var commdata = null;
+            var yearnum_1 = null;
+            var yearnum_2 = null;
+            var yearnum_3 = null;
+            
+            // Configure json request url
+            dataurl = '/reports-json/<?php echo $actionname; ?>/?';
+            
+            // Products
+            refdata =  $('#chart_data_referencing').attr('checked');
+            if (refdata != undefined) dataurl += 'refdata=1&';
+            
+            landdata = $('#chart_data_landlords').attr('checked');
+            if (landdata != undefined) dataurl += 'landdata=1&';
+            
+            tendata = $('#chart_data_tenants').attr('checked');
+            if (tendata != undefined) dataurl += 'tendata=1&';
+            
+            commdata = $('#chart_data_commission').attr('checked');
+            if (commdata != undefined) dataurl += 'commdata=1&';
+            
+            // Dates
+            yearnum_1 = $('#yearnum_1').attr('checked');
+            if (yearnum_1 != undefined) dataurl += 'yearnum_1=1&';
+            
+            yearnum_2 = $('#yearnum_2').attr('checked');
+            if (yearnum_2 != undefined) dataurl += 'yearnum_2=1&';
+            
+            yearnum_3 = $('#yearnum_3').attr('checked');
+            if (yearnum_3 != undefined) dataurl += 'yearnum_3=1&';
+            
+            $.ajax
+            (
+             {
+                async: false,
+                url: dataurl,
+                dataType: 'json',
+                success: function(data)
+                {
+                    ret = data.data; // Data
+                    plot.legend.labels = data.legend; // Legend
+                }
+             }
+            );
+            
+            return ret; // Data is returned to load in chart
+        }
+
+        // Connect submit event
+        $('#formsubmit').click
+        (
+            function()
+            {
+                $('#formsubmit').hide();
+                $('#submission-wait-icon').show();
+            
+                chart.destroy();
+                chart = $.jqplot
+                (
+                    'visual_chart_container',
+                    [],
+                    {
+                        dataRenderer: chartDataLoader,
+                        legend:
+                        {
+                            show: true,
+                            location: 'ne'
+                        },
+                        axesDefaults:
+                        {
+                            //pad: 0,
+                            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                            labelOptions: {fontFamily: 'arial', fontSize: '10pt'}
+                        },
+                        axes:
+                        {
+                            xaxis: { label: 'Months', renderer: $.jqplot.DateAxisRenderer, tickOptions: {formatString:'%b&nbsp;%Y'}},
+                            yaxis: { label: 'Sales', tickOptions: {formatString:'%d'}}
+                        },
+                        highlighter:
+                        {
+                            show: true,
+                            sizeAdjust: 15,
+                            tooltipSeparator: ' - '
+                        },
+                        cursor:
+                        {
+                            show: false
+                        }
+                    }
+                );
+                
+                $('#formsubmit').show();
+                $('#submission-wait-icon').hide();
+            }
+        );
+    }
+)
+</script>
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Visual Reports</h2>
+        
+        <form id="visual_chart_form">
+            <fieldset>
+                <legend>Products</legend>
+                <input type="checkbox" id="chart_data_referencing" /> Referencing<br/>
+                <input type="checkbox" id="chart_data_landlords"/> Landlords Insurance<br/>
+                <input type="checkbox" id="chart_data_tenants"/> Tenants Insurance<br/>
+                <input type="checkbox" id="chart_data_commission"/> Commission<br/>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Years of Coverage</legend>
+                
+                <?php
+                    // Display the last 3 years as check boxes
+                    $endyear = date("Y");
+                    $startyear = $endyear - 2;
+                    
+                    $num = 1;
+                    for ($year = $startyear; $year <= $endyear; $year++)
+                    {
+                        ?>
+                        <input type="checkbox" id="yearnum_<?php echo $num;?>" name="yearnum_<?php echo $num;?>" /> <?php echo $year?><br/>
+                        <?php
+                        $num++;
+                    }
+                ?>
+                <br/>
+            </fieldset>
+            
+            <div class="formcontrols">
+                <input type="button" id="formsubmit" value="Apply" class="nav-agents-button"/>
+                <img style="float: right; display: none;" id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+            </div>
+        </form>
+        <br/>
+        
+        <div id="visual_chart_container" class="report_chart_container">
+            <!-- charting container, populated on document load using charting library -->
+        </div>
+    </div>
+</div>

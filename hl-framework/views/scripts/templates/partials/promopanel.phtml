@@ -1,0 +1,13 @@
+<div class="promo">
+    <h3><?php echo $this->header; ?></h3>
+    <p><?php echo $this->content; ?></p>
+    <img src='/assets/common/images/content_icons/white_<?php echo $this->icon; ?>.png' />
+    <?php
+    if (isset($this->url) && $this->url!='')
+    {
+        ?>
+        <a href="<?php echo $this->url; ?>"><strong>Buy Now</strong></a>
+        <?php
+    }
+    ?>
+</div>

@@ -1,0 +1,73 @@
+<?php if (isset($this->stepNum) && $this->stepNum  == 3) : ?>
+    <div id="quote" class="panel panel-default">
+        <h3>Your Premium</h3>
+
+        <div class="premium">
+            <h5 class="base-colour">Monthly</h5>
+            <span class="monthlyPremiumQuote quaternary-colour quote-price">
+                &pound;<?php echo number_format ($this->premiums['UserQuoteMonthlyPremiumInc'],2); ?>
+            </span>
+        </div>
+
+        <div class="premium">
+            <h5 class="base-colour">Annually</h5>
+            <span class="annualPremiumQuote base-colour quote-price">
+                &pound;<?php echo number_format ($this->premiums['UserQuoteAnnualPremiumInc'],2); ?>
+            </span>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($this->stepNum)) : ?>
+    <div id="progress" class="panel panel-default">
+        <h3 class="quaternary-colour">Overall Progress</h3>
+        <div class="progress">
+            <?php
+            if($this->stepNum == "dd"){
+                $fractionComplete = 100;
+            }elseif($this->stepNum == "add"){
+                $fractionComplete = .4;
+            }else{
+                if (isset($this->stepNum) && isset($this->stepMax)) {
+                    $fractionComplete = $this->stepNum / $this->stepMax;
+                } else {
+                    $fractionComplete = 0;
+                }
+            }
+            ?>
+            <div class="progress-bar quaternary-background" role="progressbar" aria-valuenow="<?php echo round($fractionComplete * 100); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo round($fractionComplete * 100); ?>%;">
+                <span class="sr-only"><?php echo round($fractionComplete * 100); ?>% complete</span>
+            </div>
+        </div>
+
+        <div id="errorList">
+            <?php if ($this->errorCount > 0) :
+                    printf(
+                        '<p>There %s only %d mandatory field%s left to complete in step %d:</p>',
+                        (($this->errorCount == 1) ? 'is' : 'are'),
+                        $this->errorCount,
+                        (($this->errorCount == 1) ? '' : 's'),
+                        $this->stepNum
+                    );
+            endif;
+            echo $this->errorsHtml; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="panel panel-primary">
+    <h3>Need help?</h3>
+    <p class="large quaternary-colour">Call: 0845 117 6000</p>
+    <p>We&rsquo;re open from:</p>
+    <table class="table table-condensed">
+        <tr>
+            <td>Weekdays</td>
+            <td>8:30am - 6:30pm</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>9:30am - 1:00pm</td>
+        </tr>
+    </table>
+    <p>We&rsquo;re always happy to help.</p>
+</div>

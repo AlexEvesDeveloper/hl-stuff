@@ -1,0 +1,106 @@
+<?php
+$breadcrumbArray = array(
+    'currentPage'   =>  $this->searchTitle
+);
+
+echo $this->partial('partials/breadcrumb.phtml', array('breadcrumbArray' => $breadcrumbArray));
+
+?>
+<div class="wrapper two-col">
+
+    <div class="content blog">
+
+        <?php
+
+        $articleCount = count($this->blogSummaries);
+
+        foreach ($this->blogSummaries as $key => $summary) {
+            ?>
+            <h2><?php echo $summary['title']; ?></h2>
+            <?php if ($articleCount > 1) { ?>
+                <div id="blogDescriptionHideable<?php echo $key; ?>">
+                    <?php echo $summary['description']; ?>
+                </div>
+            <?php } ?>
+            <div id="blogContentHideable<?php echo $key; ?>"<?php if ($articleCount > 1) { echo ' style="display: none;"'; } ?>>
+                <?php echo $summary['content']; ?>
+            </div>
+            <div class="left blogFooter">
+                Posted On: <span class="date"><?php echo $summary['lastUpdated']; ?></span>
+                <?php
+                if ($articleCount > 1) {
+                    ?>
+                    <a href="#" id="blogToggle<?php echo $key; ?>" onclick="if ($('#blogContentHideable<?php echo $key; ?>').is(':visible')) { $('#blogContentHideable<?php echo $key; ?>').hide(); $('#blogDescriptionHideable<?php echo $key; ?>').show(); $('#blogToggle<?php echo $key; ?>').text('Read more'); } else { $('#blogContentHideable<?php echo $key; ?>').show(); $('#blogDescriptionHideable<?php echo $key; ?>').hide(); $('#blogToggle<?php echo $key; ?>').text('Minimise article'); } return false;">Read more</a>
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="clear"></div>
+        <?php
+        }
+        ?>
+
+        <h2>Find stories...</h2>
+        <div class="search">
+            <div class="bar">
+                <form method="post" action="/news">
+                    <input type="hidden" name="searchType" value="keyword" />
+                    <div class="left"><a href="/news/all">Show all messages</a></div>
+                    <div class="right">
+                        Search by keyword:
+                        <select name="param1">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchKeywords as $keyword) {
+                            echo "    <option value=\"{$keyword['tag']}\">{$keyword['tag']}</option>";
+                        }
+                        ?>
+                        </select>
+                        <input type="submit" name="Search" value="Search" />
+                    </div>
+                </form>
+            </div>
+            <div class="bar">
+                <form method="post" action="/news">
+                    <input type="hidden" name="searchType" value="date" />
+                    <div class="right">
+                        Search by date:
+                        <select name="param2">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchMonths as $month) {
+                            echo "    <option value=\"{$month}\">{$month}</option>";
+                        }
+                        ?>
+                        </select>
+                        <select name="param1">
+                            <option value="">Please select</option>
+                        <?php
+                        foreach ($this->blogSearchYears as $year) {
+                            echo "    <option value=\"{$year}\">{$year}</option>";
+                        }
+                        ?>
+                        </select>
+                        <input type="submit" name="Search" value="Search" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sidebar">
+        <h2 class="gradient">News articles by month</h2>
+        <div class="search">
+            <?php
+            foreach($this->blogMonthsYears as $yearsMonths) {
+                list($year, $month) = explode(' ', $yearsMonths);
+                echo "<a href=\"/news/search/{$year}/{$month}\">{$month} {$year}</a><br />\n";
+            }
+            ?>
+            <a href="/news/all">Show all messages</a>
+        </div>
+        <a href="http://twitter.com/homelet" target="_blank" class="nav-corporate-button">Follow us on <strong>Twitter</strong></a>
+    </div>
+
+</div>

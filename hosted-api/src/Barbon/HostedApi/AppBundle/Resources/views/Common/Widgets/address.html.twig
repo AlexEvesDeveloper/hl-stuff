@@ -1,0 +1,32 @@
+
+{% spaceless %}
+    <address>
+        {% if address.flat is defined and address.flat is not empty %}
+            Flat {{ address.flat }},
+        {% endif %}
+        {% if address.houseName is defined and address.houseName is not empty %}
+            {{ address.houseName }},
+        {% endif %}
+        {% if address.houseNumber is defined and address.houseNumber is not empty %}
+            {{ address.houseNumber }},
+        {% endif %}
+        {% if address.street is defined and address.street is not empty %}
+            {{ address.street }}
+        {% endif %}
+        {% if address.district is defined and address.district is not empty %}
+            <br />{{ address.district }}
+        {% endif %}
+        {% if address.town is defined and address.town is not empty %}
+            <br />{{ address.town }}
+        {% endif %}
+        {% if address.county is defined and address.county is not empty %}
+            <br />{{ address.county }}
+        {% endif %}
+        {% if address.country is defined and address.country is not empty %}
+            <br />{{ address.country }}
+        {% endif %}
+        {% if address.postcode is defined and address.postcode is not empty %}
+            <br />{{ address.postcode }}
+        {% endif %}
+    </address>
+{% endspaceless %}

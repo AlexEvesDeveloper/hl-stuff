@@ -1,0 +1,39 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    {% stylesheets '@BarbonHostedApiAgentReferenceBundle/Resources/less/agent-list-references.less' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Applications
+                <span class="pull-right">{{ results.totalRecords }} 
+                    {% if 1 == results.totalRecords %}
+                        result
+                    {% else %}
+                        results
+                    {% endif %}
+                </span>
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                {% if 0 < results.totalRecords %}
+                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/sortable-reference-table-list.html.twig' 
+                        with { 
+                            'results': results, 
+                            'case_view_url' : 'barbon_hostedapi_landlord_reference_cases_view_index',
+                            'application_view_url' : 'barbon_hostedapi_landlord_reference_applications_view_index' 
+                        } 
+                    %}
+                {% else %}
+                    There are no recorded reference applications for this account.
+                {% endif %}
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+    </div>
+{% endblock %}
+

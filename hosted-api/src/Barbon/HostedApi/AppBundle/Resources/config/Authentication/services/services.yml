@@ -1,0 +1,6 @@
+services:
+    barbon.hosted_api.app.service.authentication.mac_manager:
+        class: Barbon\HostedApi\AppBundle\Service\Authentication\MacManager
+        arguments:
+            - @request_stack
+            - @security.token_storage

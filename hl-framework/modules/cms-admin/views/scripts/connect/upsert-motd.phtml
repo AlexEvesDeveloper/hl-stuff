@@ -1,0 +1,177 @@
+<!-- Provide styles and scripts for the MOTD popup -->
+<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/vendor/facebox/css/facebox.css" />
+<link rel="stylesheet" media="screen,projection" type="text/css" href="/assets/vendor/facebox/css/cms-admin-facebox.css" />
+<script type="text/javascript" src="/assets/vendor/facebox/js/jquery.facebox.js"></script>
+<script type="text/javascript">
+    
+    $(function() {
+        
+        $( "#sortable" ).disableSelection();
+        
+        $( "#displayFrom" ).datepicker({
+            dateFormat: 'dd/mm/yy',
+            selectOtherMonths: true
+        });
+        
+        $( "#displayTo" ).datepicker({
+            dateFormat: 'dd/mm/yy',
+            selectOtherMonths: true
+        });
+        
+        <?php if ($this->errorMessage) { ?>
+            setTimeout(function() {
+                $('.error').animate({opacity: "0"}, 1000).slideUp(500);
+            }, 3000);    
+        <?php } ?>
+        
+        
+        //The previewers...
+        $("#preview").click(displayPreview);
+    });
+    
+    
+    function displayPreview() {
+		
+        //Get the variable values specified on the page.
+        var motdWidth = $('#displayWidth').val();
+        var motdTitle = $('#motdTitle').val();
+        var motdMessage = $('#message').val();
+		$('#dialogContent').html(motdMessage);
+        
+		$(document).bind('beforeReveal.facebox', function() {
+			$('#facebox .body')
+				.width(motdWidth + 'px')
+				.click(function(e) {
+					$(document).trigger('close.facebox');
+				});
+		});
+
+		$.facebox(motdTitle, $('#dialog').html());
+		
+		//Hide default close button.
+        $('.close').css('display', 'none');
+	}
+    
+</script>
+
+
+<h1><?php echo $this->upsertType; ?> message</h1>
+<?php if ($this->errorMessage != '') { ?>
+    <p class="msg error">
+        <?php echo $this->errorMessage; ?>
+    </p>
+<?php } ?>
+
+<form method="post">
+    
+    <input type="hidden" name="upsertType" id="upsertType" value="<?php echo $this->upsertType ?>" />
+
+    
+    <?php if($this->upsertType == 'Edit'): ?>
+        <input type="hidden" name="id" id="id" value="<?php echo $this->id ?>" />
+    <?php endif ?>
+    
+    
+    <input type="hidden" name="active" id="active" value="<?php echo $this->active ?>" />
+    
+    
+    <div class="connect-cms-box">
+        <h5>Title:<span class="mandatory">*</span></h5>
+        <input type="text" size="60" name="motdTitle"
+            class="input-text" id="motdTitle" value="<?php echo $this->motdTitle ?>"/>
+        
+        <a href="#" id="preview" name="preview"><img src="/assets/cms_admin/design/ico-preview.png" title="Preview" alt="Preview" /></a>
+    </div>
+    
+    
+    <!-- Date from element -->
+    <div class="connect-cms-box">
+        <h5>Display from:<span class="mandatory">*</span></h5>
+        <input type="text" name="displayFrom" id="displayFrom"
+               class="input-text" value="<?php echo $this->displayFrom ?>" />
+    </div>
+    
+    
+    <!-- Date to element -->
+    <div class="connect-cms-box">
+        <h5>Display to:<span class="mandatory">*</span></h5>
+        <input type="text" name="displayTo" id="displayTo"
+               class="input-text" value="<?php echo $this->displayTo ?>" />
+    </div>
+    
+    
+    <!-- Agent types -->
+    <div class="connect-cms-box" style="float: left;">
+        <h5>Agent types:<span class="mandatory">*</span></h5>
+        
+        <div class="connect-cms-box-agentypes">
+            <input type="checkbox" name="standard" id="standard" value="1" <?php echo $this->getChecked($this->agentTypes, 1); ?> /> 
+            <?php echo $this->iconify("1", 1); ?>
+            Standard
+        </div>
+        
+        <div class="connect-cms-box-agentypes">
+            <input type="checkbox" class="checkbox" name="premier" id="premier" value="2" <?php echo $this->getChecked($this->agentTypes, 2); ?> />
+            <?php echo $this->iconify("2", 1); ?>
+            Premier
+        </div>
+        
+    </div>
+    
+    
+    <div style="clear: both;"></div>
+    
+    
+    <!-- Agent user types -->
+    <div class="connect-cms-box" style="float: left;">
+        <h5>Agent user types:<span class="mandatory">*</span></h5>
+        
+        <div class="connect-cms-box-agentypes">
+            <input type="checkbox" name="basic" id="basic" value="1" <?php echo $this->getChecked($this->agentUserTypes, 1); ?> />
+            <?php echo $this->iconify("1", 2); ?>
+            Basic
+        </div>
+        
+        <div class="connect-cms-box-agentypes">
+            <input type="checkbox" class="checkbox" name="master" id="master" value="2" <?php echo $this->getChecked($this->agentUserTypes, 2); ?> />
+            <?php echo $this->iconify("2", 2); ?>
+            Master
+        </div>
+    </div>
+    
+    
+    <div style="clear: both;"></div>
+    
+    
+    <div class="connect-cms-box">
+        <h5>Popup size (px):<span class="mandatory">*</span></h5>
+        Width: <input type="text" size="10" maxlength="3" name="displayWidth" id="displayWidth"
+            class="input-text" value="<?php echo $this->displayWidth ?>" style="margin-right: 20px;" />
+    </div>
+
+
+    <!-- Msg -->  
+    <div class="connect-cms-box">
+        <h5>Message:<span class="mandatory">*</span></h5>
+        <textarea class="editor input-text" name="message" id="message" cols="100" rows="10">
+            <?php echo $this->message ?>
+        </textarea>
+    </div>
+
+
+    <div class="box-02">
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="window.location = '/cms-admin/connect/motd';" />
+        </p>
+    </div>
+    
+    
+    <!-- This div is used to previewing MOTDs. -->
+    <div id="dialog" style="display: none;">
+		<div id="dialogContent"></div>
+		<div style="clear: both; float: right;">
+			<a class="nav-corporate-dark-button" href="#">OK, thanks!</a>
+		</div>
+    </div>
+</form>

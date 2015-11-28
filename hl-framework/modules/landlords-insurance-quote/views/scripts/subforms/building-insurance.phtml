@@ -1,0 +1,119 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-buildinginsurance')); ?>
+        </span>
+        Landlord Building Insurance
+    </h2>
+
+    <a name="building-insurance"></a>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-buildinginsurance'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->need_building_insurance; ?>
+    </div>
+
+    <div id="buildingInsurancePromo">
+        <div class="alert alert-warning">
+            <span class="warningpromo-content"><?php echo $this->promoContent('landlords-insurance-quote-buildinginsurance-promo'); ?></span>
+        </div>
+    </div>
+
+    <div class="hideable" id="building_insurance_hideable">
+        <div id="buildingFloodExcluded" style="display: none;">
+            <div class="alert alert-warning">
+                <?php echo $this->promoContent('landlords-insurance-quote-buildinginsurance-floodexcluded'); ?>
+            </div>
+        </div>
+
+        <div id="buildingSubsidenceExcluded" style="display: none;">
+            <div class="alert alert-warning">
+                <?php echo $this->promoContent('landlords-insurance-quote-buildinginsurance-subsidenceexcluded'); ?>
+            </div>
+        </div>
+
+        <div class="section-help">
+            <p><strong>We automatically provide cover for a rebuild value up to &pound;500,000 as standard.</strong></p>
+        </div>
+
+        <div id="override_dsi_hideable" class="radio form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                <?php echo $this->promoContent('landlords-insurance-quote-help-buildinginsurance-rebuildvalue'); ?>
+            </div>
+            <?php echo $this->element->override_dsi; ?>
+        </div>
+
+        <div id="building_value_hideable" class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">Please enter the value without commas or currency symbol. For example, if the rebuild value is &pound;100,000 please enter 100000</div>
+            <?php echo $this->element->building_value; ?>
+        </div>
+
+        <h3 class="quaternary-colour">Tell us about the property...</h3>
+
+        <div class="form-group">
+            <div class="field-help-conditional">Please contact us on 0845 117 6000 for a quotation on properties built prior to 1850</div>
+            <?php echo $this->element->building_built; ?>
+        </div>
+
+        <div class="modal fade" id="older-buildings" tabindex="-1" role="dialog" aria-labelledby="older-buildings-title" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+
+                        <h4 class="quaternary-colour" id="older-buildings-title">Older Buildings</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Since your property was built <strong>prior to 1850</strong>, please contact us on 0845 117 6000 for a quotation.</p>
+                        <p>If you selected this option by accident, click the 'close' button below and change the build date option.</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-quaternary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->element->building_bedrooms; ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->element->building_type; ?>
+        </div>
+
+        <div class="form-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                <?php echo $this->promoContent('landlords-insurance-quote-help-buildinginsurance-excess'); ?>
+            </div>
+            <?php echo $this->element->building_insurance_excess; ?>
+        </div>
+
+        <div class="radio form-group last-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                <?php echo $this->promoContent('landlords-insurance-quote-help-buildinginsurance-accidentaldamage'); ?>
+            </div>
+            <?php echo $this->element->building_accidental_damage; ?>
+        </div>
+
+        <div id="buildingAccidentalDamagePromo" class="alert alert-warning" style="display: none;">
+            <?php echo $this->promoContent('landlords-insurance-quote-buildinginsurance-accidentaldamage-promo'); ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block body %}
+    
+    <script>
+        var canDisplayDeclaration = {{ canDisplayDeclaration ? 'true' : 'false' }};
+    </script>
+
+    <form method="post" class="form-horizontal one-col" novalidate>
+        <h2>{{ bodyTitle | trans }}</h2>
+        {{ form_widget(form) }}
+    </form>
+
+{% endblock %}

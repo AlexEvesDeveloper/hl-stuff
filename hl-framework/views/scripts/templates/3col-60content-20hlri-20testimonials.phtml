@@ -1,0 +1,96 @@
+<?php
+echo $this->subHeader($this->pageStyling, $this->pageStyling);
+?>
+<div class="<?php echo $this->pageStyling; ?>">
+    <div class="wrapper three-col">
+        <div class="content">
+            <?php echo $this->content ?>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar1 hlri">
+                <h4>HomeLet Rental Index</h4>
+                <div class="content">
+                    <div class="imageContainer">
+                        <a href="/rentalindex"><img src="/assets/cms/images/homelet_rental_index_icon.png" alt="HomeLet Rental Index" /></a>
+                    </div>
+                    <p class="first">
+                        The HomeLet Rental Index shows agreed rental prices from over 3,000 letting agents each month.
+                        It also includes data on key tenant demographics to provide further insight to the market trends of the Private Rented Sector.
+                    </p>
+                    <p>
+                        <a href="/rentalindex">Find out more...</a>
+                    </p>
+                </div>
+            </div>
+            <div class="sidebar2">
+                <div id="right">
+                    <h3 class="underline-<?php echo $this->pageStyling; ?>">Resources</h3>
+                    <?php
+                    $layout = $this->layout()->getView();
+                    if ($this->pageStyling == 'corporate') {
+                        ?>
+                        <div class="white">
+                            <a href="<?php echo $layout->urls['contactUs']; ?>" class="nav-corporate-button">Ask us a <strong>Question</strong></a>
+                            <a href="<?php echo $layout->urls['connectLogin']; ?>" class="nav-corporate-dark-button">Login to <strong>Connect</strong></a>
+                            <div style="clear:both;"></div>
+                        </div>
+                        <?php
+                    } elseif ($this->pageStyling == 'tenants') {
+                        ?>
+                        <div id="resources">
+                            <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsFaq']; ?>">Frequently Asked <strong>Questions</strong></a>
+                            <a class="nav-tenants-button" href="<?php echo $layout->urls['contactUs']; ?>">Ask us a <strong>Question</strong></a>
+                            <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsTopTips']; ?>"><strong>Top Tips</strong> for Tenants</a>
+                            <div class="clear"></div>
+                        </div>
+                        <?php
+                    } elseif ($this->pageStyling == 'landlords') {
+                        ?>
+                        <div id="resources">
+                        	<a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsFaq']; ?>">Frequently Asked <strong>Questions</strong></a>
+                            <a class="nav-landlords-button" href="<?php echo $layout->urls['contactUs']; ?>">Ask us a <strong>Question</strong></a>
+                            <a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsTopTips']; ?>"><strong>Top Tips</strong> for Landlords</a>
+                            <div class="clear"></div>
+                        </div>
+                        <!-- LANDLORDS LOWDOWN - Not currently in use
+                        <script type="text/javascript" src="/assets/cms/js/landlords/lowdownSignup.js"></script>
+                        <div id="landlord-lowdown">
+                            <form>
+                                <input type="text" name="email" />
+                                <input type="submit" name="go" value="Go" />
+                            </form>
+                            <div class="clear"></div>
+                        </div> -->
+                        <?php
+                    } elseif ($this->pageStyling == 'letting-agents') {
+						
+            		}
+                    ?>
+                    <h4 class="underline-<?php echo $this->pageStyling; ?>">
+                        <?php
+                        if ($this->pageStyling == 'landlords') { echo 'What our customers say'; }
+                        elseif ($this->pageStyling == 'letting-agents') { echo 'What agents say'; }
+                        else { echo 'What people say'; }
+                        ?>
+                    </h4>
+                    <div class="blue">
+                        <div class="testyhearts">
+                            <div id="testimonials-holder">
+                                <ul>
+                                    <?php
+                                    echo $this->testimonials( $this->pageStyling );
+                                    ?>
+                                </ul>
+                                <div id="test-changer">
+                                    <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                                    <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

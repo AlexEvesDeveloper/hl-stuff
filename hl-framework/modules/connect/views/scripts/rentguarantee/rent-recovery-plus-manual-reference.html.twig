@@ -1,0 +1,21 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Application</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <p>
+            Thank you for setting up an RRP policy, your policy number is {{ policyNumber }}.
+            Our dedicated team will now check the reference to validate that it meets the conditions for this policy.
+            If the policy conditions are met, you will receive your policy documents within 24 hours.
+            If conditions are not met or we have any queries with the reference, one of our team will contact you as
+             a matter of priority.
+        </p>
+    </div>
+{% endblock %}

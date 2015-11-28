@@ -1,0 +1,7 @@
+<h2>Product Selection</h2>
+<div class="form_section one-col">
+    <div class="autoAlt">
+        <?php echo $this->element->product->setOptions(array('onchange'=>'setProduct()'))->render(); ?>
+        <?php echo $this->element->previously_selected_product; ?>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div style="float: left; width: 500px; height:30px; ">
+    <strong>
+        <?php echo $this->bankInterest->getBankName();?>
+    </strong>
+    (<?php echo $this->bankInterest->getBankAddress()->town; ?>),
+    Account no: <?php echo $this->bankInterest->getAccountNumber(); ?>
+</div>
+<div style="float: right; height:30px; ">
+    <a style="float:none; display:inline" href="#" onclick="removeBankInterest(
+        <?php echo $this->bankInterest->getInterestId(); ?>); return false;">Remove</a>
+</div>
+
+<div class="clearfix"></div>

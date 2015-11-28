@@ -1,0 +1,24 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Add Guarantor</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" enctype="multipart/form-data" novalidate class="form-horizontal">
+        <h2>{{ bodyTitle | trans }}</h2>
+        {{ form_widget(form) }}
+    </form>
+
+    {% include 'back-to-summary.html.twig' with { 'summaryController': 'iris-add-guarantor' } %}
+{% endblock %}

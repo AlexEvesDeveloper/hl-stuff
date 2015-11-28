@@ -1,0 +1,43 @@
+<div class="form-sub-section">
+    <h2 class="quaternary-colour text-block-heading">Keeping your information secure</h2>
+    <div class="section-help">
+        <p>We&rsquo;re committed to protecting your privacy. We&rsquo;ll only use the information we collect about you lawfully, in accordance with the Data Protection Act 1998.</p>
+        <p>If you&rsquo;d like to know more about how we protect your data, please <a href="/terms-of-use" target="_blank" class="quaternary-colour">read our privacy policy</a>.</p>
+    </div>
+
+    <div class="agree_statement_details_resale section-help">
+        <p>We won&rsquo;t pass your information on to any third parties without your consent.</p>
+        <p>Please tick this box if you&rsquo;re happy for HomeLet to share your information with our trusted partners, for offers, information and products that we think might be of interest to you as a landlord.</p>
+        <div class="checkbox">
+            <label for="dpa_resale" class="optional">
+                <?php echo $this->element->dpa_resale; ?>
+                I am happy for HomeLet to share my information with trusted partners.
+            </label>
+        </div>
+    </div>
+
+    <div class="section-help">
+        <p><a data-target="dpa_additional" class="quaternary-colour" onClick="_gaq.push(['_trackEvent', 'Landlord Insurance', 'information', 'Quote Form']);">Please click here to read about how we&rsquo;ll use your information.</a></p>
+    </div>
+
+    <div id="dpa_additional" class="section-help" style="display: none;">
+        <p>By providing us with your contact details you consent to being contacted by post, email, text and telephone in relation to your quote for landlords insurance.</p>
+        <p>We would also like to keep in contact with you about Barbon Insurance Group offers, products and services, which we feel may be relevant to you as a landlord.</p>
+        <h3 class="quaternary-colour">Changing your contact preferences</h3>
+        <p>You can contact us at any time to change your preferences.</p>
+
+        <div class="agree_statement_marketing_sms_and_email checkbox">
+            <label for="dpa_sms_email">
+                <?php echo $this->element->dpa_sms_email; ?>
+                If you&rsquo;d prefer HomeLet do not contact you with any further information by email or SMS please tick this box.
+            </label>
+        </div>
+
+        <div class="agree_statement_marketing_phone_and_post checkbox">
+            <label for="dpa_phone_post">
+                <?php echo $this->element->dpa_phone_post; ?>
+                If you&rsquo;d prefer HomeLet do not contact you with any further information by phone or post please tick this box.
+            </label>
+        </div>
+    </div>
+</div>

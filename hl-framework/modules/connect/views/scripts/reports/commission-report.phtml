@@ -1,0 +1,67 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Commission</h2>
+        
+        <table style="width: 100%;">
+            <tr>
+                <th>Month/Year</th>
+                <th>Commission paid for Tenants policies (&pound;)</th>
+                <th>Commission paid for Landlords policies (&pound;)</th>
+                <th>Total commission paid (&pound;)</th>
+            </tr>
+            
+            <?php
+            
+            if (count($this->reportdata))
+            {
+                $total_tenants = 0;
+                $total_landlords = 0;
+                $total_total = 0;
+                
+                foreach ($this->reportdata as $commissiondate => $data)
+                {
+                    $tenants_com = 0;
+                    $landlords_com = 0;
+                    
+                    if (isset($data['T'])) $tenants_com = $data['T'];
+                    if (isset($data['L'])) $landlords_com = $data['L'];
+                    
+                    echo '<tr>';
+                    echo '<td>' . $commissiondate . '</td>';
+                    
+                     
+                    echo '<td>' . sprintf('%.2f', $tenants_com) . '</td>';
+                    echo '<td>' . sprintf('%.2f', $landlords_com) . '</td>';
+                    echo '<td>' . sprintf('%.2f', ($tenants_com + $landlords_com)) . '</td>';
+                    echo '</tr>';
+                    
+                    $total_tenants += $tenants_com;
+                    $total_landlords += $landlords_com;
+                    $total_total += ($tenants_com + $landlords_com);
+                }
+                
+                echo '<tr>';
+                echo '<th>Total</th>';
+                echo '<td>' . sprintf('%.2f', $total_tenants) . '</td>';
+                echo '<td>' . sprintf('%.2f', $total_landlords) . '</td>';
+                echo '<td>' . sprintf('%.2f', $total_total) . '</td>';
+                echo '</tr>';
+            }
+            else
+            {
+                ?>
+                
+                <tr>
+                    <td colspan="8">
+                        No data found
+                    </td>
+                </tr>
+                
+                <?php
+            }
+            
+            ?>
+        </table>
+    </div>
+</div>

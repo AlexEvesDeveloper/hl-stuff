@@ -1,0 +1,14 @@
+services:
+    barbon.hosted_api.agent.reference.controller.cases.view_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\Cases\ViewController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]
+
+    barbon.hosted_api.agent.reference.controller.cases.view_report_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\Cases\ViewReportController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]

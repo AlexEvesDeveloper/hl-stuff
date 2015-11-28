@@ -1,0 +1,49 @@
+<h1>Add Job Vacancy</h1>
+<script>
+$(function() {
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);
+    <?php } ?>
+    $( "#startDate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    $( "#endDate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+});
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<form method="post">
+    <p>
+        <label for="jobTitle" class="req">Job Title:</label><br />
+        <input type="text" size="60" name="jobTitle" class="input-text" id="jobTitle" value="<?php echo $this->jobTitle ?>"/>
+    </p>
+    <p>
+        <label for="reportingTo" class="req">Reporting To:</label><br />
+        <input type="text" size="60" name="reportingTo" class="input-text" id="reportingTo" value="<?php echo $this->reportingTo ?>"/>
+    </p>
+    <p>
+        <label for="location" class="req">Location:</label><br />
+        <input type="text" size="60" name="location" class="input-text" id="location" value="<?php echo $this->location ?>"/>
+    </p>
+    <p>
+        <label for="startDate" class="req">Start Date:</label><br />
+        <input type="text" name="startDate" id="startDate" class="input-text" value="<?php echo $this->startDate ?>" />
+    </p>
+    <p>
+        <label for="endDate" class="req">End Date:</label><br />
+        <input type="text" name="endDate" id="endDate" class="input-text" value="<?php echo $this->endDate ?>" />
+    </p>
+    <p>
+        <label for="jobDescription" class="req">Description:</label><br />
+        <textarea class="editor input-text" name="jobDescription" id="jobDescription" cols="100" rows="10"><?php echo $this->jobDescription ?></textarea>
+    </p>
+    <div class="box-02">
+        <input type="hidden" name="id" id="id" value="<?php echo $this->id ?>" />
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="javascript:history.go(-1)" />
+        </p>
+    </div>
+</form>

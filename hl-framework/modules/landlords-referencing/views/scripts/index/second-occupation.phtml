@@ -1,0 +1,29 @@
+<div class="col-xs-12">
+    <div class="breadcrumb"></div>
+</div>
+<div class="landlords landlords-referencing col-sm-9">
+    <div class="content">
+        <form action="" method="post" enctype="application/x-www-form-urlencoded" class="main validate">
+            <?php
+
+            //Populate the form elements into an array to pass to the occupation partial.
+            $model = array();
+            foreach($this->form as $element) {
+
+                $model[$element->getName()] = $element;
+            }
+            $model['description'] = $this->form->getDescription();
+
+            echo $this->partial('partials/occupation.phtml', $model);
+
+            echo $this->partial('partials/form-navigation.phtml', array('stepNum' => 0, 'stepMax' => 1000));
+            ?>
+        </form>
+    </div>
+</div>
+
+<div class="landlords col-sm-3">
+    <?php echo $this->partial('partials/sidebar.phtml', array('page' => 'second-occupation', 'fractionComplete' => $this->fractionComplete)); ?>
+</div>
+
+<div class="clear"></div>

@@ -1,0 +1,55 @@
+<tr>
+    <td class="connect-motd-col1"><?php echo $this->displayFrom ?></td>
+    <td class="connect-motd-col2"><?php echo $this->displayTo ?></td>
+    
+    <td class="connect-motd-col3">
+        <?php echo $this->iconify($this->agentTypes, 1); ?>
+    </td>
+    
+    <td class="connect-motd-col4">
+        <?php echo $this->iconify($this->agentUserTypes, 2); ?>
+    </td>
+    
+    
+    <!-- Truncate the title text so that it doesn't force the table to be multi-row -->
+    <td class="connect-motd-col5">
+        <?php echo substr(trim($this->motdTitle), 0, 30).'...'; ?>
+    </td>
+    
+    
+    <!-- The options bar -->
+    <td class="connect-motd-col6">
+        
+        <?php if($this->active == 0) { ?>
+        
+            <a href="/cms-admin/connect/set-motd-status?id=<?php echo $this->id ?>&setMotdStatus=1"><img src="/assets/cms_admin/design/ico-status-online.png" title="Activate" alt="Activate" /></a>
+            &nbsp;
+        
+        <?php } else { ?>
+        
+            <a href="/cms-admin/connect/set-motd-status?id=<?php echo $this->id ?>&setMotdStatus=0"><img src="/assets/cms_admin/design/ico-status-offline.png" title="Deactivate" alt="Deactivate" /></a>
+            &nbsp;
+        
+        <?php } ?>
+        
+        
+        <a onclick="displayPreview(<?php echo($this->id . ',' . $this->displayWidth); ?>);
+            return false;" href="#"><img src="/assets/cms_admin/design/ico-preview.png" title="Preview" alt="Preview" /></a>
+        &nbsp;
+                
+        <a href="/cms-admin/connect/upsert-motd?id=<?php echo $this->id ?>"><img src="/assets/cms_admin/design/ico-edit.gif" title="Edit" alt="Edit" /></a>
+        &nbsp;
+                
+        <a class="motd-delete" href="/cms-admin/connect/archive-motd?id=<?php echo $this->id ?>"><img src="/assets/cms_admin/design/ico-delete.gif" title="Delete" alt="Delete" /></a>
+
+
+        <!-- This div stores the MOTD content for display. -->
+        <div id="dialog<?php echo $this->id; ?>" title="<?php echo $this->motdTitle; ?>" style="display: none;">
+            <?php echo html_entity_decode(trim($this->message,',')); ?>
+            
+            <div style="clear: both; float: right;">
+				<a class="nav-corporate-dark-button" href="#">OK, thanks!</a>
+            </div>
+        </div>
+    </td>
+</tr>

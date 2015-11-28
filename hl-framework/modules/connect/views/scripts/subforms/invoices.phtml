@@ -1,0 +1,22 @@
+
+<form target="_blank" action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Invoices</h2>
+    
+    <div class="form_section one-col">
+        <p>
+            To view your invoice simply select the month and year required and click the button below
+        </p>
+        
+        <div>
+            <?php echo $this->element->invoice_month; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->invoice_year; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->invoice_producereport; ?>
+            <?php echo $this->element->invoice_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,11 @@
+{% spaceless %}
+
+    {# If completion method is by email and the application status is awaiting applicant details #}
+    {% if 2 == application.completionMethod and 4 == application.status %}
+        <a class="nav-agents-button mailLink" href="/iris-referencing/resend-completion-email-to-tenant?uuid={{ application.referencingApplicationUuId }}">
+            Resend email to Applicant
+        </a>
+        <div class="clearfix"></div>
+    {% endif %}
+
+{% endspaceless %}

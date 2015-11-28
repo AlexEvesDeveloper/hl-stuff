@@ -1,0 +1,26 @@
+<div class="dialog">
+    <?php echo $this->element->getElement('questionId');?>
+
+    <div class="form-group">
+        <label for="property" class="required">Select Property</label>
+        <div class="property-element">
+            <?php
+            echo $this->element->getElement('property')
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="information" class="required">Additional Information</label>
+        <div class="information-element">
+            <?php
+            echo $this->element->getElement('information')
+                ->setOptions(array('class'=>'form-control', 'rows' => '4'))->render()
+            ?>
+        </div>
+    </div>
+
+    <input class="btn btn-quaternary" type="button" id="cor_address_add" value="Add" name="cor_address_add" onclick="addAdditional(); return false;" />
+    <div class="clearfix"></div>
+</div>

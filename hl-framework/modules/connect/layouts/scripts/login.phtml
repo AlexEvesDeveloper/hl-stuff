@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="en" />
+<meta http-equiv="x-ua-compatible" content="chrome=1,IE=edge" />
+<meta name="description" content="<?php echo $this->description ?>" />
+<meta name="keywords" content="<?php echo $this->keywords ?>" />
+<meta name="copyright"
+	content="Copyright 2010-<?php echo date('Y'); ?> - HomeLet Ltd." />
+
+<title>HomeLet Connect - <?php echo $this->pageTitle; ?>
+</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+        <?php
+        $this->headLink()->prependStylesheet ('/assets/connect/css/connect.css', 'all');
+		
+		$this->headLink()->appendStylesheet ('/assets/vendor/cookiepolicy/css/cookiepolicy.jquery.css');
+
+        $this->headLink()->appendStylesheet ('/assets/common/css/ie.css', 'screen', 'lte IE 8');
+
+        $this->headScript()->prependFile    ('//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');
+
+        $this->inlineScript()->appendFile   ('/assets/vendor/supersleight/js/supersleight-min.js', 'text/javascript', array('conditional' => 'IE 6'));
+        $this->inlineScript()->appendFile   ('/assets/connect/js/originalCms_main.js');
+        $this->inlineScript()->appendFile   ('/assets/vendor/jquery-carousel/js/jquery.carousel.js');
+        $this->inlineScript()->appendFile   ('/assets/vendor/facebox/js/legacy-jquery.facebox.js');
+
+        $this->inlineScript()->appendFile   ('/assets/vendor/jquery-scrollto/js/jquery.scrollto.js');
+		
+		$this->inlineScript()->appendFile   ('/assets/vendor/cookiepolicy/js/cookiepolicy.jquery.js');
+
+        echo $this->headLink();
+        echo $this->headScript();
+
+        $googleAnalyticsDomain = '.homelet.co.uk';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_GET['trans_id']) && isset($_GET['hash'])) {
+                // This looks like a secpay GET request - so we need to switch the GA Domain to 'none'
+                $googleAnalyticsDomain = 'none';
+            }
+        }
+        ?>
+
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-1926380-28']);
+            _gaq.push(['_setDomainName', '<?php echo $googleAnalyticsDomain ?>']);
+            _gaq.push(['_setAllowLinker', true]);
+            _gaq.push(['_setAllowHash', false]);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+<body class="letting-agents">
+	<div id="full_wrapper">
+		<div id="header">
+			<div class="wrapper">
+				<a href="<?php echo $this->params->homelet->domain; ?>" id="logo"><img src="/assets/common/images/logo-mid.png"
+					alt="HomeLet - Taking the risk out of Property Rental" /> </a>
+				<div id="contact_info">
+					T. 0845 117 6000<br /> E. <a href="mailto:hello@homelet.co.uk">hello@homelet.co.uk</a>
+				</div>
+			</div>
+		</div>
+
+		<!--[if lt IE 7]>
+                <div style='width: 860px; margin: 0 auto; margin-bottom: 10px; border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
+                    <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>
+                    <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+                        <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+                        <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+                            <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
+                            <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
+                        </div>
+                        <div style='width: 75px; float: left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>
+                        <div style='width: 75px; float: left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>
+                        <div style='width: 73px; float: left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>
+                        <div style='float: left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>
+       				</div>
+                </div>
+            <![endif]-->
+
+
+
+        <?php echo $this->connectMenu(); ?>
+
+        <?php echo $this->layout()->content; ?>
+
+        <?php echo $this->inlineScript(); ?>
+
+</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('body').cookiepolicy({
+				cookie_policy_url: '<?php echo $this->params->homelet->domain; ?>/terms-of-use/cookie-policy/'
+			});
+		});
+	</script>
+
+</body>
+</html>

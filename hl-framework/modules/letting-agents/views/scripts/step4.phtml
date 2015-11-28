@@ -1,0 +1,90 @@
+<style>
+#product_standard {
+    background: url("/assets/cms/images/letting-agents/ProductStandard.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 120px;
+    margin-left: 2px;
+    text-indent: -9999px;
+    width: 206px;
+}
+#product_premier {
+    background: url("/assets/cms/images/letting-agents/ProductPremier.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 120px;
+    margin-left: 2px;
+    text-indent: -9999px;
+    width: 206px;
+}
+#product_premplus {
+    background: url("/assets/cms/images/letting-agents/ProductPremierPlus.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 120px;
+    margin-left: 2px;
+    text-indent: -9999px;
+    width: 206px;
+}
+#product_standard:hover, #product_premier:hover, #product_premplus:hover {
+    background-position: center bottom;
+}
+#agentselect label.onactive {
+    background-position: center bottom;
+}
+#agentselect .myradio {
+    background-position: center bottom;
+}
+.wrapper {
+    padding-bottom: 200px;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function($) {
+	$('#product_standard').addClass("myradio").css({opacity: 100});
+	
+	$(".fakeoption1").click(function () {
+		$(".fakeoption1").removeClass("myradio").removeClass("onactive");
+		$(this).addClass("myradio").css({opacity: 100});
+		var value = $(this).text();
+		$("#agent_type").val(value);
+		validatePage();
+	}); 
+	
+	// Show/hide warning promo
+	$("#professionalIndemnityNoPromo").hide();
+	$("select[name='pi_cert']").change(function() {
+		if($("select[name='pi_cert']").val() == "no"){
+			$("#professionalIndemnityNoPromo").show();
+		}else{
+			$("#professionalIndemnityNoPromo").hide();
+		}
+	});
+	
+});
+</script>
+<div class="letting-agents">
+    <div class="wrapper two-col">
+        <div class="content">
+            <form action="" method="post" enctype="application/x-www-form-urlencoded">
+            	<div class="form_section one-col">
+					<div style="height:120px;" class="col" id="agentselect">
+							<label title="standard" id="product_standard" class="fakeoption1" style="opacity: 100;">standard</label>
+							<label title="premier" id="product_premier" class="fakeoption1" style="opacity: 100;">premier</label>
+							<label title="premplus" id="product_premplus" class="fakeoption1" style="opacity: 100;">premplus</label>
+					        <?php echo $this->element->agent_type; ?>
+					        <!-- input type="hidden" id="agenttype" value="premplus" name="agent_type" class="required valid"-->
+						</div>            	
+					<div>
+						<?php echo $this->element->pi_cert; ?>
+					</div>
+					<div id="professionalIndemnityNoPromo" class="warningpromo" style="display: block;">
+						<span class="warningpromo-content">
+							<p><strong>Professional Indemnity</strong></p>
+							<p>No professional indemnity cover? Don't put your business at risk, it's easy and affordable to protect yourself against potential claims. For instant peace of mind, call us on 0845 117 6033.</p>
+						</span>
+					</div>
+				</div>
+                <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+            </form>
+        </div>
+        <?php  echo $this->lettingAgentsSidebar($this->errorsHtml, $this->stepNum, $this->stepMax); ?>        
+    </div>
+</div>

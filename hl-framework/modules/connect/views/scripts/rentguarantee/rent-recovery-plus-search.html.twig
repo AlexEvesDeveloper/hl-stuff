@@ -1,0 +1,21 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Search</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/rentguarantee/rent-recovery-plus-search-results" action="get" class="form-horizontal">
+        <h2>Rent Recovery Plus Search</h2>
+        <div class="form_section one-col">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary btn-search">Search</button>
+        </div>
+    </form>
+{% endblock %}

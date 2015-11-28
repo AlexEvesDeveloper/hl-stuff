@@ -1,0 +1,27 @@
+
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Commission</h2>
+    
+    <div class="form_section one-col">
+        <p>
+            To view how much commission you've been paid, enter the dates below and select 'View Commission Report'
+        </p>
+        
+        <div>
+            <?php echo $this->element->commission_startmonth; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->commission_startyear; ?>
+        </div>
+        <div>
+            <?php echo $this->element->commission_endmonth; ?>
+        </div>
+        <div class="alt">
+            <?php echo $this->element->commission_endyear; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->commission_producereport; ?>
+        </div>
+    </div>
+</form>

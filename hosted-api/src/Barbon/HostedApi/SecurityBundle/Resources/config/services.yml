@@ -1,0 +1,45 @@
+services:
+    barbon.hosted_api.security.provider.user_provider_factory:
+        class: Barbon\HostedApi\SecurityBundle\Provider\UserProviderFactory
+        arguments:
+            - @request_stack
+            - @service_container
+
+    barbon.hosted_api.security.provider.user_provider:
+        class: Barbon\HostedApi\SecurityBundle\Provider\AbstractUserProvider
+        factory: ["@barbon.hosted_api.security.provider.user_provider_factory", getUserProvider]
+
+    barbon.hosted_api.security.provider.abstract_user_provider:
+        abstract: true
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+
+    barbon.hosted_api.security.provider.system_user_provider:
+        class: Barbon\HostedApi\SecurityBundle\Provider\SystemUserProvider
+        parent: barbon.hosted_api.security.provider.abstract_user_provider
+
+    barbon.hosted_api.security.provider.agent_user_provider:
+        class: Barbon\HostedApi\SecurityBundle\Provider\AgentUserProvider
+        parent: barbon.hosted_api.security.provider.abstract_user_provider
+        arguments:
+            - @session
+
+    barbon.hosted_api.security.provider.landlord_user_provider:
+        class: Barbon\HostedApi\SecurityBundle\Provider\LandlordUserProvider
+        parent: barbon.hosted_api.security.provider.abstract_user_provider
+        arguments:
+            - @session
+
+    barbon.hosted_api.security.authentication.dual_pair_authenticator:
+        class: Barbon\HostedApi\SecurityBundle\Authentication\DualPairAuthenticator
+        arguments: ["@barbon.hosted_api.security.provider.user_provider"]
+
+    barbon.hosted_api.security.authentication.single_pair_authenticator:
+        class: Barbon\HostedApi\SecurityBundle\Authentication\SinglePairAuthenticator
+        arguments: ["@barbon.hosted_api.security.provider.user_provider"]
+
+    barbon.hosted_api.security.authentication.handler.idle_session_handler:
+        class: Barbon\HostedApi\SecurityBundle\Authentication\Handler\IdleSessionHandler
+        arguments: ["@session", "@security.context", "@router", "@security.authorization_checker", %session_max_idle_time%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

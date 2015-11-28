@@ -1,0 +1,124 @@
+<table id="cover_summary" class="table table-bordered table-condensed table-tenants">
+    <thead>
+
+    <tr>
+        <th></th>
+        <th>Value</th>
+        <th>Monthly</th>
+        <th>Annually</th>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    <tr>
+        <td class="product">Contents</td>
+        <td>&pound;<?php echo number_format($this->contentsCoverAmount); ?></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->contents, 2); ?></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->annualContents, 2); ?></td>
+    </tr>
+
+    <?php if ('' != $this->sharer1 || '' != $this->sharer2): ?>
+        <?php if ('' != $this->sharer1): ?>
+            <tr>
+                <td>&bull; Sharer 1 - <?php echo $this->sharer1; ?></td>
+                <td>included</td>
+                <td></td>
+                <td></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ('' != $this->sharer2): ?>
+            <tr>
+                <td>&bull; Sharer 2 - <?php echo $this->sharer2; ?></td>
+                <td>included</td>
+                <td></td>
+                <td></td>
+            </tr>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($this->unspecifiedPossessionsCoverAmount > 0 || count($this->possessions) > 0): ?>
+        <?php if (count($this->possessions) > 0): ?>
+            <tr>
+                <td class="product">Specified Possessions</td>
+                <td>&pound;<?php echo number_format($this->specifiedPossessionsCoverAmount); ?></td>
+                <td class="totals">&pound;<?php echo number_format($this->premiums->specifiedPossessions, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($this->premiums->annualSpecifiedPossessions, 2); ?></td>
+            </tr>
+
+            <?php foreach($this->possessions as $possession): ?>
+                <tr>
+                    <td>
+                        &bull; <?php echo $possession['category']; ?> <br />
+                        &nbsp; Description: <?php echo $possession['description']; ?>
+                    </td>
+                    <td>&pound;<?php echo number_format($possession['value']); ?></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if ($this->unspecifiedPossessionsCoverAmount > 0): ?>
+            <tr>
+                <td class="product">Other Possessions</td>
+                <td>&pound;<?php echo number_format($this->unspecifiedPossessionsCoverAmount); ?></td>
+                <td class="totals">&pound;<?php echo number_format($this->premiums->unspecifiedPossessions, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($this->premiums->annualUnspecifiedPossessions, 2); ?></td>
+            </tr>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if (count($this->bicycles) > 0): ?>
+        <tr>
+            <td class="product">Bicycles</td>
+            <td>&pound;<?php echo number_format($this->bicyclesCoverAmount); ?></td>
+            <td class="totals">&pound;<?php echo number_format($this->premiums->pedalCycles, 2); ?></td>
+            <td class="totals">&pound;<?php echo number_format($this->premiums->annualPedalCycles, 2); ?></td>
+        </tr>
+
+        <?php foreach($this->bicycles as $bike): ?>
+            <tr>
+                <td>
+                    &bull; <?php echo $bike['make'] . ' - ' . $bike['model']; ?><br />
+                    &nbsp; Serial number: <?php echo $bike['serial']; ?>
+                </td>
+                <td>&pound;<?php echo number_format($bike['value']); ?></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <tr class="subtotals">
+        <td class="product">Subtotal</td>
+        <td></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->total, 2); ?></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->annualTotal, 2); ?></td>
+    </tr>
+
+    <tr class="ipt">
+        <td class="product">(IPT included @ <?php echo $this->ipt; ?>%)</td>
+        <td></td>
+        <td class="totals">(&pound;<?php echo number_format($this->premiums->iptAmount, 2); ?>)</td>
+        <td class="totals">(&pound;<?php echo number_format($this->premiums->annualIptAmount, 2); ?>)</td>
+    </tr>
+
+    <?php if ($this->includeAdminFees): ?>
+        <tr>
+            <td class="product">Administration Fee</td>
+            <td></td>
+            <td class="totals">&pound;<?php echo number_format($this->feeMonthly, 2); ?></td>
+            <td class="totals">&pound;<?php echo number_format($this->feeAnnual, 2); ?></td>
+        </tr>
+    <?php endif; ?>
+
+    <tr class="totals">
+        <td class="product">Total</td>
+        <td></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->total + $this->feeMonthly, 2); ?></td>
+        <td class="totals">&pound;<?php echo number_format($this->premiums->annualTotal + $this->feeAnnual, 2); ?></td>
+    </tr>
+    </tbody>
+</table>

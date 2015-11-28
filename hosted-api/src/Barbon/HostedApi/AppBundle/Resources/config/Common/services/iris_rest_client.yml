@@ -1,0 +1,79 @@
+services:
+    # IRIS API client factory
+    barbon.hosted_api.app.service.iris.iris_client_factory:
+        class: Barbon\HostedApi\AppBundle\Service\Iris\IrisClientFactory
+        arguments:
+            - @request_stack
+            - @service_container
+
+    barbon.iris_rest_client.client.iris_client:
+        class: Barbon\IrisRestClient\Client\IrisClient
+        factory: ["@barbon.hosted_api.app.service.iris.iris_client_factory", getIrisClient]
+
+    # System IRIS entity manager
+    barbon.iris_rest_client.iris_system_entity_manager:
+        class: Barbon\IrisRestClient\EntityManager\DefaultIrisEntityManager
+        arguments:
+            - @barbon.iris_rest_client.client.iris_system_client
+            - @barbon.iris_rest_client.annotation_parser
+            - "application/json"
+        calls:
+            - [addSerialiser, [ "application/json", @barbon.iris_rest_client.data_transformer.serialiser.json_serialiser ]]
+            - [addDeserialiser, [ "application/json", @barbon.iris_rest_client.data_transformer.deserialiser.json_deserialiser ]]
+            - [addDeserialiser, [ "application/pdf", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/gif", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/jpeg", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/png", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+
+    # Runtime (system/agent/landlord - see factory barbon.iris_rest_client.client.iris_client) IRIS entity manager
+    barbon.iris_rest_client.iris_entity_manager:
+        class: Barbon\IrisRestClient\EntityManager\DefaultIrisEntityManager
+        arguments:
+            - @barbon.iris_rest_client.client.iris_client
+            - @barbon.iris_rest_client.annotation_parser
+            - "application/json"
+        calls:
+            - [addSerialiser, [ "application/json", @barbon.iris_rest_client.data_transformer.serialiser.json_serialiser ]]
+            - [addDeserialiser, [ "application/json", @barbon.iris_rest_client.data_transformer.deserialiser.json_deserialiser ]]
+            - [addDeserialiser, [ "application/pdf", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/gif", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/jpeg", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+            - [addDeserialiser, [ "image/png", @barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser ]]
+
+    # System IRIS API client
+    barbon.iris_rest_client.client.iris_system_client:
+        class: Barbon\IrisRestClient\Client\IrisSystemClient
+        arguments:
+            - "%iris_client.api_url%"
+            - "%iris_client.system_consumer_key%"
+            - "%iris_client.system_consumer_secret%"
+
+    # Agent IRIS API
+    barbon.iris_rest_client.client.iris_agent_client:
+        class: Barbon\IrisRestClient\Client\IrisAgentClient
+        parent: barbon.iris_rest_client.client.iris_system_client
+
+    # Landlord IRIS API client
+    barbon.iris_rest_client.client.iris_landlord_client:
+        class: Barbon\IrisRestClient\Client\IrisLandlordClient
+        parent: barbon.iris_rest_client.client.iris_system_client
+
+    # Annotation parser
+    barbon.iris_rest_client.annotation_parser:
+        class: Doctrine\Common\Annotations\AnnotationReader
+
+    # Data transformers
+    barbon.iris_rest_client.data_transformer.serialiser.json_serialiser:
+        class: Barbon\IrisRestClient\DataTransformer\Serialiser\JsonSerialiser
+        arguments:
+            - @barbon.iris_rest_client.annotation_parser
+
+    barbon.iris_rest_client.data_transformer.deserialiser.json_deserialiser:
+        class: Barbon\IrisRestClient\DataTransformer\Deserialiser\JsonDeserialiser
+        arguments:
+            - @barbon.iris_rest_client.annotation_parser
+
+    barbon.iris_rest_client.data_transformer.deserialiser.blob_deserialiser:
+        class: Barbon\IrisRestClient\DataTransformer\Deserialiser\BlobDeserialiser
+        arguments:
+            - @barbon.iris_rest_client.annotation_parser

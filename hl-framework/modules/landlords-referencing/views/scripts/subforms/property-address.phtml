@@ -1,0 +1,38 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger">
+            <a class="show-form-help"></a>
+        </span>
+        <span class="field-help hidden-xs hidden-sm">
+            Please enter a postcode and click to find a matching address. Then select the address of the property to be let.
+        </span>
+        Property
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            Please enter a postcode and click to find a matching address. Then select the address of the property to be let.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ins_property_postcode" class="required error">Postcode</label>
+        <div class="input-group">
+            <?php echo $this->element->ins_property_postcode; ?>
+            <span class="input-group-btn">
+                <input type="submit" id="postcode_lookup" value="Find address" name="lookup"
+                       onclick="getProperties($('#property_number_name').val(),
+                $('#ins_property_postcode').val(), 'ins_property_postcode', 'property_address'); return false;" class="btn btn-quaternary btn-postcode" />
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div id="ins_address_selector">
+            <?php echo $this->element->property_address; ?>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->element->property_number_name; ?>

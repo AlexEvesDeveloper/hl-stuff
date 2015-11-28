@@ -1,0 +1,146 @@
+<script type="text/javascript">
+    function confirmClaim() {
+        if (
+            $('#claim_type').val() == "" ||
+            $('#claim_month').val() == "" ||
+            $('#claim_year').val() == "" ||
+            $('#claim_value').val() == "") {
+                return false;    
+            }
+            $("#claim_confirm").val("confirm");
+                return true;
+    }
+</script>
+
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-heading">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-importantinformation'); ?>
+        </div>
+        Important Information
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-importantinformation'); ?>
+        </div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="radio form-group">
+        <label for="declaration1" class="required">Is the property located in an area liable to flooding?</label>
+        <div id="dec1primarylabel">
+            <?php echo $this->element->declaration1; ?>
+        </div>
+    </div>
+
+    <div id="dec1extra" class="form-group">
+        <div id="declaration1Promo">
+            <h3 class="tertiary-colour">Additional Information Required</h3>
+            <?php
+            echo $this->element->declaration1_details
+                ->setAttribs(array('class' => 'declarationAnswer form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="radio form-group">
+        <label for="declaration2" class="required">Have you or any person to whom this insurance will apply suffered any incident or loss, whether insured or not, in the last 3 years in respect of the covers required?</label>
+        <div id="dec2primarylabel">
+            <?php echo $this->element->declaration2; ?>
+        </div>
+    </div>
+
+    <div id="dec2extra">
+        <div id="declaration2Promo">
+            <div class="form-group">
+                <h3 class="tertiary-colour">Additional Information Required</h3>
+                <p>You've stated that you've made a claim in the past, please state the type, date and value of the claim.</p>
+            </div>
+
+            <div class="form-group">
+                <?php
+                echo $this->element->claim_type
+                    ->setAttribs(array('class' => 'form-control'))->render();
+                ?>
+            </div>
+
+            <div class="form-group">
+                <?php
+                echo $this->element->claim_month
+                    ->setAttribs(array('class' => 'form-control'))->render();
+                ?>
+            </div>
+
+            <div class="form-group">
+                <?php
+                echo $this->element->claim_year
+                    ->setAttribs(array('class' => 'form-control'))->render();
+                ?>
+            </div>
+
+            <div class="form-group">
+                <label for="claim_value" class="optional">Value of claim</label>
+                <div class="input-group">
+                    <?php
+                    echo $this->element->claim_value
+                        ->setAttribs(array('class' => 'form-control'))->render();
+                    echo $this->element->claim_confirm;
+                    ?>
+                    <span class="input-group-btn">
+                        <input type="submit" name="addClaim" id="addClaim" value="Add claim &gt;" onclick="confirmClaim();return false;" class="btn btn-tertiary" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ajaxClaim" class="ajax_form_section form-group"><?php echo $this->yourClaims(); ?></div>
+
+    <!-- Section 3 -->
+    <div class="radio form-group">
+        <label for="declaration3" class="required">Have you, or any person to whom this insurance will apply, been convicted of arson, theft or any offence other than driving offences?</label>
+        <div id="dec3primarylabel">
+            <?php echo $this->element->declaration3; ?>
+        </div>
+    </div>
+
+    <div id="dec3extra" class="form-group">
+        <div id="declaration3Promo">
+            <h3 class="tertiary-colour">Additional Information Required</h3>
+            <?php
+            echo $this->element->declaration3_details
+                ->setAttribs(array('class' => 'declarationAnswer form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="radio form-group">
+        <label for="declaration4" class="required">Are you, or any person to whom this insurance will apply, aware of any circumstances which may give rise to a claim, or have you/they been refused insurance or had special terms imposed?</label>
+        <div id="dec4primarylabel">
+            <?php echo $this->element->declaration4; ?>
+        </div>
+    </div>
+
+    <div id="dec4extra" class="form-group">
+        <div id="declaration4Promo">
+            <h3 class="tertiary-colour">Additional Information Required</h3>
+            <?php
+            echo $this->element->declaration4_details
+                ->setAttribs(array('class' => 'declarationAnswer form-control'))->render();
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">Confirmation Statement</h2>
+    <div class="radio form-group">
+        <label for="declaration_confirmation" class="required">I confirm that the answers to the above statements are all true to the best of my knowledge and understand that failure to answer these questions correctly could impact my ability to claim.</label>
+        <?php echo $this->element->declaration_confirmation; ?>
+    </div>
+</div>

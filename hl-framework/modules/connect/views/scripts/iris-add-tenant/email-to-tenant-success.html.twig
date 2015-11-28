@@ -1,0 +1,44 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">New Reference</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <p>
+        We've sent emails to the following tenants, instructing them to complete the rest of the referencing process. 
+    <p>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Reference No.</th>
+                <th>Tenant Name</th>
+                <th>Tenant Email</th>
+                <th>View Reference</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for caseApplication in caseApplications %}
+                <tr>
+                    <td>{{ caseApplication.referenceNumber }}</td>
+                    <td>{{ caseApplication.title }} {{ caseApplication.firstName }} {{ caseApplication.lastName }}</td>
+                    <td>{{ caseApplication.email }}</td>
+                    <td>
+                        <a href="/iris-referencing/summary?uuid={{ caseApplication.referencingApplicationUuId }}">View this reference </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

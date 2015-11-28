@@ -1,0 +1,15 @@
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php if ($this->enddate->get(Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY) < date('Y-m-d')): ?>
+            Rent Guarantee cover on this policy ceased on the renewal date.
+        <?php else: ?>
+            Rent Guarantee cover on this policy will cease on the renewal date.
+        <?php endif; ?>
+        
+        <form method="get" action="/rentguarantee/renewals">
+            <input type="submit" class="round-button" value="Finished"/>
+        </form>
+	</div>
+</div>

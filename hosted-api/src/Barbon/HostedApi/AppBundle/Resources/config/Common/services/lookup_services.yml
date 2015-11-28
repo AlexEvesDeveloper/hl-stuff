@@ -1,0 +1,151 @@
+services:
+    barbon.hosted_api.app.form.common.lookup.iris_lookup_container:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\IrisLookupContainer
+        arguments:
+            - @barbon.iris_rest_client.iris_system_entity_manager
+            - @doctrine_cache.providers.file_system_iris
+
+    barbon.hosted_api.app.form.common.lookup.application_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\ApplicationType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.employment_status:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\EmploymentStatus
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.letting_referee_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\LettingRefereeType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.financial_referee_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\FinancialRefereeType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.property_built_in_range:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\PropertyBuiltInRange
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.property_let_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\PropertyLetType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.property_type:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\PropertyType
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.rent_guarantee_offering:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\RentGuaranteeOffering
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.residential_status:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\ResidentialStatus
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.completion_method:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\CompletionMethod
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.security_questions:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\SecurityQuestions
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.titles:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\Titles
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.application_status:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\ApplicationStatus
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.iris_lookup_container
+
+    barbon.hosted_api.app.form.common.lookup.product_agent:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\Product
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @doctrine_cache.providers.file_system_iris
+            - @barbon.hosted_api.app.service.brand.system_brand
+
+
+
+    # Lookup twig extensions
+    barbon.hosted_api.app.form.common.lookup.twig_extension.residential_status_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\ResidentialStatusExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.residential_status
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.twig_extension.employment_status_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\EmploymentStatusExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.employment_status
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.twig_extension.application_type_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\ApplicationTypeExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.application_type
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.application_status_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\ApplicationStatusExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.application_status
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.rent_guarantee_offering_type_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\RentGuaranteeOfferingTypeExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.rent_guarantee_offering
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.property_let_type_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\PropertyLetTypeExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.property_let_type
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.property_built_in_range_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\PropertyBuiltInRangeExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.property_built_in_range
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.property_type_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\PropertyTypeExtension
+        arguments:
+            - @barbon.hosted_api.app.form.common.lookup.property_type
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.product_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\ProductExtension
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        tags:
+            - { name: twig.extension }
+
+    barbon.hosted_api.app.form.common.lookup.product_price_extension:
+        class: Barbon\HostedApi\AppBundle\Form\Common\Lookup\TwigExtension\ProductPriceExtension
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        tags:
+            - { name: twig.extension }

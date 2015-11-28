@@ -1,0 +1,309 @@
+<style type="text/css">
+
+    .declarationOpener {
+
+        text-transform: uppercase;
+    }
+
+    .declarationList {
+
+        margin-left: 20px;
+    }
+
+    ul {
+        padding: 0 !important;
+    }
+
+    table {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 0 0 20px !important;
+    }
+
+    tr, td {
+        border: none !important;
+        vertical-align: top;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .col1 {
+        width: 25px;
+    }
+
+    .col2 {
+        width: 510px;
+    }
+
+    .col3 {
+        text-align: right;
+        width: 80px;
+    }
+
+    td div {
+        padding: 0 0 12px 0 !important;
+    }
+
+    #submission-wait-icon {
+        display: none;
+        float: right;
+        width: 54px;
+        height: 55px;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $('#next').click(function() {
+
+            $('#next').css('display', 'none');
+            $('#submission-wait-icon').css('display', 'block');
+        });
+    });
+
+</script>
+
+<?php
+$session = new Zend_Session_Namespace('referencing_global');
+?>
+
+<div class="tenants web_ref_overlay">
+<div class="wrapper two-col">
+
+<div class="content">
+
+<form action="" method="post" enctype="application/x-www-form-urlencoded" class="validate">
+<h1><span class="landlords">Declaration and Consent</span></h1>
+<br />
+
+<?php if ($this->form->getDescription()) {?>
+    <ul class="errors">
+        <li><?php echo $this->form->getDescription(); ?></li>
+    </ul>
+<?php }?>
+
+<p>
+    This reference is being completed by HomeLet on behalf of your Letting Agent. HomeLet
+    is part of the Barbon Insurance Group Limited.  Barbon shall for the purposes of this
+    application form be the Data Controller as defined in the Data Protection Act 1998
+    (the "Act").
+</p>
+
+<p>
+    Please read and complete the following declaration statement really carefully,
+    making sure that you tick to say you understand how we're going to use your
+    information.  You should also sign and date the form in the space provided because
+    we can't complete your application without this, and that could delay your application
+    for a rented property.
+</p>
+
+
+<table border="0">
+    <tr>
+        <td class="col1">
+            <?php echo $this->form->consent_information_stored->render(); ?>
+        </td>
+        <td class="col2">
+            <div>
+                I understand that the information contained in this application will be retained,
+                stored and used by HomeLet in accordance with the Data Protection Act. I confirm
+                that the information I have provided is true and accurate to the best of my
+                knowledge and agree that HomeLet can verify this through a number of different
+                sources.  These sources may include consulting the databases of credit reference
+                agencies, the electoral roll, the Industry Sortcode Directory (ISCD) as well as
+                other sources of information in relation to the details I've provided.  In
+                connection with this application I also understand and consent that:
+
+                <ul class="declarationList">
+                    <li>
+                        HomeLet may contact me using the contact details provided in this application form, for
+                        the purpose of completing my reference;
+                    </li>
+
+                    <li>
+                        HomeLet may pass on any information I have supplied and the results of
+                        any linked verification checks to my letting agent and/or any appointed landlord;
+                    </li>
+
+                    <li>
+                        If I default on my rental payment or apply for a new tenancy agreement in the
+                        future HomeLet may review the results of the verifications and searches set out above;
+                    </li>
+
+                    <li>
+                        If I default on paying my rent the default may be recorded on HomeLet's central
+                        database for defaulting tenants and that such default may affect any future
+                        application I may make for tenancies, credit and/or insurance;
+                    </li>
+
+                    <li>
+                        HomeLet can use debt collection agencies or tracing agents to trace my
+                        whereabouts and recover any monies I owe to HomeLet
+                    </li>
+
+                    <li>
+                        I understand that by consulting with a Credit Reference Agency, the Agency
+                        will keep a record of this search, and that the results of this search may
+                        show how I conduct my payments with other organisations.  I also understand
+                        that how I conduct the rental payments as part of this tenancy may be
+                        disclosed to the Agency and may affect future credit applications.
+                        From time to time this information may also be used for debt tracing and
+                        fraud prevention.
+                    </li>
+
+                    <li>
+                        I also understand that I may request the name and address of the Credit
+                        Reference Agency HomeLet use, and that I may apply for a copy of the
+                        information they provided to HomeLet*
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <?php echo $this->form->consent_referee->render(); ?>
+        </td>
+        <td>
+            <div>
+                I hereby authorise HomeLet to supply my referee/s (including those outside of the EEA) with my
+                personal data to assist them in providing details of my earnings/ dates of employment /
+                previous tenancy term (if appropriate) to HomeLet for the purposes described above for
+                the completion of my application for a rented property *
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <?php echo $this->form->consent_nondigital_marketing->render(); ?>
+        </td>
+        <td>
+            <div>
+                I understand that by ticking this box I am giving HomeLet consent to contact me
+                directly by telephone or post, and hereby give them permission to use my information
+                to provide me with details about their services which include specialist insurance
+                for tenants which can cover my liability as a tenant as well as my personal contents
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <?php echo $this->form->consent_digital_marketing->render(); ?>
+        </td>
+        <td>
+            <div>
+                I agree that HomeLet may send me information about their specialist products and
+                services by email or SMS, which may include a personalised quote for specialist
+                Tenant's Insurance, which if I choose to, I may contact HomeLet directly for more
+                information  on this and to take out cover
+            </div>
+        </td>
+    </tr>
+</table>
+
+<strong>
+    <p>
+        Please note that if you wish to find out more about any of the sources of information that we access
+        to complete your application then this can be found at http://www.homelet.co.uk/ref-info. If you'd like to
+        unsubscribe from any services at any time then please contact HomeLet on unsubscribe@homelet.co.uk.
+    </p>
+</strong>
+
+
+<?php
+//Variable content depending on whether the user is the PLL or the reference subject.
+if($session->userType == Model_Referencing_ReferenceUserTypes::PRIVATE_LANDLORD):
+    ?>
+    <strong>
+        <p>
+            I am duly authorised by the applicant to submit this referencing application on their behalf.
+            The Applicant has confirmed that the information provided is accurate. I have printed a hard copy of
+            the completed referencing application and this has been signed and dated by the Applicant. I
+            understand that I must retain this application form on my file for a minimum period of six years
+            and, if requested to do so by HomeLet, send a copy of it to them.
+        </p>
+
+        <p>
+            I have read the above and the HomeLet General Terms and Conditions of use, and agree to be bound
+            by these terms.
+        </p>
+
+        <p>
+            I understand that by submitting this application I will become liable to pay to HomeLet.
+        </p>
+    </strong>
+<?php endif; ?>
+
+<?php if($session->userType == Model_Referencing_ReferenceUserTypes::REFERENCE_SUBJECT): ?>
+    <p>
+        <strong>
+            I am the Tenant named in this application and confirm that I have read this statement and
+            agree with it in its entirety.
+        </strong>
+<p>
+    <?php endif;?>
+
+
+<div class="form_section one-col">
+    <div class="alt">
+        <?php echo $this->form->terms_agreed->setAttribs(array('style' => 'width: 150px;'))->render(); ?>
+    </div>
+</div>
+
+
+<div class="form_section one-col">
+    * Please note, that if you do not tick the first two boxes, we will be unable to complete this application.
+</div>
+
+
+<?php if($session->userType == Model_Referencing_ReferenceUserTypes::PRIVATE_LANDLORD): ?>
+    Please note by clicking on the 'Next' button you (the landlord) confirm:
+
+    <table border="0">
+        <tr>
+            <td class="col1">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </td>
+            <td class="col2">
+                The information you are submitting includes the same details as on the paper
+                application form completed by the tenant, and
+            </td>
+        </tr>
+        <tr>
+            <td class="col1">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </td>
+            <td>
+                The online declaration you have completed on behalf of the tenant is the same as
+                the printed and signed copy you have kept on file
+            </td>
+        </tr>
+    </table>
+<?php endif;?>
+
+<?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => 0, 'stepMax' => 1000)); ?>
+<img id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+</form>
+</div>
+
+<?php echo $this->partial('partials/sidebar.phtml', array('page' => 'terms', 'fractionComplete' => $this->fractionComplete)); ?>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('.form_section > div:even')
+            .not($('.form_section > div input.noalt').parent())
+            .addClass('alt');
+    });
+</script>

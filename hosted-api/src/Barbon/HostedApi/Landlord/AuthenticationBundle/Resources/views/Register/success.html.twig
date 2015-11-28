@@ -1,0 +1,9 @@
+<h4>Registration Successful</h4>
+
+<p>
+    Please wait whilst we process your registration.
+    <img src="{{ asset('images/ajax-loader.gif') }}" alt="loading"/>
+</p>
+<script>
+    window.location.replace("{{ path('barbon_hostedapi_landlord_dashboard_index_index') }}");
+</script>

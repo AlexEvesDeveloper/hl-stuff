@@ -1,0 +1,75 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Tenants Insurance Policies</h2>
+        
+        <table style="width: 100%;">
+            <tr>
+                <th>Policy Number</th>
+                <th>Policyholder Name</th>
+                <th>Risk Address</th>
+                <th>Type of Cover</th>
+                <th>Payment Schedule (months)</th>
+                <th>Inception Date</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+            </tr>
+            
+            <?php
+            
+            if (count($this->reportdata))
+            {
+                $count = 0;
+                foreach ($this->reportdata as $row)
+                {
+                    $address = array();
+                    
+                    if (isset($row['propaddress1']) && $row['propaddress1'] != '')
+                        $address = array_merge($address, explode(',', $row['propaddress1']));
+                        
+                    if (isset($row['propaddress5']) && $row['propaddress5'] != '')
+                        $address = array_merge($address, explode(',', $row['propaddress5']));
+                    
+                    foreach ($address as &$value) $value = trim($value);
+                    $address = implode(',<br/>', $address);
+                    
+                    echo '<tr>';
+                    echo '<td>' . $row['policynumber'] . '</td>';
+                    echo '<td>' . $row['firstname'] . ' ' . $row['lastname'] . '</td>';
+                    echo '<td>' . $address . '</td>';
+                    echo '<td>' . $row['policyname'] . '</td>';
+                    echo '<td>' . $row['policylength'] . '</td>';
+                    echo '<td>' . $row['startdate'] . '</td>';
+                    echo '<td>' . $row['enddate'] . '</td>';
+                    echo '<td>' . $row['paystatus'] . '</td>';
+                    echo '</tr>';
+                    
+                    $count++;
+                }
+            }
+            else
+            {
+                ?>
+                
+                <tr>
+                    <td colspan="8">
+                        No data found
+                    </td>
+                </tr>
+                
+                <?php
+            }
+            
+            ?>
+        </table>
+        
+        <?php if (isset($count) && $count > 0): ?>
+        <table style="float: right; margin-top: 1em;">
+            <tr>
+                <th style="width: 10em;">Total policies</th>
+                <td style="width: 10em;"><?php echo $count; ?></td>
+            </tr>
+        </table>
+        <?php endif ?>
+    </div>
+</div>

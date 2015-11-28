@@ -1,0 +1,142 @@
+<?php $this->headScript()->appendFile($this->baseUrl('/assets/portfolio-insurance-quote/js/add-property.js')) ?>
+
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour">Add Property</h2>
+    <?php echo $this->element->covercount; ?>
+    <?php echo $this->element->propertyid; ?>
+
+    <div class="form-group">
+        <label for="ins_postcode" class="required">Postcode:</label>
+        <div class="input-group">
+            <?php
+            echo $this->element->ins_postcode
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+            <span class="input-group-btn">
+                <input type="submit" id="ins_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#ins_house_number_name').val(), $('#ins_postcode').val(), 'ins_postcode', 'ins_address'); return false;" class="btn btn-quaternary btn-postcode">
+            </span>
+        </div>
+    </div>
+
+    <div id="ins_address_selector">
+        <div class="form-group">
+            <?php
+            echo $this->element->ins_address
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+    <div id="ins_address_details">
+        <p>You have selected the following address:</p>
+        <dl class="dl-horizontal">
+            <dt>Address:</dt>
+            <dd>
+                <?php echo $this->element->ins_address_line1; ?><br />
+                <?php echo $this->element->ins_address_line2; ?><br />
+                <?php echo $this->element->ins_address_line3; ?>
+            </dd>
+            <dt>Postcode:</dt>
+            <dd>
+                <?php echo $this->element->ins_address_postcode; ?>
+            </dd>
+        </dl>
+        <p>If this is incorrect, please search for a new postcode above.</p>
+    </div>
+
+    <div id="tenant_occupation_selector">
+        <div class="form-group">
+            <?php
+            echo $this->element->employment_status
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+
+    <div class="form-group form-group-checkbox">
+        <div class="checkbox">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                <?php echo $this->promoContent('portfolio-insurance-quote-help-buildingsinsurance'); ?>
+            </div>
+            <label for="comprehensive_buildings_insurance" class="optional">
+                <?php echo $this->element->comprehensive_buildings_insurance; ?>
+                Buildings Insurance
+            </label>
+        </div>
+    </div>
+
+    <div id="buildings_block">
+        <div class="form-group">
+            <?php
+            echo $this->element->buildings_cover
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div class="form-group form-group-checkbox">
+            <div class="checkbox">
+                <label for="buildings_accidental_damage" class="optional">
+                    <?php echo $this->element->buildings_accidental_damage; ?>
+                    Accidental Damage
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group form-group-checkbox">
+            <div class="checkbox">
+                <label for="buildings_nil_excess" class="optional">
+                    <?php echo $this->element->buildings_nil_excess; ?>
+                    Nil Excess
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group form-group-checkbox">
+        <div class="checkbox">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help quaternary-colour">
+                <?php echo $this->promoContent('portfolio-insurance-quote-help-contentsinsurance'); ?>
+            </div>
+            <label for="full_contents_insurance" class="optional">
+                <?php echo $this->element->full_contents_insurance; ?>
+                Contents Insurance
+            </label>
+        </div>
+    </div>
+
+    <div id="contents_block">
+        <div class="form-group">
+            <?php
+            echo $this->element->contents_cover
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+        <div class="form-group form-group-checkbox">
+            <div class="checkbox">
+                <label for="contents_accidental_damage" class="optional">
+                    <?php echo $this->element->contents_accidental_damage; ?>
+                    Accidental Damage Cover
+                </label>
+            </div>
+        </div>
+        <div class="form-group form-group-checkbox">
+            <div class="checkbox">
+                <label for="contents_nil_excess" class="optional">
+                    <?php echo $this->element->contents_nil_excess; ?>
+                    Nil Excess
+                </label>
+            </div>
+        </div>
+        <div class="form-group form-group-checkbox">
+            <div class="checkbox">
+                <label for="limited_contents" class="optional">
+                    <?php echo $this->element->limited_contents; ?>
+                    Contents Insurance for Unfurnished Properties
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

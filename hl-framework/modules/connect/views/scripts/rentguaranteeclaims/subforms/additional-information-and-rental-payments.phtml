@@ -1,0 +1,114 @@
+<style>
+	div#rental_payments_input div.datePicker label {width:347px;}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Add auto-add click event for Back and Continue buttons
+    $('#back, #next').click(function() {
+        return autoAddRgPaymentInfo();
+    });
+
+    $('#date_due').datePicker({startDate:'01/01/1900'});
+    $('#date_received').datePicker({startDate:'01/01/1900'});
+});
+</script>
+<div class="clear"></div>
+<form enctype="application/x-www-form-urlencoded" method="post" action="" id="guarantorform">
+    <h2>Additional Information</h2>
+    <div class="form_section one-col">
+        <div>
+            <p>
+                Please provide any additional information that may help us when processing your claim below,
+                including details of any dispute the tenant(s) may have raised with the Landlord.
+            </p>
+        </div>
+        <div>
+            <?php echo $this->element->additional_information; ?>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <h2>Claim Payment</h2>
+    <div class="form_section one-col">
+        <p>
+            Claimant bank account details
+        </p>
+
+        <div>
+            <?php echo $this->element->dd_accountname; ?>
+        </div>
+        <div>
+            <?php echo $this->element->bank_account_number; ?>
+        </div>
+        <div>
+            <?php echo $this->element->bank_sortcode_number; ?>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <h2>Rental Payment Schedule</h2>
+    <div class="form_section one-col">
+        <div class="important-information">
+            <h4>Important Information About the Rent Schedule</h4>
+            <p>Please provide the FULL rent schedule from the beginning of the tenancy or the last 2 years.</p>
+            <p>Please only include rental due and rental payments made by the tenant along with the dates due and received. (It may affect the claim if proceedings are issued if &lsquo;other&rsquo; payments are included on the rent schedule.)</p>
+        </div>
+        <div>
+            <p>
+                Please complete a rent payment history. Each entry that you make
+                will populate a rent schedule in table form below.  This will
+                enable us to assess your claim and will be used to support any
+                legal action as may be required.  Please refer to our claims
+                process and timeline document for further information on the
+                requirements for the Rent Schedule.
+            </p>
+        </div>
+        <div id="rental_payments_input" style="border: 1px solid #B5C5D4; margin: 20px; padding: 7px; position: relative;">
+            <div class="datePicker">
+                <label class="optional" for="date_due">Date due (dd/mm/yyyy)</label>
+                <input id="date_due" name="date_due" class="due" type="text" value="" />
+            </div>
+            <div>
+                <label class="optional" for="amount_due">Amount due (&pound;)</label>
+                <input id="amount_due" name="amount_due" class="due" type="text" value="" />
+            </div>
+            <div>
+                <input id="addDueInfo" type="submit" value="Add Payment Due" name="addDueInfo" onclick="addRgPaymentInfo('due'); return false;">
+            </div>
+            <div class="datePicker">
+                <label class="optional" for="date_received">Date received (dd/mm/yyyy)</label>
+                <input id="date_received" name="date_received" class="received" type="text" value="" />
+            </div>
+            <div>
+                <label class="optional" for="amount_received">Amount received (&pound;)</label>
+                <input id="amount_received" name="amount_received" class="received" type="text" value="" />
+            </div>
+            <div>
+                <input id="addReceivedInfo" type="submit" value="Add Payment Received" name="addReceivedInfo" onclick="addRgPaymentInfo('received'); return false;">
+            </div>
+            <div id="ajaxIndicator" style="display: none; position: absolute; top: auto; bottom: 5px;"></div>
+        </div>
+        <div id="rental_payments" class="rental_payments">
+            <?php echo $this->rentGuaranteeClaimsRentalPayments(); ?>
+        </div>
+
+        <div class="important-information">
+            <h4>Important Information</h4>
+            <p>
+                If a deposit was taken on or after 6 April 2007 and not held under a TDS and/or
+                the initial requirements of the TDS were not complied with, proceedings cannot be commenced on the basis of the
+                expiry of the Section 21 Notice.
+            </p>
+
+            <p>
+                In addition, the tenant(s) may be able to claim up to three times the deposit by way of compensation
+                from the Landlord and the return of the deposit.
+            </p>
+        </div>
+    </div>
+    <div id="navigationmenu">
+        <?php echo $this->element->back; ?>
+        <?php echo $this->element->save_exit; ?>
+        <?php echo $this->element->next; ?>
+    </div>
+</form>

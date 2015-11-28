@@ -1,0 +1,48 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% 
+            include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/application-summary.html.twig'
+            with { 
+                'progress': progress, 
+                'application': application,
+                'case': case,
+                'caseId': caseId,
+                'case_url_path' : 'barbon_hostedapi_agent_reference_cases_view_index'
+            } 
+        %} 
+    
+        {% 
+            include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/application-progress.html.twig'
+            with { 
+                'progress': progress, 
+                'application': application 
+            } 
+        %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Report
+            </div><!-- panel-heading -->
+
+            <div class="panel-body">
+                {% if progress.finalReportCompleted %}
+                    Your final report is ready to view
+
+                    <div class="pull-right">
+                        <a href="{{ path('barbon_hostedapi_agent_reference_applications_viewreport_viewapplicationreport', {'applicationId': application.applicationId}) }}" class="badge badge-primary">View report</a>
+                    </div>
+                {% elseif progress.interimReportCompleted %}
+                    Your interim report is ready to view
+
+                    <div class="pull-right">
+                        <a href="{{ path('barbon_hostedapi_agent_reference_applications_viewreport_viewapplicationreport', {'applicationId': application.applicationId}) }}" class="badge badge-primary">View report</a>
+                    </div>
+                {% else %}
+                    We're processing your reference. Your report will be available soon.
+                {% endif %}
+            </div>
+        </div><!-- panel panel-default -->
+    </div><!-- container -->
+{% endblock %}

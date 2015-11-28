@@ -1,0 +1,80 @@
+<script type="text/javascript">
+$(document).ready(function() {
+  $("table#view-claim-summary tr:even").css("background-color", "#f7f9fa");
+  $("table#view-claim-summary tr:odd").css("background-color", "#ffffff");
+});
+</script>
+<div class="oc-corporate">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class='case-details'>Case Details</div>
+    <div class="view-claim-summary two-col">
+        <div class='case-details-colLeft'>
+            <div class="case-details-group">
+                <label >Claim No</label>
+                <div><?php echo $this->latestDetail['ClaimNo']?></div>
+            </div>
+            <div class="case-details-group">
+                <label >Date Logged</label>
+                <div><?php echo $this->latestDetail['ClaimDate']?></div>
+            </div>
+            <div class="case-details-group">
+                <label >Claims Handler</label>
+                <div><?php echo $this->latestDetail['ClaimsHandler']?></div>
+            </div>
+        </div>
+        <div class='case-details-colRight'>
+            <div class="case-details-group">
+                <label >Property Address</label>
+                <div><?php echo $this->latestDetail['ClaimAddress']?></div>
+            </div>
+            <div class="case-details-group">
+                <label >Logged By</label>
+                <div><?php echo $this->latestDetail['LoggedBy']?></div>
+            </div>
+            <div class="case-details-group">
+                <label>Last Activity</label>
+                <div><?php echo $this->latestDetail['Activity']?></div>
+            </div>
+        </div>
+    </div>
+    <div class='case-details'>Case Actions</div>
+    <div class="view-claim-summary two-col">
+        <table width="98%" align="center" border=0>
+            <tr>
+                <th width="25%">Status</th>
+                <th width="25%">Date</th>
+                <th width="25%">Claims Handler</th>
+                <th width="25%">Activity</th>
+            </tr>
+        </table>
+        <div class="view-claim-summary-list">
+            <table width="100%" align="center" border=0 id="view-claim-summary">
+                <?php
+                    if(count($this->claimsDetails)>0) {
+                        foreach ($this->claimsDetails as $claimData) {
+                ?>
+                            <tr class='row-border text'>
+                                <td width="25%"><?php echo $claimData['OpenOrClosed']?></td>
+                                <td width="25%"><?php echo $claimData['ClaimDate']?></td>
+                                <td width="25%"><a href='mailto:<?php echo $claimData['ClaimsHandlerEmail'];?>'>
+                                <?php echo $claimData['ClaimsHandler']?></a></td>
+                                <td width="25%"><?php echo $claimData['Activity']?></td>
+                            </tr>
+
+                        <?php
+                            }
+                        }
+                        ?>
+            </table>
+        </div>
+    </div>
+
+    <br/><br/>
+    <a href="/rentguaranteeclaims/view-claims" style="float: left;" class="link-button link-button-back">Back</a>
+
+    <a href="/rentguaranteeclaims/send-message?claimNumber=<?php echo $this->latestDetail['ClaimNo']?>"
+       style="float: left;" class="link-button link-button-centre-align">Email Claims Handler</a>
+
+    <a target="_blank" href="/rentguaranteeclaims/claim-status?claimNumber=<?php echo $this->latestDetail['ClaimNo']?>"
+       style="float: left;" class="link-button link-button-centre-align">Print Status Report</a>
+</div>

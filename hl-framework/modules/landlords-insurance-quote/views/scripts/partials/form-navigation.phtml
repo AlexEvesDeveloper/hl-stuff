@@ -1,0 +1,32 @@
+<?php $loading = '<img src="/assets/common/images/loading.gif" class="loading-indicator" alt="Loading..." />'; ?>
+<?php if ('dd' == $this->stepNum) : ?>
+    <button type="submit" name="back" class="btn btn-inverse pull-left">
+        <?php echo $loading; ?> Go Back
+    </button>
+    <button id="next_step" type="submit" name="next" class="btn btn-quaternary pull-right">
+        Confirm <?php echo $loading; ?>
+    </button>
+<?php elseif ('no-product' == $this->stepNum) : ?>
+    <button type="submit" name="back" class="btn btn-inverse pull-left">
+        <?php echo $loading; ?> Go Back
+    </button>
+<?php else : ?>
+    <?php if ($this->stepNum < $this->stepMax) : ?>
+        <?php if (is_int($this->stepNum) && $this->stepNum >= 1 && $this->stepNum <= 4) : ?>
+            <button id="next_step" type="submit" name="next" class="btn btn-quaternary pull-right" onClick="_gaq.push(['_trackEvent', 'Landlord Insurance', 'Step<?php echo $this->stepNum; ?>', 'Quote Form']);">
+                Save &amp; Next <?php echo $loading; ?>
+            </button>
+        <?php endif; ?>
+    <?php else : ?>
+        <button id="next_step" type="submit" name="next" class="btn btn-quaternary pull-right" onClick="_gaq.push(['_trackEvent', 'Landlord Insurance', 'Step5', 'Quote Form']);">
+            Purchase <?php echo $loading; ?>
+        </button>
+    <?php endif; ?>
+
+    <?php if ($this->stepNum > 1) : ?>
+        <button type="submit" name="back" class="btn btn-inverse pull-left">
+            <?php echo $loading; ?> Go Back
+        </button>
+    <?php endif; ?>
+<?php endif; ?>
+<div class="clearfix"></div>

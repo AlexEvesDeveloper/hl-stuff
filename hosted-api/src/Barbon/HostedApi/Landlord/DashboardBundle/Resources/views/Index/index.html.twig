@@ -1,0 +1,169 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    {% stylesheets '@BarbonHostedApiAgentReferenceBundle/Resources/less/agent-list-references.less' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('js/x-editable/css/bootstrap-editable.css') }}" type="text/css" />
+{% endblock %}
+
+{% block body %}
+    {# todo: make the banners controlled by options per-account #}
+    {#<div class="banner">#}
+        {#<a href="http://www.simplelandlordsinsurance.com/?utm_source=simpletenantreferencing&utm_medium=refferal&utm_campaign=STR01" target="_blank"><img src="/images/dg-tenant-referencing-banner.gif" alt="" /></a>#}
+    {#</div>#}
+
+    <div class="container">
+        <div id="landlord-dashboard-account-overview" class="panel panel-default">
+            <div class="panel-heading">
+                Your Referencing Account Overview
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="overview-status">
+                            <span class="status-title">First name</span>
+                            <span class="status-message">
+                                <a href="#" id="firstName" class="edit-link edit-first-name" data-type="text" data-send="always" data-url="{{ path('barbon_hostedapi_landlord_profile_update_index') }}" data-title="Enter first name">
+                                    {{ landlord.firstName }}
+                                </a>
+                            </span>
+                            <span class="status-icon status-icon-success">
+                                <i class="fa fa-pencil"></i>
+                            </span>
+                        </div>
+
+                        <div class="overview-status">
+                            <span class="status-title">Last name</span>
+                            <span class="status-message">
+                                <a href="#" id="lastName" class="edit-link edit-last-name" data-type="text" data-send="always" data-url="{{ path('barbon_hostedapi_landlord_profile_update_index') }}" data-title="Enter last name">
+                                    {{ landlord.lastName }}
+                                </a>
+                            </span>
+                            <span class="status-icon status-icon-success"><i class="fa fa-pencil"></i></span>
+                        </div>
+
+                        <div class="overview-status">
+                            <span class="status-title">Day telephone</span>
+                            <span class="status-message">
+                                <a href="#" id="dayPhone" class="edit-link edit-day-phone" data-type="text" data-send="always" data-url="{{ path('barbon_hostedapi_landlord_profile_update_index') }}" data-title="Enter day telephone">
+                                    {{ landlord.dayPhone }}
+                                </a>
+                            </span>
+                            <span class="status-icon status-icon-success"><i class="fa fa-pencil"></i></span>
+                        </div>
+
+                        <div class="overview-status">
+                            <span class="status-title">Evening telephone</span>
+                            <span class="status-message">
+                                <a href="#" id="eveningPhone" class="edit-link edit-evening-phone" data-type="text" data-send="always" data-url="{{ path('barbon_hostedapi_landlord_profile_update_index') }}" data-title="Enter evening telephone">
+                                    {{ landlord.eveningPhone }}
+                                </a>
+                            </span>
+                            <span class="status-icon status-icon-success"><i class="fa fa-pencil"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal dl-dashboard">
+                            <dt>E-mail</dt>
+                            <dd>{{ landlord.email }}</dd>
+                            <dt>Address</dt>
+                            <dd>
+                                {% if landlord.address is not null %}
+                                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                                    with { 'address': landlord.address } %}
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+        <div id="landlord-dashboard-reference-panel" class="panel panel-default">
+            <div class="panel-heading">
+                Recent Tenant References at a glance
+                <a href="{{ path('barbon_hostedapi_landlord_reference_newreference_multi_new_index') }}" class="badge badge-primary pull-right">Start a new reference <i class="fa fa-plus"></i></a>
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                {% if results is empty %}
+                    You have not completed any tenant references yet.
+                {% else %}
+                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/sortable-reference-table-list.html.twig' 
+                        with { 
+                            'results': results,
+                            'case_view_url' : 'barbon_hostedapi_landlord_reference_cases_view_index',
+                            'application_view_url' : 'barbon_hostedapi_landlord_reference_applications_view_index' 
+                        } 
+                    %}
+
+                    {% if viewMore %}
+                        <a href="{{path('barbon_hostedapi_landlord_reference_listreferences_list_index')}}" style="padding-left: 8px">
+                            <i class="fa fa-list-alt"></i> View more
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+    </div><!-- container -->
+
+
+    <!-- main.js -->
+    <script>
+        $(document).ready(function() {
+            $('.edit-first-name').editable({
+                error: function(response, newValue) {
+                    return handleError(response, newValue);
+                }
+            });
+            $('.edit-last-name').editable({
+                error: function(response, newValue) {
+                    return handleError(response, newValue);
+                }
+            });
+            $('.edit-day-phone').editable({
+                error: function(response, newValue) {
+                    return handleError(response, newValue);
+                }
+            });
+            $('.edit-evening-phone').editable({
+                error: function(response, newValue) {
+                    return handleError(response, newValue);
+                }
+            });
+
+            /**
+             * @param Object response
+             * @param string newValue
+             *
+             * @return string
+             */
+            function handleError(response, newValue)
+            {
+                if ('503' == response.status) {
+                    // IRIS is most likely down
+                    return 'Service unavailable. Please try later.';
+                }
+                else if ('400' == response.status) {
+                    // invalid in accordance to the server side constraint
+                    responseText = JSON.parse(response.responseText);
+                    return responseText.msg;
+                }
+            }
+
+            // Allow editing of editable fields by clicking on their pencil icon.
+            $('.fa-pencil').closest('.status-icon').click(function(e) {
+                e.stopPropagation();
+                var $edit = $(this).closest('.overview-status').find('.edit-link');
+                $edit.editable('toggle');
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/x-editable/js/bootstrap-editable.min.js') }}"></script>
+{% endblock %}

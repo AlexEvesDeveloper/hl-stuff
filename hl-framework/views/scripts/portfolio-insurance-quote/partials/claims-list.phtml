@@ -1,0 +1,20 @@
+<?php
+
+	$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view'); 
+	$addressString = "";
+	if ($this->houseNumber != "") $addressString = " {$this->houseNumber}";
+	if ($this->address1 != "") $addressString .= " {$this->address1}";
+	if ($this->address2 != "") $addressString .= " {$this->address2}";
+	if ($this->address3 != "") $addressString .= " {$this->address3}";
+	if ($this->address4 != "") $addressString .= " {$this->address4}";
+	if ($this->address5 != "") $addressString .= " {$this->address5}";
+	if ($this->postcode != "") $addressString .= " {$this->postcode}";
+?>
+
+<div class="form_section property_list">
+    <strong>Property:</strong> <?php echo $addressString; ?><br />
+    <strong>Claim type:</strong> <?php echo $this->claimTypeText; ?><br />
+    <strong>Claim date:</strong> <?php echo "{$this->claimmonth}/{$this->claimyear}"; ?><br />
+    <strong>Claim value:</strong> <?php echo $this->claimvalue; ?><br />
+	(<a style="float: none; display: inline;" href="#" onclick="removeClaim(<?php echo $this->cid; ?>); return false;">remove claim</a>)
+</div>

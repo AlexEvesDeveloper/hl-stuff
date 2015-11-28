@@ -1,0 +1,36 @@
+<script type="text/javascript">
+$(function() {
+    historyHeight = $('.scrollcontainer table.emailhistory').height();
+    if (historyHeight < 300) {
+        $('.scrollcontainer').css('height', (historyHeight + 10) + 'px');
+    }
+});
+</script>
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/tenants">Tenants</a> &raquo; <a href="/tenants/reference-tracker">Reference Tracker</a> &raquo; View Your Emails
+    </div>
+</div>
+
+<div class="tenants col-sm-8">
+    <div class="content">
+        <h2>View Your Emails</h2>
+
+        <?php echo $this->showEmailHistory(); ?>
+    </div>
+    <input class="btn btn-primary" type="submit" name="back" id="back" value="Back" onclick="window.location='/tenants/reference-tracker';" />
+</div>
+
+<div class="col-sm-4">
+    <div class="panel panel-default bg-lets-move-tenant">
+        <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+        <h3 class="base-colour heavy">Let's Move App</h3>
+
+        <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+        <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+        <br />
+        <br />
+        <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+        <div class="clearfix"></div>
+    </div>
+</div>

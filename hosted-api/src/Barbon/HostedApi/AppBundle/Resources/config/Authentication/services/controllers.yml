@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.app.controller.authentication.mac_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Authentication\MacController
+        arguments:
+            - @doctrine_cache.providers.file_system_iris
+            - @barbon.hosted_api.app.service.authentication.mac_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]

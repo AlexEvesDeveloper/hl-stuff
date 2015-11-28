@@ -1,0 +1,20 @@
+
+{# Upload signed declaration link #}
+{% macro upload_signed_declaration_link(referencingApplicationUuId, class, isPopup, methodKey) %}
+    {% set uploadDeclarationUrl = '/iris-referencing/upload-declaration?uuid=' ~ referencingApplicationUuId %}
+    {% if isPopup %}
+        <a href="javascript:void(0);" class="{{ class }} upload-declaration" style="text-decoration:none;" onclick="upload_signed_declaration_popup_{{ methodKey }}()">Upload Declaration</a>
+        <script>
+            function upload_signed_declaration_popup_{{ methodKey }}()
+            {
+                window.open(
+                    '{{ uploadDeclarationUrl }}&isPopup=1',
+                    null,
+                    "height=300,width=450,status=yes,toolbar=no,menubar=no,location=no"
+                );
+            }
+        </script>
+    {% else %}
+        <a href="{{ uploadDeclarationUrl }}" class="{{ class }} upload-declaration">Upload Declaration</a>
+    {% endif %}
+{% endmacro %}

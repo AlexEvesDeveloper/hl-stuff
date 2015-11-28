@@ -1,0 +1,143 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block body %}
+    <main class="container framework-content">
+        <div class="steps">
+            <div class="step complete">
+                <i class="fa fa-check fa-4x"></i>
+                <div class="details">
+                    Reference details
+                </div>
+            </div>
+            <div class="step active">
+                <div class="circle active">
+                    <span class="pointer"></span>
+                    2
+                </div>
+                <div class="details">
+                    Confirmation
+                </div>
+            </div>
+            <div class="step">
+                <div class="circle">3</div>
+                <div class="details">
+                    Payment
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div><!-- steps -->
+
+        <div class="page-header">
+            <h2>Please review the reference details for this order</h2>
+        </div>
+
+        <!-- property details -->
+        {% block property_details %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Rental property details
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <dl class="dl-horizontal col-md-6 pull-left">
+                    <dt>Number of bedrooms</dt>
+                    <dd>{{ case.numberOfBedrooms }}</dd>
+                    <dt>Property type</dt>
+                    <dd>{{ case.propertyType | iris_property_type_label }}</dd>
+                    <dt>Date of construction</dt>
+                    <dd>{{ case.propertyBuiltInRangeType | iris_property_built_in_range_label }}</dd>
+                    <dt>Property let type</dt>
+                    <dd>{{ case.propertyLetType | iris_property_let_type_label }}</dd>
+                </dl>
+                <dl class="col-md-6 pull-left">
+                    <dt>Property address</dt>
+                    <dd>
+                        {% if case.address is not null %}
+                            {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                            with { 'address': case.address } %}
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+        {% endblock %}
+
+        {% block tenancy_details %}
+        <!-- tenancy details -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tenancy details
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <dl class="dl-horizontal col-md-6 pull-left">
+                    <dt>Start date</dt>
+                    <dd>{{ case.tenancyStartDate | date("jS F Y") }}</dd>
+                    <dt>Duration</dt>
+                    <dd>{{ case.tenancyTerm }} months</dd>
+                    <dt>Total rent</dt>
+                    <dd>&pound{{ case.totalRent }}</dd>
+                </dl>
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+        {% endblock %}
+
+        {% block tenant_summary %}{% endblock %}
+
+        {% block price_details %}{% endblock %}
+
+        {% block marketing_preference %}
+        {{ form_start(form) }}
+        <div id="terms-and-conditions-widget" class="panel panel-default">
+            <div class="panel-heading">
+                Terms and Conditions
+            </div><!-- panel-heading -->
+
+            <div class="panel-body terms">
+                {{form_widget(form.application_correct)}}
+                <p>Yes, I confirm that the information provided in this application form is true to the best of my knowledge,
+                    and I&rsquo;m happy with the checks which HomeLet will complete as detailed above. These
+                    results may be accessed again if I apply for a tenancy in the future. / These results may be accessed again
+                    if I apply to act as a guarantor in the future.</p>
+
+                {{form_errors(form.application_correct)}}
+
+                {{form_widget(form.referee_contact)}}
+                <p>Yes, I&rsquo;m happy for HomeLet to contact my referees (including those outside the EEA), with personal information
+                    which has been provided in this form to allow them to verify the information about my earnings, dates of employment
+                    and previous tenancy term.</p>
+
+                {{form_errors(form.referee_contact)}}
+
+
+                {{form_widget(form.agree_terms)}}
+                <p>
+                    I understand and agree with the
+                    <a href="{{ path('barbon_hostedapi_landlord_reference_newreference_tenancyagreement_index') }}"
+                       onclick="window.open(this.href, 'Terms and conditions', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                        terms and conditions
+                    </a>.
+                </p>
+                {{form_errors(form.agree_terms)}}
+                Ensure that each reference applicant has read and agreed to the
+                <a href="{{ path('barbon_hostedapi_landlord_reference_newreference_tenancyagreement_download',
+                {'filename':'Individual_Reference_Terms_and_Conditions.pdf'}
+                ) }}">referencing terms and conditions</a>
+            </div>
+        </div>
+        <div id="marketing-preferences-widget" class="panel panel-default">
+            <div class="panel-heading">
+                Marketing preferences
+            </div><!-- panel-heading -->
+
+            <div class="panel-body terms">
+                {{form_widget(form.applications)}}
+            </div>
+        </div>
+        <div class="pull-right">
+            {{form_label(form.agree)}}
+            {{form_widget(form.agree, {'attr':{'class':'btn btn-success'}, 'label': 'Proceed'})}}
+        </div>
+            {{ form_end(form) }}
+        {% endblock %}
+
+    </main><!-- container -->
+{% endblock %}

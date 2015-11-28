@@ -1,0 +1,13 @@
+{% block prospective_landlord_widget %}
+    {% spaceless %}
+        {{ form_row(form.isVisible) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.dayPhone) }}
+        {{ form_row(form.eveningPhone) }}
+        {{ form_row(form.fax) }}
+        {{ form_row(form.email) }}
+    {% endspaceless %}
+{% endblock %}

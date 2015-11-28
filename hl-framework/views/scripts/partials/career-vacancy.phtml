@@ -1,0 +1,25 @@
+<li>
+    <a class="jobheader expander" href="#" rel="nofollow" id="job<?php echo $this->id ?>">
+        <?php echo $this->title ?><?php if ($this->location != ''): ?>, <?php echo $this->location; ?><?php endif; ?>
+    </a>
+    <div class="details">
+        <div class="text joblisting">
+            <div>
+                <strong>Job Title:</strong> <?php echo $this->title ?><br />
+                <?php if($this->reportingTo != ''): ?><strong>Reporting To:</strong> <?php echo $this->reportingTo ?><br /><?php endif; ?>
+                <?php if($this->location != ''): ?><strong>Location:</strong> <?php echo $this->location ?><br /><?php endif; ?>
+            </div>
+            <div>
+                <strong>Closing Date:</strong> <?php echo $this->endDate; ?><br />
+            </div>
+            <div>
+                <?php echo $this->description ?>
+            </div>
+            <div class="apply">
+                <a href="<?php echo $this->applyUrl; ?>" class="homeletButton">Apply <strong>Now</strong></a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</li>
+

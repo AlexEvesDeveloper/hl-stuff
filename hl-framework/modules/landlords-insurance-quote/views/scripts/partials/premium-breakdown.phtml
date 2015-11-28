@@ -1,0 +1,270 @@
+<h2 class="quaternary-colour">Your Premium Breakdown</h2>
+
+<?php
+$session = new Zend_Session_Namespace('landlords_insurance_quote');
+$quoteManager = new Manager_Insurance_LandlordsPlus_Quote($session->quoteID);
+
+$premiums = $quoteManager->calculatePremiums();
+
+$fees = $quoteManager->getFees();
+if ($premiums != ''): ?>
+    <table id="cover_summary" class="table table-bordered table-condensed hidden-xs">
+    <thead>
+        <tr>
+            <th colspan="2"></th>
+            <th>Sum Insured</th>
+            <th>Excess</th>
+            <th>Monthly</th>
+            <th>Annually</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER)): ?>
+            <?php $buildingsMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER); ?>
+            <tr>
+                <td class="product">
+                    Buildings
+                    <?php if ($buildingsMeta['accidental_damage']=='yes'): ?>
+                        <br />+ Accidental Damage
+                    <?php endif; ?>
+                </td>
+                <td><a href="step2#building-insurance" class="quaternary-colour">Edit</a></td>
+                <td>&pound;<?php echo ($premiums['rebuildValue']>0 && $premiums['rebuildValue'] != $premiums['calculatedDSIValue'])?number_format($premiums['rebuildValue'],0):number_format(500000,0); ?></td>
+                <td><?php echo $buildingsMeta['excess']>0?'&pound;'.number_format($buildingsMeta['excess'], 2):'Nil'; ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualBuildingCover'] / 12, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualBuildingCover'], 2); ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER)): ?>
+            <?php $contentsMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER); ?>
+            <tr>
+                <td class="product">
+                    Contents
+                    <?php if ($contentsMeta['accidental_damage']=='yes'): ?>
+                        <br />+ Accidental Damage
+                    <?php endif; ?>
+                </td>
+                <td><a href="step2#contents-insurance" class="quaternary-colour">Edit</a></td>
+                <td>&pound;<?php echo number_format($contentsMeta['cover_amount'], 2); ?></td>
+                <td><?php echo $contentsMeta['excess']>0?'&pound;'.number_format($contentsMeta['excess'], 2):'Nil'; ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualContentsCover'] / 12, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualContentsCover'], 2); ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::UNFURNISHED_CONTENTS_COVER)): ?>
+            <tr>
+                <td class="product">
+                    Contents Insurance for Unfurnished Properties
+                </td>
+                <td><a href="step2#contents-insurance" class="quaternary-colour">Edit</a></td>
+                <td>&pound;5,000</td>
+                <td>Standard: &pound;250,<br />Subsidence: &pound;1000,<br />Malicious: &pound;500</td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualContentsCover'] / 12, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualContentsCover'], 2); ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::EMERGENCY_ASSISTANCE)
+            || $quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER)
+            || $quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER)): ?>
+            <tr>
+                <td class="product">
+                    Emergency Assistance
+                    <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BOILER_HEATING)): ?>
+                        <br />+ Boiler &amp; Heating
+                    <?php endif; ?>
+                </td>
+                <td>&nbsp;</td>
+                <td>&pound;1500</td>
+                <td>Nil</td>
+                <td class="totals"><?php echo $premiums['grossAnnualEmergencyAssistance']>0?'&pound;'.number_format($premiums['grossAnnualEmergencyAssistance'] / 12, 2):'Free'; ?></td>
+                <td class="totals"><?php echo $premiums['grossAnnualEmergencyAssistance']>0?'&pound;'.number_format($premiums['grossAnnualEmergencyAssistance'], 2):'Free'; ?></td>
+            </tr>
+        <?php endif; ?>
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::RENT_GUARANTEE)): ?>
+            <?php $rentGuaranteeMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::RENT_GUARANTEE); ?>
+            <tr>
+                <td class="product">Rent Guarantee</td>
+                <td>&nbsp;</td>
+                <td>&pound;<?php echo number_format($rentGuaranteeMeta['monthly_rent'], 2); ?></td>
+                <td>A sum equivalent<br />to one month's Rent</td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualRentGuarantee'] / 12, 2); ?></td>
+                <td class="totals">&pound;<?php echo number_format($premiums['grossAnnualRentGuarantee'], 2); ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::LEGAL_EXPENSES)): ?>
+            <tr>
+                <td class="product">Legal Expenses</td>
+                <td>&nbsp;</td>
+                <td>&pound;50,000</td>
+                <td>Nil</td>
+                <td class="totals"><?php echo $premiums['grossAnnualLegalExpensesCover']>0?'&pound;'.number_format($premiums['grossAnnualLegalExpensesCover'] / 12, 2):'Free'; ?></td>
+                <td class="totals"><?php echo $premiums['grossAnnualLegalExpensesCover']>0?'&pound;'.number_format($premiums['grossAnnualLegalExpensesCover'], 2):'Free'; ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <tr class="ipt">
+            <td class="product">Insurance Premium Tax</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td class="totals">&pound;<?php echo number_format($premiums['totalGrossMonthlyIPT'],2); ?></td>
+            <td class="totals">&pound;<?php echo number_format($premiums['totalGrossAnnualIPT'],2); ?></td>
+        </tr>
+        <tr class="fees">
+            <td class="product">Admin/Service Fees</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td class="totals">&pound;<?php echo number_format($fees['landlords_insurance_plus_monthly_admin'],2); ?></td>
+            <td class="totals">&pound;<?php echo number_format($fees['landlords_insurance_plus_yearly_admin'],2); ?></td>
+        </tr>
+        <tr class="totals">
+            <td class="product">Total</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td class="totals">&pound;<?php echo number_format($premiums['totalGrossMonthlyPremium'] + $premiums['totalGrossMonthlyIPT'] + $fees['landlords_insurance_plus_monthly_admin'],2); ?></td>
+            <td class="totals">&pound;<?php echo number_format($premiums['totalGrossAnnualPremium'] + $premiums['totalGrossAnnualIPT'] + $fees['landlords_insurance_plus_yearly_admin'],2); ?></td>
+        </tr>
+    </tbody>
+    </table>
+
+    <div class="visible-xs">
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER)): ?>
+            <?php $buildingsMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER); ?>
+            <h3 class="quaternary-colour">
+                Buildings
+                <?php if ($buildingsMeta['accidental_damage']=='yes'): ?>
+                    <br/>+ Accidental Damage
+                <?php endif; ?>
+            </h3>
+            <a href="step2#building-insurance" class="quaternary-colour">Edit</a>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;<?php echo ($premiums['rebuildValue']>0 && $premiums['rebuildValue'] != $premiums['calculatedDSIValue'])?number_format($premiums['rebuildValue'],0):number_format(500000,0); ?></dd>
+                <dt>Excess</dt>
+                <dd><?php echo $buildingsMeta['excess']>0?'&pound;'.number_format($buildingsMeta['excess'], 2):'Nil'; ?></dd>
+                <dt>Monthly</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualBuildingCover'] / 12, 2); ?></dd>
+                <dt>Annually</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualBuildingCover'], 2); ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER)): ?>
+            <?php $contentsMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER); ?>
+            <h3 class="quaternary-colour">
+                Contents
+                <?php if ($contentsMeta['accidental_damage']=='yes'): ?>
+                    <br />+ Accidental Damage
+                <?php endif; ?>
+            </h3>
+            <a href="step2#contents-insurance" class="quaternary-colour">Edit</a>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;<?php echo number_format($contentsMeta['cover_amount'], 2); ?></dd>
+                <dt>Excess</dt>
+                <dd><?php echo $contentsMeta['excess']>0?'&pound;'.number_format($contentsMeta['excess'], 2):'Nil'; ?></dd>
+                <dt>Monthly</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualContentsCover'] / 12, 2); ?></dd>
+                <dt>Annually</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualContentsCover'], 2); ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::UNFURNISHED_CONTENTS_COVER)): ?>
+            <h3 class="quaternary-colour">Contents Insurance for Unfurnished Properties</h3>
+            <a href="step2#contents-insurance" class="quaternary-colour">Edit</a>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;5,000</dd>
+                <dt>Excess</dt>
+                <dd>Standard: &pound;250, Subsidence: &pound;1000, Malicious: &pound;500</dd>
+                <dt>Monthly</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualContentsCover'] / 12, 2); ?></dd>
+                <dt>Annually</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualContentsCover'], 2); ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::EMERGENCY_ASSISTANCE)
+            || $quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BUILDING_COVER)
+            || $quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::CONTENTS_COVER)): ?>
+            <h3 class="quaternary-colour">
+                Emergency Assistance
+                <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::BOILER_HEATING)): ?>
+                    <br />+ Boiler &amp; Heating
+                <?php endif; ?>
+            </h3>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;1500</dd>
+                <dt>Excess</dt>
+                <dd>Nil</dd>
+                <dt>Monthly</dt>
+                <dd><?php echo $premiums['grossAnnualEmergencyAssistance']>0?'&pound;'.number_format($premiums['grossAnnualEmergencyAssistance'] / 12, 2):'Free'; ?></dd>
+                <dt>Annually</dt>
+                <dd><?php echo $premiums['grossAnnualEmergencyAssistance']>0?'&pound;'.number_format($premiums['grossAnnualEmergencyAssistance'], 2):'Free'; ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::RENT_GUARANTEE)): ?>
+            <?php $rentGuaranteeMeta = $quoteManager->getProductMeta(Manager_Insurance_LandlordsPlus_Quote::RENT_GUARANTEE); ?>
+            <h3 class="quaternary-colour">Rent Guarantee</h3>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;<?php echo number_format($rentGuaranteeMeta['monthly_rent'], 2); ?></dd>
+                <dt>Excess</dt>
+                <dd>A sum equivalent to one month's Rent</dd>
+                <dt>Monthly</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualRentGuarantee'] / 12, 2); ?></dd>
+                <dt>Annually</dt>
+                <dd>&pound;<?php echo number_format($premiums['grossAnnualRentGuarantee'], 2); ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <?php if ($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::LEGAL_EXPENSES)): ?>
+            <h3 class="quaternary-colour">Legal Expenses</h3>
+            <dl class="dl-horizontal">
+                <dt>Sum Insured</dt>
+                <dd>&pound;50,000</dd>
+                <dt>Excess</dt>
+                <dd>Nil</dd>
+                <dt>Monthly</dt>
+                <dd><?php echo $premiums['grossAnnualLegalExpensesCover']>0?'&pound;'.number_format($premiums['grossAnnualLegalExpensesCover'] / 12, 2):'Free'; ?></dd>
+                <dt>Annually</dt>
+                <dd><?php echo $premiums['grossAnnualLegalExpensesCover']>0?'&pound;'.number_format($premiums['grossAnnualLegalExpensesCover'], 2):'Free'; ?></dd>
+            </dl>
+        <?php endif; ?>
+
+        <h3 class="quaternary-colour">Insurance Premium Tax</h3>
+        <dl class="dl-horizontal">
+            <dt>Monthly</dt>
+            <dd>&pound;<?php echo number_format($premiums['totalGrossMonthlyIPT'],2); ?></dd>
+            <dt>Annually</dt>
+            <dd>&pound;<?php echo number_format($premiums['totalGrossAnnualIPT'],2); ?></dd>
+        </dl>
+
+        <h3 class="quaternary-colour">Admin/Service Fees</h3>
+        <dl class="dl-horizontal">
+            <dt>Monthly</dt>
+            <dd>&pound;<?php echo number_format($fees['landlords_insurance_plus_monthly_admin'],2); ?></dd>
+            <dt>Annually</dt>
+            <dd>&pound;<?php echo number_format($fees['landlords_insurance_plus_yearly_admin'],2); ?></dd>
+        </dl>
+
+        <h3 class="quaternary-colour">Total</h3>
+        <dl class="dl-horizontal">
+            <dt>Monthly</dt>
+            <dd>&pound;<?php echo number_format($premiums['totalGrossMonthlyPremium'] + $premiums['totalGrossMonthlyIPT'] + $fees['landlords_insurance_plus_monthly_admin'],2); ?></dd>
+            <dt>Annually</dt>
+            <dd>&pound;<?php echo number_format($premiums['totalGrossAnnualPremium'] + $premiums['totalGrossAnnualIPT'] + $fees['landlords_insurance_plus_yearly_admin'],2); ?></dd>
+        </dl>
+    </div>
+<?php else: ?>
+    You haven't chosen anything to cover.<br /><br />
+<?php endif; ?>

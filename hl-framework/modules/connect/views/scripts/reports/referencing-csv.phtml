@@ -1,0 +1,106 @@
+<?php
+
+$totalcount = count($this->reportdata);
+$stdout = fopen('php://output', 'a');
+
+// Summary by product
+fputcsv($stdout, array('Product', 'Volume', 'Percentage of total (' . $totalcount . ')'));
+
+foreach ($this->productoverview_reportdata as $row)
+{
+    $productname = ($row['name'] == 'None' || $row['name'] == 'none') ? 'Cancelled' : $row['name'];
+    $percentage = ($totalcount > 0) ? (($row['count'] / $totalcount) * 100 ) : 'N/A';
+    
+    fputcsv($stdout, array($productname, (($row['count'] == 0) ? 'N/A' : $row['count']), sprintf('%.2f', $percentage)));
+}
+
+fputcsv($stdout, array()); // blank line
+
+
+// Summary by applicant type
+fputcsv($stdout, array('Applicant Type', 'Volume', 'Percentage of total (' . $totalcount . ')'));
+
+$tenantscount = 0;
+$guarantorscount = 0;
+foreach ($this->appltype_reportdata as $row)
+{
+    if (isset($row['countTenant'])) $tenantscount = $row['countTenant'];
+    if (isset($row['countGuarantor'])) $guarantorscount = $row['countGuarantor'];
+}
+
+fputcsv($stdout, array('Tenant', $tenantscount, sprintf('%.2f', ($totalcount > 0) ? (($tenantscount / $totalcount) * 100 ) : 'N/A')));
+fputcsv($stdout, array('Guarantor', $guarantorscount, sprintf('%.2f', ($totalcount > 0) ? (($guarantorscount / $totalcount) * 100 ) : 'N/A')));
+
+fputcsv($stdout, array()); // blank line
+
+
+// Summary by submission type
+fputcsv($stdout, array('Submission Type', 'Volume', 'Percentage of total (' . $totalcount . ')'));
+
+$tenantscount = 0;
+$agentcount = 0;
+$homeletcount = 0;
+$othercount = 0;
+foreach ($this->appltype_reportdata as $row)
+{
+    if (isset($row['countTenant'])) $tenantscount = $row['countTenant'];
+    if (isset($row['countAgent'])) $agentcount = $row['countAgent'];
+    if (isset($row['countHomelet'])) $homeletcount = $row['countHomelet'];
+    if (isset($row['countOthers'])) $othercount = $row['countOthers'];
+}
+
+fputcsv($stdout, array('Tenant Link', $tenantscount, sprintf('%.2f', ($totalcount > 0) ? (($tenantscount / $totalcount) * 100 ) : 'N/A')));
+fputcsv($stdout, array('Logged via Connect', $agentcount, sprintf('%.2f', ($totalcount > 0) ? (($agentcount / $totalcount) * 100 ) : 'N/A')));
+fputcsv($stdout, array('Logged via HomeLet', $homeletcount, sprintf('%.2f', ($totalcount > 0) ? (($homeletcount / $totalcount) * 100 ) : 'N/A')));
+fputcsv($stdout, array('Other', $othercount, sprintf('%.2f', ($totalcount > 0) ? (($othercount / $totalcount) * 100 ) : 'N/A')));
+
+fputcsv($stdout, array()); // blank line
+
+
+
+// Main data
+fputcsv
+(
+    $stdout,
+    array('Date entered', 'Referencing Number', 'Prospective Address', 'Product', 'Term',
+          'Applicant Type', 'Status', 'Sent via Tenant Link')
+);
+
+if (count($this->reportdata))
+{
+    foreach ($this->reportdata as $row)
+    {
+        $address = array();
+        
+        if (isset($row['address1']) && $row['address1'] != '')
+            $address = array_merge($address, explode(',', $row['address1']));
+            
+        if (isset($row['town']) && $row['town'] != '')
+            $address = array_merge($address, explode(',', $row['town']));
+        
+        foreach ($address as &$value) $value = trim($value);
+        $address = implode(', ', $address);
+        
+        fputcsv
+        (
+            $stdout,
+            array
+            (
+                $row['start_time'],
+                $row['RefNo'],
+                $address,
+                (strtolower($row['Name']) == 'none' ? 'Cancelled' : $row['Name']),
+                ( $row['PolicyLength'] > 0 ? $row['PolicyLength'] . ' months' : 'None'),
+                ($row['Guarantor'] > 0 ? 'Guarantor' : 'Tenant'),
+                ($row['conclusion'] != '' ? 'Acceptable' : 'Pending'),
+                ($row['compmethod'] == 'email' ? 'Yes' : 'No')
+            )
+        );
+    }
+}
+else
+{
+    fputcsv($stdout, array('No data found'));
+}
+
+fclose($stdout);

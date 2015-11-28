@@ -1,0 +1,7 @@
+services:
+    barbon.hosted_api.landlord.reference.controller.cases.view_controller:
+        class: Barbon\HostedApi\Landlord\ReferenceBundle\Controller\Cases\ViewController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+        calls:
+            - [ setContainer,[ @service_container ] ]

@@ -1,0 +1,36 @@
+<h1>Testimonials</h1><br />
+<script>
+$(function() {
+    $(".ico-delete").click(function(e){
+        if (!confirm("Are you sure you want to delete this testimonial?\n\nThis action cannot be undone!")) { e.preventDefault(); }
+    });
+    $( "#sortable" ).sortable({
+        opacity: 0.6,
+        update : function () { 
+            $('#menuorder').val($('#sortable').sortable('toArray')); 
+        } 
+    });
+    $( "#sortable" ).disableSelection();
+    <?php if ($this->deleted) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);    
+    <?php } ?>
+});
+</script>
+<?php if ($this->deleted) { ?>
+    <p class="msg done">Testimonial deleted successfully!</p>
+<?php } ?>
+<table>
+    <tbody>
+        <tr>
+            <th>Person</th>
+            <th>Quote</th>
+            <th>Tags</th>
+            <th width="120"></th>
+        </tr>
+        <?php echo $this->testimonialList ?>
+    </tbody>
+</table>
+<br />
+<a href="/cms-admin/testimonials/add">Add a new testimonial</a>

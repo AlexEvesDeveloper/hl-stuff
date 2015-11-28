@@ -1,0 +1,17 @@
+
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <p>
+            I can confirm that I have the consent of the landlord to renew this policy and I have met my obligations under Financial
+            Conduct Authority regulations with regards to this policy renewal.
+        </p>
+        
+        <form method="post" name="landlordConsent">
+            <input type="hidden" name="landlordconsent" value="true" />
+            <input type="hidden" name="policynumber" value="<?php echo $this->policynumber;?>" />
+            <input type="submit" class="round-button" id="submitBack" name="formsubmit" value="Back"/>
+            <input type="submit" class="round-button" id="submitContinue" name="formsubmit" value="Continue"/>
+        </form>
+    </div>
+</div>

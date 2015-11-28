@@ -1,0 +1,12 @@
+<?php if (is_array($this->breadcrumbs) && count($this->breadcrumbs)) : ?>
+    <?php $_count = count($this->breadcrumbs) ?>
+    <ol class="breadcrumb">
+        <?php $_i = 0; foreach ($this->breadcrumbs as $_url => $_name) : ?>
+            <?php if ($_count == ($_i + 1)) : ?>
+                <li class="active"><?php echo $_name ?></li>
+            <?php else : ?>
+                <li <?php if (0 == $_i): ?>class="home"<?php endif; ?>><a href="<?php echo $_url ?>" title="Go to <?php echo strip_tags($_name) ?>"><?php echo $_name ?></a></li>
+            <?php endif; ?>
+        <?php $_i ++; endforeach; ?>
+    </ol>
+<?php endif; ?>

@@ -1,0 +1,11 @@
+<div class="content">
+    <form id="bankInterest" class="validate" action="" method="post">
+        <?php echo $this->form; ?>
+        <input class="btn btn-quaternary pull-right" type="button" id="cor_address_add" value="Add Interest" name="cor_address_add" onclick="addBankInterest(); return false;" />
+    </form>
+    <div class="clear"></div>
+    <div id="bank-interest-list" style="margin-top:20px;">
+        <?php echo $this->partialLoop('partials/bank-interest-list.phtml', $this->bankInterestList); ?>
+    </div>
+    <input class="btn btn-quaternary pull-right" <?php if (null == $this->bankInterestList): ?>style="display:none;"<?php endif; ?> type="button" id="done_button" value="Finished" name="done_button" onclick="$(document).trigger('close.facebox'); return false;" />
+</div>

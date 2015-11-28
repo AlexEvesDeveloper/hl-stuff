@@ -1,0 +1,80 @@
+<?php
+echo $this->subHeader('landlords', 'landlords');
+?>
+<div class="corporate">
+    <div class="wrapper two-col">
+		<div class="content">
+            <?php echo $this->content ?>
+            <h2><span class="landlords">Landlords Insurance</span></h2>
+            <div class="product_info_box">
+            	<h3>Comprehensive landlord&rsquo;s insurance for a single property</h3>
+            	<div>
+	            	<ul>
+	            		<li>Landlords Buildings Insurance - bringing you the essential cover you need as a landlord, plus the option of protecting against accidental or malicious damage by your tenant.</li>
+	            		<li>Landlords Contents Insurance - total peace of mind that your contents are safe.</li>
+	            		<li>Contents insurance for unfurnished properties - just because your property is unfurnished doesn't mean its empty - this policy covers your carpets, curtains, light fittings, white goods - and your liability as a landlord.</li>
+	            	</ul>
+	            	<ul>
+	            		<li>Emergency Assistance - when disaster strikes at 3am, make sure it's us they call and not you!</li>
+	            		<li>Prestige Rent Guarantee - guaranteed rent for your property for a full 12 months, with added Legal Expenses protection - because even the best tenants can become unable to pay their rent.</li>
+	            	</ul>
+            	</div>
+            	<a class="nav-landlords-button" href="/landlords/insurance-quote/step1">Get a <strong>Quote</strong></a><br /><br />
+            	<a class="nav-landlords-button" href="/landlords/insurance">Find out <strong>more</strong></a>
+            </div>
+            <br />
+            <h2><span class="landlords">Portfolio Insurance</span></h2>
+            <div class="product_info_box">
+            	<h3>Specialist insurance for property portfolios</h3>
+            	<div>
+	            	<ul>
+	            		<li>One policy and one renewal date - simple!</li>
+	            		<li>Perfect for all landlords - whether you have 2 or 30 properties.</li>
+	            		<li>Flexible - add or remove properties easily as your portfolio develops.</li>
+	            	</ul>
+	            	<ul>
+	            		<li>Cover is available for your Buildings and Contents.</li>
+	            		<li>Significant discounts compared to individual policies - up to 45%</li>
+	            	</ul>
+            	</div>
+            	<a class="nav-landlords-button" href="/portfolio/insurance-quote/step1">Get a <strong>Quote</strong></a><br /><br />
+            	<a class="nav-landlords-button" href="/landlords/portfolio">Find out <strong>more</strong></a>
+            </div>
+            <br />
+            <h2><span class="landlords">Tenant Referencing and Rent Guarantee</span></h2>
+            <div class="product_info_box">
+            	<h3>Why choose Tenant Referencing and Rent Guarantee?</h3>
+            	<div>
+					<ul>
+						<li>We can check your future tenant’s credit history and ascertain whether they have a genuine bank account.</li>
+						<li>We can speak to the tenant’s current landlord or managing agent and their employer to ask them for a reference.</li>
+                    </ul>
+
+                    <ul>
+						<li>We can cover your rental payments for up to a year if your tenant stops paying you.</li>
+						<li>Every year HomeLet pays out over £3million in Rent Guarantee claims - money landlords cannot afford to lose.</li>
+					</ul>
+            	</div>
+            	<a class="nav-landlords-button" href="/landlords/referencing/start">Find out <strong>more</strong></a>
+            </div>
+		</div>
+		<div class="sidebar">
+			<?php $layout = $this->layout()->getView(); ?>
+            <h4 class="underline-corporate">What our customers say</h4>
+            <div class="blue">
+                <div class="testyhearts">
+                    <div id="testimonials-holder">
+                        <ul>
+                            <?php echo $this->testimonials( 'landlords' ); ?>
+                        </ul>
+                        <div id="test-changer">
+                            <a href="#" rel="nofollow" class="prev" id="test-changer-left"></a>
+                            <a href="#" rel="nofollow" class="next" id="test-changer-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div class="clear"></div>
+	</div>
+</div>

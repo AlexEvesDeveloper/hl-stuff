@@ -1,0 +1,35 @@
+parameters:
+    vendor.style.default: '@@brandprimary: #0093d0; @pagebackground: #dee6e8; @headingfont: bliss_2light, Arial, sans-serif; @bodyfont: pt_sansregular, Helvetica, Arial, sans-serif;'
+
+services:
+    barbon.hosted_api.app.controller.brand.abstract_brand_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\AbstractBrandController
+        abstract: true
+        arguments:
+            - @barbon.hosted_api.app.service.brand.system_brand
+            - 3600
+        calls:
+            - [ setContainer, [ @service_container ] ]
+            - [ setRequestFromStack, [ @request_stack ] ]
+
+    barbon.hosted_api.app.controller.brand.analytics_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\AnalyticsController
+        parent: barbon.hosted_api.app.controller.brand.abstract_brand_controller
+
+    barbon.hosted_api.app.controller.brand.contact_details_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\ContactDetailsController
+        parent: barbon.hosted_api.app.controller.brand.abstract_brand_controller
+
+    barbon.hosted_api.app.controller.brand.field_suppression_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\FieldSuppressionController
+        parent: barbon.hosted_api.app.controller.brand.abstract_brand_controller
+
+    barbon.hosted_api.app.controller.brand.logo_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\LogoController
+        parent: barbon.hosted_api.app.controller.brand.abstract_brand_controller
+
+    barbon.hosted_api.app.controller.brand.style_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Brand\StyleController
+        parent: barbon.hosted_api.app.controller.brand.abstract_brand_controller
+        arguments:
+            - "%vendor.style.default%"

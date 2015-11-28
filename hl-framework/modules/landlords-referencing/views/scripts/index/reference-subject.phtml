@@ -1,0 +1,153 @@
+<div class="col-xs-12">
+    <div class="breadcrumb"></div>
+</div>
+<div class="landlords landlords-referencing col-sm-9">
+    <div class="content">
+        <form action="" method="post" enctype="application/x-www-form-urlencoded" class="main validate">
+            <div class="form_section">
+                <div class="form-sub-section">
+                    <div class="form-help hidden-xs hidden-sm"></div>
+
+                    <h2 class="quaternary-colour main-heading">
+                        <span class="help-trigger"><a class="show-form-help"></a></span>
+                            <span class="field-help hidden-xs hidden-sm">
+                                Please enter your tenant&rsquo;s personal details here.
+                            </span>
+                        Tenant Details
+                    </h2>
+
+                    <div class="mobile-help section-help section-help-fullwidth">
+                        <div class="visible-xs visible-sm">
+                            Please enter your tenant&rsquo;s personal details here.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Select a title.
+                        </div>
+                        <?php echo $this->form->personal_title; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Enter a first name.
+                        </div>
+                        <?php echo $this->form->first_name; ?>
+                    </div>
+
+
+                    <div class="form-group">
+                        <?php echo $this->form->middle_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Enter a last name.
+                        </div>
+                        <?php echo $this->form->last_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->other_name; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Enter a valid daytime tlephone number.
+                        </div>
+                        <?php echo $this->form->telephone_day; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Enter a valid mobile phone number.
+                        </div>
+                        <?php echo $this->form->mobile_number; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->email; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please enter a date of birth.
+                        </div>
+                        <!--  This is actually the tenant's date of birth -->
+                        <label for="tenancy_start_date" class="optional"><?php echo $this->form->tenancy_start_date->getLabel(); ?></label>
+                        <div class="input-group date">
+                            <input type="text" name="tenancy_start_date" data-required="required" data-validate="validate" data-type="date" id="tenancy_start_date" value="<?php echo htmlentities($this->form->tenancy_start_date->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->bank_account_number; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->form->bank_sortcode_number; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please select the <strong>current</strong> residential status.
+                        </div>
+                        <?php echo $this->form->residential_status; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please select an occupational type.
+                        </div>
+                        <?php echo $this->form->occupational_type; ?>
+                    </div>
+
+                    <div class="form-group" id="div_is_future_employment_secured">
+                        <?php echo $this->form->is_future_employment_secured; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please enter a figure for total annual income.
+                        </div>
+                        <?php echo $this->form->total_annual_income; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please select whether this occupation is likely to change during the tenancy.
+                        </div>
+                        <?php echo $this->form->occupation_will_change; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="help-trigger"><a class="show-help"></a></div>
+                        <div class="field-help quaternary-colour">
+                            Please select whether or not there is some kind of adverse credit history.
+                        </div>
+                        <?php echo $this->form->has_adverse_credit; ?>
+                    </div>
+                </div>
+            </div>
+
+            <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => 0, 'stepMax' => 1000)); ?>
+        </form>
+    </div>
+</div>
+
+<div class="landlords col-sm-3">
+    <?php echo $this->partial('partials/sidebar.phtml', array('page' => 'reference-subject', 'fractionComplete' => $this->fractionComplete)); ?>
+</div>
+
+<div class="clear"></div>

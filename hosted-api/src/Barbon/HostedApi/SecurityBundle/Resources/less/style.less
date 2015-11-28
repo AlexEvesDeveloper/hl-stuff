@@ -1,0 +1,129 @@
+body {
+    background: #f1f1f1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="text"],
+input[type="password"],
+button {
+    border-radius: 4px;
+    padding: 8px 12px;
+    transition: 0.2s all;
+}
+
+input[type="text"],
+input[type="password"] {
+    color: #333;
+    background: #f1f1f1;
+    outline: none;
+    transition: 0.2s all;
+    width: 100%;
+    border: 2px solid #ccc;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #0e386a;
+    background: #edf2f5;
+    outline: none;
+}
+
+button {
+    background: #0e386a;
+    border: none;
+    color: #fff;
+}
+
+button:hover,
+button:active {
+    background: lighten(#0e386a, 10%);
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: normal;
+    color: #333;
+    text-align: center;
+}
+
+.container {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.login-form {
+    background: #fff;
+    padding: 40px 50px 20px;
+    border: 2px solid #ccc;
+
+    label {
+        display: block;
+        margin: 0 0 5px;
+        font-weight: bold;
+    }
+
+    input {
+        margin-bottom: 20px;
+    }
+}
+
+.flash {
+    padding: 25px 50px;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.flash-info {
+    background: #b2d8fa;
+    color: #333;
+}
+
+.flash-success {
+    background: #029f23;
+}
+
+.flash-caution {
+    background: #e3aa3f;
+}
+
+.flash-error {
+    background: #940005;
+}
+
+@media (max-width: 599px) {
+    .container {
+        width: 95%;
+    }
+
+    .login-form,
+    .flash {
+        padding: 20px;
+    }
+
+    .login-form {
+        padding-top: 40px;
+    }
+}
+
+.pull-right {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}
+
+/**
+ * IE8
+ */
+
+.lt-ie9 {
+    input {
+        width: 95%;
+    }
+
+    label {
+        color: #000;
+    }
+}

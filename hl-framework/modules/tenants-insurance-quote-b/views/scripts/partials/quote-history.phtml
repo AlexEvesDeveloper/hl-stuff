@@ -1,0 +1,27 @@
+<table border="0" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th>Quote number</th>
+            <th>Date produced</th>
+            <th>Valid until</th>
+            <th>View</th>
+            <th>Create new quote</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($this->quoteHistory as $quote)
+        {
+            ?>
+            <tr>
+                <td><?php echo $quote['quote_number']; ?></td>
+                <td><?php echo $quote['date_started']; ?></td>
+                <td><?php echo $quote['expires']; ?></td>
+                <td><a href="/tenants/insurance-quote-b/retrieve?quote=<?php echo $quote['quote_number']; ?>">View quote</a></td>
+                <td><a href="/tenants/insurance-quote-b/new">Create new quote</a></td>
+            </tr>
+            <?php
+        }
+        ?>
+    </tbody>
+</table>

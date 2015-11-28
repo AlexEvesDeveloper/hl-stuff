@@ -1,0 +1,36 @@
+<?php /*
+<?php
+if ($this->stepNum == 'dd') {
+    ?>
+    <input type="submit" value="Confirm" id="next" name="next">
+    <input type="submit" value="Back" id="back" name="back">
+    <?php
+} elseif ($this->stepNum == 'cc') {
+    ?>
+    <input type="submit" value="Confirm" id="next" name="next">
+    <input type="submit" value="Back" id="back" name="back">
+    <?php
+} elseif ($this->stepNum == 'signup'){ ?>
+	<input type="submit" value="Next" id="next" name="next">
+}else {
+*/
+
+?>
+<?php
+
+    if ($this->stepNum < $this->stepMax) {
+        ?>
+        <input type="submit" value="Next" id="next" name="next">
+        <?php
+    } else {
+        ?>
+        <input type="submit" value="Buy Me" id="next" name="next">
+        <?php
+    }
+    if ($this->stepNum > 1) {
+        ?>
+        <input type="submit" value="Back" id="back" name="back">
+        <?php
+    }
+//}
+?>

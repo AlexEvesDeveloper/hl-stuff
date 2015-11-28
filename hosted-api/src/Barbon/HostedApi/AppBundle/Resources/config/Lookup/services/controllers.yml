@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.app.controller.lookup.address_controller:
+        class: Barbon\HostedApi\AppBundle\Controller\Lookup\AddressController
+        arguments:
+            - @barbon.iris_rest_client.iris_entity_manager
+            - @doctrine_cache.providers.file_system_iris
+        calls:
+            - [ setContainer,[ @service_container ] ]

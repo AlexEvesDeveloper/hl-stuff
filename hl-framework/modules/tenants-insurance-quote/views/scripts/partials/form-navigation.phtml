@@ -1,0 +1,33 @@
+<?php $loading = '<img src="/assets/common/images/loading.gif" class="loading-indicator" alt="Loading..." />'; ?>
+<?php if ('dd' == $this->stepNum): ?>
+    <button type="submit" name="back" class="btn btn-inverse pull-left">
+        <?php echo $loading; ?> Back
+    </button>
+    <button type="submit" name="next" class="btn btn-tertiary pull-right">
+        Confirm <?php echo $loading; ?>
+    </button>
+<?php elseif ('cc' == $this->stepNum): ?>
+    <button type="submit" name="back" class="btn btn-inverse pull-left">
+        <?php echo $loading; ?> Back
+    </button>
+    <button type="submit" name="next" class="btn btn-tertiary pull-right">
+        Confirm <?php echo $loading; ?>
+    </button>
+<?php else: ?>
+    <?php if ($this->stepNum < $this->stepMax): ?>
+        <button type="submit" name="next" class="btn btn-tertiary pull-right">
+            Next <?php echo $loading; ?>
+        </button>
+    <?php else: ?>
+        <button type="submit" name="next" class="btn btn-tertiary pull-right">
+            Purchase <?php echo $loading; ?>
+        </button>
+    <?php endif; ?>
+
+    <?php if ($this->stepNum > 1): ?>
+        <button type="submit" name="back" class="btn btn-inverse pull-left">
+            <?php echo $loading; ?> Back
+        </button>
+    <?php endif; ?>
+<?php endif; ?>
+<div class="clearfix"></div>

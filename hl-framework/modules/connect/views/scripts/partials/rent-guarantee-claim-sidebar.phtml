@@ -1,0 +1,27 @@
+<div class="sidebar" <?php if($this->stepNum==1) { echo "style='margin-top:104px'";} else { echo "style='margin-top:54px'";}?>>
+    <div id="progress">
+		<h4>Overall Progress</h4>
+			<div>
+				<span class="progress_bar">
+					<?php if (isset($this->stepNum) && isset($this->stepMax)) { $fractionComplete = $this->stepNum / $this->stepMax; } else { $fractionComplete = 0; } ?>
+						<span class="current_progress" style="width: <?php echo round($fractionComplete * 100); ?>%;">&nbsp;</span>
+                </span>
+			</div>
+            <div id="errorList">
+				<?php 
+					if ($this->errorCount > 0) {
+						printf(
+                                '<p>There %s only %d mandatory field%s left to complete in step %d:</p>',
+                                (($this->errorCount == 1) ? 'is' : 'are'),
+                                $this->errorCount,
+                                (($this->errorCount == 1) ? '' : 's'),
+                                $this->stepNum
+                            );
+                        }
+					echo $this->errorsHtml;
+                ?>
+			</div>
+     </div>
+</div>
+
+

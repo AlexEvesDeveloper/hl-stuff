@@ -1,0 +1,17 @@
+<li class="<?php echo (($this->lineEnd) ? ' line_end' : ''); ?> <?php echo $this->size; ?>_button">
+    <div class="special_connect_button<?php echo $this->alt; ?>">
+        <form class="commission_calculator">
+            <h5>Commission calculator</h5>
+            <label for="amount">Premium</label><br />
+            &pound;<input type="text" id="amount" size="8" />
+            <br />
+            <input type="button" class="button" name="button" value="Calculate" onclick="showCalculator();" />
+        </form>
+        <br />
+    </div>
+    <script type="text/javascript">
+        function showCalculator() {
+            $.facebox('Commission calculator', { ajax: '/insurance/commission-calculator?amount=' + $('#amount').val() });
+        }
+    </script>
+</li>

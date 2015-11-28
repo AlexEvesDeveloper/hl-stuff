@@ -1,0 +1,6 @@
+
+{% if pagination.totalNumberOfItems %}
+    <div class="pagination-stats">
+        Found <strong>{{ pagination.totalNumberOfItems }}</strong> results, currently on page <strong>{{ pagination.currentPageNumber }}</strong> of <strong>{{ pagination.totalNumberOfPages }}</strong>
+    </div>
+{% endif %}

@@ -1,0 +1,40 @@
+<div id="sub_header">
+    <div class="wrapper">
+        <div id="quotes">
+            <ul>
+                <?php
+                if ($this->loggedIn) {
+                    echo $this->headerQuotes('connect,connect-private', false);
+                } else {
+                    echo $this->headerQuotes('connect', false);
+                }
+                ?>
+            </ul>
+        </div>
+        <?php
+        // Check if user is logged in
+        $auth = Zend_Auth::getInstance();
+        $auth->setStorage(new Zend_Auth_Storage_Session('hl_connect'));
+
+        if ($auth->hasIdentity()) {
+            ?>
+            <div id="quick_links">
+                <h4>Quick Links</h4>
+                <?php if ($auth->getStorage()->read()->isInIris): ?>
+                    <a href="/iris-new-reference" class="nav-corporate-dark-button">Start a new <strong>Reference</strong></a><br />
+                <?php else: ?>
+                    <a href="#" onclick="window.open('/referencing/new','newReference','hotkeys=no,menubar=no,personalbar=no,resizable=yes,screenx=1,screeny=1,scrollbars=yes,status=no,toolbar=no,width=650,height=650');"
+                       class="nav-corporate-dark-button">Start a new <strong>Reference</strong></a><br />
+                <?php endif; ?>
+                <?php echo $this->myConnectLink($this->agentSchemeNumber, $this->agentUsername, $this->agentId); ?>
+
+            </div>
+            <?php
+        }
+        ?>
+        <div id="changer">
+            <a href="#" id="quote-left" rel="nofollow"></a> <a href="#" id="quote-right" rel="nofollow"></a>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>

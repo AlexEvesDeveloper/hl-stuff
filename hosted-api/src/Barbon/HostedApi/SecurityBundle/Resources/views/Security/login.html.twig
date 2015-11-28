@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-gb"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en-gb"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en-gb"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-gb"><!--<![endif]-->
+<head>
+{% block stylesheets %}
+    {% stylesheets '@BarbonHostedApiSecurityBundle/Resources/less/style.less' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+</head>
+
+<body>
+<div class="container">
+    <h1>Login</h1>
+    {% if error %}
+        <div class="flash flash-error">
+            {{ error.message | replace({
+                "Bad credentials.": "Error: You have entered invalid credentials."
+            })}}
+        </div>
+    {% endif %}
+    {% for sessionTimeoutMessage in app.session.flashbag.get('session_timeout') %}
+        <div class="flash flash-error">
+            {{ sessionTimeoutMessage }}
+        </div>
+    {% endfor %}
+    <div class="login-form">
+        <form action="{{ path('barbon_hostedapi_security_security_logincheck') }}" method="post">
+            <label for="asn">Agent Scheme Number:</label>
+            <input type="text" id="asn" name="_asn" value="{{ last_asn }}" />
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+            <button type="submit" class="pull-right">Login</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

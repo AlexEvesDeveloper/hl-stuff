@@ -1,0 +1,29 @@
+<h1>Edit Panel</h1>
+<script type="text/javascript">
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);
+    <?php } ?>
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<form method="post">
+    <p>
+        <label for="key" class="req">Key:</label><br />
+        <input type="text" size="60" name="key" class="input-text readonly" id="key" readonly value="<?php echo $this->key ?>"/>
+        <p class="msg info"><?php echo $this->description; ?></p>
+    <p>
+    <p>
+        <label for="content" class="req">Content:</label><br />
+        <textarea class="editor input-text" name="content" id="content" cols="100" rows="10"><?php echo $this->content ?></textarea>
+    </p>
+    <div class="box-02">
+        <input type="hidden" name="id" id="id" value="<?php echo $this->id ?>" />
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="javascript:history.go(-1)" />
+        </p>
+    </div>
+</form>

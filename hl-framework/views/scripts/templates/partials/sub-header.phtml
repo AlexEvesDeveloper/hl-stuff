@@ -1,0 +1,47 @@
+<div id="sub_header">
+    <div class="wrapper">
+        <div id="quotes">
+            <ul>
+                <?php echo $this->quotes; ?>
+            </ul>
+        </div>
+        <div id="quick_links">
+            <?php
+            $layout = $this->layout()->getView();
+            if ($this->linkTypes == 'corporate') {
+                ?>
+                <h4>Quick Links</h4>
+                <a href="<?php echo $layout->urls['lettingAgentsSite']; ?>" class="nav-agents-button"><strong>Letting Agents</strong> Site</a>
+                <a href="<?php echo $layout->urls['landlordsQuote']; ?>" class="nav-landlords-button">Get a <strong>Landlord's Quote</strong></a>
+                <a href="<?php echo $layout->urls['tenantsQuote']; ?>" class="nav-tenants-button">Get a <strong>Tenant's Quote</strong></a>
+                <?php
+            } elseif ($this->linkTypes == 'landlords') {
+                ?>
+                <h4>Quick Links</h4>
+                <a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsQuote']; ?>">Get a <strong>Landlord's Quote</strong></a>
+                <a class="nav-landlords-button" href="<?php echo $layout->urls['landlordsRetrieveQuote']; ?>"><strong>My Quotes</strong></a>
+                <a class="nav-landlords-button" href="<?php echo $layout->urls['tenantsReferencing']; ?>"><strong>Tenant's Referencing</strong></a>
+                <?php
+            } elseif ($this->linkTypes == 'letting-agents') {
+                ?>
+                <h4>Quick Links</h4>
+                <a class="nav-corporate-button" href="<?php echo $layout->urls['lettingAgentsSignup']; ?>">Sign Up <strong>Online</strong></a>
+                <a class="nav-corporate-button" href="<?php echo $layout->urls['connectLogin']; ?>">Login to <strong>Connect</strong></a>
+                <a class="nav-corporate-button" href="<?php echo $layout->urls['lettingAgentsEnquire']; ?>"><strong>Enquire</strong> about Sign Up</a>
+                <?php
+            } elseif ($this->linkTypes == 'tenants') {
+                ?>
+                <h4>Quick Links</h4>
+                <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsQuote']; ?>">Get a <strong>Tenant's Contents</strong> Quote</a>
+                <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsLiability']; ?>"><strong>Tenant's Liability</strong> Information</a>
+                <a class="nav-tenants-button" href="<?php echo $layout->urls['tenantsTrackApplication']; ?>"><strong>Track</strong> your Reference</a>
+                <?php
+            }
+            ?>
+        </div>
+        <div id="changer">
+            <a href="#" id="quote-left" rel="nofollow"></a> <a href="#" id="quote-right" rel="nofollow"></a>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>

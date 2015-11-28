@@ -1,0 +1,41 @@
+<?php
+
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_sharers'];
+?>
+<div id="policy_sharers_hideable" class="hideable">
+
+    <div class="form-group">
+        <?php
+        echo $this->element->policy_sharers
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+        <div class="section-help-fullwidth">
+            * Minimum Sum Insured levels apply when sharers are included.  A sharer is someone who is not your family member or partner/spouse but is named on the tenancy agreement.
+        </div>
+    </div>
+
+    <div id="policy_sharers_occupations_container">
+        <div id="policy_sharer1" >
+            <div class="form-group">
+                <?php
+                echo $this->element->policy_sharer1_occupation
+                    ->setOptions(array('class'=>'form-control'))->render();
+                ?>
+            </div>
+        </div>
+
+        <div id="policy_sharer2" class="form-group">
+            <?php
+            echo $this->element->policy_sharer2_occupation
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div id="sharerUnemployedPromo">
+            <div class="alert alert-info">
+                <?php echo $this->promoContent('tenants-insurance-quote-sharer-unemployed-promo'); ?>
+            </div>
+        </div>
+    </div>
+</div>

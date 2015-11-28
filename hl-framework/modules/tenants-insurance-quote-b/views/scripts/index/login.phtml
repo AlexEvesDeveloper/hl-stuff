@@ -1,0 +1,56 @@
+<div class="tenants no-banner">
+    <div class="col-sm-8">
+        <form enctype="application/x-www-form-urlencoded" method="post" action="" class="form-horizontal main">
+            <h1 class="tertiary-colour">Already registered?</h1>
+            <p>To log in to My HomeLet, all you need to do is enter your password.</p>
+
+            <?php if ($this->form->getDescription()) : ?>
+                <div class="alert alert-warning">
+                    <ul class="errors">
+                        <li><?php echo $this->form->getDescription(); ?></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <label for="email" class="required control-label col-sm-4">Email address</label>
+                <div class="col-sm-8">
+                    <input type="text" name="email" id="email" value="<?php echo $this->form->getElement('email')->getValue(); ?>" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="required control-label col-sm-4">Password</label>
+                <div class="col-sm-8">
+                    <input type="password" name="password" id="password" value="<?php echo $this->form->getElement('password')->getValue(); ?>" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <input type="submit" name="submit" id="submit" value="Login" class="btn btn-tertiary">
+                    <input type="submit" name="forgottenPassword" id="forgottenPassword" value="Resend Password" class="btn btn-tertiary">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="panel panel-alternate">
+            <h3>Need help?</h3>
+            <p class="large quaternary-colour">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+</div>

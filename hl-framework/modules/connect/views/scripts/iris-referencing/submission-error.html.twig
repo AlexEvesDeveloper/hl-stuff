@@ -1,0 +1,18 @@
+
+{% extends 'irisreferencing-base.html.twig' %}
+
+{% block body %}
+
+    <h2>There was a problem</h2>
+
+    {{ reasonForFailure | raw }}
+
+    <p>
+        If you continue to get this message after submitting an application, please call us on 0845 111 2222.
+    </p>
+
+    <p>
+        <a href="/iris-referencing">&laquo; Back to Referencing</a>
+    </p>
+
+{% endblock %}

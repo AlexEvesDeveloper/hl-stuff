@@ -1,0 +1,46 @@
+
+{% extends "iristat-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/tenants">For Tenants</a> &raquo;
+            <a href="/tenant-application-tracker">Reference Tracker</a> &raquo;
+            <a href="/tenant-application-tracker/call-me">Request a Callback</a> &raquo;
+            Thank You
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="tenants col-sm-8">
+        <div class="content">
+            <h2>{{ bodyTitle }}</h2>
+
+            <p>
+                <strong>Thank you, your email has been sent to our Campaign team.</strong>
+            </p>
+
+        </div>
+
+        <a href="/tenant-application-tracker"><button class="btn btn-primary">Back</button></a>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-lets-move-tenant">
+            <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+            <h3 class="base-colour heavy">Let's Move App</h3>
+
+            <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+            <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+            <br />
+            <br />
+            <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}

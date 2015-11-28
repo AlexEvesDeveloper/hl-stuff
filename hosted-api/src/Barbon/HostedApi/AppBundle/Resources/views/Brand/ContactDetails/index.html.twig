@@ -1,0 +1,19 @@
+<div class="agent-brand">
+    {% if agentBrand.phone is defined and '' != agentBrand.phone %}
+        <div class="agent-brand-phone">
+            Phone: <strong>{{ agentBrand.phone }}</strong>
+        </div>
+    {% endif %}
+
+    {% if agentBrand.websiteUrl is defined and '' != agentBrand.websiteUrl %}
+        <div class="agent-brand-url">
+            Website: <a href="{{ agentBrand.websiteUrl }}" target="_blank"><strong>{{ agentBrand.websiteUrl }}</strong></a>
+        </div>
+    {% endif %}
+
+    {% if agentBrand.email is defined and '' != agentBrand.email %}
+        <div class="agent-brand-email">
+            E-mail: <a href="mailto:{{ agentBrand.email }}"><strong>{{ agentBrand.email }}</strong></a>
+        </div>
+    {% endif %}
+</div>

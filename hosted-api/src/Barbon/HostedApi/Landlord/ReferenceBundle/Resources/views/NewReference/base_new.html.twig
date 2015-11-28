@@ -1,0 +1,66 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block body %}
+    <main class="container framework-content">
+        <div class="steps">
+            <div class="step active">
+                <div class="circle">
+                    <span class="pointer"></span>
+                    1
+                </div>
+                <div class="details">
+                    Reference details
+                </div>
+            </div>
+            <div class="step">
+                <div class="circle">2</div>
+                <div class="details">
+                    Confirmation
+                </div>
+            </div>
+            <div class="step">
+                <div class="circle">3</div>
+                <div class="details">
+                    Payment
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div><!-- steps -->
+
+        {% block formnavigation %}
+        {% endblock %}
+
+        {% block pageform %}
+        {% endblock %}
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {# Field suppression config for this vendor #}
+    <script src="{{ path('barbon_hostedapi_app_brand_fieldsuppression_index') }}"></script>
+
+    {# Product pricing endpoint config #}
+    {# todo: Refactor to not pollute global namespace #}
+    <script>
+        var productPricesEndpoint = '{{ path('barbon_hostedapi_landlord_reference_lookup_product_prices') }}';
+    </script>
+
+    {# JavaScript assets #}
+    {%
+    javascripts
+    '@BarbonHostedApiAppBundle/Resources/public/js/collections.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.fieldSuppression.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.dates.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.refresh.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.minimise.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/form.productPrices.js'
+    '@BarbonHostedApiAppBundle/Resources/public/js/addressfinder.plugin.jquery.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

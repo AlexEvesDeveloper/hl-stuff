@@ -1,0 +1,21 @@
+<div class="content">
+    <form id="portfolioProperty" class="validate" action="" method="post">
+        <div>
+            <?php echo $this->form; ?>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        // imageTick setup:
+        $('input[type=checkbox]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        $('input[type=radio]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+    </script>
+
+    <ul id="additional-list">
+        <?php echo $this->partialLoop('portfolio-insurance-quote/partials/additional-list.phtml', $this->additionalList); ?>
+    </ul>
+</div>

@@ -1,0 +1,110 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+framework:
+    esi:             { enabled: true }
+    #translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    cache: false
+    form:
+        resources: ['bootstrap_3_layout.html.twig', 'BarbonHostedApiAppBundle:Common/Widgets:widgets.html.twig']
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - BarbonHostedApiAppBundle:Reference\Form:referencing_case.html.twig
+        - BarbonHostedApiAppBundle:Reference\Form:referencing_application.html.twig
+        - BarbonHostedApiAppBundle:Reference\Form:referencing_guarantor.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:address.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:address_history.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:bank_account.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:financial_referee.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:financial_referees.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:letting_referee.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:previous_address.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:prospective_landlord.html.twig
+        - BarbonHostedApiAppBundle:Common\Form:application_marketing_preferences.html.twig
+        - BarbonHostedApiAgentReferenceBundle:Form:summary.html.twig
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:
+        - "BarbonHostedApiAppBundle"
+        - "BarbonHostedApiSecurityBundle"
+        - "BarbonHostedApiAgentReferenceBundle"
+        - "BarbonHostedApiLandlordReferenceBundle"
+        - "BarbonHostedApiLandlordAuthenticationBundle"
+        - "BarbonHostedApiLandlordDashboardBundle"
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        lessphp:
+            apply_to: "\.less$"
+            formatter: "classic"
+            preserve_comments: false
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+# Doctrine Configuration
+#doctrine:
+#    dbal:
+#        driver:   "%database_driver%"
+#        host:     "%database_host%"
+#        port:     "%database_port%"
+#        dbname:   "%database_name%"
+#        user:     "%database_user%"
+#        password: "%database_password%"
+#        charset:  UTF8
+#        # if using pdo_sqlite as your database driver:
+#        #   1. add the path in parameters.yml
+#        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+#        #   2. Uncomment database_path in parameters.yml.dist
+#        #   3. Uncomment next line:
+#        #     path:     "%database_path%"
+#
+#    orm:
+#        auto_generate_proxy_classes: "%kernel.debug%"
+#        auto_mapping: true
+
+doctrine_cache:
+    providers:
+        apc_iris:
+            type: apc
+            namespace: iris
+
+        file_system_iris:
+            type: file_system
+            namespace: iris
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }

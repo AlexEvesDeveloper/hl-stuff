@@ -1,0 +1,53 @@
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets
+        '@BarbonHostedApiAppBundle/Resources/less/Common/style.less'
+        '@BarbonHostedApiAppBundle/Resources/less/Common/font-awesome/font-awesome.less'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ path('barbon_hostedapi_app_brand_style_index') }}" />
+{% endblock %}
+
+{% block header %}
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{{ path('barbon_hostedapi_app_brand_logo_index') }}" alt="AgentBrandName" class="brand-logo" />
+                </div>
+
+                <div class="col-sm-8 contact-details">
+                    {{ render_esi(url('barbon_hostedapi_app_brand_contactdetails_index')) }}
+                    {% if app.user and is_granted('ROLE_LANDLORD') %}
+                    <div class="account-menu">
+                        <ul style="float: right;{# todo: Needs to be in stylesheet and to look a little better #}">
+                            <li><a href="{{ path('barbon_hostedapi_landlord_dashboard_index_index') }}" class="badge badge-primary"><i class="fa fa-home"></i> My Account</a></li>
+                            <li><a href="{{ path('barbon_hostedapi_landlord_authentication_login_logout') }}" class="badge badge-primary"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block footer %}
+    <footer class="page-footer">
+        <div class="container">
+            <div class="text-center">
+                Powered by
+                <img class="homelet-logo" src="{{ asset('images/homelet-logo.png') }}" alt="HomeLet" />
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {% if app.user %}
+        {{ render_esi(url('barbon_hostedapi_app_brand_analytics_index')) }}
+    {% endif %}
+{% endblock %}

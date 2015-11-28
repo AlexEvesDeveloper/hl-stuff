@@ -1,0 +1,61 @@
+<?php
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view'); 
+$addressString = "";
+if ($this->building != "") $addressString .= $this->building;
+if ($this->houseNumber != "") $addressString .= " {$this->houseNumber}";
+if ($this->address1 != "") $addressString .= " {$this->address1}";
+if ($this->address2 != "") $addressString .= " {$this->address2}";
+if ($this->address3 != "") $addressString .= " {$this->address3}";
+if ($this->address4 != "") $addressString .= " {$this->address4}";
+if ($this->address5 != "") $addressString .= " {$this->address5}";
+if ($this->postcode != "") $addressString .= " {$this->postcode}";
+?>
+<div class="property-item">
+    <div class="clearfix"></div>
+    <div class="property-row">
+        <a href="#" onClick="return false;" class="table-toggle quaternary-colour"><?php echo $addressString;?> <span class="pull-right toggle-link">Click to show details</span></a>
+    </div>
+    <?php if ($view->stepNum == 2) : ?>
+        <a href="/portfolio/insurance-quote/insured-address/?id=<?php echo $this->id;?>" class="btn btn-inverse btn-sm">Edit</a>
+        <a href="#" onclick="$.facebox('Remove property', { ajax: '/portfolio/insurance-quote/remove-property-dialog/?id=<?php echo $this->id;?>' }); return false;" class="btn btn-inverse btn-sm">Remove</a>
+    <?php endif; ?>
+
+    <table id="property_<?php echo $this->id; ?>" class="table table-condensed table-bordered table-property">
+        <thead>
+        <tr>
+            <th>Option</th>
+            <th>Selected Cover</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Comprehensive Buildings Insurance</td>
+            <td>&pound;<?php echo number_format($this->buildingsSumInsured, 0 ,'.' ,','); ?></td>
+        </tr>
+        <tr>
+            <td>Accidental damage</td>
+            <td><?php echo $this->buildingsAccidentalDamage; ?></td>
+        </tr>
+        <tr>
+            <td>Buildings nil excess</td>
+            <td><?php echo $this->buildingsNilExcess; ?></td>
+        </tr>
+        <tr>
+            <td>Full Contents Insurance</td>
+            <td>&pound;<?php echo number_format($this->contentsSumInsured, 0 ,'.' ,','); ?></td>
+        </tr>
+        <tr>
+            <td>Accidental damage</td>
+            <td><?php echo $this->contentsAccidentalDamage; ?></td>
+        </tr>
+        <tr>
+            <td>Contents nil excess</td>
+            <td><?php echo $this->contentsNilExcess; ?></td>
+        </tr>
+        <tr>
+            <td>Contents Insurance for Unfurnished Properties</td>
+            <td><?php echo $this->limitedContents; ?></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

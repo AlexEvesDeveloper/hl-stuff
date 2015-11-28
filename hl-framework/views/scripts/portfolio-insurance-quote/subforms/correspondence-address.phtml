@@ -1,0 +1,54 @@
+<?php
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_correspondenceaddress'];
+?>
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('portfolio-insurance-quote-help-correspondencedetails')); ?>
+        </span>
+        Your Correspondence Address
+    </h2>
+
+    <div class="visible-xs visible-sm section-help">
+        <?php echo $this->promoContent('portfolio-insurance-quote-help-correspondencedetails'); ?>
+    </div>
+
+    <div class="form-group">
+        <label for="cor_postcode" class="required">Please enter the postcode for the property you live at:</label>
+        <div class="input-group">
+            <?php
+            echo $this->element->cor_postcode
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+            <span class="input-group-btn">
+                <input type="submit" id="cor_postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#cor_house_number_name').val(), $('#cor_postcode').val(), 'cor_postcode', 'cor_address'); return false;" class="btn btn-quaternary btn-postcode" />
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" id="cor_address_selector">
+        <?php
+        echo $this->element->cor_address
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div id="cor_address_details">
+        <p>You have selected the following address:</p>
+        <dl class="dl-horizontal">
+            <dt>Address:</dt>
+            <dd>
+                <?php echo $this->element->cor_address_line1; ?><br />
+                <?php echo $this->element->cor_address_line2; ?><br />
+                <?php echo $this->element->cor_address_line3; ?>
+            </dd>
+            <dt>Postcode:</dt>
+            <dd>
+                <?php echo $this->element->cor_address_postcode; ?>
+            </dd>
+        </dl>
+        <p>If this is incorrect, please search for a new postcode above.</p>
+    </div>
+</div>

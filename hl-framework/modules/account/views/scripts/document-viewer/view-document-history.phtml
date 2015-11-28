@@ -1,0 +1,79 @@
+
+<?php if (!$this->isAjaxRequest): ?>
+
+<div class="portal-wrapper">
+    
+    <?php echo $this->breadcrumbs ?>
+    
+    <div class="secondary-content">
+        <?php echo $this->navigation ?>
+    </div>
+    
+    <div class="primary-content">
+
+        <h2>Quotes</h2>
+<?php endif; ?>
+
+        <?php if (count($this->policyDocuments) > 0): ?>
+            <div class="row">
+                <?php foreach ($this->policyDocuments as $policyDocument): ?>
+                    <div class="col-sm-6">
+                        <div class="policy-document">
+                            <h3>Name: <?php echo $policyDocument->customerDescription ?></h3>
+
+                            <dl class="dl-horizontal">
+                                <dt>Type</dt>
+                                <dd><?php echo $policyDocument->catType ?></dd>
+                                <dt>Date of Issue</dt>
+                                <dd><?php echo $policyDocument->send_datetime->get(Zend_Date::DAY . ' ' . Zend_Date::MONTH_NAME_SHORT . ' ' . Zend_Date::YEAR) ?></dd>
+                                <dt>Sent By</dt>
+                                <dd>
+                                    <?php if ($policyDocument->send_method == 'Print'): ?>
+                                        Post
+                                    <?php elseif ($policyDocument->send_method == 'Email'): ?>
+                                        Email
+                                    <?php endif ?>
+                                </dd>
+                            </dl>
+
+                            <?php if ($this->policyNumber[0] == 'Q'): ?>
+                                <a href="/my-homelet/quotes/<?php echo base64_encode($this->policyNumber) ?>/documents/<?php echo $this->escape($policyDocument->request_hash) ?>/view"
+                                       title="<?php echo $this->escape($policyDocument->customerDescription) ?>" target="_blank">View Document</a>
+                            <?php else: ?>
+                                <a href="/my-homelet/policies/<?php echo base64_encode($this->policyNumber) ?>/documents/<?php echo $this->escape($policyDocument->request_hash) ?>/view"
+                                       title="<?php echo $this->escape($policyDocument->customerDescription) ?>" target="_blank">View Document</a>
+                            <?php endif ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="info-container">
+                <h3>You currently have no policy documents available to view</h3>
+
+                <p>
+                    If you&rsquo;ve just purchased a policy, then welcome to HomeLet!
+                    Just to remind you, it can take over one hour for our system to generate your new policy documents.
+                    Once they&rsquo;ve been generated they&rsquo;ll display right here in My HomeLet.
+                </p>
+
+                <p>
+                    We&rsquo;ll also email you in the future to let you know when you have any new documents to view.
+                </p>
+
+                <h3>Can&rsquo;t see your documents?</h3>
+
+                <p>
+                    If you&rsquo;re an existing customer and you can&rsquo;t see your documents please don&rsquo;t hesitate to contact us.
+                    You can call us on <strong>0845 117 6000</strong> or email <a href="mailto:help@homelet.co.uk">help@homelet.co.uk</a>.
+                </p>
+            </div>
+        <?php endif; ?>
+        
+<?php if (!$this->isAjaxRequest): ?>
+        
+    </div>
+    
+</div>
+
+<?php endif; ?>

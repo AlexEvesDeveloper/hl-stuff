@@ -1,0 +1,33 @@
+<?php
+
+// Grab view for outputting values
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+?>
+<h2>Direct Debit Confirmation</h2>
+<?php echo $this->helpPopup('Direct Debit Payment', 'tenants-insurance-quote-help-directdebit'); ?>
+<div class="clear"></div>
+Thank you. Your Bank Details have been verified.<br /><br />
+<p>If the details shown above are correct and you wish to confirm the Direct Debit Instruction please click on the "Confirm" button.
+<!--If you would rather print, sign and send the Direct Debit Instruction please click on the "Print & Send by Post" button. If you choose this print option, we will hold cover for ten days.--></p>
+
+<strong>
+    <?php
+    if($view->branchDetails->bankNameFull != "") echo $view->branchDetails->bankNameFull ."<br />";
+    if($view->branchDetails->addressLine1 != "") echo $view->branchDetails->addressLine1 ."<br />";
+    if($view->branchDetails->addressLine2 != "") echo $view->branchDetails->addressLine2 ."<br />";
+    if($view->branchDetails->addressLine3 != "") echo $view->branchDetails->addressLine3 ."<br />";
+    if($view->branchDetails->addressLine4 != "") echo $view->branchDetails->addressLine4 ."<br />";
+    if($view->branchDetails->town != "") echo $view->branchDetails->town ."<br />";
+    if($view->branchDetails->county != "") echo $view->branchDetails->county ."<br />";
+    if($view->branchDetails->postCode != "") echo $view->branchDetails->postCode ."<br />";
+    ?>
+</strong>
+<br />
+<p>We will send a letter confirming the set up of this Direct Debit Instruction to you within 3 working days. We will provide a separate notice of the payment collection amounts and dates no later than 10 working days prior to the first collection. </p>
+<?php echo $this->element->dd_inyourname; ?>
+<?php echo $this->element->dd_onlyauthorised; ?>
+<?php echo $this->element->dd_accountname; ?>
+<?php echo $this->element->bank_account_number; ?>
+<?php echo $this->element->bank_sortcode_number; ?>
+<?php echo $this->element->dd_confirm; ?>

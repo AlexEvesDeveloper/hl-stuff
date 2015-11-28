@@ -1,0 +1,34 @@
+<div class="content">
+    <form id="portfolioProperty" class="validate" action="" method="post">
+        <?php echo $this->form; ?>
+    </form>
+    <script type="text/javascript">
+        // imageTick setup:
+        $('input[type=checkbox]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+        $('input[type=radio]').checkbox({
+            empty: '/assets/common/images/empty.png'
+        });
+    </script>
+    <style>
+        .facebox-header {
+            background: none;
+        }
+        .facebox-header h2 {
+            padding-left: 8px;
+        }
+    </style>
+    <h3 class="quaternary-colour">Previous Claims Added:</h3>
+    <div id="claims-list">
+        <?php
+        if (count($this->claimsList) > 0) {
+            echo $this->partialLoop('portfolio-insurance-quote/partials/claims-list.phtml', $this->claimsList);
+        } else {
+            echo "<em>None</em>";
+        }
+        ?>
+    </div>
+    <input type="button" onclick="$('#facebox .close').click();" value="Done" class="btn btn-quaternary pull-right" />
+    <div class="clearfix"></div>
+</div>

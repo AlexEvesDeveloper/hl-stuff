@@ -1,0 +1,15 @@
+<h2>Company Details</h2>
+<div class="form_section two-col">
+    <div class="autoAlt">
+        <?php echo $this->element->company_name->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->company_tradingname; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->company_registration->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->company_incorporation; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->company_contactname->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->company_phone; ?>
+    </div>
+</div>

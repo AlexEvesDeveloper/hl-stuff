@@ -1,0 +1,53 @@
+services:
+  barbon.hosted_api.app.event.listener.persist_multi_reference_listener:
+    class: Barbon\HostedApi\AppBundle\Event\Listener\PersistMultiReferenceListener
+    arguments:
+      - @barbon.iris_rest_client.iris_entity_manager
+      - @request_stack
+    tags:
+      - { name: kernel.event_listener, event: new_multi_reference_event, method: persistMultiReference }
+
+  barbon.hosted_api.app.event.listener.persist_guarantor_reference_listener:
+    class: Barbon\HostedApi\AppBundle\Event\Listener\PersistGuarantorReferenceListener
+    arguments:
+      - @barbon.iris_rest_client.iris_entity_manager
+      - @request_stack
+    tags:
+      - { name: kernel.event_listener, event: new_guarantor_reference_event, method: persistGuarantorReference }
+
+  barbon.hosted_api.app.event.listener.abstract_payment_listener:
+    abstract: true
+    arguments:
+      - @barbon.iris_rest_client.iris_entity_manager
+      - @router
+
+  barbon.hosted_api.app.event.listener.multi_payment_listener:
+    class: Barbon\HostedApi\AppBundle\Event\Listener\MultiPaymentListener
+    parent: barbon.hosted_api.app.event.listener.abstract_payment_listener
+    arguments:
+      - @barbon.hosted_api.app.form.common.model.multi_payment_order
+    tags:
+      - { name: kernel.event_listener, event: confirm_multi_reference_event, method: determineRedirectToPayment }
+
+  barbon.hosted_api.app.event.listener.individual_payment_listener:
+    class: Barbon\HostedApi\AppBundle\Event\Listener\IndividualPaymentListener
+    parent: barbon.hosted_api.app.event.listener.abstract_payment_listener
+    arguments:
+      - @barbon.hosted_api.app.form.common.model.individual_payment_order
+    tags:
+      - { name: kernel.event_listener, event: confirm_guarantor_reference_event, method: determineRedirectToPayment }
+
+  barbon.hosted_api.app.event.listener.session_clean_up_listener:
+    class: Barbon\HostedApi\AppBundle\Event\Listener\SessionCleanUpListener
+    arguments:
+      - @session
+    tags:
+      - { name: kernel.event_listener, event: new_reference_finish_event, method: cleanUpSession }
+
+  barbon.hosted_api.app.form.common.model.multi_payment_order:
+    class: Barbon\HostedApi\AppBundle\Form\Common\Model\MultiPaymentOrder
+    public: false
+
+  barbon.hosted_api.app.form.common.model.individual_payment_order:
+    class: Barbon\HostedApi\AppBundle\Form\Common\Model\IndividualPaymentOrder
+    public: false

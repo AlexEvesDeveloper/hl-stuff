@@ -1,0 +1,28 @@
+<?php
+echo $this->subHeader($this->pageStyling, $this->pageStyling);
+?>
+<div class="<?php echo $this->pageStyling; ?>">
+    <div class="wrapper three-col-equi">
+		<div class="content">
+            <?php echo $this->content ?>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader1'], $this->meta['promoText1'], $this->meta['promoIcon1'], $this->meta['promoUrl1']); ?>
+            </div>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader2'], $this->meta['promoText2'], $this->meta['promoIcon2'], $this->meta['promoUrl2']); ?>
+            </div>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader3'], $this->meta['promoText3'], $this->meta['promoIcon3'], $this->meta['promoUrl3']); ?>
+            </div>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader4'], $this->meta['promoText4'], $this->meta['promoIcon4'], $this->meta['promoUrl4']); ?>
+            </div>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader5'], $this->meta['promoText5'], $this->meta['promoIcon5'], $this->meta['promoUrl5']); ?>
+            </div>
+            <div class="col">
+                <?php echo $this->promoPanel($this->pageStyling, $this->meta['promoHeader6'], $this->meta['promoText6'], $this->meta['promoIcon6'], $this->meta['promoUrl6']); ?>
+            </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,187 @@
+<div class="col-xs-12">
+    <?php if ($this->breadcrumbs):
+        echo $this->breadcrumbs;
+    else: ?>
+        <ol class="breadcrumb">
+            <li class="home"><a href="/">Home</a></li>
+            <li><a href="/my-homelet">My HomeLet</a></li>
+            <li class="active">Retrieve Quote</li>
+        </ol>
+    <?php endif; ?>
+    <h1 class="base-colour">Retrieve Your Quote</h1>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="portal-wrapper content">
+
+    <div class="col-md-12">
+        <p>Select your HomeLet quote from the selection below to continue it.</p>
+
+        <table class="table table-condensed table-bordered hidden-xs">
+            <thead>
+            <tr>
+                <th>Quote Number</th>
+                <th>Product</th>
+                <th>Cover</th>
+                <th>Start date</th>
+                <th>Expires</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $counter = 1; ?>
+            <?php foreach ($this->quotes as $quote): ?>
+                <?php $liabilitypolicy = false; ?>
+
+                <tr class="view" id="<?php echo $counter++; ?>">
+                    <td>
+                        <strong><?php echo $this->escape($quote->policyNumber) ?></strong><br />
+                        <em>(<?php echo $this->escape($quote->propertyAddress1); ?>, <?php echo $this->escape($quote->propertyPostcode); ?>)</em>
+                    </td>
+                    <td><?php echo $this->escape($quote->getPrintableProductName()) ?></td>
+                    <td>
+                        <ul>
+                            <?php if (count($quote->policyCovers) > 0): ?>
+                                <?php foreach ($quote->policyCovers as $cover): ?>
+                                    <li><?php echo $this->escape($cover['name']) ?></li>
+
+                                    <?php
+                                    if ('liabilitytp' == $cover['cover']) {
+                                        $liabilitypolicy = true;
+                                    }
+                                    ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <em>None Selected</em>
+                            <?php endif; ?>
+                        </ul>
+                    </td>
+                    <td>
+                        <?php
+                        if ('0000-00-00' == $quote->startDate) {
+                            ?>
+                            <em>Not Specified</em>
+                            <?php
+                        }
+                        else {
+                            echo $this->escape($quote->getStartsAt());
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo $this->escape($quote->getExpiresAt()) ?>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <?php if ('Referred' == $quote->payStatus || 'ReleasedFromUnderwriting' == $quote->payStatus): ?>
+                            Your quote has been referred to our Insurance team. We&rsquo;ll contact you shortly about your quote for some further information.<br/><br/>
+                            If you need to contact us you can call us on 0845 117 6000
+                        <?php elseif(true === $liabilitypolicy): ?>
+                            Please call us on 0845 117 6000 to buy a Tenancy Liability quote.
+                        <?php elseif(in_array($quote->policyName, array('landlords', 'lowcostlandlords', 'tenants'))): ?>
+                            Please call us on 0845 117 6000 to buy a <?php echo $this->escape($quote->getPrintableProductName()) ?> quote.
+                        <?php else: ?>
+                            <?php if (0 == $quote->origin || 'landlordsp' !== $quote->policyName): ?>
+                                <a href="/<?php echo $this->escape($quote->getProductName()) ?>/insurance-quote/retrieve?auth=<?php echo $this->escape($this->authTokens[$quote->policyNumber]) ?>" title="" class="btn btn-<?php echo $this->policyTypeToColour($quote->policyType); ?>">Complete Your Quote</a><br/>
+                            <?php else: ?>
+                                <a href="/<?php echo $this->escape($quote->getProductName()) ?>/insurance-quote/retrieve?auth=<?php echo $this->escape($this->authTokens[$quote->policyNumber]) ?>" title="" class="btn btn-<?php echo $this->policyTypeToColour($quote->policyType); ?>">Complete Your Quote</a><br/>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="visible-xs">
+            <dl>
+                <?php foreach ($this->quotes as $quote): ?>
+                    <dt><strong>Quote Number</strong></dt>
+                    <dd>
+                        <strong><?php echo $this->escape($quote->policyNumber) ?></strong><br />
+                        <em>(<?php echo $this->escape($quote->propertyAddress1); ?>, <?php echo $this->escape($quote->propertyPostcode); ?>)</em>
+                    </dd>
+                    <dt><strong>Product</strong></dt>
+                    <dd><?php echo $this->escape($quote->getPrintableProductName()) ?></dd>
+                    <dt><strong>Cover</strong></dt>
+                    <dd>
+                        <ul>
+                            <?php if (count($quote->policyCovers) > 0): ?>
+                                <?php foreach ($quote->policyCovers as $cover): ?>
+                                    <li><?php echo $this->escape($cover['name']) ?></li>
+
+                                    <?php
+                                    if ('liabilitytp' == $cover['cover']) {
+                                        $liabilitypolicy = true;
+                                    }
+                                    ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <em>None Selected</em>
+                            <?php endif; ?>
+                        </ul>
+                    </dd>
+                    <dt><strong>Start date</strong></dt>
+                    <dd>
+                        <?php
+                        if ('0000-00-00' == $quote->startDate) {
+                            ?>
+                            <em>Not Specified</em>
+                        <?php
+                        }
+                        else {
+                            echo $this->escape($quote->getStartsAt());
+                        }
+                        ?>
+                    </dd>
+                    <dt><strong>Expires</strong></dt>
+                    <dd>
+                        <?php echo $this->escape($quote->getExpiresAt()) ?>
+                    </dd>
+                    <dt><strong>Action</strong></dt>
+                    <dd>
+                        <?php if ('Referred' == $quote->payStatus || 'ReleasedFromUnderwriting' == $quote->payStatus): ?>
+                            Your quote has been referred to our Insurance team. We&rsquo;ll contact you shortly about your quote for some further information.<br/><br/>
+                            If you need to contact us you can call us on 0845 117 6000
+                        <?php elseif (true === $liabilitypolicy): ?>
+                            Please call us on 0845 117 6000 to buy a Tenancy Liability quote.
+                        <?php elseif(in_array($quote->policyName, array('landlords', 'lowcostlandlords', 'tenants'))): ?>
+                            Please call us on 0845 117 6000 to buy a <?php echo $this->escape($quote->getPrintableProductName()) ?> quote.
+                        <?php else: ?>
+                            <?php if (0 == $quote->origin || 'landlordsp' !== $quote->policyName): ?>
+                                <a href="/<?php echo $this->escape($quote->getProductName()) ?>/insurance-quote/retrieve?auth=<?php echo $this->escape($this->authTokens[$quote->policyNumber]) ?>" title="" class="btn btn-<?php echo $this->policyTypeToColour($quote->policyType); ?>">Complete Your Quote</a><br/>
+                            <?php else: ?>
+                                <a href="/<?php echo $this->escape($quote->getProductName()) ?>/insurance-quote/retrieve?auth=<?php echo $this->escape($this->authTokens[$quote->policyNumber]) ?>" title="" class="btn btn-<?php echo $this->policyTypeToColour($quote->policyType); ?>">Complete Your Quote</a><br/>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <hr />
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-secondary panel-help">
+            <h3>Need help?</h3>
+            <p class="large quaternary-colour">Call: 0845 117 6000</p>
+            <p>We&rsquo;re open from:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>Weekdays</td>
+                    <td>8:30am - 6:30pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>9:30am - 1:00pm</td>
+                </tr>
+            </table>
+            <p>We&rsquo;re always happy to help.</p>
+        </div>
+    </div>
+
+    <div class="col-md-9 col-md-6">
+        <p>Have a My HomeLet account? <a href="/my-homelet/login" title="">Please log in to My HomeLet</a>.</p>
+        <p>One of our Letting Agents looking for Connect? <a href="<?php $params = Zend_Registry::get('params'); echo ($params->connectUrl->connectRootUrl); ?>">Log in to Connect</a>.</p>
+    </div>
+
+</div>

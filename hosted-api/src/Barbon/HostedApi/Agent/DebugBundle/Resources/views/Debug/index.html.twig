@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {% javascripts
+        '@BarbonHostedApiAppBundle/Resources/public/js/debug/*'
+        '@BarbonHostedApiAgentDebugBundle/Resources/public/js/*'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block body %}
+    <div class="container form-inline" style="border: 1px solid #9B9B9B; border-radius: 5px;">
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-12">
+                POST {{ scheme }}://{{ hostname }}{{ basepath }}/
+
+
+                <div class="form-group">
+                    <label class="sr-only" for="requestClient">Action</label>
+                    <select id="requestClient" class="form-control">
+                        <option value="agent">agent</option>
+                    </select>
+                </div>
+
+                /
+
+                <div class="form-group">
+                    <label class="sr-only" for="requestAction">Action</label>
+                    <select id="requestAction" class="form-control">
+                        <option value="reference/new-reference">reference/new-reference</option>
+                        <option value="search-references">reference/list-references</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <form id="requestForm" method="post">
+            <div id="requestFields"></div>
+        </form>
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-5 form-group">
+                <label class="sr-only" for="requestFieldName">Field name</label>
+                <input id="requestFieldName" type="text" name="fieldName" class="form-control" placeholder="Field name" style="width: 100%;">
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label class="sr-only" for="requestFieldValue">Field value</label>
+                <input id="requestFieldValue" type="text" name="fieldValue" class="form-control" placeholder="Field value" style="width: 100%;">
+            </div>
+
+            <div class="col-md-1">
+                <button type="button" id="addField" class="btn btn-default">Add</button>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 15px; padding-bottom: 15px;">
+            <div class="col-md-12" style="text-align: right;">
+                <button id="loadSampleData" type="button" class="btn btn-default">Load data</button>
+                <button id="submitRequest" type="button" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitForm()
+        {
+            addRequestField();
+
+            var requestClient = $('#requestClient').val();
+            var requestAction = $('#requestAction').val();
+
+            var action = '{{scheme}}://{{hostname}}{{basepath}}/' + requestClient + '/' + requestAction;
+
+            $('#requestForm').attr('action', action).submit();
+        }
+
+        function loadSampleData()
+        {
+            var requestClient = $('#requestClient').val();
+            var requestAction = $('#requestAction').val();
+            var url = '/bundles/barbonhostedapiagentdebug/input-data/agent/new-reference' + '.json?' + 
+                ((Math.random() * 10000) + 1);
+        
+            $.getJSON(url, function(sampleData) {
+                var requestFieldName = $('#requestFieldName');
+                var requestFieldValue = $('#requestFieldValue');
+        
+                for (var prop in sampleData) {
+                    if (sampleData.hasOwnProperty(prop)) {
+                        requestFieldName.val(prop);
+                        requestFieldValue.val(sampleData[prop]);
+        
+                        addRequestField();
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

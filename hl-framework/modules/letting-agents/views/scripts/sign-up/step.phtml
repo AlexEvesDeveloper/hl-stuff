@@ -1,0 +1,15 @@
+<?php echo $this->LettingAgentsSubHeader($this->stepNum); ?>
+<div class="letting-agents">
+    <div class="wrapper two-col">
+        <div class="content">
+            <form id="letting-application" action="" method="post" enctype="application/x-www-form-urlencoded">
+				<?php echo $this->form; ?>                
+                <?php
+                	//if (!in_array($this->stepNum, array(4))) // steps that this nav bar should NOT appear in
+	               	echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); 
+                	?>
+            </form>
+        </div>
+        <?php  echo $this->lettingAgentsSidebar($this->errorsHtml, $this->stepNum, $this->stepMax); ?>        
+    </div>
+</div>

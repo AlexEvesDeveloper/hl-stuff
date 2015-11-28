@@ -1,0 +1,178 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Referencing report - Summary</h2>
+        <?php $totalcount = count($this->reportdata); ?>
+        
+        <table style="width: 100%; margin-bottom: 1em;">
+            <tr>
+                <th style="width: 60%;">Product</th>
+                <th style="width: 20%;">Volume</th>
+                <th style="width: 20%;">Percentage of total (<?php echo $totalcount; ?>)</th>
+            </tr>
+            
+            <?php
+            
+            foreach ($this->productoverview_reportdata as $row)
+            {
+                $productname = ($row['name'] == 'None' || $row['name'] == 'none') ? 'Cancelled' : $row['name'];
+                $percentage = ($totalcount > 0) ? (($row['count'] / $totalcount) * 100 ) : 'N/A';
+                
+                echo '<tr>';
+                echo '<td>' . $productname . '</td>';
+                echo '<td>' . (($row['count'] == 0) ? 'N/A' : $row['count']) . '</td>';
+                echo '<td>' . sprintf('%.2f', $percentage) . '</td>';
+                echo '</tr>';
+            }
+            
+            ?>
+        </table>
+        
+        
+        <table style="width: 100%; margin-bottom: 1em;">
+            <?php $totalcount = count($this->reportdata); ?>
+            <tr>
+                <th style="width: 60%;">Applicant Type</th>
+                <th style="width: 20%;">Volume</th>
+                <th style="width: 20%;">Percentage of total (<?php echo $totalcount; ?>)</th>
+            </tr>
+            
+            <?php
+            
+            $tenantscount = 0;
+            $guarantorscount = 0;
+            foreach ($this->appltype_reportdata as $row)
+            {
+                if (isset($row['countTenant'])) $tenantscount = $row['countTenant'];
+                if (isset($row['countGuarantor'])) $guarantorscount = $row['countGuarantor'];
+            }
+            
+            echo '<tr>';
+            echo '<td>Tenant</td>';
+            echo '<td>' . $tenantscount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($tenantscount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            echo '<tr>';
+            echo '<td>Guarantor</td>';
+            echo '<td>' . $guarantorscount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($guarantorscount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            ?>
+        </table>
+        
+        
+        
+        <table style="width: 100%; margin-bottom: 1em;">
+            <?php $totalcount = count($this->reportdata); ?>
+            <tr>
+                <th style="width: 60%;">Submission Type</th>
+                <th style="width: 20%;">Volume</th>
+                <th style="width: 20%;">Percentage of total (<?php echo $totalcount; ?>)</th>
+            </tr>
+            
+            <?php
+            
+            $tenantscount = 0;
+            $agentcount = 0;
+            $homeletcount = 0;
+            $othercount = 0;
+            foreach ($this->appltype_reportdata as $row)
+            {
+                if (isset($row['countTenant'])) $tenantscount = $row['countTenant'];
+                if (isset($row['countAgent'])) $agentcount = $row['countAgent'];
+                if (isset($row['countHomelet'])) $homeletcount = $row['countHomelet'];
+                if (isset($row['countOthers'])) $othercount = $row['countOthers'];
+            }
+            
+            echo '<tr>';
+            echo '<td>Tenant Link</td>';
+            echo '<td>' . $tenantscount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($tenantscount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            echo '<tr>';
+            echo '<td>Logged via Connect</td>';
+            echo '<td>' . $agentcount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($agentcount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            echo '<tr>';
+            echo '<td>Logged via HomeLet</td>';
+            echo '<td>' . $homeletcount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($homeletcount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            echo '<tr>';
+            echo '<td>Other</td>';
+            echo '<td>' . $othercount . '</td>';
+            echo '<td>' . sprintf('%.2f', ($totalcount > 0) ? (($othercount / $totalcount) * 100 ) : 'N/A') . '</td>';
+            echo '</tr>';
+            
+            ?>
+        </table>
+        
+        
+        
+        
+        
+        <h2>Referencing report - Data</h2>
+        <table style="width: 100%;">
+            <tr>
+                <th>Date entered</th>
+                <th>Referencing Number</th>
+                <th>Prospective Address</th>
+                <th>Product</th>
+                <th>Term</th>
+                <th>Applicant Type</th>
+                <th>Status</th>
+                <th>Sent via Tenant Link</th>
+            </tr>
+            
+            <?php
+            
+            if (count($this->reportdata))
+            {
+                foreach ($this->reportdata as $row)
+                {
+                    $address = array();
+                    
+                    if (isset($row['address1']) && $row['address1'] != '')
+                        $address = array_merge($address, explode(',', $row['address1']));
+                        
+                    if (isset($row['town']) && $row['town'] != '')
+                        $address = array_merge($address, explode(',', $row['town']));
+                    
+                    foreach ($address as &$value) $value = trim($value);
+                    $address = implode(',<br/>', $address);
+                    
+                    echo '<tr>';
+                    echo '<td>' . $row['start_time'] . '</td>';
+                    echo '<td>' . $row['RefNo'] . '</td>';
+                    echo '<td>' . $address . '</td>';
+                    echo '<td>' . (strtolower($row['Name']) == 'none' ? 'Cancelled' : $row['Name']) . '</td>';
+                    echo '<td>' . ( $row['PolicyLength'] > 0 ? $row['PolicyLength'] . ' months' : 'None') . '</td>';
+                    echo '<td>' . ($row['Guarantor'] > 0 ? 'Guarantor' : 'Tenant') . '</td>';
+                    echo '<td>' . ($row['conclusion'] != '' ? 'Acceptable' : 'Pending') . '</td>';
+                    echo '<td>' . ($row['compmethod'] == 'email' ? 'Yes' : 'No') . '</td>';
+                    echo '</tr>';
+                }
+            }
+            else
+            {
+                ?>
+                
+                <tr>
+                    <td colspan="8">
+                        No data found
+                    </td>
+                </tr>
+                
+                <?php
+            }
+            
+            ?>
+        </table>
+    </div>
+</div>

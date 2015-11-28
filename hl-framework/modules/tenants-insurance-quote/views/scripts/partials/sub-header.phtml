@@ -1,0 +1,62 @@
+<?php
+// Create string format for the step contents and step link
+$stepContentFormat = '<span class="circle">%1$d</span><span class="text">%2$s</span>';
+$stepLinkFormat = '<a %1$s id="tenants-quote-step%2$d" href="/tenants/insurance-quote/step%3$d">%4$s</a>';
+
+$class = null;
+
+// Add text values for each of the steps in the process
+$stepText = array(
+    1 => 'Your Details',
+    2 => 'Your cover',
+    3 => 'Important information',
+    4 => 'Payment'
+);
+
+if ('dd' == $this->stepNum):
+    $num = 4;
+else:
+    $num = $this->stepNum;
+endif; ?>
+
+<div id="sub_header_clean">
+    <h1>Tenants Contents - Insurance Quote</h1>
+    <div id="steps" class="steps-tenants">
+        <div class="hidden-xs">
+            <?php for ($i = 1; $i <= 4; $i++): ?>
+                <?php
+                // We only want to give the link a class if its the current step
+                if ($i == $num):
+                    $class = ' class="current"';
+                endif;
+                ?>
+
+                <?php $stepContent = sprintf($stepContentFormat, $i, $stepText[$i]); ?>
+
+                <div class="step">
+                    <?php if ($i <= $num): ?>
+                        <?php echo sprintf($stepLinkFormat, $class, $i, $i, $stepContent); ?>
+                    <?php else: ?>
+                        <?php echo $stepContent; ?>
+                    <?php endif; ?>
+                </div>
+            <?php endfor; ?>
+        </div>
+
+        <div class="visible-xs">
+            <div class="step">
+                <a class="current" id="tenants-quote-step<?php echo $num ?>" href="/tenants/insurance-quote/step<?php echo $num ?>">
+                    <span class="circle"><?php echo $num ?></span>
+                    <span class="text">of</span>
+                </a>
+            </div>
+            <div class="step">
+                <a href="#">
+                    <span class="circle">4</span>
+                    <span class="text">steps</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

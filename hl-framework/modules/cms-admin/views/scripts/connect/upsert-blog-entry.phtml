@@ -1,0 +1,160 @@
+<h1><?php echo $this->upsertType; ?> blog entry</h1>
+
+
+<script>
+    
+    $(function() {
+        
+        $("#sortable").disableSelection();
+        $("#removeIcon").click(removeIcon);
+        
+        <?php if ($this->errorMessage) { ?>
+            setTimeout(function() {
+                $('.error').animate({opacity: "0"}, 1000).slideUp(500);
+            }, 3000);    
+        <?php } ?>
+        
+        var availableTags = [<?php echo $this->blogTags; ?>];
+        
+        function split( val ) {
+            return val.split( /,\s*/ );
+        }
+        
+        function extractLast( term ) {
+            return split( term ).pop();
+        }
+        
+        $( "#tagString" )
+            .bind( "keydown", function( event ) {
+                if ( event.keyCode === $.ui.keyCode.TAB &&
+                        $( this ).data( "autocomplete" ).menu.active ) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function( request, response ) {
+                    // delegate back to autocomplete, but extract the last term
+                    response( $.ui.autocomplete.filter(
+                        availableTags, extractLast( request.term ) ) );
+                },
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function( event, ui ) {
+                    var terms = split( this.value );
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push( ui.item.value );
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push( "" );
+                    this.value = terms.join( ", " );
+                    return false;
+                }
+            });
+    });
+
+
+    function removeIcon() {
+        
+        $('#articleIcon').val('');
+        $('#imageName').val('');
+        $('#imageContent').hide('slow');
+        return false;
+    }
+    
+</script>
+
+
+<?php if ($this->errorMessage != '') { ?>
+    <p class="msg error">
+        <?php echo $this->errorMessage; ?>
+    </p>
+<?php } ?>
+
+
+<form method="post" enctype="multipart/form-data">
+    
+    <input type="hidden" name="upsertType" id="upsertType" value="<?php echo $this->upsertType ?>" />
+
+
+    <?php if($this->upsertType == 'Edit'): ?>
+        <input type="hidden" name="id" id="id" value="<?php echo $this->id ?>" />
+    <?php endif ?>
+    
+    
+    <input type="hidden" name="status" id="status" value="<?php echo $this->status ?>" />
+    
+    
+    <div class="connect-cms-box">
+        <h5>
+            Title:<span class="mandatory">*</span>
+            <span class="connect-info-text">The title will always be displayed.</span>
+        </h5>
+        
+        <input type="text" size="60" name="title"
+            class="input-text" id="title" value="<?php echo $this->title ?>"/>
+    </div>
+    
+    
+    <div class="connect-cms-box">
+        <h5>
+            Article icon:
+            <span class="connect-info-text">The icon will only be displayed when this blog entry is shown in a summary box. Icon will be resized to 65x65px.</span>
+        </h5>
+        
+        <input type="file" size="40" name="articleIcon" id="articleIcon" class="input-text" />
+        <a href="#" id="removeIcon" name="removeIcon">Remove</a>
+        
+        <?php if($this->imageToDisplay != ''): ?>
+            
+            <div>
+                <img name="imageContent" id="imageContent" src="<?php echo $this->imageToDisplay; ?>" />
+                <input type="hidden" name="imageName" id="imageName" value="<?php echo $this->imageName; ?>" />
+            </div>
+        
+        <?php endif ?>
+    </div>
+    
+    
+    <div class="connect-cms-box">
+        <h5>
+            Summary:<span class="mandatory">*</span>
+            <span class="connect-info-text">The summary will only be displayed when this blog entry is shown in a summary box</span>
+        </h5>
+        
+        <input type="text" size="60" name="summary"
+            class="input-text" id="summary" value="<?php echo $this->summary ?>"/>
+    </div>
+    
+    
+    <div class="connect-cms-box">
+        <h5>
+            Tags:
+            <span class="connect-info-text">Tags will be used for search purposes. Please separate tags with a comma</span>
+        </h5>
+        
+        <input type="text" size="60" class="input-text" id="tagString" name="tagString"
+            value="<?php echo $this->tagString ?>"/>
+    </div>
+    
+       
+    <div class="connect-cms-box">
+        <h5>
+            Article:<span class="mandatory">*</span>
+        </h5>
+        
+        <textarea class="editor input-text" name="article" id="article"
+            cols="100" rows="10"><?php echo $this->article ?></textarea>
+    </div>
+    
+    
+    <div class="box-02">
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="window.location = '/cms-admin/connect/blog';" />
+        </p>
+    </div>
+</form>

@@ -1,0 +1,140 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-importantinformation'); ?>
+        </span>
+        Important Information
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-importantinformation'); ?>
+        </div>
+    </div>
+
+    <h3 class="quaternary-colour question-section-header">About Tenants and Occupancy</h3>
+
+    <!-- Section 1 -->
+    <div id="dec1primarylabel" class="radio form-group">
+        Is the property occupied by a tenant or tenants?
+        <?php echo $this->element->declaration1; ?>
+    </div>
+
+    <!-- Section 2 -->
+    <div id="dec2primarylabel" class="radio form-group">
+        Is the property to be occupied by a tenant(s) within 60 days of the start date of this policy?
+        <?php echo $this->element->declaration2; ?>
+    </div>
+
+    <!-- Section 2b -->
+    <div id="dec2bprimarylabel" class="radio form-group">
+        Is the property let or to be let on a written Assured Short hold Tenancy* with a minimum initial period of at least three months? *(In England & Wales or the equivalent in Scotland or Northern Ireland)
+        <?php echo $this->element->declaration2b; ?>
+    </div>
+
+    <!-- Section 2c -->
+    <div id="dec2cprimarylabel" class="radio form-group">
+        Is your tenant in breach of any term of their tenancy agreement?
+        <?php echo $this->element->declaration2c; ?>
+    </div>
+
+    <!-- Section 2d -->
+    <div id="dec2dprimarylabel" class="radio form-group">
+        Has the property to be insured been unoccupied for 90 days or more for a continuous period before the date you'd like the insurance to start?
+        <?php echo $this->element->declaration2d; ?>
+    </div>
+
+    <h3 class="quaternary-colour question-section-header">About the Property</h3>
+
+    <!-- Section 3 -->
+    <div id="dec3primarylabel" class="radio form-group">
+        Is the property built with brick, stone or concrete and roofed with tiles, slates, metal or concrete?
+        <?php echo $this->element->declaration3; ?>
+    </div>
+
+    <!-- Section 4 -->
+    <div id="dec4primarylabel" class="radio form-group">
+        Is the property in a good state of repair and regularly maintained?
+        <?php echo $this->element->declaration4; ?>
+    </div>
+
+    <!-- Section 6 -->
+    <div id="dec6primarylabel" class="radio form-group">
+        Is the property, or any immediately neighboring property, on a site which has ever shown signs of damage caused by subsidence, landslip or heave, or is there any evidence of ongoing movement (eg: cracking and/or bulging of walls)?
+        <?php echo $this->element->declaration6; ?>
+    </div>
+
+    <h3 class="quaternary-colour question-section-header">About You</h3>
+
+    <!-- Section 7 -->
+    <div id="dec7primarylabel" class="radio form-group">
+        Have you suffered any incident or loss, whether insured or not, in the last 3 years in respect of the perils/covers requested in this proposal?
+        <?php echo $this->element->declaration7; ?>
+    </div>
+
+    <!-- Section 8 -->
+    <div id="dec8primarylabel" class="radio form-group">
+        Have you been convicted of arson, theft or any offence other than driving offences?
+        <?php echo $this->element->declaration8; ?>
+    </div>
+
+    <!-- Section 9 -->
+    <div id="dec9primarylabel" class="radio form-group">
+        Are you aware of any circumstances which may give rise to a claim, or have you/they been refused insurance or had special terms applied?
+        <?php echo $this->element->declaration9; ?>
+    </div>
+
+    <!-- Section 10 -->
+    <div id="dec10primarylabel">
+        <?php
+        // Munt Severitiy Level 9 - Quote Manager instantiated within view file!!
+        // However.. I would have done the same ;o)
+
+        //Determine if declaration question 10 should be displayed, and if yes, add the element.
+        $session = new Zend_Session_Namespace('landlords_insurance_quote');
+        $quoteManager = new Manager_Insurance_LandlordsPlus_Quote($session->quoteID);
+        if($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::RENT_GUARANTEE)) {
+            $displayDeclaration10 = true;
+        }
+        else if($quoteManager->hasProduct(Manager_Insurance_LandlordsPlus_Quote::LEGAL_EXPENSES)) {
+            $displayDeclaration10 = true;
+        }
+        else {
+            $displayDeclaration10 = false;
+        }
+
+        if($displayDeclaration10) {
+            ?>
+            <div class="radio form-group">
+                For Prestige Rent Guarantee and/or Legal Expenses cover only, please confirm that your existing tenants have been and any future tenants will be satisfactorily referenced in accordance with HomeLet conditions.<br />
+                Satisfactorily means an acceptable HomeLet Enhance Reference for each tenant named on the Assured Shorthold Tenancy Agreement - please call our Customer Services Department on 0845 117 6000 to discuss if you have any queries or have referenced your tenants by any other means.
+                <?php echo $this->element->declaration10; ?>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+
+    <!-- Section 11 -->
+    <div id="dec11primarylabel" class="radio form-group">
+        Do you wish to add a bank interest on this policy?  Please note that - if applicable - your mortgage or finance provider may wish to have their interest noted on your insurance policy.
+        <?php echo $this->element->declaration11; ?>
+    </div>
+</div>
+
+<div class="form-sub-section">
+    <!-- Additional Information Section -->
+    <div class="form-group">
+        <?php echo $this->element->getElement('additional_information'); ?>
+    </div>
+</div>
+
+<div class="form-sub-section">
+    <h2 class="quaternary-colour">Confirmation Statement</h2>
+    <div class="radio form-group">
+        I confirm that the answers to the above statements are all true to the best of my knowledge and understand that failure to answer these questions correctly could impact my ability to claim.
+        <?php echo $this->element->declaration_confirmation; ?>
+    </div>
+</div>

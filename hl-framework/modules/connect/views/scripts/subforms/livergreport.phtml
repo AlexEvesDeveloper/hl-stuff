@@ -1,0 +1,21 @@
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Live Rent Guarantee Policies</h2>
+    
+    <div class="form_section one-col">
+        <p>
+            This report shows all Rent Guarantee policies purchased in the time period you enter below
+        </p>
+        
+        <div class="datePicker">
+            <?php echo $this->element->livergreport_start; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->livergreport_end; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->livergreport_producereport; ?>
+            <?php echo $this->element->livergreport_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

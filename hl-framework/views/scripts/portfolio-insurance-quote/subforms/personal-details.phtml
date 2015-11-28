@@ -1,0 +1,64 @@
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('portfolio-insurance-quote-help-personaldetails')); ?>
+        </span>
+        Your Details
+    </h2>
+
+    <div class="visible-xs visible-sm section-help">
+        <?php echo $this->promoContent('portfolio-insurance-quote-help-personaldetails'); ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->title
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->first_name
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->last_name
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->phone_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->mobile_number
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?php
+        echo $this->element->email_address
+            ->setOptions(array('class'=>'form-control'))->render();
+        ?>
+    </div>
+
+    <div class="form-group">
+        <label for="date_of_birth_at"><?php echo $this->element->date_of_birth_at->getLabel(); ?></label>
+        <div class="input-group date">
+            <input type="text" name="date_of_birth_at" id="date_of_birth_at" value="<?php echo htmlentities($this->element->date_of_birth_at->getValue()); ?>" class="form-control" /><span class="input-group-addon"><img src="/assets/common/images/icon-calendar.png" alt="select a date" /></span>
+        </div>
+    </div>
+
+</div>

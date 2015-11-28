@@ -1,0 +1,48 @@
+
+{% extends "irisreferencing-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Add Tenant</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <style type="text/css">
+        #sub_header {
+            display: none;
+        }
+    </style>
+    
+    <script>
+        var _isAgentReturningFromNotification = {{ isAgentReturningFromNotification ? 'true' : 'false' }};
+        var canDisplayDeclaration = {{ canDisplayDeclaration ? 'true' : 'false' }};
+    </script>
+    
+    <form method="post" class="form-horizontal" novalidate>
+        <h2>
+            {{ bodyTitle | trans }}
+            <span class="_loader" style="display:none;">
+                <img src="/assets/common/images/ajax-loader-small.gif" class="loading-spinner" />
+            </span>
+        </h2>
+
+        {% if difference is not null and numberOfTenants is not null %}
+            <p class="flash-message flash-message-success">
+                It's time to add the next tenant to your reference.
+                You are now adding tenant <strong>{{ (numberOfTenants - difference) + 1 }}</strong> of <strong>{{ numberOfTenants }}</strong>.
+            </p>
+        {% endif %}
+
+        {{ form_widget(form) }}
+    </form>
+
+    {% include 'back-to-summary.html.twig' with { 'summaryController': 'iris-add-tenant' } %}
+{% endblock %}

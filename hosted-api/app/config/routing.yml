@@ -1,0 +1,111 @@
+# Application wide routes
+barbon_hosted_api_app_home:
+    resource: "@BarbonHostedApiAppBundle/Controller"
+    prefix:   /
+    type:     annotation
+
+barbon_hosted_api_app_brand:
+    resource: "@BarbonHostedApiAppBundle/Controller/Brand"
+    prefix:   /app/brand
+    type:     annotation
+
+barbon_hosted_api_app_lookup:
+    resource: "@BarbonHostedApiAppBundle/Controller/Lookup"
+    prefix:   /app/lookup
+    type:     annotation
+
+barbon_hosted_api_app_authentication:
+    resource: "@BarbonHostedApiAppBundle/Controller/Authentication"
+    prefix:   /system/authentication
+    type:     annotation
+
+#barbon_hosted_api_security_security:
+#    resource: "@BarbonHostedApiSecurityBundle/Controller"
+#    prefix:   /
+#    type:     annotation
+
+# Agent only routes
+barbon_hosted_api_agent_reference_new_reference:
+    resource: "@BarbonHostedApiAgentReferenceBundle/Controller/NewReference"
+    type:     annotation
+    prefix:   /agent/reference/new-reference
+
+barbon_hosted_api_agent_reference_list_references:
+    resource: "@BarbonHostedApiAgentReferenceBundle/Controller/ListReferences"
+    type:     annotation
+    prefix:   /agent/reference/list-references
+
+barbon_hosted_api_agent_reference_applications:
+    resource: "@BarbonHostedApiAgentReferenceBundle/Controller/Applications"
+    type:     annotation
+    prefix:   /agent/reference/applications
+
+barbon_hosted_api_agent_reference_cases:
+    resource: "@BarbonHostedApiAgentReferenceBundle/Controller/Cases"
+    type:     annotation
+    prefix:   /agent/reference/cases
+
+barbon_hosted_api_agent_debug:
+    resource: "@BarbonHostedApiAgentDebugBundle/Controller/"
+    type:     annotation
+    prefix:   /agent/debug
+
+# Landlord only routes
+barbon_hosted_api_landlord_dashboard:
+    resource: "@BarbonHostedApiLandlordDashboardBundle/Controller/"
+    type:     annotation
+    prefix:   /landlord/dashboard
+
+barbon_hosted_api_landlord_profile:
+    resource: "@BarbonHostedApiLandlordProfileBundle/Controller/"
+    type:     annotation
+    prefix:   /landlord/profile
+
+barbon_hosted_api_landlord_authentication:
+    resource: "@BarbonHostedApiLandlordAuthenticationBundle/Controller/"
+    type:     annotation
+    prefix:   /landlord/authentication
+
+barbon_hosted_api_landlord_reference_new_reference:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/NewReference"
+    type:     annotation
+    prefix:   /landlord/reference/new-reference
+
+barbon_hosted_api_landlord_reference_new_reference_multi:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/NewReference/Multi"
+    type:     annotation
+    prefix:   /landlord/reference/new-reference/multi
+
+barbon_hosted_api_landlord_reference_new_reference_guarantor:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/NewReference/Guarantor"
+    type:     annotation
+    prefix:   /landlord/reference/new-reference/guarantor
+
+barbon_hosted_api_landlord_reference_list-references:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/ListReferences"
+    type:     annotation
+    prefix:   /landlord/reference/list-references
+
+barbon_hosted_api_landlord_reference_lookup:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/Lookup"
+    type:     annotation
+    prefix:   /landlord/reference/lookup
+
+barbon_hosted_api_landlord_reference_applications:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/Applications"
+    type:     annotation
+    prefix:   /landlord/reference/applications
+
+barbon_hosted_api_landlord_reference_cases:
+    resource: "@BarbonHostedApiLandlordReferenceBundle/Controller/Cases"
+    type:     annotation
+    prefix:   /landlord/reference/cases
+
+barbon_hosted_api_landlord_debug:
+    resource: "@BarbonHostedApiLandlordDebugBundle/Controller/"
+    type:     annotation
+    prefix:   /landlord/debug
+
+terms_and_conditions:
+    path:  ../media/Referencing_Terms_and_Conditions.pdf
+

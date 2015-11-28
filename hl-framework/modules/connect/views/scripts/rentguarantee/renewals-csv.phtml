@@ -1,0 +1,60 @@
+<?php
+
+$totalcount = count($this->reportdata);
+$stdout = fopen('php://output', 'a');
+
+// Invited policies
+fputcsv($stdout, array('Invited'));
+fputcsv($stdout, array('Policy Number', 'Risk Address', 'Tenant Name', 'Expiry Date'));
+
+if (count($this->invited))
+{
+    foreach ($this->invited as $row)
+    {
+        fputcsv
+        (
+            $stdout,
+            array
+            (
+                $row['policynumber'],
+                $row['propaddress1'],
+                $row['firstname'] . $row['lastname'],
+                date('d/m/Y', strtotime($row['enddate']))
+            )
+        );
+    }
+}
+else
+{
+    fputcsv($stdout, array('No data found'));
+}
+
+fputcsv($stdout, array()); // Blank line
+
+// Overdue policies
+fputcsv($stdout, array('Overdue'));
+fputcsv($stdout, array('Policy Number', 'Risk Address', 'Tenant Name', 'Expiry Date'));
+
+if (count($this->overdue))
+{
+    foreach ($this->overdue as $row)
+    {
+        fputcsv
+        (
+            $stdout,
+            array
+            (
+                $row['policynumber'],
+                $row['propaddress1'],
+                $row['firstname'] . $row['lastname'],
+                date('d/m/Y', strtotime($row['enddate']))
+            )
+        );
+    }
+}
+else
+{
+    fputcsv($stdout, array('No data found'));
+}
+
+fclose($stdout);

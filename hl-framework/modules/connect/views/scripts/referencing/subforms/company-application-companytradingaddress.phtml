@@ -1,0 +1,13 @@
+<h2>Company Trading Address</h2>
+<div class="form_section two-col">
+    <div class="autoAlt">
+        <?php echo $this->element->trading_address; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->trading_postcode; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->trading_years->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->trading_months; ?>
+    </div>
+</div>

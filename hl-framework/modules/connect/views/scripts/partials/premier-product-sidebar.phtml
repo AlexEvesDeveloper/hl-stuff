@@ -1,0 +1,58 @@
+<?php if ($this->product == '' || $this->product == 'standard') { 
+    $advantageurl = "/moreproducts/advantage";
+    $vizzihomeurl = "/moreproducts/vizzihome";
+    $businesscareurl = "/moreproducts/business-care";
+
+    $advantagetarget = "_self";
+    $vizzihometarget = "_self"; 
+    $businesscaretarget = "_self";
+?>
+<div>
+    <h3>Upgrade your account today, call us on</h3>
+    <p>
+        <span class="prem-bold contact-number">0845 113 2634</span>
+    </p>
+    <p>
+        Find out more about our exclusive <span class="prem-bold">PremierPlus</span> below
+    </p>
+</div>
+<?php } elseif ($this->product == 'premier') {
+    $advantageurl = "http://www.peoplevalue.co.uk/homelet/";
+    $vizzihomeurl = "/moreproducts/vizzihome";
+    $businesscareurl = "/moreproducts/business-care";
+
+    $advantagetarget = "_blank";
+    $vizzihometarget = "_self"; 
+    $businesscaretarget = "_self";
+ ?>
+<div>
+    <h3>Access your Premier benefits today!</h3>
+    <p>Click the link below to access your Advantage discounts</p>
+</div>
+<?php } ?>
+<div class="button advantage">
+    <a href="<?php echo $advantageurl; ?>" target="<?php echo $advantagetarget; ?>">
+    <img alt="" src="/assets/connect/images/advantage.png">
+        <div>
+            <h3>Advantage discounts</h3> Get exclusive discounts on high street brands<br />
+            Find out more
+        </div>
+    </a>
+</div>
+
+<?php if ($this->product == 'premier') { ?>
+    <div>
+        <h3>Upgrade your account today, call us on</h3>
+        <p><span class="prem-bold contact-number">0845 113 2634</span><br /> Find out more about our exclusive <span class="prem-bold">PremierPlus</span> below</p>
+    </div>
+<?php } ?>
+<div class="button business-care">
+    <a href="<?php echo $businesscareurl; ?>" target="<?php echo $businesscaretarget; ?>">
+       <img alt="" src="/assets/connect/images/business-care.png">
+        <div>
+            <h3>BusinessCare</h3>
+            24/7 telephone helpline direct to legal experts<br />
+            Find out more
+        </div>
+    </a>
+</div>

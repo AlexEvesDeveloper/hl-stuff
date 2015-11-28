@@ -1,0 +1,12 @@
+<form action="/product-discount/update" method="post" enctype="application/x-www-form-urlencoded">
+<?php 
+    foreach ($this->memberIds as $id) {
+?>
+<?php
+    	print($this->form->getSubForm('subform_productoptions' . $id));
+    }
+    print($this->form->getElement('csu_id'));
+    print($this->form->getElement('opt_id'));
+    print($this->form->getElement('send_quote'));
+?>
+</form>

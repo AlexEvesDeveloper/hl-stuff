@@ -1,0 +1,38 @@
+<?php echo $this->tenantsQuoteSubHeader(4); ?>
+<div class="col-sm-9 content">
+    <h2 class="tertiary-colour">We&rsquo;ve got you covered!</h2>
+
+    <?php
+        echo $this->partial('partials/payment-confirmation.phtml',
+            array(
+                'form' => $this->form,
+                'policyNumber' => $this->policyNumber,
+                'companyName' => $this->companyName,
+                'domain' => $this->domain,
+                'documentNumber' => $this->documentNumber,
+                'openingTimes' => $this->openingTimes,
+                'policy' => $this->policy,
+                'extraVars' => $this->extraVars
+            )
+        );
+    ?>
+</div>
+
+<div class="col-sm-3">
+    <div class="panel panel-primary">
+        <h3 class="tertiary-colour">Need help?</h3>
+        <p class="large tertiary-colour">Call: 0845 117 6000</p>
+        <p>We&rsquo;re open from:</p>
+        <table class="table table-condensed">
+            <tr>
+                <td>Weekdays</td>
+                <td>8:30am - 8:00pm</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td>9:30am - 1:00pm</td>
+            </tr>
+        </table>
+        <p>We&rsquo;re always happy to help.</p>
+    </div>
+</div>

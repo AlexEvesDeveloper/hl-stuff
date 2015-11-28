@@ -1,0 +1,32 @@
+<?php
+// Use base urls to allow for payment provider integration when served from
+// the payment providers url to link back into the site correctly.
+$baseURL = 'http';
+if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == '443')) {
+    $baseURL .= 's';
+}
+$baseURL .= '://';
+$baseURL .= $_SERVER['SERVER_NAME'];
+?>
+<div id="menu">
+    <div class="wrapper">
+        <ul id="main_nav">
+            <li class="letting_agents<?php if ($this->url == '' || $this->url == '/') {?>_selected<?php } ?> first"><a style="width: 106px;" href="<?php echo $baseURL; ?>/">Connect Home</a></li>
+            <li class="letting_agents<?php if (substr($this->url, 0, 11) == 'referencing') {?>_selected<?php } ?>"><a style="width: 106px;" href="<?php echo $baseURL; ?><?php echo $this->isInIris ? '/iris-referencing' : '/referencing' ?>">Referencing</a></li>
+            <li class="letting_agents<?php if (substr($this->url, 0, 13) == 'rentguarantee') {?>_selected<?php } ?> double-line"><a style="width: 156px;" href="<?php echo $baseURL; ?>/rentguarantee">Rent Guarantee <br/>&amp; Eviction Services</a></li>
+
+            <?php if ($this->fsastatusabbr != 'REF'): ?>
+                <li class="letting_agents<?php if (substr($this->url, 0, 9) == 'insurance') {?>_selected<?php } ?>"><a style="width: 86px;" href="<?php echo $baseURL; ?>/insurance">Insurance</a></li>
+            <?php endif; ?>
+
+            <li class="letting_agents<?php if (substr($this->url, 0, 12) == 'moreproducts') {?>_selected<?php } ?> double-line"><a style="width: 126px;" href="<?php echo $baseURL; ?>/moreproducts">More Products <br/>&amp; Services</a></li>
+
+            <?php if (in_array(Model_Core_Agent_UserResources::REPORTS, $this->userresources)): ?>
+                <li class="letting_agents<?php if (substr($this->url, 0, 7) == 'reports') {?>_selected<?php } ?>"><a style="width: 96px;" href="<?php echo $baseURL; ?>/reports">Reports</a></li>
+            <?php endif; ?>
+
+            <li class="letting_agents<?php if (substr($this->url, 0, 4) == 'help') {?>_selected<?php } ?>"><a style="width: 66px;" href="<?php echo $baseURL; ?>/help">Help</a></li>
+            <li class="letting_agents<?php if (substr($this->url, 0, 8) == 'settings') {?>_selected<?php } ?> last"><a style="width: 106px;" href="<?php echo $baseURL; ?>/settings">Settings</a> &nbsp;</li>
+        </ul>
+    </div>
+</div>

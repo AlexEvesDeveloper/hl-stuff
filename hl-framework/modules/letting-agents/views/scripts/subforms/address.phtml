@@ -1,0 +1,25 @@
+<div class="form_section one-col">    
+    <div>  
+        <?php echo $this->element->postcode; ?>
+        <input type="submit" id="postcode_lookup" value="Find address" name="lookup" onclick="getProperties($('#house_number_name').val(), $('#postcode').val(), 'postcode', 'address'); return false;">
+    </div>
+    
+    <div id="address_selector" class="alt" style="height:32px">
+        <?php echo $this->element->address->render(); ?>
+    </div>
+    
+     <div id="address_details">   
+    	<div>
+    		<?php echo $this->element->address_line1; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->address_line2; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->address_line3; ?>
+    	</div>
+    	<div>
+    		<?php echo $this->element->address_postcode; ?>
+    	</div>
+    </div>
+</div>

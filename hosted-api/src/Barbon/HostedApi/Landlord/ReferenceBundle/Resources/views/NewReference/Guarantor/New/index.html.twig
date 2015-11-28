@@ -1,0 +1,21 @@
+{% extends 'BarbonHostedApiLandlordReferenceBundle:NewReference:base_new.html.twig' %}
+
+{% block pageform %}
+    <div class="single-guarantor">
+        <div class="page-content">
+            <h1>Add a guarantor</h1>
+            <p>Please provide the following details about the guarantor.</p>
+            {{ form_start(form) }}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Guarantor Details</h4>
+                </div>
+                <div class="panel-body">
+                    {{ form_widget(form) }}
+                </div>
+            </div>
+            <input class="btn btn-default btn-next" type="submit" value="Next" />
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock pageform %}

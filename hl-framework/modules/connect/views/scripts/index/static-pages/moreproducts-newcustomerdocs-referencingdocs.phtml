@@ -1,0 +1,37 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info',
+                'title' => 'Referencing quick guide',
+                'url'   => '/assets/connect/pdf/Referencing_Quick_Guide.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This one page guide provides a short overview on some of our key referencing criteria, such as what our Tenancy Application Scores are acceptable and what our criteria on couples is.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Referencing service guidelines',
+                'url'   => '/assets/connect/pdf/Referencing_Service_Guidelines.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This handy guide is designed to help you get the most out of being a HomeLet customer. It contains plenty of tips and explains our referencing process.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'compliance',
+                'title' => 'Your referencing application forms',
+                'url'   => '/referencing/info/applicationforms'
+            )
+        ));
+        ?>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<?php
+
+if (strtolower(substr($this->url, 0, 4)) == 'http' || strtolower(substr($this->url, -4, 4)) == '.pdf') {
+    // If the link is in fact an offsite link as indicated by an absolute URL,
+    //   or is a PDF, open it in a new window
+    $target = '_blank';
+} else {
+    $target = '';
+}
+
+// Check to see if this is a PDF and a thumbnail's available, else use standard
+// icon.
+$pdfIcon = false;
+if (strtolower(substr($this->url, -4, 4)) == '.pdf') {
+
+    $params = Zend_Registry::get('params');
+    $basePath = $params->connect->basePublicPath;
+    $thumbnailUrl = substr($this->url, 0, -4) . '.thumb.jpg';
+
+    if (file_exists($basePath . $thumbnailUrl)) {
+        $pdfIcon = true;
+    }
+
+    // Rejig URL to point through referencing controller's agent form action, so
+    // that PDFs can have pre-filled content injected into them.
+
+    $this->url = '/referencing/agent-form?form=' . preg_replace('/.*\/(.*)\.pdf/i', '$1', $this->url);
+}
+
+if ($pdfIcon) {
+
+    $pdfVersion = (isset($this->pdf_info['version'])) ? $this->pdf_info['version'] : 'Current version';
+    $pdfReleaseDate = (isset($this->pdf_info['release_date'])) ? $this->pdf_info['release_date'] : 'Unknown release date';
+    $pdfDescription = (isset($this->pdf_info['description'])) ? $this->pdf_info['description'] : "{$this->title}.";
+
+    ?>
+    <li class="pdf_icon<?php echo (($this->lineEnd) ? ' line_end' : ''); ?>">
+        <div class="connect_pdf">
+            <div class="pdf_info">
+                <a href="<?php echo $this->url; ?>" target="<?php echo $target; ?>"><img src="<?php echo $thumbnailUrl; ?>" alt="<?php echo ucwords($this->title); ?>" /></a>
+                <h4><?php echo $this->title; ?></h4>
+                <a class="connect_pdf_view" href="<?php echo $this->url; ?>" target="<?php echo $target; ?>">View</a>
+                <a class="connect_pdf_email emailPdfToMe" href="<?php echo $this->url; ?>" target="<?php echo $target; ?>">Email Me</a>
+
+                <!-- <p class="pdf_version"><?php echo $pdfVersion; ?> (<span class="pdf_release_date"><?php echo $pdfReleaseDate; ?></span>)</p> -->
+                <p class="pdf_description"><?php echo $pdfDescription; ?></p>
+            </div>
+        </div>
+    </li>
+<?php
+
+}

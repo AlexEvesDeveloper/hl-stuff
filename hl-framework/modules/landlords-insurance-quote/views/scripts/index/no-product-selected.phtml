@@ -1,0 +1,12 @@
+<?php echo $this->landlordsQuoteSubHeader($this->stepNum); ?>
+
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <div class="alert alert-info">
+        We've stored your quote and we'll be in touch shortly&hellip;<br />
+        <br />
+        Thank you for getting a quote for your landlords insurance, your quote has been sent to our specialist landlord insurance team. We need to gather a few more details from you before we provide a quote, therefore one of our landlord team members will be contacting you shortly.<br />
+        <br />
+        If you have any queries please phone 0845 117 6000.
+    </div>
+    <?php echo $this->partial('partials/form-navigation.phtml', array('stepNum' => $this->stepNum, 'stepMax' => $this->stepMax)); ?>
+</form>

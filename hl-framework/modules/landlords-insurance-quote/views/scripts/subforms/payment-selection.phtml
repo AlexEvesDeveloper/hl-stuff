@@ -1,0 +1,153 @@
+<?php
+
+// Get subform values
+$subformValues = $this->element->getValues();
+$values = $subformValues['subform_paymentselection'];
+
+// Grab view for outputting non-form display values
+$view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+
+?>
+<script type="text/javascript">
+    $(function() {
+        var $paymentMethod = $('input[name=payment_method]');
+        var $paymentFrequency = $('input[name=payment_frequency]');
+
+        var $ddForm = $('#direct-debit');
+        var $ddPayMonthly = $('#dd-pay-monthly');
+        var $ddPayAnnually = $('#dd-pay-annually');
+
+        // Wire up change events
+        $paymentMethod.change(function() {
+            var method = $('input[name=payment_method]:checked').val();
+
+            if ('dd' == method) {
+                // Show direct debit form
+                $ddForm.show();
+            } else {
+                // Hide direct debit form and blank its values
+                $ddForm.hide();
+                $ddForm.find('input[type="radio"]').prop('checked', false);
+                $ddForm.find('input[type="text"]').val('');
+            }
+        });
+
+        $paymentFrequency.change(function() {
+            var frequency = $('input[name=payment_frequency]:checked').val();
+
+            if ('Monthly' == frequency) {
+                // Show monthly info, hide annual info
+                $ddPayMonthly.show();
+                $ddPayAnnually.hide();
+            } else {
+                // Hide monthly info, show annual info
+                $ddPayMonthly.hide();
+                $ddPayAnnually.show();
+            }
+        });
+
+        // Hide DD form and then ping change events when page first loads
+        $paymentMethod.change();
+        $paymentFrequency.change();
+    });
+</script>
+
+<div class="form-sub-section payment-selection">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-paymentselection'); ?>
+        </span>
+        Payment
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-paymentselection'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->payment_method; ?>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->payment_frequency; ?>
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+
+<div class="form-sub-section" id="direct-debit">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="quaternary-colour main-heading">
+        <span class="help-trigger"><a class="show-form-help"></a></span>
+        <span class="field-help hidden-xs hidden-sm">
+            <?php echo strip_tags($this->promoContent('landlords-insurance-quote-help-directdebit')); ?>
+        </span>
+        Direct Debit Payment
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('landlords-insurance-quote-help-directdebit'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div id="dd-pay-monthly">
+            <p class="dd-info">Your First Payment</p>
+            <p class="dd-price">&pound;<?php echo number_format(($view->premiums['monthly'] * 2) + $view->fees['landlords_insurance_plus_monthly_admin'], 2); ?></p>
+            <p class="dd-info">Your Monthly Payment</p>
+            <p class="dd-price">&pound;<?php echo number_format(($view->premiums['monthly'] + $view->fees['landlords_insurance_plus_monthly_admin']), 2); ?></p>
+            <p class="small">Any administration fees are taken with this payment.</p>
+        </div>
+        <div id="dd-pay-annually">
+            <p class="pull-left"><strong>Your Annual Payment</strong></p>
+            <p class="pull-right larger">&pound;<?php echo number_format($view->premiums['annual'], 2); ?></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->dd_inyourname; ?>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->dd_onlyauthorised; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->dd_accountname; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->bank_account_number; ?>
+    </div>
+
+    <div class="form-group">
+        <?php echo $this->element->bank_sortcode_number; ?>
+    </div>
+
+    <div class="alert alert-info">
+        <h3 class="quaternary-colour">The Direct Debit Guarantee</h3>
+        <ul>
+            <li>
+                This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.
+            </li>
+            <li>
+                If there are any changes to the amount, date or frequency of your Direct Debit HomeLet will notify you 10 working days in advance of your account being debited or as otherwise agreed. If you request HomeLet to collect a payment, confirmation of the amount and date will be given to you at the time of the request.
+            </li>
+            <li>
+                If an error is made in the payment of your Direct Debit by HomeLet or your bank or building society you are entitled to a full and immediate refund of the amount paid from your bank or building society<br />
+                - If you receive a refund you are not entitled to, you must pay it back when HomeLet asks you to.
+            </li>
+            <li>
+                You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.
+            </li>
+        </ul>
+    </div>
+</div>

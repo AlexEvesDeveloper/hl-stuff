@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-gb"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en-gb"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en-gb"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-gb"><!--<![endif]-->
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="<?php echo $this->description ?>" />
+    <meta name="keywords" content="<?php echo $this->keywords ?>" />
+    <meta name="dcterms.dateCopyrighted" content="<?php echo date('Y'); ?>">
+    <meta name="dcterms.rightsHolder" content="HomeLet Ltd.">
+
+    <title><?php echo $this->pageTitle; ?> | HomeLet</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <?php
+    $this->headLink()->prependStylesheet('/assets/vendor/bootstrap/css/bootstrap.min.css');
+    $this->headLink()->prependStylesheet('/assets/vendor/facebox/css/facebox.css');
+
+    $this->headLink()->appendStylesheet('/assets/common/css/ie.css', 'screen', 'lt IE 9');
+
+    $this->headScript()->prependFile('/assets/vendor/jquery/js/jquery-1.11.0.min.js');
+    $this->headScript()->prependFile('/assets/vendor/html5shiv/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9'));
+    $this->headScript()->prependFile('/assets/vendor/respond/js/respond.js', 'text/javascript', array('conditional' => 'lt IE 9'));
+
+    $this->inlineScript()->appendFile('/assets/vendor/supersleight/js/supersleight-min.js', 'text/javascript', array('conditional' => 'IE 6'));
+    $this->inlineScript()->appendFile('/assets/common/js/main.js');
+    $this->inlineScript()->appendFile('/assets/vendor/facebox/js/jquery.facebox.js');
+    $this->inlineScript()->appendFile('/assets/vendor/jquery/js/jquery-migrate.min.js');
+    $this->inlineScript()->appendFile('/assets/vendor/cookiepolicy/js/cookiepolicy.jquery.js');
+
+    echo $this->headLink();
+    echo $this->headScript();
+
+    $googleAnalyticsDomain = '.homelet.co.uk';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if (isset($_GET['trans_id']) && isset($_GET['hash'])) {
+            // This looks like a secpay GET request - so we need to switch the GA Domain to 'none'
+            $googleAnalyticsDomain = 'none';
+        }
+    }
+    ?>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1926380-5']);
+        _gaq.push(['_setDomainName', '<?php echo $googleAnalyticsDomain ?>']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_setAllowHash', false]);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <script type="text/javascript">
+        adroll_adv_id = "6JWFIUUXKJH63LU5XN5YXJ";
+        adroll_pix_id = "HOXXDYVWA5B5DOMSP6PFT3";
+        (function () {
+            var oldonload = window.onload;
+            window.onload = function(){
+                __adroll_loaded=true;
+                var scr = document.createElement("script");
+                var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+                scr.setAttribute('async', 'true');
+                scr.type = "text/javascript";
+                scr.src = host + "/j/roundtrip.js";
+                ((document.getElementsByTagName('head') || [null])[0] ||
+                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+                if(oldonload){oldonload()}};
+        }());
+    </script>
+
+    <script type="text/javascript">
+        document.documentElement.className = document.documentElement.className.replace(/(.*)no-js(.*)/, '$1js$2');
+    </script>
+</head>
+<body class="<?php echo $this->styling; ?> page">
+
+    <?php echo $this->clickTale('top'); ?>
+
+    <div id ="full_wrapper">
+        <div class="site-header">
+            <?php echo $this->mainMenu; ?>
+            <div class="container">
+                <div class="branding">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="logo">
+                                <a href="/" class="link">HomeLet</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-8">
+                            <span class="phone phone-number hidden-xs">0845 117 6000</span>
+                            <a href="tel:+448451176000" class="pull-right visible-xs xs-phone-number">0845 117 6000</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--[if lt IE 7]>
+            <div style='width: 860px; margin: 0 auto; margin-bottom: 10px; border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
+                <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>
+                <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+                    <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+                    <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+                        <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
+                        <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
+                    </div>
+                    <div style='width: 75px; float: left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>
+                    <div style='width: 75px; float: left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>
+                    <div style='width: 73px; float: left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>
+                    <div style='float: left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>
+                </div>
+            </div>
+        <![endif]-->
+
+        <?php
+        // todo: De-blurgh this, the problem is this layout is used by multiple controllers so each would need to
+        // be modified to pass their module name into the view.
+        $front = Zend_Controller_Front::getInstance();
+        $request = $front->getRequest();
+        echo $this->adCampaignBanner($request);
+        ?>
+
+        <div class="body body-content">
+            <main class="container" role="main">
+                <article>
+                    <?php echo $this->layout()->content; ?>
+                </article>
+            </main>
+        </div>
+
+    </div>
+
+    <div class="prefooter banner-bg">
+        <div class="prefooter-banner">
+            <div class="container"></div>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        <div class="container">
+            <div class="row information-footer">
+                <div class="col-sm-3">
+                    <h3>HomeLet</h3>
+                </div>
+
+                <div class="col-sm-9">
+                    <ul class="list-inline">
+                        <li><a href="/terms-of-use">Terms of use</a></li>
+                        <li><a href="/cookies">Cookie policy</a></li>
+                        <li><a href="/contact-us">Contact us</a></li>
+                        <li class="large pull-right">Tel. 0845 117 6000</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row company-footer">
+                <div class="col-sm-8">
+                    <div class="copyrights">
+                        &copy;2015 HomeLet. All rights reserved.
+                    </div>
+                    <p>HomeLet is a trading name of Barbon Insurance Group Limited which is authorised and regulated by the Financial Conduct Authority for insurance mediation.<br />
+                        Registered in England number 3135797. Registered office address: Hestia House, Edgewest Road, Lincoln, LN6 7EL.</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <ul class="list-inline pull-right">
+                        <li><a href="https://www.facebook.com/pages/HomeLet/106776409363786" class="social-link facebook" target="_blank"><span class="sr-only">Like on Facebook</span></a></li>
+                        <li><a href="https://twitter.com/homelet" class="social-link twitter" target="_blank"><span class="sr-only">Follow on Twitter</span></a></li>
+                        <li><a href="https://www.linkedin.com/company/homelet" class="social-link linkedin" target="_blank"><span class="sr-only">Connect on LinkedIn</span></a></li>
+                        <li><a href="https://plus.google.com/u/0/b/103037991794476213721/+HomeletCoUkInsurance" class="social-link google" target="_blank"><span class="sr-only">HomeLet on Google Plus</span></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCKsMF7b0QBdGj0_o4M3p0Tg" class="social-link youtube" target="_blank"><span class="sr-only">HomeLet YouTube channel</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php echo $this->inlineScript(); ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('body').cookiepolicy();
+        });
+    </script>
+
+<?php echo $this->googleRemarketing(); ?>
+<?php echo $this->clickTale('bottom'); ?>
+
+</body>
+</html>

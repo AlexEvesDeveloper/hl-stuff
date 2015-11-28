@@ -1,0 +1,17 @@
+<h2>Prospective Landlord Details</h2>
+<div class="form_section two-col">
+    <div class="autoAlt">
+        <?php echo $this->element->landlord_firstname->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->landlord_lastname; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->landlord_landlinenumber->setOptions(array('class'=>'first'))->render(); ?>
+        <?php echo $this->element->landlord_mobilenumber; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->landlord_address; ?>
+    </div>
+    <div class="autoAlt">
+        <?php echo $this->element->landlord_postcode; ?>
+    </div>
+</div>

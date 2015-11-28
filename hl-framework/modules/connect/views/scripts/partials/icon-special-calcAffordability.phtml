@@ -1,0 +1,75 @@
+<li class="<?php echo (($this->lineEnd) ? ' line_end' : ''); ?> <?php echo $this->size; ?>_button">
+    <div class="special_connect_button<?php echo $this->alt; ?>">
+        <img src="/assets/connect/images/icons/white-calculator.png" alt="Affordability Calculator" width="104" height="100" />
+        <div style="float:left; width:155px;">
+            <h5>Affordability calculator</h5>
+            Please enter an amount<br /> in whole pounds (£) <br />into one of the boxes
+        </div>
+        <form class="affordability_calculator">
+            <label for="rent">Monthly Rent </label>
+            &pound;<input type="text" id="rent" /><br />
+
+            <label for="tenant_income">Tenant Income/Year</label>
+            &pound;<input type="text" id="tenant_income" /><br />
+
+            <label for="guarantor_income">Guarantor Income/Year</label>
+            &pound;<input type="text" id="guarantor_income" />
+            <a style="width:200px;" class="nav-corporate-dark-button" onclick="Calculate(); return false;" href="#">Calculate</a>
+            <!-- a style="width:50px;" class="nav-corporate-dark-button" onclick="$.facebox('Affordability Calculator', { ajax: '/referencing/affordability-calculator/'}); return false;" href="#">Calculate</a -->
+            <!-- input type="submit" class="submit" name="submit" value="calculate" onclick="$.facebox('Affordability Calculator', { ajax: '/referencing/affordability-calculator/'}; return false;" /-->
+        </form>
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#rent').change(function() {
+            $('#tenant_income').val("");
+            $('#guarantor_income').val("");
+        });
+
+        $('#tenant_income').change(function() {
+            $('#rent').val("");
+            $('#guarantor_income').val("");
+        });
+
+        $('#guarantor_income').change(function() {
+            $('#tenant_income').val("");
+            $('#rent').val("");
+        });
+    });
+
+    function Calculate()
+    {
+            rent             = $('#rent');
+            tenant_income    = $('#tenant_income');
+            guarantor_income = $('#guarantor_income');
+            if (
+                ((rent.val() != '') && (tenant_income.val() != '')) ||
+                ((tenant_income.val() != '') && (guarantor_income.val() != '')) ||
+                ((rent.val() != '') && (guarantor_income.val() != ''))
+            ) {
+                    alert('Please enter one amount only in any box');
+                    return;
+            }
+            if(rent.val() != "")
+            {
+                    tenant_income.val( (rent.val() * 2.5) * 12 );
+                    guarantor_income.val( (rent.val() * 3) * 12 );
+            }
+            else if(tenant_income.val() != "")
+            {
+                    amount                 = (tenant_income.val() / 12) / 2.5;
+                    rent.val(amount.toFixed(2));
+                    amount                 = (rent.val() * 3) * 12;
+                    guarantor_income.val( amount.toFixed(2) );
+            }
+            else if(guarantor_income.val() != "")
+            {
+                    amount                 = (guarantor_income.val() / 12) / 3;
+                    rent.val( amount.toFixed(2) );
+                    amount                 = (rent.val() * 2.5) * 12;
+                    tenant_income.val( amount.toFixed(2) );
+            }
+    }
+    </script>
+</li>

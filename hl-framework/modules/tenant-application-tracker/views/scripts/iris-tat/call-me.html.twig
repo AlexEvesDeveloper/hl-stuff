@@ -1,0 +1,89 @@
+
+{% extends "iristat-base.html.twig" %}
+
+{% if formTheme %}
+    {% form_theme form formTheme %}
+{% endif %}
+
+{% block breadcrumbs %}
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/tenants">For Tenants</a> &raquo; <a href="/tenant-application-tracker">Reference Tracker</a> &raquo; Request a Callback
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="tenants col-sm-8">
+        <div class="content">
+            <h2>{{ bodyTitle }}</h2>
+            <p>
+                If you'd like us to contact you about Tenant's Insurance, please provide the information below and we'll call you back at a time that's convenient to you:
+            </p>
+
+            {% if form %}
+                {{ form_errors(form) }}
+
+                <div class="panel panel-dark">
+                    <form enctype="application/x-www-form-urlencoded" method="post" action="" class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-6 col-md-4">First name</label>
+                            <div class="col-sm-6 col-md-8">
+                                {{ tatStatus.firstName }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-6 col-md-4">Last name</label>
+                            <div class="col-sm-6 col-md-8">
+                                {{ tatStatus.lastName }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.mobileNumber) }}
+                        {{ form_row(form.landlineNumber) }}
+                        {{ form_row(form.additionalInfo) }}
+                        {{ form_row(form.timeToCall) }}
+
+                        <p class="col-sm-offset-6 col-md-offset-4">
+                            By selecting 'Submit' you are confirming you are happy for HomeLet to contact you about Tenant's Insurance.
+                        </p>
+
+                        <ul class="list-inline list-buttons pull-right">
+                            <li>
+                                <input type="submit" name="back" id="back" value="Back" class="btn btn-primary" onclick="window.location.href='/tenant-application-tracker'; return false;">
+                            </li>
+                            <li>
+                                <input type="submit" name="next" id="next" value="Submit" class="btn btn-primary">
+                            </li>
+                        </ul>
+
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            {% endif %}
+
+            <p>
+                For more information about Tenancy Liability please click <a href="/tenants/liability-insurance">here</a>.
+            </p>
+            <p>
+                If you'd like to get a quote online for Tenant's Contents Insurance+ please click <a href="/tenants/insurance-quote/step1?asn={{ agentSchemeNumber }}">here</a>.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default bg-lets-move-tenant">
+            <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+            <h3 class="base-colour heavy">Let's Move App</h3>
+
+            <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+            <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+            <br />
+            <br />
+            <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}

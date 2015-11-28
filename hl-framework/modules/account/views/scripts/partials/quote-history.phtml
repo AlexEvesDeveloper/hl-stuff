@@ -1,0 +1,20 @@
+<table class="table table-condensed table-bordered">
+    <thead>
+    <tr>
+        <th>Quote number</th>
+        <th>Date produced</th>
+        <th>Valid until</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->quoteHistory as $quote) : ?>
+            <tr>
+                <td><?php echo $quote['quote_number']; ?></td>
+                <td><?php echo $quote['date_started']; ?></td>
+                <td><?php echo $quote['expires']; ?></td>
+                <td><a href="/<?php echo $quote['type']; ?>/insurance-quote/retrieve?quote=<?php echo $quote['quote_number']; ?>">View/Complete quote</a></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

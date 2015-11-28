@@ -1,0 +1,29 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">View Report</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <h2>View Report</h2>
+
+    <p>
+        We're sorry, we couldn't find your report. This is possibly because:
+    </p>
+
+    <ul>
+        <li>Your reference is still being processed</li>
+        <li>There was a problem processing your reference</li>
+    </ul>
+
+    <p>
+        If you're concerned that there may be a problem, please <a href="http://homelet.co.uk/contact-us/" target="_blank">contact us</a>.
+    </p>
+
+{% endblock %}

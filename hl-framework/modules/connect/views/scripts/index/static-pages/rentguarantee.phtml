@@ -1,0 +1,54 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+
+        <?php if ($this->panelShow) { echo $this->infoPanel($this->panelContent); } ?>
+
+        <?php
+		$this->iconLayout(array(
+            array(
+                'icon'      => 'start-alternate',
+                'title'     => Model_Core_Agent_AbsoluteType::toString($this->agentObj->absoluteType) . ' Rent Guarantee',
+                'help_text' => 'Submit a new application',
+                'url'       => '/rentguarantee/absolute'
+            ),
+            array(
+                'icon'      => 'start-alternate',
+                'title'     => 'Rent Recovery Plus Insurance',
+                'help_text' => 'Submit a new application',
+                'url'       => '/rentguarantee/rent-recovery-plus'
+            ),
+            array(
+                'icon'      => 'start-rg',
+                'title'     => 'Rent Guarantee renewals',
+                'help_text' => 'Manage your Rent Guarantee renewals',
+                'url'       => '/rentguarantee/renewals',
+            ),
+            array(
+                'icon'      => 'evict',
+                'title'     => 'Online claims',
+                'help_text' => 'Submit a new Rent Guarantee claim or view your existing claims',
+                'url'       => '/rentguaranteeclaims/home'
+            ),
+            array(
+                'icon'      => 'your-products',
+                'title'     => 'Rent Guarantee products',
+                'help_text' => 'Find out more about our specialist products',
+                'url'       => '/rentguarantee/products'
+            ),
+            array(
+                'icon'      => 'documents',
+                'title'     => 'Evict',
+                'help_text' => 'Find out more about our professional eviction services',
+                'url'       => '/rentguarantee/evict'
+            ),
+            array(
+                'icon'      => 'documents',
+                'title'     => 'Useful information &amp; documents',
+                'help_text' => 'Including claims information',
+                'url'       => '/rentguarantee/info'
+            )
+        ));
+        ?>
+    </div>
+</div>

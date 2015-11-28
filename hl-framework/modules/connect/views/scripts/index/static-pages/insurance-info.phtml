@@ -1,0 +1,38 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php
+        if (!in_array($this->fsastatusabbr, array('IO', 'IAR'))) {
+            $this->iconLayout(array(
+                array(
+                    'icon'  => 'info',
+                    'title' => 'Case complete sheet',
+                    'url'   => '/assets/connect/pdf/Homelet_Case_Complete.pdf',
+                    'pdf_info'  => array(
+                        'description'   => 'A required document to evidence regulatory compliance by your firm when completing an insurance sale.',
+                        'version'       => '',
+                        'release_date'  => ''
+                    )
+                )
+            ));
+        }
+	?>
+	<div style="clear:both;"></div>
+	<?php
+        $this->iconLayout(array(
+            array(
+                'icon'      => 'key-facts',
+                'title'     => 'Key facts',
+                'help_text' => 'View summaries of the cover that we provide',
+                'url'       => '/insurance/info/keyfacts'
+            ),
+            array(
+                'icon'      => 'key-facts',
+                'title'     => 'Policy wordings',
+                'help_text' => 'View the full Policy Wordings for our insurance products',
+                'url'       => '/insurance/info/policywordings'
+            )
+        ));
+        ?>
+    </div>
+</div>

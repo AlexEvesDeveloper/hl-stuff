@@ -1,0 +1,22 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li><a href="/iris-referencing">Referencing</a></li>
+        <li class="last"><a href="/iris-referencing/summary?uuid={{ application.referencingApplicationUuId }}">Reference no: {{ application.referenceNumber }}</a></li>
+        <li class="current_page">Failed to Submit</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <h3>Failed to Submit Application</h3>
+
+    <p>
+        There was a problem whilst trying to submit the reference application <strong>{{ application.referenceNumber }}</strong>.
+        Please contact us on 0845 111 2222.
+    </p>
+
+{% endblock %}

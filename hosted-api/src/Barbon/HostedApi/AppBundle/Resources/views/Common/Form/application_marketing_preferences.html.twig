@@ -1,0 +1,56 @@
+{% block application_marketing_preferences_widget %}
+    <h4>{{form.vars.applicant_name}}</h4>
+
+    <div class="checkbox">
+        {{ form_widget(form.canContactApplicantByPhoneAndPost) }}
+        {% if form.vars.user_type == 'landlord' %}
+            <p>
+                Following the completion of the reference, HomeLet or other Barbon Group Companies may contact
+                your tenant about additional services we can offer which may be of interest to them. These services could
+                help protect their liability as a tenant as well as their personal contents. If your tenant doesn&rsquo;t want us
+                to contact them, please tick this box.
+            </p>
+        {% else %}
+            <p>
+                Following the completion of your reference, HomeLet or other Barbon Group Companies may contact
+                you about additional services we can offer which may be of interest to you. These services could
+                help protect your liability as a tenant as well as your personal contents. If you don&rsquo;t want us
+                to contact you, please tick this box.
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="alert alert-info">
+        {% if form.vars.user_type == 'landlord' %}
+            <p>
+                We&rsquo;ll never pass their details on to a third party unless
+                we ask for their express permission. If they would like to unsubscribe from any services at any time,
+                then please contact HomeLet on unsubscribe@homelet.co.uk
+            </p>
+        {% else %}
+            <p>
+                We&rsquo;ll never pass your details on to a third party unless
+                we ask for your express permission. If you&rsquo;d like to unsubscribe from any services at any time,
+                then please contact HomeLet on unsubscribe@homelet.co.uk
+            </p>
+        {% endif %}
+
+    </div>
+
+    <div class="checkbox">
+        {{ form_widget(form.canContactApplicantBySMSAndEmail, {'label' : 'Can contact applicant by SMS and e-mail'}) }}
+        {% if form.vars.user_type == 'landlord' %}
+            <p>
+                My tenant is happy for HomeLet and other Barbon Group Companies to contact them occasionally by email
+                or SMS with exclusive offers, together with other information from selected third parties about
+                products and services which could benefit them as a tenant.
+            </p>
+        {% else %}
+            <p>
+                Yes, I&rsquo;m happy for HomeLet and other Barbon Group Companies to contact me occasionally by email
+                or SMS with exclusive offers, together with other information from selected third parties about
+                products and services which could benefit me as a tenant.
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}

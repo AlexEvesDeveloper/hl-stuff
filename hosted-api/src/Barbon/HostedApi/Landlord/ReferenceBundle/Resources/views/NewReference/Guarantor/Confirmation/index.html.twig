@@ -1,0 +1,73 @@
+{% extends 'BarbonHostedApiLandlordReferenceBundle:NewReference:base_confirmation.html.twig' %}
+
+{% block tenant_summary %}
+    <!-- applicant details -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Guarantor details
+        </div><!-- panel-heading -->
+        <div class="panel-body">
+            <dl class="dl-horizontal col-md-6 pull-left">
+                <dt>Reference type</dt>
+                <dd>{{ guarantor.product.productId | iris_product_label(case.rentGuaranteeOfferingType, case.propertyLetType) }}</dd>
+                <dt>Full name</dt>
+                <dd>{{ guarantor.firstName }} {{ guarantor.middleName }} {{ guarantor.lastName }}</dd>
+                <dt>Date of birth</dt>
+                <dd>{{ guarantor.birthDate | date("jS F Y") }}</dd>
+                <dt>E-mail</dt>
+                <dd>{{ guarantor.email }}</dd>
+                {% if guarantor.phone is not empty %}
+                    <dt>Phone</dt>
+                    <dd>{{ guarantor.phone }}</dd>
+                {% endif %}
+                {% if guarantor.mobile is not empty %}
+                    <dt>Mobile</dt>
+                    <dd>{{ guarantor.mobile }}</dd>
+                {% endif %}
+            </dl>
+            {% if guarantor.addressHistories is not null %}
+            <dl class="col-md-6 pull-left">
+                <dt>Current address</dt>
+                <dd>
+                    {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                    with { 'address': guarantor.addressHistories|first.address } %}
+                </dd>
+            </dl>
+            {% endif %}
+        </div><!-- panel-body -->
+    </div><!-- panel panel-default -->
+{% endblock %}
+
+{% block price_details %}
+    {#<!-- price details -->#}
+    {#<div id="price-breakdown-widget" class="panel panel-default">#}
+        {#<div class="panel-heading">#}
+            {#Price breakdown#}
+        {#</div><!-- panel-heading -->#}
+        {#<div class="panel-body">#}
+            {#<table class="table">#}
+                {#<thead>#}
+                {#<tr>#}
+                    {#<th class="col-md-8">Applicant</th>#}
+                    {#<th class="col-md-2">Product</th>#}
+                    {#<th class="col-md-2">Price</th>#}
+                {#</tr>#}
+                {#</thead>#}
+                {#<tbody>#}
+
+                {#{% set price = guarantor.product.productId | iris_product_price(case, guarantor, 1) %}#}
+                {#<tr>#}
+                    {#<td>{{ guarantor.firstName }} {{ guarantor.middleName }} {{ guarantor.lastName }}</td>#}
+                    {#<td>{{ guarantor.product.productId | iris_product_label(case.rentGuaranteeOfferingType, case.propertyLetType) }}</td>#}
+                    {#<td>&pound{{ price | number_format(2) }}</td>#}
+                {#</tr>#}
+                {#<tr>#}
+                    {#<th scope="row" colspan="2">Total</th>#}
+                    {#<th scope="row">&pound{{ price | number_format(2) }} (inc. VAT)</th>#}
+                {#</tr>#}
+                {#</tbody>#}
+            {#</table>#}
+        {#</div>#}
+    {#</div>#}
+
+{% endblock %}

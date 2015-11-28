@@ -1,0 +1,44 @@
+<script type="text/javascript">
+<?php
+// For each form section, add "alt" class to each even (0-indexed) element with
+//   class "autoAlt".  Basic and master users may see a different number of
+//   input elements per form, this keeps the alternating row colouring
+//   consistent.
+?>
+$(function() {
+    $('.content .form_section').each(function() {
+        $('.autoAlt:odd', this).addClass('alt');
+    });
+});
+</script>
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <?php
+        if (isset($this->flashMessages) && count($this->flashMessages) > 0) {
+            ?>
+            <script type="text/javascript">
+            $(window).load(function() {
+                setTimeout(function() {
+                    $.facebox(
+                        'Problem in form submission',
+                        '<ul style="list-style-type: none; display: block;"><?php
+                            foreach($this->flashMessages as $message) {
+                                $m = addslashes($message);
+                                echo "<li>{$m}</li>";
+                            }
+                        ?></ul>'
+                    );
+                }, 500);
+            });
+            </script>
+            <?php
+        }
+        ?>
+		<div>
+			<form method="post" action="/insurance/quote-my-landlord">
+			 	<?php echo $this->form; ?>
+			 </form>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="wrapper">
+    <?php
+        $breadcrumbArray = array(
+            array(
+                'url'   => '/insurance',
+                'title' =>  'Insurance'
+            ),
+            'currentPage' => "Policy no: {$this->policynumber}"
+        );
+
+        echo $this->partial('partials/breadcrumb.phtml', array('breadcrumbArray' => $breadcrumbArray));
+    ?>
+    
+    <div class="content">
+        <p>
+            This policy could not be found. You may not have the permissions to be able to view this policy, such as if the policy is not associated
+            with your agent scheme number.
+        </p>
+        
+        <p>
+            If you feel this message has been displayed in error, please contact us to resolve the mistake.
+        </p>
+    </div>
+</div>

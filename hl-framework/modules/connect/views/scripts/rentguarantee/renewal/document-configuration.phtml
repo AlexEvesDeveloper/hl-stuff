@@ -1,0 +1,117 @@
+<?php echo $this->headLink(); echo $this->headScript();?>
+<img src="/assets/connect/images/homelet-logo.png"/>
+<br/><br/>
+<div class="reportHeading">Rent Guarantee Renewals Suite</div>
+<div class="separator"></div>
+<script type="text/javascript">
+    function sendDocument(sendby) {
+        var formsendby = document.getElementById('rgRenewalSuiteDocumentsSendBy');
+        formsendby.value = sendby;
+        document.rgRenewalSuiteDocuments.submit();
+        return true;
+    }
+</script>
+<div class="box" style="width:99%">
+	<div class="box_title">Renewal Documents - <?php if($this->landlorddocument == "invite") echo "Invitation"; else echo "Reminder"?></div>
+	<div class="box_content">
+		<div id="rgTemplatePeview">
+			<div style="width:85%;border:1px solid #23408E;margin:auto;padding:15px">
+			<?php echo $this->templateContent;?>
+			</div>
+			<div class="separator"></div>		
+			<br/>
+			<div style="width:85%;margin:auto;">
+				<form name="rgRenewalSuiteDocuments" method="post">
+				    <input type="hidden" name="action" value="rgRenewalSuiteDocuments" />
+				    <input type="hidden" name="brand" value="<?php echo $this->brand;?>" />
+				    <input type="hidden" name="agentschemeno" value="<?php echo $this->agentschemeno;?>" />
+				    <input type="hidden" name="sendby" id="rgRenewalSuiteDocumentsSendBy" value="" />
+				    <input type="hidden" name="landlorddocument" value="<?php echo $this->landlorddocument;?>" />
+				    <input type="hidden" name="agentdocument" value="<?php echo $this->agentdocument;?>" />
+				    <input type="hidden" name="policynumber" value="<?php echo $this->policynumber;?>" />
+				    <table align="center" cellspacing="5">
+				    	<tr>
+				    		<td colspan="4">
+				    			<div class="required" style="margin-left:25%">
+				    				<ul>
+				    				<?php
+				    					foreach($this->email_err as $err) {
+				    						echo "<li>$err</li>";
+				    					} 
+				    				?>
+				    				</ul>
+				    			</div>
+				    		</td>
+				    	</tr>
+				        <tr>
+				            <td>
+				                Landlords Name: 
+				            </td>
+				            
+				            <td>
+				                <input type="text" name="agentsFieldLandlordName" value="<?php echo $this->agentsFieldLandlordName;?>" />
+				            </td>
+				            
+				            <td>
+				                Landlords Email Address:
+				            </td>
+				            
+				            <td>
+				            	<?php 
+				            		if(isset($_REQUEST['landlordsEmailAddress'])) $email_address = $_REQUEST['landlordsEmailAddress'];
+				            		else $email_address = $this->landlordsEmailAddress;
+				            	?>
+				                <input type="text" name="landlordsEmailAddress" value="<?php echo $email_address; ?>" />
+				            </td>
+				        </tr>
+				        <tr>
+				            <td>
+				                Job Title:
+				            </td>
+				            <td>
+				                <input type="text" name="agentsFieldAgentJobTitle" value="<?php echo $this->agentsFieldAgentJobTitle;?>" />
+				            </td>
+				            <td>
+				                Your Contact Number:
+				            </td>
+				            <td>
+				                <input type="text" name="agentsFieldContactNumber" value="<?php echo $this->agentsFieldContactNumber?>" />
+				            </td>
+				        </tr>      
+				        <?php if($this->landlorddocument  == "invite") :?> 
+						 <tr>
+				            <td>
+				                Premium (&pound;):
+				            </td>
+				            <td>
+				                <input type="text" name="agentsFieldPremium" value="<?php echo $this->agentsFieldPremium;?>" />
+				            </td>
+				            <td>
+				                Term:
+				            </td>
+				            <td>
+				                <input type="text" name="agentsFieldTerm" value="<?php echo $this->agentsFieldTerm;?>" />
+				            </td>
+				        </tr>
+				        <?php endif;?>
+				        <tr>
+				            <td colspan="2">&nbsp;</td>
+				            <td colspan="2" >
+				                <input type="button" onclick="sendDocument('');" class="round-button" value=" Refresh Screen "/>
+				            </td>
+				        </tr>
+				    </table>
+				</form>
+				<div class="left">
+					<input type="button" class="round-button" onclick="location.href='/connect/rentguarantee-renewal'" value=" Return to Renewals Suite "/>&nbsp;
+					<input type="button" onclick="sendDocument('email');" class="round-button" value=" Email "/>&nbsp;
+					<input type="button" onclick="sendDocument('print');" class="round-button" value=" Print "/>
+				</div>
+				<div class="right">
+					<span class="required"><i>Note: Please enter Landlords Email Address before emailing</i></span>
+				</div>
+				<div class="separator"></div>
+			</div>
+		</div>
+	</div>
+</div>

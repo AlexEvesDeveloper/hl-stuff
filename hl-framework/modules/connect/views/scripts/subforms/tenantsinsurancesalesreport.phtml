@@ -1,0 +1,21 @@
+<form action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded">
+    <h2>Tenants Insurance Sales</h2>
+    
+    <div class="form_section one-col">
+        <p>
+            This report shows all Tenants Insurance policies introduced by you in the time period you enter below
+        </p>
+        
+        <div class="datePicker">
+            <?php echo $this->element->tenantsinsurancesalesreport_start; ?>
+        </div>
+        <div class="alt datePicker">
+            <?php echo $this->element->tenantsinsurancesalesreport_end; ?>
+        </div>
+        
+        <div>
+            <?php echo $this->element->tenantsinsurancesalesreport_producereport; ?>
+            <?php echo $this->element->tenantsinsurancesalesreport_exporttoexcel; ?>
+        </div>
+    </div>
+</form>

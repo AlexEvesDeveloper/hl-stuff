@@ -1,0 +1,24 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "popup-base.html.twig" %}
+
+{% block body %}
+
+    <p>
+        Enter the Postcode in the postcode box above and click the find address button, alternatively use our
+        <a href="javascript:displayPostcodeFinder();">postcode finder</a> if you have a partial address. If you cannot find a postcode please try the
+        <a href="http://www.royalmail.com/find-a-postcode" target="_blank">Royal Mail website</a>.
+    </p>
+
+    <div>
+        <a href="javascript:window.close();"><strong>Close</strong></a>
+    </div>
+
+    <script>
+        function displayPostcodeFinder()
+        {
+            window.open('https://ref.homeletuk.com/cgi-bin/rapidConnect.pl?postcode=&brand=connect&ret_formname=propertyForm&ret_address=propertyAddressStreet&ret_town=propertyAddressTown&ret_postcode=propertyPostcode&ret_focuson=propertyAddressTown&ret_pcrefno=pcrefno', null, "height=500,width=400,status=yes,toolbar=no,menubar=no,location=no");
+            return false;
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<?php
+if ($this->metaType=='string') {
+    ?>
+    <p>
+        <label for="<?php echo $this->metaName ?>" class="req"><?php echo $this->niceName ?>:</label><br />
+        <span class="smaller low"><?php echo $this->description ?></span><br />
+        <input type="text" size="60" name="<?php echo $this->metaName ?>" class="input-text" id="<?php echo $this->metaName ?>" value="<?php echo $this->value ?>"/><br />
+    </p>
+    <?php
+} elseif ($this->metaType=='html') {
+    ?>
+    <p>
+        <label for="<?php echo $this->metaName ?>" class="req"><?php echo $this->niceName ?>:</label><br />
+        <span class="smaller low"><?php echo $this->description ?></span><br />
+        <textarea class="editor input-text" name="<?php echo $this->metaName ?>" id="<?php echo $this->metaName ?>" cols="100" rows="4"><?php echo $this->value ?></textarea>
+    </p>
+    <?php
+} elseif ($this->metaType=='testimonial_tags' || $this->metaType=='quote_tags') {
+    ?>
+    <p>
+        <label for="<?php echo $this->metaName ?>" class="req"><?php echo $this->niceName ?>:</label><br />
+        <span class="smaller low"><?php echo $this->description ?></span><br />
+        <?php
+        if ($this->metaType=='testimonial_tags')
+        {
+            ?>
+            <input type="text" size="60" name="<?php echo $this->metaName ?>" class="input-text testimonialTags" id="<?php echo $this->metaName ?>" value="<?php echo $this->value ?>"/><br />
+            <?php
+        } else {
+            ?>
+            <input type="text" size="60" name="<?php echo $this->metaName ?>" class="input-text quoteTags" id="<?php echo $this->metaName ?>" value="<?php echo $this->value ?>"/><br />
+            <?php
+        }
+        ?>
+    </p>
+    <?php
+} elseif ($this->metaType=='icon') {
+
+    $params = Zend_Registry::get('params');
+    $icons = array('' => '(none)') + $params->cms->iconList->toArray();
+    $iconUrl = $params->cms->iconUrl;
+
+    ?>
+    <p>
+        <label for="<?php echo $this->metaName; ?>" class="req"><?php echo $this->niceName; ?>:</label><br />
+        <span class="smaller low"><?php echo $this->description ?></span><br />
+        <select class="input-text input-icon" name="<?php echo $this->metaName; ?>" id="<?php echo $this->metaName; ?>" onchange="$('#<?php echo $this->metaName; ?>_icon').attr('src', '<?php echo $iconUrl; ?>white_' + $(this).val() + '_small.png');">
+<?php
+
+foreach($icons as $iconType) {
+    echo sprintf(
+        "<option value=\"%s\"%s>%s</option>\n",
+        $iconType,
+        (($iconType == $this->value) ? ' selected="selected"' : ''),
+        $iconType
+    );
+}
+
+?>
+        </select>
+        <span class="iconPreviewOuter">
+          <span class="iconPreviewMid">
+            <span class="iconPreviewInner">
+              <img id="<?php echo $this->metaName; ?>_icon" src="<?php echo (($this->value != '') ? "{$iconUrl}white_{$this->value}_small.png" : ''); ?>" alt="" />
+            </span>
+          </span>
+        </span>
+    </p>
+    <?php
+}

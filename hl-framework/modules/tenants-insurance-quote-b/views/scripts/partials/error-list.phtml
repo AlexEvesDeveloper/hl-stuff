@@ -1,0 +1,16 @@
+<?php
+if (count($this->errors) > 0) {
+    ?>
+    <ul class="errorList">
+        <?php
+        foreach ($this->errors as $elementId => $errors) {
+            foreach ($errors as $errorType => $errorMessage) {
+                ?>
+                <li><a href="#<?php echo $elementId; ?>"><?php echo $errorMessage; ?></a></li>
+                <?php
+            }
+        }
+        ?>
+    </ul>
+    <?php
+}

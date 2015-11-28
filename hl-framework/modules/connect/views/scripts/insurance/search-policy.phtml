@@ -1,0 +1,63 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#next').click(function() {
+
+            $('#next').hide();
+            $('#submission-wait-icon').show();
+            return true;
+        });
+    });
+</script>
+
+<div class="popup_form_section">
+    <?php
+
+    $errors = $this->form->getMessages();
+
+    if (count($errors) > 0) {
+        foreach($errors as $errorKey => $errorVal) {
+            echo '<ul class="errors"><li>' . implode('</li><li>', $errorVal) . '</li></ul>';
+        }
+    }
+    ?>
+
+    <p>
+        If you&rsquo;re looking for a Tenancy Liability policy please call us
+        on 0845 117 6000, as we don&rsquo;t currently host Tenancy Liability
+        policies on Connect.
+    </p>
+
+    <form id="policySearch" name="policySearch" method="get" action="/insurance/search-policy" class="workflowform">
+        <p class="workflowinfo">Please enter the Quote Reference Number into the box below and click on &quot;Search&quot;.</p>
+        <div>
+            <label>Reference Number</label>
+            <input type="text" id="campRefNo" name="campRefNo" value="<?php echo $this->form->getElement('campRefNo')->getValue(); ?>" />
+        </div>
+        <p class="workflowinfo">Please enter policy details in any of the boxes below and click on &quot;Search&quot;.</p>
+        <div>
+            <label>Policy Number</label>
+            <input type="text" id="policyNo" name="policyNo" value="<?php echo $this->form->getElement('policyNo')->getValue(); ?>" />
+        </div>
+        <div class="alt">
+            <label>Street Address</label>
+            <input type="text" id="address1" name="address1" value="<?php echo $this->form->getElement('address1')->getValue(); ?>" />
+        </div>
+        <div>
+            <label>Town/City</label>
+            <input type="text" id="address3" name="address3" value="<?php echo $this->form->getElement('address3')->getValue(); ?>" />
+        </div>
+        <div class="alt">
+            <label>Post Code</label>
+            <input type="text" id="postcode" name="postcode" value="<?php echo $this->form->getElement('postcode')->getValue(); ?>" />
+        </div>
+        <div>
+            <label>Payment Ref</label>
+            <input type="text" id="paymentRef" name="paymentRef" value="<?php echo $this->form->getElement('paymentRef')->getValue(); ?>" />
+        </div>
+        <div>
+            <input type="submit" name="submit" class="submit" id="next" value="Search">
+            <img style="float: right; display: none;" id="submission-wait-icon" src="/assets/common/images/ajax-loader.gif" width="54" height="55" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,8 @@
+services:
+    barbon.hosted_api.app.event_listener.reference.reference_to_session_listener:
+        class:  Barbon\HostedApi\AppBundle\EventListener\Reference\ReferenceToSessionListener
+        arguments:
+            - @form.factory
+            - @barbon.hosted_api.app.form.reference.type.reference_type
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }

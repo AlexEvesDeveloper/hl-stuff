@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Tenant References
+    </div><!-- panel-heading -->
+    <div class="panel-body">
+        <div class="case-status">
+            <span class="heading name">
+                Name
+            </span>
+            <span class="heading status">
+                Status
+            </span>
+            <span class="heading reference">
+                Application Reference
+            </span>
+        </div>
+        {% for application in applications %}
+            <div class="case-status underway">{# status-underway should be this, success or fail depending on the status of the application, so it can be clearly flagged #}
+                <span class="name">
+                    {{application.title}} {{application.firstName}} {{application.lastName}}
+                </span>
+                <span class="status">
+                    {{application.status | iris_application_status_label}}
+                </span>
+                <span class="reference">
+                    <a href="{{ path(application_view_url, {'applicationId': application.applicationId}) }}" class="badge badge-primary">{{application.referenceNumber}} <i class="fa fa-arrow-right"></i></a>
+                </span>
+            </div>
+        {% endfor %}
+    </div><!-- panel-body -->
+</div><!-- panel panel-default -->

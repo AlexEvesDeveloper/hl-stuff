@@ -1,0 +1,50 @@
+<script type="text/javascript">
+    $(function() {
+        // Align attachment upload section with top of form
+        $('.content').css('position', 'relative');
+        var p = $('.form_section').first().position();
+        $('#upload').css('margin-top', p.top + 'px');
+    });
+</script>
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/tenants">Tenants</a> &raquo; <a href="/tenants/reference-tracker">Reference Tracker</a> &raquo; Email HomeLet
+    </div>
+</div>
+<form enctype="multipart/form-data" method="post" action="" class="form-horizontal">
+    <div class="tenants col-sm-8">
+
+        <div class="content">
+            <h2>Email HomeLet</h2>
+            <p>
+                If you have any additional information you&rsquo;d like to add to your application or if your personal details have changed please email us to let us know.
+            </p>
+
+            <p>
+                You can also attach any relevant documents for the purposes of your references such as tax credits, bank statements or pension statements.
+            </p>
+
+            <p>
+                Please be assured that we are working as quickly as possible to process your application and will update your details as soon as we can.
+            </p>
+            <?php echo $this->form; ?>
+        </div>
+
+    </div>
+
+    <div class="col-sm-4">
+        <?php echo $this->uploadEmailAttachments($this->reference); ?>
+
+        <div class="panel panel-default bg-lets-move-tenant">
+            <img src="/assets/cms/images/icon-default-house.png" alt="house" class="pull-right">
+            <h3 class="base-colour heavy">Let's Move App</h3>
+
+            <p>Make managing the move to your new rented home easy with the<strong> Let's Move App</strong>!</p>
+            <p>Create a handy checklist which gives you all the tools you need when planning the big move.</p>
+            <br />
+            <br />
+            <p><a class="btn btn-primary" title="Let move checklist" href="/tenants/letsmove">Find out more</a></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</form>

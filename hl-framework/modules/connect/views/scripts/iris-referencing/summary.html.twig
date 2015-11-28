@@ -1,0 +1,234 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% import "/iris-referencing/macros/referencing-macros.html.twig" as referencingMacros %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Reference no: {{ application.referenceNumber }}{% if application.product %} - {{ application.product.name }}{% endif %}</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div id="refSubject">
+        <div class="left">
+
+            <div class="fieldWrapper">
+                <div class="label">
+                    Applicant Name
+                </div>
+                <div class="datum">
+                    {% if application.firstName and application.lastName %}
+                        {{ application.title }} {{ application.firstName }} {{ application.lastName }}
+                    {% else %}
+                        <em>Not Provided</em>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if application.applicationType %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Applicant Type
+                    </div>
+                    <div class="datum">
+                        {{ application.applicationType | iris_lookup_name('applicationTypes')  }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if application.otherName %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Maiden Name
+                    </div>
+                    <div class="datum">
+                        {{ application.otherName }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="fieldWrapper">
+                <div class="label">
+                    Date of Birth
+                </div>
+                <div class="datum">
+                    {{ application.birthDate | date('jS F, Y') }} ({{ application.birthDate | date('d/m/Y') }})
+                </div>
+            </div>
+
+            {% if application.residentialStatus %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Residential Status
+                    </div>
+                    <div class="datum">
+                        {{ application.residentialStatus | iris_lookup_name('residentialStatuses') }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if application.employmentStatus %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Employment Status
+                    </div>
+                    <div class="datum">
+                        {{ application.employmentStatus | iris_lookup_name('employmentStatuses') }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="fieldWrapper">
+                <div class="label">
+                    Gross Annual Income
+                </div>
+                <div class="datum">
+                    {% if application.grossIncome is not null %}
+                        &pound; {{ application.grossIncome | number_format(2) }}
+                    {% else %}
+                        <em>Not Provided</em>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="fieldWrapper">
+                <div class="label">
+                    Share of Rent
+                </div>
+                <div class="datum">
+                    {% if application.rentShare is not null %}
+                        &pound; {{ application.rentShare | number_format(2) }}
+                    {% else %}
+                        <em>Not Provided</em>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="fieldWrapper">
+                <div class="label">
+                    Property Address
+                </div>
+                <div class="datum">
+                    {% include '/iris-referencing/includes/address.html.twig' with { 'address': case.address } %}
+                </div>
+            </div>
+
+            {% if application.email %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        E-mail
+                    </div>
+                    <div class="datum">
+                        <a href="mailto:{{ application.email }}">{{ application.email }}</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if application.phone %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Telephone
+                    </div>
+                    <div class="datum">
+                        {{ application.phone }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if application.mobile %}
+                <div class="fieldWrapper">
+                    <div class="label">
+                        Mobile
+                    </div>
+                    <div class="datum">
+                        {{ application.mobile }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div>
+        {% include '/iris-referencing/includes/resend-applicant-completion-email-link.html.twig' with { 'application': application } %}
+    </div>
+
+    {% include '/iris-referencing/includes/progress.html.twig' with { 'progress': progress, 'application': application } %}
+
+    <div class="clearfix"></div>
+
+    <div class="application-options">
+
+        {# if we're awaiting applicant details, allow continue by agent (tenant) #}
+        {# todo: replace with enumeration #}
+        {% if 1 == application.status and 1 == application.applicationType %}
+            <a href="/iris-new-reference/tenant-continue-application?uuid={{ application.referencingApplicationUuId }}" class="button">Continue Reference</a>
+        {% endif %}
+
+        {# if we're awaiting applicant details, allow continue by agent (guarantor) #}
+        {# todo: replace with enumeration #}
+        {% if 1 == application.status and 2 == application.applicationType %}
+            <a href="/iris-add-guarantor/guarantor-continue-application?uuid={{ application.referencingApplicationUuId }}" class="button">Continue Reference</a>
+        {% endif %}
+
+        {# if we're awaiting agent review, allow continue by agent (tenant) #}
+        {# todo: replace with enumeration #}
+        {% if 7 == application.status and 1 == application.applicationType %}
+            <a href="/iris-new-reference/agent-tenant-email-continue-reference?uuid={{ application.referencingApplicationUuId }}" class="button">Continue Reference</a>
+        {% endif %}
+
+        {# if we're awaiting agent review, allow continue by agent (guarantor) #}
+        {# todo: replace with enumeration #}
+        {% if 7 == application.status and 2 == application.applicationType %}
+            <a href="/iris-add-guarantor/agent-guarantor-email-continue-reference?uuid={{ application.referencingApplicationUuId }}" class="button">Continue Reference</a>
+        {% endif %}
+
+        {% if application.finalReportNodeId %}
+            <a href="/iris-referencing/view-final-report?uuid={{ application.referencingApplicationUuId }}" class="button">View Report</a>
+        {% elseif application.interimReportNodeId %}
+            <a href="/iris-referencing/view-interim-report?uuid={{ application.referencingApplicationUuId }}" class="button">View Report</a>
+        {% endif %}
+
+        <a href="/iris-referencing/application-form?uuid={{ application.referencingApplicationUuId }}" class="button">Application Form</a>
+
+        {# only show if tenant (not guarantor) #}
+        {# todo: replace with enumeration #}
+        {% if 1 == application.applicationType %}
+            {# do not show if insight based product  #}
+            {# todo: replace with method on product model e.g. Product::canAddGuarantor() #}
+            {% if application.product.productCode != 'INSG' %}
+                <a href="/iris-add-guarantor?uuid={{ application.referencingApplicationUuId }}" class="button">Add Guarantor</a>
+            {% endif %}
+        {% endif %}
+
+        <a href="/iris-add-tenant?uuid={{ case.referencingCaseUuId }}" class="button">Add Tenant</a>
+
+        <a href="/iris-referencing/case-log?uuid={{ application.referencingApplicationUuId }}" class="button">View Case Log</a>
+
+        <a href="/iris-referencing/email-assessor?uuid={{ application.referencingApplicationUuId }}" class="button">Email Assessor</a>
+
+        {% if 1 == application.applicationType %}
+            {# do not show if insight based product  #}
+            {# todo: replace with method on product model e.g. Product::canAddGuarantor() #}
+            {% if application.product.productCode != 'INSG' %}
+                <a href="/referencing/agent-form?form=Agent-Guarantor" class="button" target="_blank">Print Guarantor Form</a>
+            {% endif %}
+        {% endif %}
+
+        {# if we're still awaiting applicant details - allow upload of signed declaration #}
+        {# todo: replace with enumeration #}
+        {% if 1 == application.status %}
+            {{ referencingMacros.upload_signed_declaration_link(application.referencingApplicationUuId, 'button', false, 'summary') }}
+        {% endif %}
+    </div>
+
+    {% include '/iris-referencing/includes/case-applications.html.twig' with { 'caseApplications': caseApplications } %}
+
+{% endblock %}

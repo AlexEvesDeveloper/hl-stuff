@@ -1,0 +1,73 @@
+<link rel="stylesheet" type="text/css" media="all" href="/assets/vendor/jquery-facebook-alert/css/jquery.facebook.alert.css" />
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <script type="text/javascript" src="/assets/vendor/jquery-facebook-alert/js/jquery.facebook.alert.js"></script>
+        <script type="text/javascript" src="/assets/connect/js/dog.js"></script>
+        <?php
+        $this->iconLayout(array(
+            array(
+                'icon'  => 'info',
+                'title' => 'Rent Guarantee claim form',
+                'url'   => '/assets/connect/pdf/Rent_Guarantee_And_Legal_Claims_Form.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'You can now submit Rent Guarantee claims online through Connect, but if you&rsquo;d like to send it by email or fax you can use this form.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Rent Guarantee claims process',
+                'url'   => '/assets/connect/pdf/Rent_Guarantee_And_Legal_Claims_Process.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This document provides some further information on our claims process, what documentation we require and a rough guide to the timescale involved.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+            array(
+                'icon'  => 'info',
+                'title' => 'Xpress Policy Summary',
+                'url'   => '/assets/connect/pdf/Xpress_RG_and_Legal_Policy_Summary_Amends.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This is the policy summary for Xpress Rent Guarantee.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            ),
+        	array(
+        		'icon'  => 'info',
+                'title' => 'Extra Policy Summary',
+                'url'   => '/assets/connect/pdf/Extra_RG_and_Legal_Policy_Summary_Amended.pdf',
+                'pdf_info'  => array(
+        			'description'   => 'This is the policy summary for Extra Rent Guarantee.',
+                    'version'       => '',
+        			'release_date'  => ''
+                 )
+        	),
+        	array(
+        		'icon'  => 'info',
+                'title' => 'Advantage Policy Summary ',
+                'url'   => '/assets/connect/pdf/Advantage_RG_and_Legal_Policy_Summary.pdf',
+                'pdf_info'  => array(
+        			'description'   => 'This is the policy summary for Advantage Rent Guarantee.',
+                    'version'       => '',
+        			'release_date'  => ''
+                 )
+        	),
+            array(
+                'icon'  => 'info',
+                'title' => 'Guide to making a Rent Guarantee claim',
+                'url'   => '/assets/connect/pdf/Guide_to_making_a_rent_guarantee_claim.pdf',
+                'pdf_info'  => array(
+                    'description'   => 'This guide outlines the documents needed as part of a claim,' .
+                            'and when information needs to be submitted so we’re able to process it.',
+                    'version'       => '',
+                    'release_date'  => ''
+                )
+            )
+        ));
+        ?>
+    </div>
+</div>

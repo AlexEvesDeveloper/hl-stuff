@@ -1,0 +1,22 @@
+
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "irisreferencing-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/iris-referencing">Referencing</a></li>
+        <li class="current_page">Reference Search</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/iris-referencing/search-references-results" action="get" class="form-horizontal">
+        <h2>Reference Search</h2>
+        <div class="form_section one-col">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary btn-search">Search</button>
+        </div>
+    </form>
+
+{% endblock %}

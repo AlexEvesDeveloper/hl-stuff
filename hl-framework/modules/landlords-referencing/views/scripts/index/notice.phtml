@@ -1,0 +1,25 @@
+<div class="tenants web_ref_overlay">
+    <div class="wrapper two-col">
+        
+        <div class="content">
+            <h1><span class="landlords">Notice</span></h1>
+            <br />
+            
+            <p>
+			<?php echo $this->notice; ?>
+			</p>
+        </div>
+
+        
+		<?php echo $this->partial('partials/sidebar.phtml', array('page' => 'notice', 'fractionComplete' => $this->fractionComplete)); ?>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(function() {
+    $('.form_section > div:even')
+        .not($('.form_section > div input.noalt').parent())
+        .addClass('alt');
+	});
+</script>

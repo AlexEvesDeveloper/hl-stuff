@@ -1,0 +1,129 @@
+<?php
+// "Away from home" promo panel content
+switch($this->element->gender) {
+    case 'male':
+        $awayFromHomeNoPromo = $this->promoContent('tenants-insurance-quote-donttakefromhome-male-promo');
+        break;
+    case 'female':
+        $awayFromHomeNoPromo = $this->promoContent('tenants-insurance-quote-donttakefromhome-female-promo');
+        break;
+    default: // Unknown
+        $awayFromHomeNoPromo = $this->promoContent('tenants-insurance-quote-donttakefromhome-neutral-promo');
+        break;
+}
+$awayFromHomeYesPromo = $this->promoContent('tenants-insurance-quote-takefromhome-promo');
+?>
+
+<div class="form-sub-section">
+    <div class="form-help hidden-xs hidden-sm"></div>
+    <h2 class="tertiary-colour main-header">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-unspecpossessions'); ?>
+        </div>
+        Your Possessions
+    </h2>
+
+    <div class="mobile-help section-help section-help-fullwidth">
+        <div class="visible-xs visible-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-unspecpossessions'); ?>
+        </div>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->away_from_home; ?>
+    </div>
+
+    <div id="awayFromHomeNoPromo" class="alert alert-warning">
+        <?php
+        // Strip out empty paragraphs
+        $awayFromHomeNoPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $awayFromHomeNoPromo);
+        echo $awayFromHomeNoPromo;
+        ?>
+    </div>
+
+    <div id="awayFromHomeYesPromo" class="alert alert-info">
+        <?php
+        // Strip out empty paragraphs
+        $awayFromHomeYesPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $awayFromHomeYesPromo);
+        echo $awayFromHomeYesPromo;
+        ?>
+    </div>
+
+    <div id="movable_possessions_hideable" class="hideable">
+        <div class="form-group last-group">
+            <div class="help-trigger"><a class="show-help"></a></div>
+            <div class="field-help-group" id="awayFromHomeCoverNotes"></div>
+            <?php
+            echo $this->element->possessions_cover
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="form-sub-section">
+    <h2 class="tertiary-colour">
+        <div class="help-trigger"><a class="show-form-help"></a></div>
+        <div class="field-help hidden-xs hidden-sm">
+            <?php echo $this->promoContent('tenants-insurance-quote-help-specpossessions'); ?>
+        </div>
+        Specified Possessions
+    </h2>
+
+    <div class="visible-xs visible-sm section-help">
+        <?php echo $this->promoContent('tenants-insurance-quote-help-specpossessions'); ?>
+    </div>
+
+    <div class="radio form-group">
+        <?php echo $this->element->above_x; ?>
+    </div>
+
+    <div id="specifiedPossessionsNoPromo" class="alert alert-warning">
+        <?php
+        // Strip out empty paragraphs
+        $specifiedPossessionsNoPromo = $this->promoContent('tenants-insurance-quote-no-specified-possessions-promo');
+        $specifiedPossessionsNoPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $specifiedPossessionsNoPromo);
+        echo $specifiedPossessionsNoPromo;
+        ?>
+    </div>
+
+    <div id="specifiedPossessionsYesPromo" class="alert alert-info">
+        <?php
+        // Strip out empty paragraphs
+        $specifiedPossessionsYesPromo = $this->promoContent('tenants-insurance-quote-specified-possessions-promo');
+        $specifiedPossessionsYesPromo = preg_replace('/<p[^>]*>[\s|&nbsp;]*<\/p>/', '', $specifiedPossessionsYesPromo);
+        echo $specifiedPossessionsYesPromo; ?>
+    </div>
+
+    <div id="specified_possessions_hideable" class="hideable">
+        <div class="form-group">
+            <?php
+            echo $this->element->possession_categoryId
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div class="form-group">
+            <?php
+            echo $this->element->possession_value
+                ->setOptions(array('class'=>'form-control'))->render();
+            ?>
+        </div>
+
+        <div class="form-group">
+            <label for="possession_description" class="optional">Item description</label>
+            <div class="input-group">
+                <?php
+                echo $this->element->possession_description
+                    ->setOptions(array('class'=>'form-control'))->render();
+                ?>
+                <div class="input-group-btn">
+                    <input type="submit" name="addPossession" id="addPossession" value="Add item" class="btn btn-tertiary" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ajaxPossession" class="ajax_form_section form-group"><?php echo $this->yourPossessions(); ?></div>
+</div>

@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <form class="workflowform">
+            <table width="100%">
+                <tr class="data">
+                    <th style="white-space: nowrap;">Policy Number</th>
+                    <th style="white-space: nowrap;">Customer Name</th>
+                    <th style="white-space: nowrap;">Status</th>
+                </tr>
+                <?php
+                foreach($this->searchResults as $resultRow) {
+                    ?>
+                    <tr>
+                        <td><a href="#" onclick="location.href='/insurance/show-policy?policyno=<?php echo $resultRow['policynumber']; ?>'; return false;"><?php echo $resultRow['policynumber']; ?></a></td>
+                        <td><?php echo $resultRow['lastname']; ?></td>
+                        <td><?php echo $resultRow['paystatus']; ?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+{% extends _isXmlHttpRequest ? "ajax-base.html.twig" : "rent-guarantee-base.html.twig" %}
+
+{% block breadcrumbs %}
+    <ul id="connect_breadcrumb">
+        <li class="home"><a href="/">Connect</a></li>
+        <li class="last"><a href="/rentguarantee">Rent Guarantee &amp; Eviction Services</a></li>
+        <li class="current_page">Rent Recovery Plus Application Cancellation</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <form action="/rentguarantee/rent-recovery-plus-cancel" method="post">
+        {% if isConfirmed is defined %}
+            <div class="content">
+                <p>
+                    Your Rent Recovery Plus (RRP) policy has now been cancelled as requested.
+                    You will receive confirmation of cancellation within 24 hours. If you do not receive this email,
+                    if you have any queries or questions, or if you change your mind about cancelling your policy
+                    please don’t hesitate to call us on {{ queryPhoneNumber }}
+                </p>
+            </div>
+        {% elseif message is defined %}
+            <div class="content">
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+        {% else %}
+            <div class="form_section two-col">
+                <div class="autoAlt">
+                    You have requested to cancel your Rent Recovery Plus (RRP) policy.
+                    Please confirm that you are happy to proceed by clicking on the confirmation icon below.
+                    Please note any cancellations outside of the 14 day cooling off period will not be eligible for a
+                    refund - full terms and conditions apply, please refer to your policy wording document for further
+                    details.
+                <br/><br/>
+                    If you have any queries or questions with regards to the cancellation of your policy please call us
+                    on {{ queryPhoneNumber }} – we’ll be happy to help.
+                </div>
+                <br/>
+                <div class="autoAlt:odd">
+                    {{ form_row(form.policyNumber) }}
+                    {{ form_row(form.policyExpiresAt) }}
+                    {{ form_row(form.policyEndAt) }}
+                </div>
+                <br/>
+                <div class="application-options">
+                    <button type="submit" name="isConfirmed" id="isConfirmed" value="1" class="button">Confirm Cancellation</button>
+                    <button type="button" onclick="javascript:history.back()" class="button">Back</button>
+                </div>
+            </div>
+        {% endif %}
+    </form>
+
+{% endblock %}

@@ -1,0 +1,215 @@
+{% block referencing_application_widget %}
+    {% spaceless %}
+        <div class="panel panel-default collection" id="applications-outer">
+            <div class="panel-heading">
+                <h4 class="pull-left">Tenant Details</h4>
+                <ul class="list-inline pull-right">
+                    <li><a class="badge badge-primary pull-right minimise-button"><i class="fa fa-minus-circle"></i> Collapse Section</a></li>
+                    <li><a class="badge badge-danger pull-right remove-from-collection">Remove Application <i class="fa fa-times-circle"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div id="applications" class="panel-body">
+                <div class="form-group-section">
+                    <div id="{{ form.vars.id }}">
+                        {# product options modal #}
+                        <div class="modal fade" id="{{ form.vars.id }}_product-modal" role="dialog" tabindex="-1">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4>Product Selection</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Insight</strong></p>
+                                        <p>We&rsquo;ll ensure that your tenant is suitable for a tenancy by checking a range of credit information.</p>
+                                        <p><strong>Enhance</strong></p>
+                                        <p>We&rsquo;ll get a reference from the tenant&rsquo;s current Landlord or Managing Agent and employer.</p>
+                                        <p><strong>Optimum</strong></p>
+                                        <p>As well as a full Enhance reference we&rsquo;ll guarantee to remove the tenant from your property if they fail to pay the rent.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" data-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {# /product options modal #}
+
+                        {# completion options modal #}
+                        <div class="modal fade" id="{{ form.vars.id }}_completion-modal" role="dialog" tabindex="-2">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4>Completion Methods</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Complete Now</strong></p>
+                                        <p>You will need the tenant&rsquo;'s details, and you will complete the process on their behalf using this form.</p>
+                                        <p><strong>Email to Tenant</strong></p>
+                                        <p>The tenant will receive an email with a link to fill in their details in order to complete the reference process.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" data-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {# /completion options modal #}
+
+                        <div class="single-application-block minimise-outer">
+                            <div class="single-application-content minimise-content">
+                                <div class="single-application-section">
+                                    {{ form_row(form.isVisible) }}
+
+                                    <div class="form-group">
+                                        <div class="field-floater">
+                                            <div class="float-left">
+                                                {{ form_label(form.productId) }}
+                                            </div>
+                                            <div class="float-right">
+                                                <a href="#" class="field-info" data-toggle="modal" data-target="#{{ form.vars.id }}_product-modal">click for info <i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        {{ form_widget(form.productId) }}
+                                    </div>
+
+                                    {{ form_row(form.title) }}
+                                    {{ form_row(form.firstName) }}
+                                    {{ form_row(form.middleName) }}
+                                    {{ form_row(form.lastName) }}
+                                    {{ form_row(form.otherName) }}
+                                    {{ form_row(form.birthDate) }}
+                                    {{ form_row(form.email) }}
+
+                                    <div class="form-group">
+                                        <div class="field-floater">
+                                            <div class="float-left">
+                                                {{ form_label(form.completionMethod) }}
+                                            </div>
+                                            <div class="float-right">
+                                                <a href="#" class="field-info" data-toggle="modal" data-target="#{{ form.vars.id }}_completion-modal">click for info <i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        {{ form_widget(form.completionMethod) }}
+                                    </div>
+
+                                    {#{{ form_row(form.completionMethod) }}#}
+                                    {{ form_row(form.rentShare, {'label' : 'Monthly share of rent (£s)'}) }}
+
+                                    {# complete now only #}
+                                    {% if form.residentialStatus is defined %}
+                                        {{ form_row(form.residentialStatus) }}
+                                    {% endif %}
+
+                                    {% if form.employmentStatus is defined %}
+                                        {{ form_row(form.employmentStatus) }}
+                                    {% endif %}
+
+                                    {% if form.grossIncome is defined %}
+                                        {{ form_row(form.grossIncome) }}
+                                    {% endif %}
+
+                                    {% if form.bankAccount is defined %}
+                                        {{ form_row(form.bankAccount) }}
+                                    {% endif %}
+
+                                    {% if form.phone is defined %}
+                                        {{ form_row(form.phone) }}
+                                    {% endif %}
+
+                                    {% if form.mobile is defined %}
+                                        {{ form_row(form.mobile) }}
+                                    {% endif %}
+
+                                    {% if form.hasCCJ is defined %}
+                                        <div class="radio-group">
+                                            {{ form_row(form.hasCCJ, {'attr': {'class': 'radio-group-options'}}) }}
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                {% if form.lettingReferee is defined %}
+                                    <h4 class="section-heading">Letting referee</h4>
+
+                                    <div class="single-application-section" id="{{ form.vars.id }}-letting-referee">
+                                        {{ form_errors(form.lettingReferee) }}
+                                        {{ form_widget(form.lettingReferee) }}
+                                    </div>
+                                {% endif %}
+
+                                {% if form.addressHistories is defined %}
+                                    <div id="{{ form.vars.id }}-address-history">
+                                        <div class="collection">
+                                            <h4 class="section-heading">Address history
+                                                <a class="badge badge-primary pull-right add-to-collection"
+                                                        data-prototype="{{ form_widget(form.addressHistories.vars.prototype)|e }}"
+                                                        data-collectionid="{{ form.addressHistories.vars.id }}"
+                                                        data-prototype-name="__previousaddressname__"><i class="fa fa-plus-circle"></i> Add</a>
+                                            </h4>
+
+                                            <div class="form-group-section">
+                                                {{ form_errors(form.addressHistories) }}
+                                                {{ form_widget(form.addressHistories) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if form.financialReferees is defined %}
+                                    <div id="{{ form.vars.id }}-financial-referees">
+                                        <div class="collection">
+                                            <h4 class="section-heading">Financial referees
+                                                <a class="badge badge-primary pull-right add-to-collection"
+                                                        data-prototype="{{ form_widget(form.financialReferees.vars.prototype)|e }}"
+                                                        data-collectionid="{{ form.financialReferees.vars.id }}"
+                                                        data-prototype-name="__financialrefereename__"><i class="fa fa-plus-circle"></i> Add</a>
+                                            </h4>
+
+                                            <div class="form-group-section">
+                                                <div class="single-application-block">
+                                                    <div class="single-application-section">
+                                                        <p>
+                                                            Please provide financial referees for this applicant. You may provide two current referees (past date)
+                                                            and one future referee (future date). Pension administrators are considered current referees.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {{ form_errors(form.financialReferees) }}
+                                                {{ form_widget(form.financialReferees) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if form.guarantors is defined %}
+                                    <div id="{{ form.vars.id }}-guarantors">
+                                        <div class="collection guarantor-collection">
+                                            <h4 class="section-heading">Guarantors
+                                                <a class="badge badge-primary pull-right add-to-collection"
+                                                    data-prototype="{{ form_widget(form.guarantors.vars.prototype)|e }}"
+                                                    data-collectionid="{{ form.guarantors.vars.id }}"
+                                                    data-prototype-name="__guarantorname__"><i class="fa fa-plus-circle"></i> Add</a>
+                                            </h4>
+
+                                            <div class="form-group-section">
+                                                {{ form_errors(form.guarantors) }}
+                                                {{ form_widget(form.guarantors) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

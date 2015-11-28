@@ -1,0 +1,36 @@
+{% extends 'whitelabel-base.html.twig' %}
+
+{% block header %}
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{{asset('images/homelet-logo.png')}}" alt="HomeLet" />
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-content">
+            <h1>{% block errorTitle %}Oops! An Error Occurred{% endblock %}</h1>
+
+            {% block errorContent %}
+                <p>
+                    Something is broken. Please let us know what you were doing when this error occurred.
+                </p>
+                <p>
+                    We will fix it as soon as possible. Sorry for any inconvenience caused.
+                </p>
+            {% endblock %}
+
+            {% block errorDetails %}
+                <aside>
+                    The server returned a &quot;{{ status_code|default('undefined status code') }} {{ status_text|default('undefined status text') }}&quot;.
+                </aside>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

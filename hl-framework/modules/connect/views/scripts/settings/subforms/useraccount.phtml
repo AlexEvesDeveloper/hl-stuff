@@ -1,0 +1,49 @@
+<div class="form_section two-col stripeMe">
+    <div>
+        <?php
+        echo $this->element->getElement('realname')->setOptions(array('class' => 'first'))->render();
+        echo $this->element->getElement('username');
+        ?>
+    </div>
+    <div>
+        <?php
+        echo $this->element->getElement('password1')->setOptions(array('class' => 'first'))->render();
+        echo $this->element->getElement('password2');
+        ?>
+    </div>
+    <div>
+        <?php
+        echo $this->element->getElement('email')->setOptions(array('class' => 'first'))->render();
+        if ($this->role == Model_Core_Agent_UserRole::MASTER) {
+            echo $this->element->getElement('emailcopyto');
+        }
+        ?>
+    </div>
+    <div>
+        <?php
+        echo $this->element->getElement('question')->setOptions(array('class' => 'first'))->render();
+        echo $this->element->getElement('answer');
+        ?>
+    </div>
+    <?php
+    if ($this->role == Model_Core_Agent_UserRole::MASTER) {
+        ?>
+        <div>
+            <?php
+            echo $this->element->getElement('master');
+            ?>
+        </div>
+        <div>
+            <?php
+            echo $this->element->getElement('reports');
+            ?>
+        </div>
+        <div>
+            <?php
+            echo $this->element->getElement('status');
+            ?>
+        </div>
+        <?php
+    }
+    ?>
+</div>

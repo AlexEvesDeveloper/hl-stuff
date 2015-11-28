@@ -1,0 +1,6 @@
+services:
+    barbon.hosted_api.agent.reference.controller.list_references.list_controller:
+        class: Barbon\HostedApi\Agent\ReferenceBundle\Controller\ListReferences\ListController
+        arguments:
+            - @barbon.hosted_api.app.service.reference.reference_retriever
+            - @barbon.hosted_api.app.form.common.lookup.application_status

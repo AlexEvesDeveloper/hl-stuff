@@ -1,0 +1,25 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+        <h2>Referencing SLA report</h2>
+        
+        <div class="half_form">
+	        <table style="width: 100%;">
+	            <tr>
+	                <th>Period</th>
+	                <th>Count</th>
+	            </tr>
+	        
+	        <?php
+	        foreach ($this->reportdata as $data)
+	        {
+	            echo '<tr>';
+	            echo '<td>' . $data['label'] . '</td>';
+	            echo '<td>' . $data['count'] . '</td>';
+	            echo '</tr>';
+	        }
+	        ?>
+	        </table>
+        </div>
+    </div>
+</div>

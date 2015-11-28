@@ -1,0 +1,92 @@
+{% extends 'BarbonHostedApiLandlordReferenceBundle:NewReference:base_confirmation.html.twig' %}
+
+{% block tenant_summary %}
+    <!-- applicant details -->
+    {% for application in case.applications %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tenant reference {{ loop.index }}
+            </div><!-- panel-heading -->
+            <div class="panel-body">
+                <dl class="dl-horizontal col-md-6 pull-left">
+                    <dt>Reference type</dt>
+                    <dd>{{ application.productId | iris_product_label(case.rentGuaranteeOfferingType, case.propertyLetType) }}</dd>
+                    <dt>Full name</dt>
+                    <dd>{{ application.firstName }} {{ application.middleName }} {{ application.lastName }}</dd>
+                    <dt>Date of birth</dt>
+                    <dd>{{ application.birthDate | date("jS F Y") }}</dd>
+                    <dt>E-mail</dt>
+                    <dd>{{ application.email }}</dd>
+                    {% if application.phone is not empty %}
+                        <dt>Phone</dt>
+                        <dd>{{ application.phone }}</dd>
+                    {% endif %}
+                    {% if application.mobile is not empty %}
+                        <dt>Mobile</dt>
+                        <dd>{{ application.mobile }}</dd>
+                    {% endif %}
+
+                </dl>
+                {% if application.addressHistories is not null %}
+                    <dl class="col-md-6 pull-left">
+                        <dt>Current address</dt>
+                        <dd>
+                            {% include '@BarbonHostedApiAppBundle/Resources/views/Common/Widgets/address.html.twig'
+                            with { 'address': application.addressHistories|first.address } %}
+                        </dd>
+                    </dl>
+                {% endif %}
+
+            </div><!-- panel-body -->
+        </div><!-- panel panel-default -->
+    {%  endfor %}
+{% endblock %}
+
+{% block price_details %}
+<!-- price details -->
+<div id="price-breakdown-widget" class="panel panel-default">
+    <div class="panel-heading">
+        Price breakdown
+    </div><!-- panel-heading -->
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-8">Applicant</th>
+                <th class="col-md-2">Product</th>
+                <th class="col-md-2">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set totalPrice = 0 %}
+            {% for application in case.applications %}
+                {% set currentPrice = application.productId | iris_product_price(case, application) %}
+                <tr>
+                    <td>{{ application.firstName }} {{ application.middleName }} {{ application.lastName }}</td>
+                    <td>{{ application.productId | iris_product_label(case.rentGuaranteeOfferingType, case.propertyLetType) }}</td>
+                    <td>&pound{{ currentPrice | number_format(2) }}</td>
+                </tr>
+                {% set totalPrice = totalPrice + currentPrice %}
+
+                {% for guarantor in application.guarantors %}
+                    {% set currentPrice = application.productId | iris_product_price(case, guarantor, loop.index) %}
+                    <tr>
+                        <td class="guarantor-name-column">{{ guarantor.firstName }} {{ guarantor.middleName }} {{ guarantor.lastName }} (Guarantor)</td>
+                        <td>{{ application.productId | iris_product_label(case.rentGuaranteeOfferingType, case.propertyLetType) }}</td>
+                        <td>&pound{{ currentPrice | number_format(2) }}</td>
+                    </tr>
+                    {% set totalPrice = totalPrice + currentPrice %}
+                {% endfor %}
+
+                {%  if  loop.last %}
+                    <tr>
+                        <th scope="row" colspan="2">Total</th>
+                        <th scope="row">&pound{{ totalPrice | number_format(2) }} (inc. VAT)</th>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

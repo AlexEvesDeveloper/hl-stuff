@@ -1,0 +1,22 @@
+{% extends 'BarbonHostedApiLandlordReferenceBundle:NewReference:base_new.html.twig' %}
+
+{% block formnavigation %}
+    <div class="hidden-xs col-sm-4 col-md-3">
+        <nav role="navigation" id="affixed-navigation">
+            <h4>Form Navigation</h4>
+            <ul class="nav form-navigation"></ul>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block pageform %}
+    <div class="col-sm-8 col-md-9">
+        <div class="page-content">
+            <p>To provide you with a tenant reference, please complete the information below about your rental property and your tenant.</p>
+            {{ form_start(form) }}
+            {{ form_row(form.case) }}
+            {{ form_row(form.order, {'label': 'Next', 'attr':{'class':'pull-right'}}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock pageform %}

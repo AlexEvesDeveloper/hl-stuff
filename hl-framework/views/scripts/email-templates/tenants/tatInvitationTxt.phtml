@@ -1,0 +1,25 @@
+Dear <?php echo $this->metaData['tenantName']; ?>
+
+Track your tenancy application online...
+
+Thank you for your recent tenancy application to rent:
+<?php echo $this->metaData['propertyAddressTxt']; ?>
+
+HomeLet will be acting on behalf of <?php echo $this->metaData['lettingAgentName']; ?> to complete your tenant
+referencing checks.
+
+Don't worry you're in safe hands!
+
+At HomeLet we understand that moving home can be a stressful time, that's why we
+want to support you wherever we can and keep you updated every step of the way.
+
+So we've set up an online application tracker service, which allows you to see exactly how we're progressing with
+your referencing checks at the click of a button, just visit http://homelet.co.uk/tenants and select
+'Track your Reference', or visit <?php echo $this->metaData['tatUrl']; ?>.
+
+All you'll need to do is provide us with <?php echo $this->metaData['lettingAgentName']; ?> scheme number
+<?php echo $this->metaData['lettingAgentAsn']; ?>, your HomeLet reference number
+<?php echo $this->metaData['tenantIrn']; ?> and your date of birth to view the status and progress of your application.
+
+Kind regards
+The HomeLet Team

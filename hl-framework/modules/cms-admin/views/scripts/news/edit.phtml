@@ -1,0 +1,53 @@
+<h1>Edit News</h1>
+<script>
+$(function() {
+    <?php if ($this->saved || $this->added) { ?>
+        setTimeout(function() {
+            $('.done').animate({opacity: "0"}, 1000).slideUp(500);
+        }, 3000);
+    <?php } ?>
+    $( "#newsDate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    $( "#selectable" ).selectable({
+        stop: function() {
+            $( "#categoryList" ).val('');
+            $( ".ui-selected", this ).each(function() {
+                var index = this.id.split("_");
+                $( "#categoryList" ).val($( "#categoryList" ).val() + index[1] + ',')
+            });
+            $( "#categoryList" ).val($result);
+        }
+    });
+});
+</script>
+<?php if ($this->saved) { ?>
+    <p class="msg done">Changes saved successfully!</p>
+<?php } ?>
+<form method="post">
+    <p>
+        <label for="newsTitle" class="req">News Title:</label><br />
+        <input type="text" size="60" name="newsTitle" class="input-text" id="newsTitle" value="<?php echo $this->newsTitle ?>"/>
+    </p>
+    <p>
+        <label for="newsDate" class="req">Date:</label><br />
+        <input type="text" name="newsDate" id="newsDate" class="input-text" value="<?php echo $this->newsDate ?>" />
+    </p>
+    <p>
+        <label for="newsContent" class="req">Content:</label><br />
+        <textarea class="editor input-text" name="newsContent" id="newsContent" cols="100" rows="10"><?php echo $this->newsContent ?></textarea>
+    </p>
+    <div>
+        <label class="req">Where should this news article appear?</label>
+        <p class="msg info">Hold [CTRL] to select more than one category</p>
+        <ol id="selectable">
+            <?php echo $this->categoryList; ?>
+        </ol>
+        <input type="hidden" name="categoryList" id="categoryList" value="<?php echo $this->selectedCategories; ?>" />
+    </div>
+    <div class="box-02">
+        <input type="hidden" name="id" id="id" value="<?php echo $this->newsID ?>" />
+        <p class="nom">
+            <input type="submit" value="Save" class="input-submit" />
+            <input type="button" value="Cancel" class="input-button" onclick="javascript:history.go(-1)" />
+        </p>
+    </div>
+</form>

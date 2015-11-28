@@ -1,0 +1,47 @@
+<?php echo $this->landlordsQuoteSubHeader($this->stepNum); ?>
+
+<div class="landlords col-sm-8 col-md-9">
+    <div class="content">
+        <?php if (1 == $this->stepNum): ?>
+            <h2 class="quaternary-colour">Landlord Insurance Quotation Form</h2>
+            <p>Please complete the form below to enable us to give you a quick quote for our 5 star Defaqto rated Landlord Insurance+ cover. If you&rsquo;d like any further information about our Landlord Insurance products, please see our <a href="http://homelet.co.uk/landlord/insurance" title="HomeLet Landlord Insurance products">Landlord Insurance page</a>.</p>
+        <?php endif; ?>
+
+        <form class="main" action="<?php echo $this->formAction; ?>" method="post" enctype="application/x-www-form-urlencoded" autocomplete="on">
+            <?php if (isset($this->errorCount) && $this->errorCount > 0): ?>
+                <div class="alert alert-danger">
+                    <p class="error">
+                        Oops, unfortunately there <?php echo ((1 == $this->errorCount) ? 'appears to be an error' : 'appear to be some errors'); ?> in the form, please see below for details:
+                    </p>
+                    <?php echo $this->errorsHtml; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="form_section">
+                <?php echo $this->form; ?>
+            </div>
+
+            <?php if (5 == $this->stepNum) : ?>
+                <?php echo $this->partial('partials/premium-breakdown.phtml'); ?>
+            <?php endif; ?>
+
+            <?php if ($this->stepNum > 1 && $this->stepNum < 5):
+                echo $this->partial(
+                    'partials/premium-summary.phtml', array(
+                        'premiums' => $this->premiumsFull,
+                        'fees' => $this->fees
+                    )
+                );
+            endif; ?>
+
+            <?php echo $this->partial(
+                'partials/form-navigation.phtml', array(
+                    'stepNum' => $this->stepNum,
+                    'stepMax' => $this->stepMax
+                )
+            ); ?>
+        </form>
+    </div>
+</div>
+
+<?php echo $this->landlordsQuoteSidebar($this->premiums, $this->fees, $this->errorsHtml, $this->stepNum, $this->stepMax); ?>

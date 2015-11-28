@@ -1,0 +1,40 @@
+<div class="wrapper two-col">
+    <div class="content">
+		<h2>Log In</h2>
+        <p class="clear">
+            Log in to Connect to arrange HomeLet tenant references, Rent Guarantee and insurance products.
+		</p>
+
+        <p class="messages" id="message">
+        	<strong>Please log in using your Agent Scheme Number, your username and your password.</strong>
+        </p>
+        <?php 
+        	if (isset($this->loginErrorMessage)){
+        ?>
+        	<p style="color: #ff0000; text-align: right;"><?php echo $this->loginErrorMessage;?></p>
+        <?php 
+        	} 
+         ?>
+        <form id="login" name="login" enctype="application/x-www-form-urlencoded" method="post" action="">
+            <div class="form_section one-col">
+                <div>
+                    <?php echo $this->form->getElement('agentschemeno'); ?>
+                </div>
+                <div class="alt">
+                    <?php echo $this->form->getElement('username'); ?>
+                </div>
+                <div>
+                    <?php echo $this->form->getElement('password'); ?>
+                </div>
+            </div>
+
+            <a href="/lost-login" style="float: left;">Forgotten log in details?</a>
+            <input type="submit" name="submit" id="next" value="login">
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="<?php echo $this->homePage;?>" style="float: left;">&lt; Return to HomeLet</a>
+    </div>
+</div>

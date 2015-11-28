@@ -1,0 +1,30 @@
+<div class="wrapper one-col">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content">
+    	<div class="half_form">
+        	<?php echo $this->refreport; ?>
+        </div>
+        <div class="half_form">
+        	<?php echo $this->slareport; ?>
+        </div>
+    </div>
+    <div class="content">
+    	<div class="half_form">
+        	<?php echo $this->overnightreport; ?>
+        </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function()
+	{
+		$('#referencingreport_end').datePicker().val(new Date().asString()).trigger('change');
+		$('#referencingreport_start').datePicker(
+			{
+				
+				startDate: '01/01/1970', // This needs to be a date range that we can provide without killing the database
+				endDate: (new Date()).asString()
+			}
+		).val(Date.parse('3 months ago').asString()).trigger('change');
+	});
+</script>

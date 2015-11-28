@@ -1,0 +1,116 @@
+<?php
+
+// Build sort button HTML
+$baseUrl = '/referencing/search?' . rebuildGetVars(array('sort','page'));
+$imageUrl = '/assets/connect/images/sort/';
+
+$refnoSortButtons = searchOptions('refno', $baseUrl, $imageUrl);
+$firstnameSortButtons = searchOptions('firstname', $baseUrl, $imageUrl);
+$lastnameSortButtons = searchOptions('lastname', $baseUrl, $imageUrl);
+$address1SortButtons = searchOptions('address1', $baseUrl, $imageUrl);
+$startdateSortButtons = searchOptions('startdate', $baseUrl, $imageUrl);
+
+function searchOptions($pairName, $baseUrl, $imageUrl) {
+    $searchOptions = array(
+        'refno_asc' => true,
+        'refno_desc' => true,
+        'firstname_asc' => true,
+        'firstname_desc' => true,
+        'lastname_asc' => true,
+        'lastname_desc' => true,
+        'address1_asc' => true,
+        'address1_desc' => true,
+        'startdate_asc' => true,
+        'startdate_desc' => true
+    );
+
+    $html = '';
+
+    $sort = (isset($_GET['sort'])) ? $_GET['sort'] : '-_-';
+    list($sortKey, $sortDir) = explode('_', $sort);
+
+    if (isset($searchOptions[$sort]) && ($pairName == $sortKey) && ($sortDir == 'asc')) {
+        $html .= '<img src="' . $imageUrl . 'sort_asc_on.gif" width="11" height="11" border="0" style="display: inline;" alt="Sort ascending" />';
+    } else {
+        $html .= "<a href=\"{$baseUrl}&sort={$pairName}_asc\">" . '<img src="' . $imageUrl . 'sort_asc_off.gif" width="11" height="11" border="0" style="display: inline;" alt="Sort ascending" onmouseover="this.src = \'' . $imageUrl . 'sort_asc_on.gif\';" onmouseout="this.src = \'' . $imageUrl . 'sort_asc_off.gif\';" /></a>';
+    }
+
+    if (isset($searchOptions[$sort]) && ($pairName == $sortKey) && ($sortDir == 'desc')) {
+        $html .= '<img src="' . $imageUrl . 'sort_desc_on.gif" width="11" height="11" border="0" style="display: inline;" alt="Sort descending" />';
+    } else {
+        $html .= "<a href=\"{$baseUrl}&sort={$pairName}_desc\">" . '<img src="' . $imageUrl . 'sort_desc_off.gif" width="11" height="11" border="0" style="display: inline;" alt="Sort descending" onmouseover="this.src = \'' . $imageUrl . 'sort_desc_on.gif\';" onmouseout="this.src = \'' . $imageUrl . 'sort_desc_off.gif\';" /></a>';
+    }
+
+    return $html;
+}
+
+function reBuildGetVars($without = array()) {
+    $getVars = '';
+    foreach ($_GET as $key => $val) {
+        if (!in_array($key, $without)) {
+            $getVars .= "{$key}={$val}&";
+        }
+    }
+    return substr($getVars, 0, -1);
+}
+
+?>
+<div class="wrapper" style="width:888px;">
+    <?php echo $this->breadCrumbTrail(); ?>
+    <div class="content" style="width:888px">
+        <form class="workflowform">
+            <table width="100%">
+                <tr class="data">
+                    <th style="white-space: nowrap;">Your Reference Number <?php echo $refnoSortButtons; ?></th>
+                    <th style="white-space: nowrap;">Tenant First Name <?php echo $firstnameSortButtons; ?></th>
+                    <th style="white-space: nowrap;">Tenant Last Name <?php echo $lastnameSortButtons; ?></th>
+                    <th style="white-space: nowrap;">1st Line of Prospective Property Address <?php echo $address1SortButtons; ?></th>
+                    <th style="white-space: nowrap;">Date Logged <?php echo $startdateSortButtons; ?></th>
+                </tr>
+				
+                <?php $c = 0; foreach($this->searchResults as $resultRow): ?>
+				
+                    <tr <?php if ($c++%2 == 0) echo 'class="alt"'?>>
+                        <td>
+							<a href="#" onclick="location.href='/referencing/summary?refno=<?php echo $resultRow['RefNo']; ?>'; return false;"><?php echo $resultRow['RefNo']; ?></a>
+						</td>
+                        <td><?php echo htmlspecialchars($resultRow['firstname']); ?></td>
+                        <td><?php echo htmlspecialchars($resultRow['lastname']); ?></td>
+                        <td><?php echo htmlspecialchars($resultRow['address1']); ?></td>
+                        <td>
+							<?php
+								$startDate = new Zend_Date($resultRow['start_time']);
+								echo($startDate->toString('dd/MM/YYYY'));
+							?>
+						</td>
+                    </tr>
+					
+                <?php endforeach; ?>
+				
+				<?php if(count($this->searchResults) > 0): ?>
+					<tr>
+						<td>
+							<?php if(isset($this->previousPageNumber)): ?>
+								<a href="<?php echo $baseUrl;?>&pageNumber=<?php echo($this->previousPageNumber); ?>">Previous</a>
+							<?php else: ?>
+								&nbsp;
+							<?php endif; ?>
+						</td>
+						
+						<td colspan="3" align="center">
+							Page <?php echo $this->currentPageNumber ?> of <?php echo $this->maxPageNumber;?>
+						</td>
+						<td>
+							<?php if(isset($this->nextPageNumber)): ?>
+								<a href="<?php echo $baseUrl;?>&pageNumber=<?php echo $this->nextPageNumber; ?>">Next</a>
+							<?php else: ?>
+								&nbsp;
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endif; ?>
+            </table>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+
+{% if _request.query.has('backToSummary') %}
+    <div class="return-to-summary">
+        <a href="/{{ summaryController }}/summary">Back to Summary &raquo;</a>
+    </div>
+{% endif %}

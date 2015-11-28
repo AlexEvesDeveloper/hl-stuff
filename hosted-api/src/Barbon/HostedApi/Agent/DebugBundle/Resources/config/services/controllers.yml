@@ -1,0 +1,5 @@
+services:
+    barbon.hosted_api.agent.debug.controller_debug:
+        class: Barbon\HostedApi\Agent\DebugBundle\Controller\DebugController
+        calls:
+            - [ setContainer,[ @service_container ] ]
